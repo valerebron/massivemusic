@@ -1,0 +1,32 @@
+<template>
+  <div id="home">
+    <youtube :video-id="youtubeId" ref="papier" />
+    <button @click="playPapier('T41QZE1tzO0')">play papier</button>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'home',
+    data: {
+      youtubeId: ''
+    },
+    methods: {
+      playPapier(idToPlay) {
+        this.youtubeId = idToPlay
+        this.papier.playVideo()
+      },
+    },
+    computed: {
+      papier() {
+        return this.$refs.papier.player
+      }
+    }
+  }
+</script>
+
+<style lang="scss">
+  #home {
+    justify-content: center;
+  }
+</style>
