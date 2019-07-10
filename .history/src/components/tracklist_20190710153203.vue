@@ -20,8 +20,7 @@
     name: 'tracklist',
     props: [
       'player',
-      'togglePlay',
-      'play',
+      'togglePlay'
     ],
     data() {
       return {

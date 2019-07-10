@@ -20,8 +20,7 @@
     name: 'tracklist',
     props: [
       'player',
-      'togglePlay',
-      'play',
+      'togglePlay'
     ],
     data() {
       return {
@@ -30,6 +29,20 @@
       }
     },
     methods: {
+      play(id) {
+        if(this.currentYtid == id) {
+          this.togglePlay()
+        }
+        else {
+          this.player.stopVideo()
+          this.player.loadVideoById(id)
+          this.currentYtid = id
+          if(document.querySelector('.track--playing') !== null) {
+            document.querySelector('.track--playing').classList.remove('track--playing')
+          }
+          document.querySelector('[data-id="'+id+'"]').classList.add('track--playing')
+        }
+      },
       search(query) {
         // all tracks
         if(query == 'all' || query == '') {
