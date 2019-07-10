@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VuePlayerPlugin, { Youtube } from 'vue-youtube-iframe-api'
+import VuePlayerPlugin from 'vue-youtube-iframe-api'
 
 import config from '../config.json'
 import Player from './components/player.vue'
@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 Vue.use(VueRouter)
 Vue.use(VuePlayerPlugin )
 
-Vue.component('youtube', Youtube)
+Vue.component('youtube', VuePlayerPlugin )
 
 const router = new VueRouter({
   routes: [

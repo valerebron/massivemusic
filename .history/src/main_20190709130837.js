@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VuePlayerPlugin, { Youtube } from 'vue-youtube-iframe-api'
+import VueYoutube, { Youtube } from 'vue-youtube-iframe-api'
 
 import config from '../config.json'
 import Player from './components/player.vue'
 import TrackList from './components/tracklist.vue'
 
-window.APIURL = config.apiHost
+window.APIURL = config
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-Vue.use(VuePlayerPlugin )
+Vue.use(VueYoutube)
 
 Vue.component('youtube', Youtube)
 

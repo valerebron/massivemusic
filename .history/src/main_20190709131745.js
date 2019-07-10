@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import VuePlayerPlugin, { Youtube } from 'vue-youtube-iframe-api'
+import VuePlayerPlugin { Youtube } from 'vue-youtube-iframe-api'
 
 import config from '../config.json'
 import Player from './components/player.vue'

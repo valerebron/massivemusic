@@ -5,8 +5,8 @@ let api = express()
 
 const trackSchema = new mongoose.Schema({
   id_yt: String,
-  title: {type: String, index: true},
-  artist: {type: String, index: true},
+  title: String,
+  artist: String,
   style: Number,
   user: Number,
   timestamp: Number,
