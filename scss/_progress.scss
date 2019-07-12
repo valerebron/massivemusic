@@ -1,0 +1,36 @@
+progress {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: none;
+  height: $global-ui-bar-height;
+  transition: height .3s;
+  &:hover {
+    height: $global-ui-bar-height-hover;
+  }
+
+  &::-moz-progress {
+    background-color: $primary-color;
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+  &::-webkit-progress {
+    background-color: $primary-color;
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+  &::-moz-progress-value {
+    background-color: $primary-color;
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+  &::-webkit-progress-value {
+    background-color: $primary-color;
+    &:hover {
+      background-color: $secondary-color;
+    }
+  }
+}

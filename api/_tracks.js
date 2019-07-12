@@ -21,6 +21,7 @@ let Track = mongoose.model('Track', trackSchema)
 router.get('/', function(req, res) {
   Track.find()
       .sort({timestamp: -1})
+      .limit(20)
       .exec(function (err, result) {
     if (err) res.send(err)
     res.json(result)

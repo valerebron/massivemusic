@@ -79,8 +79,6 @@
 
 <style lang="scss">
   .tracks {
-    background-color: black;
-    color: white;
     list-style-type: none;
   }
   .track {

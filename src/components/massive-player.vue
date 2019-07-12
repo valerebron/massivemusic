@@ -3,13 +3,15 @@
     <section class="yt-player">
       <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
       {{ currentState }}
-      <progress :value="currentProgress" max="100" @click="seekPlayer"></progress>
+      <input type="range" :value="currentProgress" step="0.125" max="100" @input="seekPlayer"/>
+      <!-- for chrome only : -->
+      <progress :value="currentProgress" max="100"></progress>
       <progress :value="currentBuffer" max="100"></progress>
       <button @click="togglePlay">Play/Pause</button>
       <button @click="playPrev">Prev</button>
       <button @click="playNext">Next</button>
       <button @click="toggleVolume">Mute</button>
-      <input type="range" min="0" max="100" :value="currentVolume" @input="updatePlayerVolume">
+      <input type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
       {{ currentTime }} / {{ totalTime }}
     </section>
     <router-view :player="propRef" :play="play" :togglePlay="togglePlay"></router-view>
@@ -90,7 +92,8 @@
         this.currentVolume = this.player.getVolume()
       },
       seekPlayer(e) {
-        let percent = ((e.x - e.target.offsetLeft) / e.target.offsetWidth) * 100
+        // let percent = ((e.x - e.target.offsetLeft) / e.target.offsetWidth) * 100
+        let percent = e.target.value
         let duration = this.player.getDuration()
         let seekToSecond = (percent * duration) / 100
 
@@ -169,6 +172,18 @@
 </script>
 
 <style lang="scss">
+  @import 'scss/main.scss';
+  .yt-player {
+    display: flex;
+    flex-direction: column;
+  }
+  iframe {
+    height: 80px;
+    width: 100%;
+  }
+  progress, input {
+    width: 100%;
+  }
   .home {
     justify-content: center;
   }
