@@ -5,32 +5,34 @@ progress {
   border: none;
   height: $global-ui-bar-height;
   transition: height .3s;
+  background-color: transparent;
   &:hover {
     height: $global-ui-bar-height-hover;
+    &::-moz-progress-bar {
+      background-color: $primary-color;
+    }
+    &::-webkit-progress-value {
+      background-color: $primary-color;
+    }
   }
 
-  &::-moz-progress {
-    background-color: $primary-color;
-    &:hover {
-      background-color: $secondary-color;
-    }
+  @mixin progress-bar {
+    transition: background-color .3s;
+    background-color: $third-color;
   }
-  &::-webkit-progress {
-    background-color: $primary-color;
-    &:hover {
-      background-color: $secondary-color;
-    }
+  
+  // this is not the bar, it's the all progress element :
+  &::-webkit-progress-bar {
+    background-color: transparent;
   }
-  &::-moz-progress-value {
-    background-color: $primary-color;
-    &:hover {
-      background-color: $secondary-color;
-    }
+
+  &::-moz-progress-bar {
+    transition: background-color .3s;
+    background-color: $third-color;
   }
+
   &::-webkit-progress-value {
-    background-color: $primary-color;
-    &:hover {
-      background-color: $secondary-color;
-    }
+    transition: background-color .3s;
+    background-color: $third-color;
   }
 }

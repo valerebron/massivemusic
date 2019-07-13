@@ -3,16 +3,29 @@
     <section class="yt-player">
       <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
       {{ currentState }}
-      <input type="range" :value="currentProgress" step="0.125" max="100" @input="seekPlayer"/>
-      <!-- for chrome only : -->
-      <progress :value="currentProgress" max="100"></progress>
-      <progress :value="currentBuffer" max="100"></progress>
       <button @click="togglePlay">Play/Pause</button>
       <button @click="playPrev">Prev</button>
       <button @click="playNext">Next</button>
       <button @click="toggleVolume">Mute</button>
-      <input type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
-      {{ currentTime }} / {{ totalTime }}
+      <div class="volume-bar">
+        <input class="volume-bar__cursor" type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
+        <!-- for chrome only : -->
+        <progress class="volume-bar__progress" :value="currentVolume" max="100"></progress>
+      </div>
+      <div class="playback-bar">
+        <div class="playback-bar__progress-time">
+          {{ currentTime }}
+        </div>
+        <div class="progress-bar">
+          <progress class="progress-bar__buffer" :value="currentBuffer" max="100"></progress>
+          <input class="progress-bar__cursor" type="range" :value="currentProgress" step="0.125" max="100" @input="seekPlayer"/>
+          <!-- for chrome only : -->
+          <progress class="progress-bar__progress" :value="currentProgress" max="100"></progress>
+        </div>
+        <div class="playback-bar__progress-time">
+          {{ totalTime }}
+        </div>
+      </div>
     </section>
     <router-view :player="propRef" :play="play" :togglePlay="togglePlay"></router-view>
   </main>
@@ -177,14 +190,64 @@
     display: flex;
     flex-direction: column;
   }
-  iframe {
-    height: 80px;
+
+  .playback-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     width: 100%;
+    &__progress-time {
+      font-size: 12px;
+      color: $third-color;
+    }
+    .progress-bar {
+      flex-grow: 1;
+      display: flex;
+          justify-content: center;
+      flex-direction: column;
+      position: relative;
+      &__buffer, &__progress {
+        position: absolute;
+        z-index: 0;
+        border: red 1px solid;
+        width: 100%;
+      }
+      &__cursor {
+        z-index: 10;
+      }
+      &__progress {
+        border: blue 1px solid;
+      }
+      &__buffer {
+        $buffer-color: $grey-6;
+        &::-moz-progress-bar {
+          background-color: $buffer-color;
+        }
+        &::-webkit-progress-value {
+          background-color: $buffer-color;
+        }
+      }
+    }
   }
-  progress, input {
-    width: 100%;
-  }
-  .home {
+
+  .volume-bar {
+    display: flex;
+    flex-direction: column;
+    position: relative;
     justify-content: center;
+    
+    &__cursor {
+      position: relative;
+      left: 0;
+      z-index: 10;
+    }
+    &__progress {
+      z-index: 0;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      border: none;
+      outline: none;
+    }
   }
 </style>
