@@ -2,11 +2,11 @@
 $input-range-container-height: 40px;
 $input-range-container-bkg-color: transparent;
 $input-range-bar-bkg-color: transparent;
-$input-range-bar-progress-bkg-color: #969696;
-$input-range-bar-progress-bkg-color-hover: rgb(145, 145, 145);
+$input-range-bar-progress-bkg-color: $grey-2;
+$input-range-bar-progress-bkg-color-hover: $primary-color;
 $input-range-pointer-size: 0;
 $input-range-pointer-size-hover: 12px;
-$input-range-pointer-bkg-color: rgb(70, 70, 70);
+$input-range-pointer-bkg-color: $grey-4;
 
 @mixin input-range-container {
   -webkit-appearance: none;

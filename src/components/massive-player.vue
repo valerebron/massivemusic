@@ -187,8 +187,6 @@
 <style lang="scss">
   @import 'scss/main.scss';
   .yt-player {
-    display: flex;
-    flex-direction: column;
   }
 
   .playback-bar {
@@ -203,20 +201,22 @@
     .progress-bar {
       flex-grow: 1;
       display: flex;
-          justify-content: center;
+      justify-content: center;
       flex-direction: column;
       position: relative;
+      &:hover {
+        .progress-bar__buffer {
+          height: $global-ui-bar-height-hover;
+        }
+      }
       &__buffer, &__progress {
         position: absolute;
         z-index: 0;
-        border: red 1px solid;
         width: 100%;
+        transition: height 0.3s;
       }
       &__cursor {
         z-index: 10;
-      }
-      &__progress {
-        border: blue 1px solid;
       }
       &__buffer {
         $buffer-color: $grey-6;

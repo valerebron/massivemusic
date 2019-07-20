@@ -27,12 +27,10 @@ progress {
   }
 
   &::-moz-progress-bar {
-    transition: background-color .3s;
-    background-color: $third-color;
+    @include progress-bar;
   }
 
   &::-webkit-progress-value {
-    transition: background-color .3s;
-    background-color: $third-color;
+    @include progress-bar;
   }
 }
