@@ -16,7 +16,7 @@ build-vue-app:
       - server.js
       - docker-compose.yml
       - Dockerfile
-  image: node:10-alpine
+  image: node:10.15-alpine
   before_script:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
