@@ -22,6 +22,7 @@ build-vue-app:
    - rm config.json && mv configDist.json config.json
   script:
    - echo $CI_COMMIT_REF_NAME
+   - node -v
    - yarn && yarn build
 deploy:
   stage: deploy
