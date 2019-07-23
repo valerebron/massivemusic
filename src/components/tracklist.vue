@@ -4,7 +4,7 @@
       {{ tracks.length }}
       {{ tracksState }}
       <ul class="tracks">
-        <li class="track" v-for="track in tracks" @click="play(track.id_yt)" :data-id="track.id_yt" :key="track.id_yt">
+        <li class="track" v-for="track in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
           {{ track.title }}
           {{ track.artist }}
           {{ track.style }}

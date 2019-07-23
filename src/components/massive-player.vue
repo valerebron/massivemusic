@@ -4,6 +4,14 @@
       <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
       {{ currentState }}
       <br>
+      <p class="yt-player__infos">
+        <b class="current-title">
+          {{ currentTitle }}
+        </b>
+        <span class="current-artist">
+          {{ currentArtist }}
+        </span>
+      </p>
       <button @click="togglePlay">Play/Pause</button>
       <button @click="playPrev">Prev</button>
       <button @click="playNext">Next</button>
@@ -46,6 +54,8 @@
         currentBuffer: 0,
         currentVolume: 0,
         currentYtid: '',
+        currentTitle: '',
+        currentArtist: '',
         propRef: '',
       }
     },
@@ -130,18 +140,20 @@
           this.player.mute()
         }
       },
-      play(id) {
-        if(this.currentYtid == id) {
+      play(track) {
+        if(this.currentYtid == track.id_yt) {
           this.togglePlay()
         }
         else {
           this.player.stopVideo()
-          this.player.loadVideoById(id)
-          this.currentYtid = id
+          this.player.loadVideoById(track.id_yt)
+          this.currentYtid = track.id_yt
+          this.currentTitle = track.title
+          this.currentArtist = track.artist
           if(document.querySelector('.track--playing') !== null) {
             document.querySelector('.track--playing').classList.remove('track--playing')
           }
-          document.querySelector('[data-id="'+id+'"]').classList.add('track--playing')
+          document.querySelector('[data-id="'+track.id_yt+'"]').classList.add('track--playing')
         }
       },
       playPrev() {
@@ -150,7 +162,8 @@
           if(currentTrack.previousSibling) {
             let prevId = currentTrack.previousSibling.getAttribute('data-id')
             if(prevId) {
-              this.play(prevId)
+              currentTrack.previousSibling.click()
+              // this.play(prevId)
             }
           }
         }
@@ -161,7 +174,8 @@
           if(currentTrack.nextSibling) {
             let nextId = currentTrack.nextSibling.getAttribute('data-id')
             if(nextId) {
-              this.play(nextId)
+              currentTrack.nextSibling.click()
+              // this.play(nextId)
             }
           }
         }
