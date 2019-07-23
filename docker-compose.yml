@@ -1,0 +1,27 @@
+version: "1"
+services:
+
+  mongo:
+    image: mongo
+    volumes:
+      - /data/db/massivemusic2:/data/db
+    restart: always
+    ports:
+      - 33320:27017
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 33321:8081
+    depends_on:
+      - mongo
+
+  web:
+    image: registry.osrp.xyz/root/massivemusic2
+    restart: always
+    ports:
+      - 33330:33330
+      - 33340:33340
+    depends_on:
+      - mongo

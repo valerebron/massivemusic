@@ -1,0 +1,9 @@
+{
+  "bddName": "massivemusic",
+  "bddHost": "massivemusic.fr",
+  "apiHost": "https://api.massivemusic.fr",
+  "bddPort": "33320",
+  "bddAdminPort": "33321",
+  "apiPort": "33330",
+  "webPort": "33340"
+}

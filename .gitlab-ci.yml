@@ -1,0 +1,42 @@
+cache:
+  paths:
+  - node_modules/
+stages:
+  - build-vue-app
+  - deploy
+
+build-vue-app:
+  stage: build-vue-app
+  artifacts:
+    paths:
+      - node_modules/
+      - dist/
+      - api/
+      - config.js
+      - server.js
+      - docker-compose.yml
+      - Dockerfile
+  image: node:9.11-alpine
+  before_script:
+   - apk update && apk add yarn -y
+   - rm config.json && mv configDist.json config.json
+  script:
+   - echo $CI_COMMIT_REF_NAME
+   - yarn && yarn build
+deploy:
+  stage: deploy
+  tags: [shell]
+  dependencies:
+    - build-vue-app
+  before_script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - cd /var/www/html/massivemusic2 && git pull
+    - rm config.json && mv configDist.json config.json
+  script:
+    - mkdir -p /data/db/massivemusic2
+    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker push $CI_REGISTRY_IMAGE
+    - docker-compose up -d
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://massivemusic.fr
