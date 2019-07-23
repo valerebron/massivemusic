@@ -3,6 +3,7 @@
     <section class="yt-player">
       <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
       {{ currentState }}
+      <br>
       <button @click="togglePlay">Play/Pause</button>
       <button @click="playPrev">Prev</button>
       <button @click="playNext">Next</button>
@@ -186,7 +187,17 @@
 
 <style lang="scss">
   @import 'scss/main.scss';
+  iframe {
+    display: none;
+  }
+  body, button {
+    background-color: black;
+    color: white;
+  }
   .yt-player {
+    position: fixed;
+    width: 100%;
+    background-color: black;
   }
 
   .playback-bar {
