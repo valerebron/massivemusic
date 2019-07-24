@@ -2,14 +2,16 @@
   <main :class="currentState">
     <section class="yt-player">
       <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
-      {{ currentState }}
-      <br>
+      <p>player state: {{ currentState }}</p>
       <p class="yt-player__infos">
         <b class="current-title">
           {{ currentTitle }}
         </b>
         <span class="current-artist">
           {{ currentArtist }}
+        </span>
+        <span class="current-style">
+          {{ currentStyle }}
         </span>
       </p>
       <button @click="togglePlay">Play/Pause</button>
@@ -56,6 +58,7 @@
         currentYtid: '',
         currentTitle: '',
         currentArtist: '',
+        currentStyle: '',
         propRef: '',
       }
     },
@@ -150,6 +153,7 @@
           this.currentYtid = track.id_yt
           this.currentTitle = track.title
           this.currentArtist = track.artist
+          this.currentStyle = track.style
           if(document.querySelector('.track--playing') !== null) {
             document.querySelector('.track--playing').classList.remove('track--playing')
           }
@@ -209,7 +213,7 @@
     color: white;
   }
   .yt-player {
-    position: fixed;
+    // position: fixed;
     width: 100%;
     background-color: black;
   }

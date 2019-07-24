@@ -25,9 +25,11 @@ mongoose.connect('mongodb://'+config.bddHost+':'+config.bddPort+'/'+config.bddNa
 
 // api Routes
 let tracks = require('./api/_tracks')
+let styles = require('./api/_styles')
 
 // api urls
 api.use('/tracks', tracks)
+api.use('/styles', styles)
 
 // api
 api.listen(config.apiPort, function(){
