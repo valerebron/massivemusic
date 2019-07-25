@@ -38,7 +38,7 @@
         </div>
       </div>
     </section>
-    <router-view :player="propRef" :play="play" :togglePlay="togglePlay"></router-view>
+    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay"></router-view>
   </main>
 </template>
 
@@ -60,6 +60,9 @@
         currentArtist: '',
         currentStyle: '',
         propRef: '',
+        isLoadedPlayer: false,
+        isLoadedTracklist: false,
+        isAppReady: false,
       }
     },
     computed: {
@@ -162,7 +165,7 @@
       },
       playPrev() {
         let currentTrack = document.querySelector('.track--playing')
-        if(currentTrack) {
+        if(currentTrack != null) {
           if(currentTrack.previousSibling) {
             let prevId = currentTrack.previousSibling.getAttribute('data-id')
             if(prevId) {
@@ -173,8 +176,8 @@
         }
       },
       playNext() {
-        let currentTrack = document.querySelector('.track--playing')
-        if(currentTrack) {
+        if(document.querySelector('.track--playing') != null) {
+          let currentTrack = document.querySelector('.track--playing')
           if(currentTrack.nextSibling) {
             let nextId = currentTrack.nextSibling.getAttribute('data-id')
             if(nextId) {
@@ -184,13 +187,31 @@
           }
         }
         else {
-          let firstId = document.querySelector('.tracks .track').getAttribute('data-id')
+          var firstId = document.querySelector('.tracks .track:first-child').getAttribute('data-id')
           if(firstId) {
-            this.play(firstId)
+            let track = {id_yt: firstId}
+            this.play(track)
           }
         }
       },
+      loadFirstTrack() {
+        this.playNext()
+        this.player.pauseVideo()
+      },
+      appReady() {
+        if(this.isAppReady == false) {
+          this.isAppReady = true
+          this.loadFirstTrack()
+        }
+      },
+      trackListReady() {
+          this.isLoadedTracklist = true
+          if(this.isLoadedPlayer) {
+            this.appReady()
+          }
+      },
       playerReady() {
+        this.isLoadedPlayer = true
         this.initPlayerVolume()
         setInterval(function() {
           this.updatePlayerTime()
@@ -198,6 +219,9 @@
           this.updatePlayerBuffer()
         }.bind(this), 500)
         this.propRef = this.$refs.yt.player
+        if(this.isLoadedTracklist) {
+          this.appReady()
+        }
       },
     },
   }

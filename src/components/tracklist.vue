@@ -21,6 +21,7 @@
 <script>
   import axios from 'axios'
   import styles_selector from './styles-selector.vue'
+import { setTimeout } from 'timers';
 
   export default {
     name: 'tracklist',
@@ -55,6 +56,10 @@
               this.tracks = res.data
               this.tracksState = ''
               this.currentQuery = ''
+              let self = this
+              setTimeout(function(){
+                self.$emit('trackListReady')
+              }, 2000)
             })
         }
         else {

@@ -1,10 +1,10 @@
 <template>
-  <section class="styles-selector">
+  <nav class="styles-selector">
     <button v-for="style in styles" :key="style.id" @mousedown="filterStyle(style.id)">
       {{ style.id }}
       {{ style.value }}
     </button>
-  </section>
+  </nav>
 </template>
 
 <script>
