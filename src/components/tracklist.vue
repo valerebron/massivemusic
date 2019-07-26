@@ -2,7 +2,7 @@
     <section class="tracklist" :class="tracksState">
       <div class="tracklist__header">
         <styles_selector @changeStyleFilter="styleFilter($event)" />
-        <input class="tracklist__search" type="search" @input="currentQuery = $event.target.value">
+        <input class="tracklist__search" type="search" v-model="currentQuery">
         tracks: {{ tracks.length }}
         query: {{ currentQuery }}
         style: {{ currentStyle }}
@@ -21,7 +21,6 @@
 <script>
   import axios from 'axios'
   import styles_selector from './styles-selector.vue'
-import { setTimeout } from 'timers';
 
   export default {
     name: 'tracklist',
@@ -39,6 +38,7 @@ import { setTimeout } from 'timers';
         tracksState: '',
         currentQuery: '',
         currentStyle: '',
+        finishTyping: '',
       }
     },
     methods: {
@@ -88,7 +88,10 @@ import { setTimeout } from 'timers';
     },
     watch: {
       currentQuery: function() {
-        this.search()
+        clearTimeout(this.finishTyping)
+        this.finishTyping = setTimeout(() => {
+          this.search()
+        }, 500)
       },
       currentStyle: function() {
         this.search()
@@ -103,7 +106,7 @@ import { setTimeout } from 'timers';
 <style lang="scss">
   .tracklist {
     &__header {
-      // position: fixed;
+      color: white;
     }
   }
   .tracks {

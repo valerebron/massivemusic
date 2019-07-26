@@ -1,5 +1,8 @@
 <template>
   <main :class="currentState">
+    <header>
+      <massiveLogo />
+    </header>
     <section class="yt-player">
       <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
       <p>player state: {{ currentState }}</p>
@@ -14,10 +17,16 @@
           {{ currentStyle }}
         </span>
       </p>
-      <button @click="togglePlay">Play/Pause</button>
-      <button @click="playPrev">Prev</button>
-      <button @click="playNext">Next</button>
-      <button @click="toggleVolume">Mute</button>
+      <ion-icon @click="playPrev" name="skip-backward"/>
+      <button @click="togglePlay">
+        <ion-icon name="play"/>
+        <ion-icon name="pause"/>
+      </button>
+      <ion-icon @click="playNext" name="skip-forward"/>
+      <button @click="toggleVolume">
+        <ion-icon @click="playNext" name="volume-high"/>
+        <ion-icon @click="playNext" name="volume-off"/>
+      </button>
       <div class="volume-bar">
         <input class="volume-bar__cursor" type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
         <!-- for chrome only : -->
@@ -43,8 +52,12 @@
 </template>
 
 <script>
+  import massiveLogo from './massive-logo.vue'
   export default {
     name: 'massiveplayer',
+    components: {
+      massiveLogo,
+    },
     data() {
       return {
         firstTrack: '',
@@ -187,10 +200,8 @@
           }
         }
         else {
-          var firstId = document.querySelector('.tracks .track:first-child').getAttribute('data-id')
-          if(firstId) {
-            let track = {id_yt: firstId}
-            this.play(track)
+          if(document.querySelector('.tracks .track:first-child')) {
+            document.querySelector('.tracks .track:first-child').click()
           }
         }
       },

@@ -23,7 +23,7 @@ router.get('/', function(req, res) {
     Track
       .find({ style: req.query.currentStyle })
       .sort({timestamp: -1})
-      // .limit(200)
+      .limit(200)
       .exec(function (err, result) {
         if (err) res.send(err)
         res.json(result)
@@ -32,7 +32,7 @@ router.get('/', function(req, res) {
   else {
     Track.find()
       .sort({timestamp: -1})
-      // .limit(200)
+      .limit(200)
       .exec(function (err, result) {
         if (err) res.send(err)
         res.json(result)

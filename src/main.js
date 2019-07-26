@@ -9,7 +9,7 @@ import TrackList from './components/tracklist.vue'
 window.APIURL = config.apiHost
 Vue.config.productionTip = false
 Vue.use(VueRouter)
-Vue.use(VuePlayerPlugin )
+Vue.use(VuePlayerPlugin)
 
 Vue.component('youtube', Player )
 
