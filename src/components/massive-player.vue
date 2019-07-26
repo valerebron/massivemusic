@@ -1,61 +1,81 @@
 <template>
   <main :class="currentState">
-    <header>
-      <massiveLogo />
-    </header>
-    <section class="yt-player">
-      <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
-      <p>player state: {{ currentState }}</p>
-      <p class="yt-player__infos">
-        <b class="current-title">
-          {{ currentTitle }}
-        </b>
-        <span class="current-artist">
-          {{ currentArtist }}
-        </span>
-        <span class="current-style">
-          {{ currentStyle }}
-        </span>
-      </p>
-      <ion-icon @click="playPrev" name="skip-backward"/>
-      <button @click="togglePlay">
-        <ion-icon name="play"/>
-        <ion-icon name="pause"/>
-      </button>
-      <ion-icon @click="playNext" name="skip-forward"/>
-      <button @click="toggleVolume">
-        <ion-icon @click="playNext" name="volume-high"/>
-        <ion-icon @click="playNext" name="volume-off"/>
-      </button>
-      <div class="volume-bar">
-        <input class="volume-bar__cursor" type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
-        <!-- for chrome only : -->
-        <progress class="volume-bar__progress" :value="currentVolume" max="100"></progress>
+    <header class="massive-header">
+      <div class="massive-header__top">
+        <navigation @changeStyleFilter="styleFilter($event)" />
+        <massiveLogo />
+        <button class="massive-search-toggle">
+          <ion-icon name="search"/>
+          <ion-icon name="arrow-dropup"/>
+        </button>
       </div>
-      <div class="playback-bar">
-        <div class="playback-bar__progress-time">
-          {{ currentTime }}
+      <div class="massive-header__bottom">
+        <input class="massive-header__search" type="search" v-model="currentQuery">
+      </div>
+    </header>
+    <section class="massive-player">
+      <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
+      <img class="massive-player__top" :src="'https://i.ytimg.com/vi/'+currentYtid+'/hqdefault.jpg'"/>
+      <div class="massive-player__bottom">
+        <div class="playback-bar">
+          <div class="playback-bar__progress-time">
+            {{ currentTime }}
+          </div>
+          <div class="progress-bar">
+            <progress class="progress-bar__buffer" :value="currentBuffer" max="100"></progress>
+            <input class="progress-bar__cursor" type="range" :value="currentProgress" step="0.125" max="100" @input="seekPlayer"/>
+            <!-- for chrome only : -->
+            <progress class="progress-bar__progress" :value="currentProgress" max="100"></progress>
+          </div>
+          <div class="playback-bar__progress-time">
+            {{ totalTime }}
+          </div>
         </div>
-        <div class="progress-bar">
-          <progress class="progress-bar__buffer" :value="currentBuffer" max="100"></progress>
-          <input class="progress-bar__cursor" type="range" :value="currentProgress" step="0.125" max="100" @input="seekPlayer"/>
-          <!-- for chrome only : -->
-          <progress class="progress-bar__progress" :value="currentProgress" max="100"></progress>
+        <div class="control-bar">
+          <ion-icon name="heart"/>
+          <ion-icon  class="player-prev" @click="playPrev" name="skip-backward"/>
+          <button  class="player-play" @click="togglePlay">
+            <ion-icon name="play"/>
+            <ion-icon name="pause"/>
+          </button>
+          <ion-icon class="player-next" @click="playNext" name="skip-forward"/>
+          <ion-icon name="arrow-dropup"/>
         </div>
-        <div class="playback-bar__progress-time">
-          {{ totalTime }}
+        <p class="player-infos">
+          <b class="current-title">
+            {{ currentTitle }}
+          </b>
+          <span class="current-artist">
+            {{ currentArtist }}
+          </span>
+          <span class="current-style">
+            {{ currentStyle }}
+          </span>
+        </p>
+        <div class="player-volume">
+          <button @click="toggleVolume">
+            <ion-icon @click="playNext" name="volume-high"/>
+            <ion-icon @click="playNext" name="volume-off"/>
+          </button>
+          <div class="volume-bar">
+            <input class="volume-bar__cursor" type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
+            <!-- for chrome only : -->
+            <progress class="volume-bar__progress" :value="currentVolume" max="100"></progress>
+          </div>
         </div>
       </div>
     </section>
-    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay"></router-view>
+    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
   </main>
 </template>
 
 <script>
+  import navigation from './navigation.vue'
   import massiveLogo from './massive-logo.vue'
   export default {
     name: 'massiveplayer',
     components: {
+      navigation,
       massiveLogo,
     },
     data() {
@@ -72,6 +92,7 @@
         currentTitle: '',
         currentArtist: '',
         currentStyle: '',
+        currentQuery: '',
         propRef: '',
         isLoadedPlayer: false,
         isLoadedTracklist: false,
@@ -205,6 +226,14 @@
           }
         }
       },
+      styleFilter(id) {
+        if(this.currentStyle == id) {
+          this.currentStyle = ''
+        }
+        else {
+          this.currentStyle = id
+        }
+      },
       loadFirstTrack() {
         this.playNext()
         this.player.pauseVideo()
@@ -240,78 +269,122 @@
 
 <style lang="scss">
   @import 'scss/main.scss';
-  iframe {
-    display: none;
-  }
-  body, button {
-    background-color: black;
-    color: white;
-  }
-  .yt-player {
-    // position: fixed;
+  .massive-header {
+    position: fixed;
+    top: 0;
+    background-color: rgba(128, 128, 128, 0.418);
     width: 100%;
-    background-color: black;
-  }
-
-  .playback-bar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    &__progress-time {
-      font-size: 12px;
-      color: $third-color;
-    }
-    .progress-bar {
-      flex-grow: 1;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      position: relative;
-      &:hover {
-        .progress-bar__buffer {
-          height: $global-ui-bar-height-hover;
-        }
-      }
-      &__buffer, &__progress {
-        position: absolute;
-        z-index: 0;
-        width: 100%;
-        transition: height 0.3s;
-      }
-      &__cursor {
-        z-index: 10;
-      }
-      &__buffer {
-        $buffer-color: $grey-6;
-        &::-moz-progress-bar {
-          background-color: $buffer-color;
-        }
-        &::-webkit-progress-value {
-          background-color: $buffer-color;
-        }
-      }
-    }
-  }
-
-  .volume-bar {
     display: flex;
     flex-direction: column;
-    position: relative;
-    justify-content: center;
-    
-    &__cursor {
-      position: relative;
-      left: 0;
-      z-index: 10;
-    }
-    &__progress {
-      z-index: 0;
-      position: absolute;
-      left: 0;
+    &__search {
       width: 100%;
-      border: none;
-      outline: none;
+    }
+    &__top {
+      display: flex;
+      justify-content: space-between;
+      align-content: center;
+    }
+    &__bottom {
+      width: 100%;
+      position: relative;
+      top: 0;
+      &.open {
+        top: 40px;
+      }
+    }
+  }
+  .massive-player {
+    z-index: $z-layer-player;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(200, 200, 200, 0.8);
+    iframe {
+      display: none;
+    }
+    &__top {
+      position: fixed;
+      z-index: $z-layer-player;
+      top: 0;
+      height: 0vh;
+      width: 100%;
+      object-fit: cover;
+      &.open {
+        height: 50vh;
+      }
+    }
+    &__bottom {
+      &.open {
+        height: 50vh;
+      }
+    }
+    .control-bar {
+      display: flex;
+      justify-content: space-around;
+    }
+    .playback-bar {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      &__progress-time {
+        font-size: 12px;
+        color: $third-color;
+      }
+      .progress-bar {
+        flex-grow: 1;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+        &:hover {
+          .progress-bar__buffer {
+            height: $global-ui-bar-height-hover;
+          }
+        }
+        &__buffer, &__progress {
+          position: absolute;
+          z-index: 0;
+          width: 100%;
+          transition: height 0.3s;
+        }
+        &__cursor {
+          z-index: 10;
+        }
+        &__buffer {
+          $buffer-color: $grey-6;
+          &::-moz-progress-bar {
+            background-color: $buffer-color;
+          }
+          &::-webkit-progress-value {
+            background-color: $buffer-color;
+          }
+        }
+      }
+    }
+
+    .player-volume {
+      display: none;
+      .volume-bar {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        justify-content: center;
+        
+        &__cursor {
+          position: relative;
+          left: 0;
+          z-index: 10;
+        }
+        &__progress {
+          z-index: 0;
+          position: absolute;
+          left: 0;
+          width: 100%;
+          border: none;
+          outline: none;
+        }
+      }
     }
   }
 </style>

@@ -1,18 +1,16 @@
 <template>
     <section class="tracklist" :class="tracksState">
       <div class="tracklist__header">
-        <styles_selector @changeStyleFilter="styleFilter($event)" />
-        <input class="tracklist__search" type="search" v-model="currentQuery">
         tracks: {{ tracks.length }}
         query: {{ currentQuery }}
         style: {{ currentStyle }}
         tracklist state: {{ tracksState }}
       </div>
       <ul class="tracks">
-        <li class="track" v-for="track in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
-          {{ track.title }}
-          {{ track.artist }}
-          {{ track.style }}
+        <li class="track" v-for="(track,index) in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
+          {{ index + 1 }}
+          <b>{{ track.title }}</b>
+          <p>{{ track.artist }} </p>
         </li>
       </ul>
     </section>
@@ -20,24 +18,19 @@
 
 <script>
   import axios from 'axios'
-  import styles_selector from './styles-selector.vue'
-
   export default {
     name: 'tracklist',
-    components: {
-      styles_selector
-    },
     props: [
       'player',
       'togglePlay',
       'play',
+      'currentStyle',
+      'currentQuery',
     ],
     data() {
       return {
         tracks: {},
         tracksState: '',
-        currentQuery: '',
-        currentStyle: '',
         finishTyping: '',
       }
     },
@@ -77,14 +70,6 @@
             })
         }
       },
-      styleFilter(id) {
-        if(this.currentStyle == id) {
-          this.currentStyle = ''
-        }
-        else {
-          this.currentStyle = id
-        }
-      },
     },
     watch: {
       currentQuery: function() {
@@ -104,9 +89,14 @@
 </script>
 
 <style lang="scss">
+  @import 'scss/main.scss';
   .tracklist {
+    z-index: $z-layer-tracklist;
     &__header {
       color: white;
+    }
+    &_search {
+      z-index: $z-layer-search;
     }
   }
   .tracks {
