@@ -48,9 +48,6 @@
           <span class="current-artist">
             {{ currentArtist }}
           </span>
-          <span class="current-style">
-            {{ currentStyle }}
-          </span>
         </p>
         <div class="player-volume">
           <button @click="toggleVolume">
@@ -362,7 +359,9 @@
         }
       }
     }
-
+    .player-infos {
+      display: none;
+    }
     .player-volume {
       display: none;
       .volume-bar {

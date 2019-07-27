@@ -6,13 +6,16 @@
         style: {{ currentStyle }}
         tracklist state: {{ tracksState }}
       </div>
-      <ul class="tracks">
-        <li class="track" v-for="(track,index) in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
-          {{ index + 1 }}
-          <b>{{ track.title }}</b>
-          <p>{{ track.artist }} </p>
-        </li>
-      </ul>
+      <table class="tracks">
+        <tr class="track" v-for="(track,index) in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
+          <td>{{ index + 1 }}</td>
+          <td>{{ track.title }}</td>
+          <td>{{ track.artist }} </td>
+          <td>
+            <ion-icon name="heart"/>
+          </td>
+        </tr>
+      </table>
     </section>
 </template>
 
@@ -105,6 +108,9 @@
   .track {
     &--playing {
       color: red;
+    }
+    td {
+      vertical-align: top;
     }
   }
 </style>
