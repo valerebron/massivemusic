@@ -1,12 +1,16 @@
 <template>
-  <main :class="currentState">
+  <main :data-player-state="currentState" :class="'state-'+this.$store.state.appState">
     <header class="massive-header">
       <div class="massive-header__top">
         <navigation @changeStyleFilter="styleFilter($event)" />
-        <massiveLogo />
+        <a href="">
+          <massiveLogo class="massive-logo"/>
+        </a>
         <button class="massive-search-toggle">
-          <ion-icon name="search"/>
-          <ion-icon name="arrow-dropup"/>
+          <ion-icon @click="setAppState('4-search')" name="search"/>
+        </button>
+        <button class="massive-search-toggle">
+          <ion-icon @click="setAppState('3-player-open')" name="arrow-dropup"/>
         </button>
       </div>
       <div class="massive-header__bottom">
@@ -39,7 +43,8 @@
             <ion-icon name="pause"/>
           </button>
           <ion-icon class="player-next" @click="playNext" name="skip-forward"/>
-          <ion-icon name="arrow-dropup"/>
+          <ion-icon @click="setAppState('6-player-full')" name="arrow-dropup"/>
+          <ion-icon @click="setAppState('3-player-open')" name="arrow-dropdown"/>
         </div>
         <p class="player-infos">
           <b class="current-title">
@@ -131,6 +136,9 @@
         else {
           return '0:00'
         }
+      },
+      setAppState(state) {
+        this.$store.commit('setAppState', state)
       },
       updatePlayerState() {
         this.currentStateId = this.player.getPlayerState()
@@ -239,6 +247,8 @@
         if(this.isAppReady == false) {
           this.isAppReady = true
           this.loadFirstTrack()
+          this.setAppState('2-init-screen')
+          this.setAppState('3-player-open')
         }
       },
       trackListReady() {
@@ -260,7 +270,7 @@
           this.appReady()
         }
       },
-    },
+    }
   }
 </script>
 
@@ -269,14 +279,16 @@
   .massive-header {
     position: fixed;
     top: 0;
-    background-color: rgba(128, 128, 128, 0.418);
     width: 100%;
+    height: $header-height;
     display: flex;
     flex-direction: column;
     &__search {
       width: 100%;
     }
     &__top {
+      z-index: $z-layer-header;
+      background-color: rgba(128, 128, 128, 0.418);
       display: flex;
       justify-content: space-between;
       align-content: center;
@@ -285,17 +297,32 @@
       width: 100%;
       position: relative;
       top: 0;
-      &.open {
-        top: 40px;
+      transition: top 0.3s;
+      position: relative;
+      height: $search-height;
+      top: -$search-height;
+      z-index: $z-layer-search;
+      opacity: 0;
+      .state-4-search & {
+        top: 0;
+        opacity: 1;
       }
     }
   }
   .massive-player {
     z-index: $z-layer-player;
     position: fixed;
-    bottom: 0;
+    bottom: -$player-height;
+    transition: all .3s;
     width: 100%;
     background-color: rgba(200, 200, 200, 0.8);
+    .state-3-player-open & {
+      bottom: 0;
+    }
+    .state-6-player-full & {
+      height: 100vh;
+      bottom: 0;
+    }
     iframe {
       display: none;
     }
@@ -306,24 +333,32 @@
       height: 0vh;
       width: 100%;
       object-fit: cover;
-      &.open {
+      .state-6-player-full & {
+        position: fixed;
+        width: 100%;
         height: 50vh;
+        top: 0;
       }
     }
     &__bottom {
-      &.open {
+     .state-6-player-full & {
+        position: fixed;
+        width: 100%;
         height: 50vh;
+        bottom: 0;
       }
     }
     .control-bar {
       display: flex;
       justify-content: space-around;
+      height: 40px;;
     }
     .playback-bar {
       display: flex;
       flex-direction: row;
       align-items: center;
       width: 100%;
+      margin-top: -18px;
       &__progress-time {
         font-size: 12px;
         color: $third-color;
@@ -361,6 +396,9 @@
     }
     .player-infos {
       display: none;
+      .state-6-player-full & {
+        display: block;
+      }
     }
     .player-volume {
       display: none;

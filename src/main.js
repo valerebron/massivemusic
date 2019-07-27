@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from '../store/appStateStore'
 import VueRouter from 'vue-router'
 import VuePlayerPlugin, { Player  } from 'vue-youtube-iframe-api'
 
@@ -8,19 +9,21 @@ import TrackList from './components/tracklist.vue'
 
 window.APIURL = config.apiHost
 Vue.config.productionTip = false
+
 Vue.use(VueRouter)
 Vue.use(VuePlayerPlugin)
 
 Vue.component('youtube', Player )
 
+// Routes
 const router = new VueRouter({
   routes: [
     { path: '/', component: TrackList}
   ],
   mode: 'history'
 })
-
 new Vue({
+  store,
   router,
   render: h => h(MassivePlayer),
 }).$mount('.app')

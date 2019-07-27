@@ -1,11 +1,11 @@
 <template>
     <section class="tracklist" :class="tracksState">
-      <div class="tracklist__header">
+      <!-- <div class="tracklist__header">
         tracks: {{ tracks.length }}
         query: {{ currentQuery }}
         style: {{ currentStyle }}
         tracklist state: {{ tracksState }}
-      </div>
+      </div> -->
       <table class="tracks">
         <tr class="track" v-for="(track,index) in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
           <td>{{ index + 1 }}</td>
@@ -94,6 +94,7 @@
 <style lang="scss">
   @import 'scss/main.scss';
   .tracklist {
+    margin-top: $header-height;
     z-index: $z-layer-tracklist;
     &__header {
       color: white;
