@@ -10404,6 +10404,11 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.3.tgz#2756f46cb3258054c5f4723de8ae7e87302a1ccf"
   integrity sha512-KmvZVtmM26BQOMK1rwUZsrqxEGeKiYSZGA7SNWE6uExx8UX/cj9hq2MRV/wWC3Cq6AoeDGk57rL9YMFRel/q+g==
 
+vue-ionicons@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/vue-ionicons/-/vue-ionicons-3.0.4.tgz#06dbb8334def235d9afe7ecb40bb1c01ba99b24d"
+  integrity sha512-tOS0dD7jAa4g8HsaL11JOgOPnog6Eh6IrxJWYVAE6oaXHf8tegidboNSKRxteu8sJ9cunj+az4skSlq0Pivgzg==
+
 vue-loader@^15.7.0:
   version "15.7.0"
   resolved "https://registry.yarnpkg.com/vue-loader/-/vue-loader-15.7.0.tgz#27275aa5a3ef4958c5379c006dd1436ad04b25b3"

@@ -1,23 +1,26 @@
 <template>
   <nav class="massive-nav">
-    <button class="massive-nav__toggle">
-      <ion-icon class="massive-nav__open" @click="setAppState('5-nav')" name="menu"></ion-icon>
-    </button>
-      <button class="massive-nav__toggle">
-      <ion-icon class="massive-nav__close" @click="setAppState('3-player-open')" name="close"></ion-icon>
+    <button class="massive-nav__toggle" @click="toggle('5-nav')">
+      <icon-menu/>
     </button>
     <div class="massive-nav__dialog">
-      <a class="massive-nav__dialog__link" v-for="style in styles" :key="style.id" @mousedown="filterStyle(style.id)">
-        {{ style.id }}
-        {{ style.value }}
+      <router-link :to="style.url" @click="filterStyle(style.id)" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
+        <div class="massive-nav__dialog__link-container">
+          <icon-right/>
+          {{ style.value }}
+        </div>
+      </router-link>
+      <a class="massive-nav__dialog__link" href="#">
+        <div class="massive-nav__dialog__link-container">
+          <icon-star/>
+          Favorites
+        </div>
       </a>
       <a class="massive-nav__dialog__link" href="#">
-        <ion-icon name="heart"/>
-        Favorites
-      </a>
-      <a class="massive-nav__dialog__link" href="#">
-        <ion-icon name="contact"/>
-        login
+        <div class="massive-nav__dialog__link-container">
+          <icon-contact/>
+          login
+        </div>
       </a>
     </div>
   </nav>
@@ -27,6 +30,7 @@
   import axios from 'axios'
   export default {
     name: 'navigation',
+    props: ['toggle'],
     data() {
       return {
         styles: '',
@@ -41,6 +45,7 @@
           })
       },
       filterStyle(id) {
+        console.log('it happens')
         this.$emit('changeStyleFilter', id)
         this.setAppState('3-player-open')
       },
@@ -55,7 +60,6 @@
 </script>
 
 <style lang="scss">
-  @import 'scss/main.scss';
   .massive-nav {
     z-index: $z-layer-nav;
     display: flex;
@@ -64,12 +68,13 @@
       z-index: $z-layer-search;
     }
     &__dialog {
-      background-color: red;
-      padding-top: $header-height;
+      background-color: black;
       display: block;
       position: fixed;
       top: 0;
       left: -100vw;
+      display: flex;
+      justify-content: center;
       .state-5-nav & {
         left: 0;
       }
@@ -82,8 +87,20 @@
         left: 0;
       }
       &__link {
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
         padding: 8px;
         font-size: 20px;
+      }
+      &__link-container {
+        width: 150px;
+        text-align: left;
+        align-items: center;
+        display: flex;
+        .ion {
+          padding-right: 10px;
+        }
       }
     }
   }

@@ -1,7 +1,12 @@
 module.exports = {
   publicPath: './',
   css: {
-    sourceMap: true
+    sourceMap: true,
+    loaderOptions: {
+      sass: {
+        data: '@import "scss/main.scss";'
+      }
+    }
   },
   chainWebpack: config => {
     const svgRule = config.module.rule('svg')

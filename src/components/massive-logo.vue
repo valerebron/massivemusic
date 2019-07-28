@@ -12,10 +12,9 @@ export default {
 </script>
 
 <style lang="scss">
-  @import 'scss/main.scss';
   .massive-logo {
+    position: relative;
     z-index: $z-layer-logo;
-    fill: $primary-color;
     width: 50px;
     padding: 10px;
   }

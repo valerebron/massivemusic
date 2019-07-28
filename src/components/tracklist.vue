@@ -6,13 +6,13 @@
         style: {{ currentStyle }}
         tracklist state: {{ tracksState }}
       </div> -->
-      <table class="tracks">
-        <tr class="track" v-for="(track,index) in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
+      <table class="tracks" @click="setAppState('3-player-open')">
+        <tr :class="'track style-'+track.style" v-for="(track,index) in tracks" @click="play(track)" :data-id="track.id_yt" :key="track.id_yt">
           <td>{{ index + 1 }}</td>
           <td>{{ track.title }}</td>
           <td>{{ track.artist }} </td>
           <td>
-            <ion-icon name="heart"/>
+            <icon-star-outline />
           </td>
         </tr>
       </table>
@@ -29,6 +29,7 @@
       'play',
       'currentStyle',
       'currentQuery',
+      'setAppState',
     ],
     data() {
       return {
@@ -92,7 +93,6 @@
 </script>
 
 <style lang="scss">
-  @import 'scss/main.scss';
   .tracklist {
     margin-top: $header-height;
     z-index: $z-layer-tracklist;
@@ -105,8 +105,12 @@
   }
   .tracks {
     list-style-type: none;
+    .state-4-search & {
+      opacity: 0.3;
+    }
   }
   .track {
+    cursor: default;
     &--playing {
       color: red;
     }

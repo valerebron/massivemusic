@@ -1,7 +1,7 @@
 {
   "bddName": "massivemusic",
   "bddHost": "localhost",
-  "apiHost": "http://localhost:33330",
+  "apiHost": "http://192.168.0.64:33330",
   "bddPort": "27017",
   "bddAdminPort": "34721",
   "apiPort": "33330",

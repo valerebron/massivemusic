@@ -13,9 +13,84 @@ $global-ui-bar-height: 4px;
 $global-ui-bar-height-hover: 6px;
 
 // Colors
-$primary-color: rgb(85, 206, 85);
+$primary-color: rgb(194, 194, 194);
 $secondary-color: rgb(72, 72, 190);
 $third-color: grey;
+
+$dubstep-11: #5e8ac7;
+$drum-12: #577967;
+$dub-13: #ab3129;
+$breakbeat-14: #ecce81;
+$deepbass-15: #d68543;
+$electro-19: #82335c;
+
+.style-11 {
+  color: $dubstep-11;
+}
+.style-12 {
+  color: $drum-12;
+}
+.style-13 {
+  color: $dub-13;
+}
+.style-14 {
+  color: $breakbeat-14;
+}
+.style-15 {
+  color: $deepbass-15;
+}
+.style-19 {
+  color: $electro-19;
+}
+
+.bkg-style-11 {
+  background-color: $dubstep-11;
+}
+.bkg-style-12 {
+  background-color: $drum-12;
+}
+.bkg-style-13 {
+  background-color: $dub-13;
+}
+.bkg-style-14 {
+  background-color: $breakbeat-14;
+}
+.bkg-style-15 {
+  background-color: $deepbass-15;
+}
+.bkg-style-19 {
+  background-color: $electro-19;
+}
+
+%getPrimaryColor {
+  transition: all 0.3s;
+  color: $primary-color;
+  fill: $primary-color;
+  .current-style-11 & {
+    color: $dubstep-11;
+    fill: $dubstep-11;
+  }
+  .current-style-12 & {
+    color: $drum-12;
+    fill: $drum-12;
+  }
+  .current-style-13 & {
+    color: $dub-13;
+    fill: $dub-13;
+  }
+  .current-style-14 & {
+    color: $breakbeat-14;
+    fill: $breakbeat-14;
+  }
+  .current-style-15 & {
+    color: $deepbass-15;
+    fill: $deepbass-15;
+  }
+  .current-style-19 & {
+    color: $electro-19;
+    fill: $electro-19;
+  }
+}
 
 $grey-0: #404040;
 $grey-1: #505050;
@@ -25,13 +100,8 @@ $grey-4: #808080;
 $grey-5: #909090;
 $grey-6: #A0A0A0;
 
-$green-0: #034110;
-$green-1: #5f0101;
-$green-2: #031963;
-$green-3: #5d0872;
-$green-4: #c9da35;
-$green-5: #be4b72;
-$green-6: rgb(7, 153, 26);
+$header-bkg: transparent;
+$ui-bkg: rgba(0, 0, 0, 0.75);
 
 // sizes
 $header-height: 75px;

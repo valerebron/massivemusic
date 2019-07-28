@@ -1,4 +1,7 @@
 button {
   border: none;
-  background-color: transparent;
+  cursor: pointer;
+  border-radius: 45px;
+  background-color: rgb(27, 18, 18);
+  @extend %getPrimaryColor;
 }

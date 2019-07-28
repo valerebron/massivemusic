@@ -1,20 +1,20 @@
 <template>
-  <main :data-player-state="currentState" :class="'state-'+this.$store.state.appState">
+  <main :data-player-state="currentState" :class="'state-'+this.$store.state.appState+' current-style-'+currentStyle">
     <header class="massive-header">
       <div class="massive-header__top">
-        <navigation @changeStyleFilter="styleFilter($event)" />
-        <a href="">
+        <navigation @changeStyleFilter="styleFilter($event)" :toggle="toggle" />
+        <router-link to="/" tag="button">
           <massiveLogo class="massive-logo"/>
-        </a>
-        <button class="massive-search-toggle">
-          <ion-icon @click="setAppState('4-search')" name="search"/>
-        </button>
-        <button class="massive-search-toggle">
-          <ion-icon @click="setAppState('3-player-open')" name="arrow-dropup"/>
+        </router-link>
+        <button class="massive-search-toggle" @click="toggle('4-search')">
+          <icon-search/>
         </button>
       </div>
       <div class="massive-header__bottom">
-        <input class="massive-header__search" type="search" v-model="currentQuery">
+        <input class="massive-header__search" type="search" v-model="currentQuery" @keyup.enter="blurSearch($event)"/>
+        <i class="massive-header__search-reset" @click="resetSearch($event)">
+          <icon-close/>
+        </i>
       </div>
     </header>
     <section class="massive-player">
@@ -36,15 +36,22 @@
           </div>
         </div>
         <div class="control-bar">
-          <ion-icon name="heart"/>
-          <ion-icon  class="player-prev" @click="playPrev" name="skip-backward"/>
-          <button  class="player-play" @click="togglePlay">
-            <ion-icon name="play"/>
-            <ion-icon name="pause"/>
+          <button  class="player-play">
+            <icon-star/>
           </button>
-          <ion-icon class="player-next" @click="playNext" name="skip-forward"/>
-          <ion-icon @click="setAppState('6-player-full')" name="arrow-dropup"/>
-          <ion-icon @click="setAppState('3-player-open')" name="arrow-dropdown"/>
+          <button  class="player-prev" @click="playPrev">
+            <icon-prev/>
+          </button>
+          <button  class="player-play" @click="togglePlay">
+            <icon-play/>
+            <icon-pause/>
+          </button>
+          <button  class="player-next" @click="playNext">
+            <icon-next/>
+          </button>
+          <button  class="player-up" @click="toggle('6-player-full')">
+            <icon-up/>
+          </button>
         </div>
         <p class="player-infos">
           <b class="current-title">
@@ -56,8 +63,8 @@
         </p>
         <div class="player-volume">
           <button @click="toggleVolume">
-            <ion-icon @click="playNext" name="volume-high"/>
-            <ion-icon @click="playNext" name="volume-off"/>
+            <icon-volume-high/>
+            <icon-volume-off/>
           </button>
           <div class="volume-bar">
             <input class="volume-bar__cursor" type="range" max="100" :value="currentVolume" @input="updatePlayerVolume"/>
@@ -67,7 +74,7 @@
         </div>
       </div>
     </section>
-    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
+    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :setAppState="setAppState" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
   </main>
 </template>
 
@@ -239,6 +246,30 @@
           this.currentStyle = id
         }
       },
+      toggle(toggleState) {
+        if(this.$store.state.appState == toggleState) {
+          this.setAppState('3-player-open')
+        }
+        else {
+          this.setAppState(toggleState)
+          if(this.$store.state.appState == '4-search') {
+            document.querySelector('.massive-header__search').focus()
+          }
+        }
+      },
+      blurSearch($event){
+        $event.target.blur()
+        this.setAppState('3-player-open')
+      },
+      resetSearch() {
+        this.currentQuery = ''
+        document.querySelector('.massive-header__search').focus()
+      },
+      resetApp() {
+        this.currentQuery = ''
+        this.currentStyle = ''
+        this.setAppState('3-player-open')
+      },
       loadFirstTrack() {
         this.playNext()
         this.player.pauseVideo()
@@ -275,36 +306,50 @@
 </script>
 
 <style lang="scss">
-  @import 'scss/main.scss';
   .massive-header {
     position: fixed;
+    z-index: $z-layer-header;
     top: 0;
     width: 100%;
     height: $header-height;
     display: flex;
     flex-direction: column;
     &__search {
-      width: 100%;
+      width: 80%;
+      font-size: 24px;
+      height: $search-height;
+      border: none;
+      background-color: rgb(43, 43, 43);
+      padding: 16px;
+      margin: 0 16px;
+      font-size: 18px;
+      color: white;
+    }
+    &__search-reset {
+      position: relative;
+      right: 45px;
+      cursor: pointer;
     }
     &__top {
       z-index: $z-layer-header;
-      background-color: rgba(128, 128, 128, 0.418);
+      background-color: $header-bkg;
       display: flex;
       justify-content: space-between;
       align-content: center;
     }
     &__bottom {
+      text-align: center;
       width: 100%;
       position: relative;
       top: 0;
-      transition: top 0.3s;
+      transition: all 0.3s;
       position: relative;
       height: $search-height;
       top: -$search-height;
       z-index: $z-layer-search;
       opacity: 0;
       .state-4-search & {
-        top: 0;
+        top: calc(20vh);
         opacity: 1;
       }
     }
@@ -312,10 +357,11 @@
   .massive-player {
     z-index: $z-layer-player;
     position: fixed;
-    bottom: -$player-height;
+    bottom: -$player-height+10;
     transition: all .3s;
     width: 100%;
-    background-color: rgba(200, 200, 200, 0.8);
+    background-color: $ui-bkg;
+    transition: 0.3s all;
     .state-3-player-open & {
       bottom: 0;
     }
@@ -358,10 +404,11 @@
       flex-direction: row;
       align-items: center;
       width: 100%;
-      margin-top: -18px;
+      margin-top: -20px;
       &__progress-time {
         font-size: 12px;
         color: $third-color;
+        padding: 0 8px;
       }
       .progress-bar {
         flex-grow: 1;
