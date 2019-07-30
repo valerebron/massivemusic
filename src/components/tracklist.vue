@@ -30,6 +30,7 @@
       'currentStyle',
       'currentQuery',
       'setAppState',
+      'appStyle',
     ],
     data() {
       return {
@@ -46,7 +47,7 @@
           axios
             .get(window.APIURL+'/tracks', {
               params: {
-                currentStyle: this.currentStyle
+                appStyle: this.appStyle
               }
             })
             .then((res) => {
@@ -65,7 +66,7 @@
           axios
             .get(window.APIURL+'/tracks/s/'+this.currentQuery, {
               params: {
-                currentStyle: this.currentStyle
+                appStyle: this.appStyle
               }
             })
             .then((res) => {
@@ -82,8 +83,10 @@
           this.search()
         }, 500)
       },
-      currentStyle: function() {
+      appStyle: function() {
+        this.$store.commit('setAppStyle', this.appStyle)
         this.search()
+        this.setAppState('3-player-open')
       },
     },
     mounted: function() {

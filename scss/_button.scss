@@ -2,6 +2,9 @@ button {
   border: none;
   cursor: pointer;
   border-radius: 45px;
-  background-color: rgb(27, 18, 18);
-  @extend %getPrimaryColor;
+  background-color: $secondary-color;
+  @extend %appStyleColor;
+  .massive-player & {
+    @extend %currentStyleColor;
+  }
 }

@@ -6,10 +6,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
 	state: {
     appState: '1-loading',
+    appStyle: '',
 	},
 	mutations: {
 		setAppState(state, newState) {
       state.appState = newState
+    },
+    setAppStyle(state, newStyle) {
+      state.appStyle = newStyle
     },
   },
 })

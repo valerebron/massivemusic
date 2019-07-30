@@ -19,9 +19,9 @@ let Track = mongoose.model('Track', trackSchema)
 
 // Get All
 router.get('/', function(req, res) {
-  if(req.query.currentStyle != '') {
+  if(req.query.appStyle != '') {
     Track
-      .find({ style: req.query.currentStyle })
+      .find({ style: req.query.appStyle })
       .sort({timestamp: -1})
       .limit(200)
       .exec(function (err, result) {
@@ -42,9 +42,9 @@ router.get('/', function(req, res) {
 
 // Search
 router.get('/s/:query', function(req, res) {
-  if(req.query.currentStyle != '') {
+  if(req.query.appStyle != '') {
     Track
-      .find({ $text: { $search: req.params.query }, style: req.query.currentStyle })
+      .find({ $text: { $search: req.params.query }, style: req.query.appStyle })
       .exec(function(err, result) {
         if (err) res.send(err)
         res.json(result)

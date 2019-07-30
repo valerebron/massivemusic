@@ -9,16 +9,11 @@ progress {
   &:hover {
     height: $global-ui-bar-height-hover;
     &::-moz-progress-bar {
-      background-color: $primary-color;
+      @extend %currentStyleBkgColor;
     }
     &::-webkit-progress-value {
-      background-color: $primary-color;
+      @extend %currentStyleBkgColor;
     }
-  }
-
-  @mixin progress-bar {
-    transition: background-color .3s;
-    background-color: $third-color;
   }
   
   // this is not the bar, it's the all progress element :
@@ -27,10 +22,59 @@ progress {
   }
 
   &::-moz-progress-bar {
-    @include progress-bar;
+    @extend %currentStyleBkgColor;
   }
 
   &::-webkit-progress-value {
-    @include progress-bar;
+    @extend %currentStyleBkgColor;
+  }
+  
+  .current-style-11 & {
+    &::-moz-progress-bar {
+      background-color: $color-11;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-11;
+    }
+  }
+  .current-style-12 & {
+    &::-moz-progress-bar {
+      background-color: $color-12;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-12;
+    }
+  }
+  .current-style-13 & {
+    &::-moz-progress-bar {
+      background-color: $color-13;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-13;
+    }
+  }
+  .current-style-14 & {
+    &::-moz-progress-bar {
+      background-color: $color-14;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-14;
+    }
+  }
+  .current-style-15 & {
+    &::-moz-progress-bar {
+      background-color: $color-15;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-15;
+    }
+  }
+  .current-style-19 & {
+    &::-moz-progress-bar {
+      background-color: $color-19;
+    }
+    &::-webkit-progress-value {
+      background-color: $color-19;
+    }
   }
 }

@@ -4,7 +4,7 @@
       <icon-menu/>
     </button>
     <div class="massive-nav__dialog">
-      <router-link :to="style.url" @click="filterStyle(style.id)" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
+      <router-link :to="style.url" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
         <div class="massive-nav__dialog__link-container">
           <icon-right/>
           {{ style.value }}
@@ -43,14 +43,6 @@
           .then((res) => {
             this.styles = res.data
           })
-      },
-      filterStyle(id) {
-        console.log('it happens')
-        this.$emit('changeStyleFilter', id)
-        this.setAppState('3-player-open')
-      },
-      setAppState(state) {
-        this.$store.commit('setAppState', state)
       },
     },
     mounted: function(){

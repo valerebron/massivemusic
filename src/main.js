@@ -50,13 +50,13 @@ Vue.component('youtube', Player )
 // Routes
 const router = new VueRouter({
   routes: [
-    { name: 'Home', path: '/', component: TrackList, props: { currentStyle: '' }},
-    { name: 'Dubstep', path: '/dubstep', component: TrackList, props: { currentStyle: 11 }},
-    { name: 'Drum & Bass', path: '/drumandbass', component: TrackList, props: { currentStyle: 12 }},
-    { name: 'Dub', path: '/dub', component: TrackList, props: { currentStyle: 13 }},
-    { name: 'Breakbeat', path: '/breakbeat', component: TrackList, props: { currentStyle: 14 }},
-    { name: 'Deepbass', path: '/deepbass', component: TrackList, props: { currentStyle: 15 }},
-    { name: 'Electro', path: '/electro', component: TrackList, props: { currentStyle: 19 }},
+    { name: 'Home', path: '/', component: TrackList, props: { appStyle: '' }},
+    { name: 'Dubstep', path: '/dubstep', component: TrackList, props: { appStyle: 11, appState: '3-player-open' }},
+    { name: 'Drum & Bass', path: '/drumandbass', component: TrackList, props: { appStyle: 12 }},
+    { name: 'Dub', path: '/dub', component: TrackList, props: { appStyle: 13 }},
+    { name: 'Breakbeat', path: '/breakbeat', component: TrackList, props: { appStyle: 14 }},
+    { name: 'Deepbass', path: '/deepbass', component: TrackList, props: { appStyle: 15 }},
+    { name: 'Electro', path: '/electro', component: TrackList, props: { appStyle: 19 }},
   ],
   mode: 'history'
 })

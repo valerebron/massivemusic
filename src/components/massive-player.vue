@@ -1,8 +1,8 @@
 <template>
-  <main :data-player-state="currentState" :class="'state-'+this.$store.state.appState+' current-style-'+currentStyle">
+  <main :data-player-state="currentState" :class="'state-'+this.$store.state.appState+' current-style-'+currentStyle+' app-style-'+this.$store.state.appStyle">
     <header class="massive-header">
       <div class="massive-header__top">
-        <navigation @changeStyleFilter="styleFilter($event)" :toggle="toggle" />
+        <navigation :toggle="toggle" />
         <router-link to="/" tag="button">
           <massiveLogo class="massive-logo"/>
         </router-link>
@@ -11,15 +11,17 @@
         </button>
       </div>
       <div class="massive-header__bottom">
-        <input class="massive-header__search" type="search" v-model="currentQuery" @keyup.enter="blurSearch($event)"/>
+        <input class="massive-header__search" type="search" v-model="currentQuery" @keyup.enter.escape="blurSearch($event)"/>
         <i class="massive-header__search-reset" @click="resetSearch($event)">
           <icon-close/>
         </i>
       </div>
     </header>
     <section class="massive-player">
-      <youtube :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
-      <img class="massive-player__top" :src="'https://i.ytimg.com/vi/'+currentYtid+'/hqdefault.jpg'"/>
+      <div class="massive-player__top">
+        <img class="massive-player__top cover-image" :src="'https://i.ytimg.com/vi/'+currentYtid+'/hqdefault.jpg'" @click="togglePlay"/>
+        <youtube :fitParent="true" :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
+      </div>
       <div class="massive-player__bottom">
         <div class="playback-bar">
           <div class="playback-bar__progress-time">
@@ -90,7 +92,7 @@
     data() {
       return {
         firstTrack: '',
-        playerVars: {height: '0'},
+        playerVars: {height: '0', controls: '0', showinfo: '0', rel: '0'},
         totalTime: 0,
         currentTime: 0,
         currentStateId: 0,
@@ -238,20 +240,13 @@
           }
         }
       },
-      styleFilter(id) {
-        if(this.currentStyle == id) {
-          this.currentStyle = ''
-        }
-        else {
-          this.currentStyle = id
-        }
-      },
       toggle(toggleState) {
         if(this.$store.state.appState == toggleState) {
           this.setAppState('3-player-open')
         }
         else {
           this.setAppState(toggleState)
+          // special action for toggle to search state
           if(this.$store.state.appState == '4-search') {
             document.querySelector('.massive-header__search').focus()
           }
@@ -301,7 +296,7 @@
           this.appReady()
         }
       },
-    }
+    },
   }
 </script>
 
@@ -370,7 +365,13 @@
       bottom: 0;
     }
     iframe {
-      display: none;
+      width: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: all 0.3s;
+      .state-6-player-full & {
+        opacity: 1;
+      }
     }
     &__top {
       position: fixed;
@@ -378,20 +379,31 @@
       top: 0;
       height: 0vh;
       width: 100%;
-      object-fit: cover;
+      object-fit: contain;
+      background: black;
       .state-6-player-full & {
         position: fixed;
         width: 100%;
         height: 50vh;
         top: 0;
       }
+      &.cover-image {
+        opacity: 0;
+        transition: opacity 1s;
+        main[data-player-state="paused"] & {
+          transition: opacity 0s;
+          opacity: 1;
+        }
+      }
     }
     &__bottom {
+      z-index: $z-layer-player;
      .state-6-player-full & {
         position: fixed;
         width: 100%;
         height: 50vh;
         bottom: 0;
+        background-color: black;
       }
     }
     .control-bar {
