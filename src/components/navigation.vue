@@ -5,9 +5,12 @@
     </button>
     <div class="massive-nav__dialog">
       <router-link :to="style.url" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
-        <div class="massive-nav__dialog__link-container">
-          <icon-right/>
-          {{ style.value }}
+        <div class="massive-nav__dialog__link-container massive-nav__dialog__link-container--style">
+          <icon-radio-on class="icon-radio-on" />
+          <icon-radio-off class="icon-radio-off" />
+          <span class="massive-nav__dialog__text">
+            {{ style.value }}
+          </span>
         </div>
       </router-link>
       <a class="massive-nav__dialog__link" href="#">
@@ -84,6 +87,27 @@
         cursor: pointer;
         padding: 8px;
         font-size: 20px;
+        .icon-radio-off {
+          transition: opacity 0.3s;
+          opacity: 1;
+        }
+        .icon-radio-on {
+          transition: opacity 0.3s;
+          opacity: 0;
+        }
+        &:hover {
+          background-color: $color-selection;
+        }
+        &.router-link-active, &:hover {
+          .icon-radio-off {
+            transition: opacity 0.3s;
+            opacity: 0;
+          }
+          .icon-radio-on {
+            transition: opacity 0.3s;
+            opacity: 1;
+          }
+        }
       }
       &__link-container {
         width: 150px;
@@ -92,6 +116,17 @@
         display: flex;
         .ion {
           padding-right: 10px;
+          height: 100%;
+        }
+        &--style {
+          position: relative;
+          .ion {
+            position: absolute;
+            width: 14px;
+          }
+          .massive-nav__dialog__text {
+            padding-left: 30px;
+          }
         }
       }
     }

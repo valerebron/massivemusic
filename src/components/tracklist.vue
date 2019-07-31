@@ -54,6 +54,7 @@
               this.tracks = res.data
               this.tracksState = ''
               this.currentQuery = ''
+              this.$store.commit('setAppTracks', this.tracks)
               let self = this
               setTimeout(function(){
                 self.$emit('trackListReady')
@@ -72,6 +73,7 @@
             .then((res) => {
               this.tracks = res.data
               this.tracksState = ''
+              this.$store.commit('setAppTracks', this.tracks)
             })
         }
       },
@@ -90,6 +92,7 @@
       },
     },
     mounted: function() {
+      this.$store.commit('setAppStyle', this.appStyle)
       this.search()
     },
   }
@@ -115,7 +118,7 @@
   .track {
     cursor: default;
     &--playing {
-      color: red;
+      background-color: $color-selection;
     }
     td {
       vertical-align: top;

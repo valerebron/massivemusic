@@ -7,6 +7,7 @@ export default new Vuex.Store({
 	state: {
     appState: '1-loading',
     appStyle: '',
+    appTracks: {},
 	},
 	mutations: {
 		setAppState(state, newState) {
@@ -14,6 +15,14 @@ export default new Vuex.Store({
     },
     setAppStyle(state, newStyle) {
       state.appStyle = newStyle
+    },
+    setAppTracks(state, newTracks) {
+      state.appTracks = newTracks
+    },
+  },
+  getters: {
+    getTrackById: (state) => (id) => {
+      return state.appTracks.find(track => track.id_yt === id)
     },
   },
 })

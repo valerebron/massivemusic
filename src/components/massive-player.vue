@@ -76,7 +76,7 @@
         </div>
       </div>
     </section>
-    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :setAppState="setAppState" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
+    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :setAppState="setAppState" :appStyle="appStyle" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
   </main>
 </template>
 
@@ -108,6 +108,7 @@
         isLoadedPlayer: false,
         isLoadedTracklist: false,
         isAppReady: false,
+        appStyle: '',
       }
     },
     computed: {
@@ -217,8 +218,8 @@
           if(currentTrack.previousSibling) {
             let prevId = currentTrack.previousSibling.getAttribute('data-id')
             if(prevId) {
-              currentTrack.previousSibling.click()
-              // this.play(prevId)
+              let prevTrack = this.$store.getters.getTrackById(prevId)
+              this.play(prevTrack)
             }
           }
         }
@@ -229,14 +230,18 @@
           if(currentTrack.nextSibling) {
             let nextId = currentTrack.nextSibling.getAttribute('data-id')
             if(nextId) {
-              currentTrack.nextSibling.click()
-              // this.play(nextId)
+              let nextTrack = this.$store.getters.getTrackById(nextId)
+              this.play(nextTrack)
             }
           }
         }
         else {
           if(document.querySelector('.tracks .track:first-child')) {
-            document.querySelector('.tracks .track:first-child').click()
+            let firstId = document.querySelector('.tracks .track:first-child').getAttribute('data-id')
+            if(firstId) {
+              let firstTrack = this.$store.getters.getTrackById(firstId)
+              this.play(firstTrack)
+            }
           }
         }
       },
@@ -273,7 +278,7 @@
         if(this.isAppReady == false) {
           this.isAppReady = true
           this.loadFirstTrack()
-          this.setAppState('2-init-screen')
+          // this.setAppState('2-init-screen')
           this.setAppState('3-player-open')
         }
       },

@@ -14,8 +14,10 @@ import iconUp from 'vue-ionicons/dist/md-arrow-dropup.vue'
 Vue.component('icon-up', iconUp)
 import iconDown from 'vue-ionicons/dist/md-arrow-dropdown.vue'
 Vue.component('icon-down', iconDown)
-import iconRight from 'vue-ionicons/dist/md-arrow-dropright.vue'
-Vue.component('icon-right', iconRight)
+import iconRadioOn from 'vue-ionicons/dist/md-radio-button-on.vue'
+Vue.component('icon-radio-on', iconRadioOn)
+import iconRadioOff from 'vue-ionicons/dist/md-radio-button-off.vue'
+Vue.component('icon-radio-off', iconRadioOff)
 import iconStar from 'vue-ionicons/dist/md-star.vue'
 Vue.component('icon-star', iconStar)
 import iconStarOutline from 'vue-ionicons/dist/md-star-outline.vue'
