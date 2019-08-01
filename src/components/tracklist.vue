@@ -100,7 +100,7 @@
 
 <style lang="scss">
   .tracklist {
-    margin-top: $header-height;
+    margin-top: $header-height+40px;
     z-index: $z-layer-tracklist;
     &__header {
       color: white;
@@ -111,6 +111,7 @@
   }
   .tracks {
     list-style-type: none;
+    width: 100%;
     .state-4-search & {
       opacity: 0.3;
     }

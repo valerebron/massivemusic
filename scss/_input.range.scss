@@ -87,6 +87,73 @@ input[type=range] {
     @include input-range-pointer;
     margin-top: -2px;
   }
+  // thumb
+  .current-style-11 & {
+    &::-moz-range-thumb {
+      background-color: $color-11;
+    }
+    &::-webkit-slider-thumb {
+      background-color: $color-11;
+    }
+    &::-ms-thumb {
+      background-color: $color-11;
+    }
+  }
+  .current-style-12 & {
+    &::-moz-range-thumb {
+      background-color: $color-12;
+    }
+    &::-webkit-slider-thumb {
+      background-color: $color-12;
+    }
+    &::-ms-thumb {
+      background-color: $color-12;
+    }
+  }
+  .current-style-13 & {
+    &::-moz-range-thumb {
+      background-color: $color-13;
+    }
+    &::-webkit-slider-thumb {
+      background-color: $color-13;
+    }
+    &::-ms-thumb {
+      background-color: $color-13;
+    }
+  }
+  .current-style-14 & {
+    &::-moz-range-thumb {
+      background-color: $color-14;
+    }
+    &::-webkit-slider-thumb {
+      background-color: $color-14;
+    }
+    &::-ms-thumb {
+      background-color: $color-14;
+    }
+  }
+  .current-style-15 & {
+    &::-moz-range-thumb {
+      background-color: $color-15;
+    }
+    &::-webkit-slider-thumb {
+      background-color: $color-15;
+    }
+    &::-ms-thumb {
+      background-color: $color-15;
+    }
+  }
+  .current-style-19 & {
+    &::-moz-range-thumb {
+      background-color: $color-19;
+    }
+    &::-webkit-slider-thumb {
+      background-color: $color-19;
+    }
+    &::-ms-thumb {
+      background-color: $color-19;
+    }
+  }
   &:hover {
     &::-webkit-slider-runnable-track {
       @include input-range-bar-hover;

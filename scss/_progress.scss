@@ -78,3 +78,11 @@ progress {
     }
   }
 }
+
+.progress-bar {
+  &:hover {
+    progress {
+      height: $global-ui-bar-height-hover;
+    }
+  }
+}

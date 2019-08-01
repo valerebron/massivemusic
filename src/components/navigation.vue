@@ -1,7 +1,7 @@
 <template>
   <nav class="massive-nav">
     <button class="massive-nav__toggle" @click="toggle('5-nav')">
-      <icon-menu/>
+      <icon-burger-close/>
     </button>
     <div class="massive-nav__dialog">
       <router-link :to="style.url" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
@@ -30,9 +30,13 @@
 </template>
 
 <script>
+  import iconBurgerClose from './icon-burger-close.vue'
   import axios from 'axios'
   export default {
     name: 'navigation',
+    components: {
+      iconBurgerClose,
+    },
     props: ['toggle'],
     data() {
       return {
@@ -100,11 +104,11 @@
         }
         &.router-link-active, &:hover {
           .icon-radio-off {
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
             opacity: 0;
           }
           .icon-radio-on {
-            transition: opacity 0.3s;
+            transition: opacity 0.2s;
             opacity: 1;
           }
         }

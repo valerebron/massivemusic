@@ -1,8 +1,9 @@
 button {
   border: none;
+  // border: 1px red solid;
+  background-color: transparent;
   cursor: pointer;
-  border-radius: 45px;
-  background-color: $secondary-color;
+  padding: 18px;
   @extend %appStyleColor;
   .massive-player & {
     @extend %currentStyleColor;

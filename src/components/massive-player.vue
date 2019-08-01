@@ -4,10 +4,10 @@
       <div class="massive-header__top">
         <navigation :toggle="toggle" />
         <router-link to="/" tag="button">
-          <massiveLogo class="massive-logo"/>
+          <massive-logo/>
         </router-link>
         <button class="massive-search-toggle" @click="toggle('4-search')">
-          <icon-search/>
+          <icon-search-close />
         </button>
       </div>
       <div class="massive-header__bottom">
@@ -37,28 +37,11 @@
             {{ totalTime }}
           </div>
         </div>
-        <div class="control-bar">
-          <button  class="player-play">
-            <icon-star/>
-          </button>
-          <button  class="player-prev" @click="playPrev">
-            <icon-prev/>
-          </button>
-          <button  class="player-play" @click="togglePlay">
-            <icon-play/>
-            <icon-pause/>
-          </button>
-          <button  class="player-next" @click="playNext">
-            <icon-next/>
-          </button>
-          <button  class="player-up" @click="toggle('6-player-full')">
-            <icon-up/>
-          </button>
-        </div>
         <p class="player-infos">
           <b class="current-title">
             {{ currentTitle }}
           </b>
+          -
           <span class="current-artist">
             {{ currentArtist }}
           </span>
@@ -74,6 +57,23 @@
             <progress class="volume-bar__progress" :value="currentVolume" max="100"></progress>
           </div>
         </div>
+        <div class="control-bar">
+          <button  class="player-star">
+            <icon-star/>
+          </button>
+          <button  class="player-prev" @click="playPrev">
+            <icon-prev/>
+          </button>
+          <button class="player-play" @click="togglePlay">
+            <icon-play-pause/>
+          </button>
+          <button  class="player-next" @click="playNext">
+            <icon-next/>
+          </button>
+          <button  class="player-up" @click="toggle('6-player-full')">
+            <icon-up-down/>
+          </button>
+        </div>
       </div>
     </section>
     <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :setAppState="setAppState" :appStyle="appStyle" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
@@ -83,11 +83,17 @@
 <script>
   import navigation from './navigation.vue'
   import massiveLogo from './massive-logo.vue'
+  import iconPlayPause from './icon-play-pause.vue'
+  import iconUpDown from './icon-up-down.vue'
+  import iconSearchClose from './icon-search-close.vue'
   export default {
     name: 'massiveplayer',
     components: {
       navigation,
       massiveLogo,
+      iconPlayPause,
+      iconUpDown,
+      iconSearchClose,
     },
     data() {
       return {
@@ -265,11 +271,6 @@
         this.currentQuery = ''
         document.querySelector('.massive-header__search').focus()
       },
-      resetApp() {
-        this.currentQuery = ''
-        this.currentStyle = ''
-        this.setAppState('3-player-open')
-      },
       loadFirstTrack() {
         this.playNext()
         this.player.pauseVideo()
@@ -302,6 +303,13 @@
         }
       },
     },
+    watch: {
+      $route: function(to) {
+        if(to.name == 'Home') {
+          this.currentQuery = ''
+        }
+      },
+    },
   }
 </script>
 
@@ -314,20 +322,22 @@
     height: $header-height;
     display: flex;
     flex-direction: column;
+    background: linear-gradient(black, transparent);
     &__search {
       width: 80%;
       font-size: 24px;
       height: $search-height;
       border: none;
-      background-color: rgb(43, 43, 43);
+      @extend %appStyleBkgColor;
       padding: 16px;
       margin: 0 16px;
       font-size: 18px;
-      color: white;
+      color: black;
     }
     &__search-reset {
       position: relative;
       right: 45px;
+      color: black;
       cursor: pointer;
     }
     &__top {
@@ -360,7 +370,7 @@
     bottom: -$player-height+10;
     transition: all .3s;
     width: 100%;
-    background-color: $ui-bkg;
+    background: linear-gradient(transparent, black);
     transition: 0.3s all;
     .state-3-player-open & {
       bottom: 0;
@@ -371,6 +381,7 @@
     }
     iframe {
       width: 100%;
+      height: 100%;
       pointer-events: none;
       opacity: 0;
       transition: all 0.3s;
@@ -403,6 +414,9 @@
     }
     &__bottom {
       z-index: $z-layer-player;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
      .state-6-player-full & {
         position: fixed;
         width: 100%;
@@ -414,7 +428,25 @@
     .control-bar {
       display: flex;
       justify-content: space-around;
-      height: 40px;;
+      align-items: center;
+      height: $player-height;
+    }
+    .player-next, .player-prev {
+      width: 0;
+      height: 0;
+      padding: 0;
+      // border: none;
+      svg {
+        width: 0;
+      }
+      .state-6-player-full & {
+        width: 44px;
+        height: 44px;
+        border: auto;
+        svg {
+          width: auto;
+        }
+      }
     }
     .playback-bar {
       display: flex;
@@ -424,7 +456,8 @@
       margin-top: -20px;
       &__progress-time {
         font-size: 12px;
-        color: $third-color;
+        color: white;
+        text-shadow: 1px 1px black;
         padding: 0 8px;
       }
       .progress-bar {
@@ -459,9 +492,12 @@
       }
     }
     .player-infos {
-      display: none;
-      .state-6-player-full & {
-        display: block;
+      margin: 0;
+      text-align: center;
+      overflow: hidden;
+      transition: height .3s;
+      .state-5-nav &, .state-4-search & {
+        height: 0px;
       }
     }
     .player-volume {
