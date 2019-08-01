@@ -39,14 +39,24 @@
 
 <style lang="scss">
   .content-loader {
-    position: fixed;
-    top: calc(50vh - 44px);
-    left: calc(50vw - 44px);
     pointer-events: none;
     transition: .1s opacity;
     opacity: 0;
+    .tracklist & {
+      position: fixed;
+      top: calc(50vh - 44px);
+      left: calc(50vw - 44px);
+    }
+    .control-bar & {
+      position: absolute;
+      bottom: 23px;
+      left: calc(50vw - 34px);
+    }
     .loading & {
         opacity: 1;
+    }
+    [data-player-state="buffering"] .control-bar & {
+      opacity: 1;
     }
   }
 </style>

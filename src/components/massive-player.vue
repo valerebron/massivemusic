@@ -70,6 +70,7 @@
           </button>
           <button class="player-play" @click="togglePlay">
             <icon-play-pause/>
+            <loader />
           </button>
           <button  class="player-next" @click="playNext">
             <icon-next/>
@@ -90,6 +91,7 @@
   import iconPlayPause from './icon-play-pause.vue'
   import iconUpDown from './icon-up-down.vue'
   import iconSearchClose from './icon-search-close.vue'
+  import loader from '../assets/loader.vue'
   export default {
     name: 'massiveplayer',
     components: {
@@ -98,6 +100,7 @@
       iconPlayPause,
       iconUpDown,
       iconSearchClose,
+      loader,
     },
     data() {
       return {
