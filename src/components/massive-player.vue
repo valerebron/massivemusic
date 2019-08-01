@@ -310,6 +310,23 @@
         }
       },
     },
+    mounted: function() {
+      // App keyboard aliases
+      let self = this
+      window.onkeydown = function(e) {
+        switch(e.key) {
+          case 'MediaPlayPause':
+            self.togglePlay()
+          break
+          case 'MediaTrackNext':
+            self.playNext()
+          break
+          case 'MediaTrackPrevious':
+            self.playPrev()
+          break
+        }
+      }
+    },
   }
 </script>
 

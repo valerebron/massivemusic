@@ -11,7 +11,7 @@
           <td>{{ index + 1 }}</td>
           <td>{{ track.title }}</td>
           <td>{{ track.artist }} </td>
-          <td>
+          <td @click="setFavorite(track)">
             <icon-star-outline />
           </td>
         </tr>
@@ -76,6 +76,11 @@
               this.$store.commit('setAppTracks', this.tracks)
             })
         }
+      },
+      setFavorite(track) {
+        let trackString = JSON.strongify(track.serialize())
+        localStorage.setItem('test', trackString);
+        console.log(trackString)
       },
     },
     watch: {

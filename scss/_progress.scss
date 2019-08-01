@@ -8,12 +8,12 @@ progress {
   background-color: transparent;
   &:hover {
     height: $global-ui-bar-height-hover;
-    &::-moz-progress-bar {
-      @extend %currentStyleBkgColor;
-    }
-    &::-webkit-progress-value {
-      @extend %currentStyleBkgColor;
-    }
+    // &::-moz-progress-bar {
+    //   @extend %currentStyleBkgColor;
+    // }
+    // &::-webkit-progress-value {
+    //   @extend %currentStyleBkgColor;
+    // }
   }
   
   // this is not the bar, it's the all progress element :
@@ -21,13 +21,13 @@ progress {
     background-color: transparent;
   }
 
-  &::-moz-progress-bar {
-    @extend %currentStyleBkgColor;
-  }
+  // &::-moz-progress-bar {
+  //   @extend %currentStyleBkgColor;
+  // }
 
-  &::-webkit-progress-value {
-    @extend %currentStyleBkgColor;
-  }
+  // &::-webkit-progress-value {
+  //   @extend %currentStyleBkgColor;
+  // }
   
   .current-style-11 & {
     &::-moz-progress-bar {
