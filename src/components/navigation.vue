@@ -13,18 +13,18 @@
           </span>
         </div>
       </router-link>
-      <a class="massive-nav__dialog__link" href="#">
+      <router-link to="favorites" class="massive-nav__dialog__link massive-nav__dialog__link--favorite">
         <div class="massive-nav__dialog__link-container">
           <icon-star/>
           Favorites
         </div>
-      </a>
-      <a class="massive-nav__dialog__link" href="#">
+      </router-link>
+      <!-- <a class="massive-nav__dialog__link" href="#">
         <div class="massive-nav__dialog__link-container">
           <icon-contact/>
           login
         </div>
-      </a>
+      </a> -->
     </div>
   </nav>
 </template>
@@ -91,6 +91,11 @@
         cursor: pointer;
         padding: 8px;
         font-size: 20px;
+        &--favorite {
+          .ion__svg {
+            color: $favorite-color;
+          }
+        }
         .icon-radio-off {
           transition: opacity 0.3s;
           opacity: 1;
@@ -99,7 +104,7 @@
           transition: opacity 0.3s;
           opacity: 0;
         }
-        &:hover {
+        &:hover, &.router-link-active {
           background-color: $color-selection;
         }
         &.router-link-active, &:hover {

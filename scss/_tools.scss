@@ -47,6 +47,52 @@
   }
 }
 
+%appStyleColorLogo {
+  .state-5-nav {
+    .massive-logo {
+      transition: all 0.3s;
+      color: $primary-color;
+      fill: $primary-color;
+    }
+    &.app-style-11{
+      .massive-logo {
+        color: $color-11;
+        fill: $color-11;
+      }
+    }
+    &.app-style-12{
+      .massive-logo {
+        color: $color-12;
+        fill: $color-12;
+      }
+    }
+    &.app-style-13{
+      .massive-logo {
+        color: $color-13;
+        fill: $color-13;
+      }
+    }
+    &.app-style-14{
+      .massive-logo {
+        color: $color-14;
+        fill: $color-14;
+      }
+    }
+    &.app-style-15{
+      .massive-logo {
+        color: $color-15;
+        fill: $color-15;
+      }
+    }
+    &.app-style-19{
+      .massive-logo {
+        color: $color-19;
+        fill: $color-19;
+      }
+    }
+  }
+}
+
 %currentStyleColor {
   transition: all 0.3s;
   color: $primary-color;

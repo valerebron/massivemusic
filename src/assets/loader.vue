@@ -1,5 +1,5 @@
-<!-- By Sam Herbert (@sherb), for everyone. More @ http://goo.gl/7AJzbL -->
-<svg width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
+<template>
+<svg class="content-loader" width="44" height="44" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg" stroke="#fff">
     <g fill="none" fill-rule="evenodd" stroke-width="2">
         <circle cx="22" cy="22" r="1">
             <animate attributeName="r"
@@ -35,3 +35,18 @@
         </circle>
     </g>
 </svg>
+</template>
+
+<style lang="scss">
+  .content-loader {
+    position: fixed;
+    top: calc(50vh - 44px);
+    left: calc(50vw - 44px);
+    pointer-events: none;
+    transition: .1s opacity;
+    opacity: 0;
+    .loading & {
+        opacity: 1;
+    }
+  }
+</style>

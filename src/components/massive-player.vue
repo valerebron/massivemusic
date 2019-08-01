@@ -6,12 +6,15 @@
         <router-link to="/" tag="button">
           <massive-logo/>
         </router-link>
+        <!-- <div class="massive-current-search">
+          {{ currentQuery }}
+        </div> -->
         <button class="massive-search-toggle" @click="toggle('4-search')">
           <icon-search-close />
         </button>
       </div>
       <div class="massive-header__bottom">
-        <input class="massive-header__search" type="search" v-model="currentQuery" @keyup.enter.escape="blurSearch($event)"/>
+        <input class="massive-header__search" type="search" v-model="currentQuery" @keydown.enter.escape="blurSearch($event)"/>
         <i class="massive-header__search-reset" @click="resetSearch($event)">
           <icon-close/>
         </i>
@@ -58,8 +61,9 @@
           </div>
         </div>
         <div class="control-bar">
-          <button  class="player-star">
-            <icon-star/>
+          <button  class="player-star" @click="toggleFavorite($store.getters.getTrackById(currentYtid))">
+            <icon-star-inline v-if="isFavorite(currentYtid)" />
+            <icon-star-outline v-else />
           </button>
           <button  class="player-prev" @click="playPrev">
             <icon-prev/>
@@ -76,7 +80,7 @@
         </div>
       </div>
     </section>
-    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :setAppState="setAppState" :appStyle="appStyle" :currentStyle="currentStyle" :currentQuery="currentQuery"></router-view>
+    <router-view @trackListReady="trackListReady" :player="propRef" :play="play" :togglePlay="togglePlay" :setAppState="setAppState" :appStyle="appStyle" :currentStyle="currentStyle" :currentQuery="currentQuery" favorites="favorites" :toggleFavorite="toggleFavorite" :isFavorite="isFavorite"></router-view>
   </main>
 </template>
 
@@ -115,6 +119,8 @@
         isLoadedTracklist: false,
         isAppReady: false,
         appStyle: '',
+        favorites: [],
+        newFavorite: null,
       }
     },
     computed: {
@@ -271,6 +277,28 @@
         this.currentQuery = ''
         document.querySelector('.massive-header__search').focus()
       },
+      isFavorite(id) {
+        return this.favorites.find(track => track.id_yt === id)
+      },
+      toggleFavorite(track) {
+        if(!this.isFavorite(track.id_yt)) {
+          this.newFavorite = {'id_yt': track.id_yt,'artist': track.artist,'invalid': track.invalid,'duration': track.duration,'play_count': track.play_count,'style': track.style,'timestamp': track.timestamp,'title': track.title,'user': track.user}
+          this.favorites.push(this.newFavorite)
+          this.newFavorite = ''
+          this.saveFavorites()
+        }
+        else {
+          this.favorites.splice(this.favorites.indexOf(track.id_yt), 1)
+          this.saveFavorites()
+          if(this.$route.name == 'Favorites') {
+            document.querySelector('.tracks [data-id="'+track.id_yt+'"]').style.display = 'none'
+          }
+        }
+      },
+      saveFavorites() {
+        const parsed = JSON.stringify(this.favorites)
+        localStorage.setItem('favorites', parsed)
+      },
       loadFirstTrack() {
         this.playNext()
         this.player.pauseVideo()
@@ -305,8 +333,15 @@
     },
     watch: {
       $route: function(to) {
-        if(to.name == 'Home') {
-          this.currentQuery = ''
+        switch(to.name) {
+          case 'Home':
+            this.currentQuery = ''
+            this.setAppState('3-player-open')
+          break
+          case 'Favorites':
+            this.currentQuery = ''
+            this.setAppState('3-player-open')
+          break
         }
       },
     },
@@ -324,6 +359,17 @@
           case 'MediaTrackPrevious':
             self.playPrev()
           break
+          case 'Escape':
+            self.setAppState('3-player-open')
+          break
+        }
+      }
+      // localstorage Favorites
+      if(localStorage.getItem('favorites')) {
+        try {
+          this.favorites = JSON.parse(localStorage.getItem('favorites'))
+        } catch(e) {
+          localStorage.removeItem('favorites')
         }
       }
     },
@@ -334,6 +380,9 @@
   .massive-header {
     position: fixed;
     z-index: $z-layer-header;
+    .state-6-player-full & {
+      z-index: $z-layer-logo;
+    }
     top: 0;
     width: 100%;
     height: $header-height;
@@ -449,12 +498,16 @@
       height: $player-height;
     }
     .player-next, .player-prev {
-      width: 0;
-      height: 0;
-      padding: 0;
+      // width: 0;
+      // height: 0;
+      // padding: 0;
       // border: none;
-      svg {
-        width: 0;
+      // svg {
+      //   width: 0;
+      // }
+      .ion__svg {
+        height: 20px;
+        width: 20px;
       }
       .state-6-player-full & {
         width: 44px;
@@ -463,6 +516,12 @@
         svg {
           width: auto;
         }
+      }
+    }
+    .player-star {
+      .ion__svg {
+        height: 25px;
+        width: 25px;
       }
     }
     .playback-bar {

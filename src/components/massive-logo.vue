@@ -1,5 +1,7 @@
 <template>
-  <svgLogo class="massive-logo"/>
+  <div class="massive-logo__wrapper">
+    <svgLogo class="massive-logo"/>
+  </div>
 </template>
 
 <script>
@@ -15,11 +17,17 @@ export default {
 <style lang="scss">
   .massive-logo {
     position: relative;
-    z-index: 999;
+    z-index: $z-layer-logo;
     width: 50px;
-    padding: 10px;
-    border-radius: 100px;
-    @extend %appStyleBkgColor;
+    transition: fill .3s;
     fill: black;
+    &__wrapper {
+     @extend %appStyleBkgColor;
+      padding: 10px;
+      border-radius: 100px;
+    }
+  }
+  body {
+    @extend %appStyleColorLogo;
   }
 </style>

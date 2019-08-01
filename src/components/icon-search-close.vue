@@ -3,6 +3,7 @@
     <i class="icon-search-close__circle"></i>
     <i class="icon-search-close__bar"></i>
     <i class="icon-search-close__bar2"></i>
+    <i class="icon-search-close__circle2"></i>
   </i>
 </template>
 
@@ -19,7 +20,7 @@ export default {
     width: $icon-width;
     height: $icon-height;
     cursor: pointer;
-    &__circle, &__bar, &__bar2 {
+    &__circle, &__circle2, &__bar, &__bar2 {
       display: inline-block;
       position: absolute;
       width: $icon-width;
@@ -30,6 +31,10 @@ export default {
     &__circle {
       clip-path: circle(40%);
     }
+    &__circle2 {
+      background-color: black!important;
+      clip-path: circle(25%);
+    }
     &__bar {
       clip-path: polygon(40% 50%, 90% 100%, 100% 90%, 60% 50%);
     }
@@ -38,7 +43,7 @@ export default {
     }
     .state-4-search & {
       .icon-search-close {
-        &__circle {
+        &__circle, &__circle2 {
           clip-path: circle(0);
         }
         &__bar {

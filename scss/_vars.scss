@@ -1,8 +1,8 @@
 // Z-index
 $z-layer-logo:         60;
+$z-layer-player:       55;
 $z-layer-nav:          50;
 $z-layer-header:       40;
-$z-layer-player:       35;
 $z-layer-search:       30;
 $z-layer-pages:        20;
 $z-layer-tracklist:    10;
@@ -21,6 +21,8 @@ $secondary-color: rgb(27, 18, 18);
 $third-color: grey;
 
 $color-selection: rgba(128, 128, 128, 0.2);
+$delete-color: rgb(170, 0, 0);
+$favorite-color: rgb(255, 191, 72);
 
 $color-11: #5e8ac7;
 $color-12: #577967;
