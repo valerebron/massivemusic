@@ -10,17 +10,17 @@ const trackSchema = new mongoose.Schema({
   style: {type: String, index: true},
   user: Number,
   timestamp: Number,
-  invalide: Number,
+  invalid: Number,
   duration: Number,
   play_count: Number,
 })
 trackSchema.index({'$**': 'text'})
 let Track = mongoose.model('Track', trackSchema)
 
-// Get All
+// Get Tracks
 router.get('/', function(req, res) {
   let find = { invalid: "0" }
-  let sort = {timestamp: -1}
+  let sort = { timestamp: -1 }
   let limit = 100
   // style
   if(req.query.appStyle != '') {
@@ -41,6 +41,16 @@ router.get('/', function(req, res) {
       if (err) res.send(err)
       res.json({items, count})
     })
+  })
+})
+
+// Invalid Tracks
+router.put('/invalid', function(req, res) {
+  Track.findOneAndUpdate({id_yt: req.query.id_yt}, {$set: {invalid: 1}}, (err, doc) => {
+    if(err) {
+      console.log('error')
+    }
+    console.log(doc)
   })
 })
 

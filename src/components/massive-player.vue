@@ -99,6 +99,8 @@
   import iconUpDown from './icon-up-down.vue'
   import iconSearchClose from './icon-search-close.vue'
   import loader from '../assets/loader.vue'
+  import axios from 'axios'
+import { setTimeout } from 'timers';
   export default {
     name: 'massiveplayer',
     components: {
@@ -169,6 +171,25 @@
           return '0:00'
         }
       },
+      isVideoDeleted(id, id_yt) {
+        console.log(id)
+        let url = 'https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v='+id_yt
+        axios
+          .get(url)
+          .catch(function() {
+            console.log('delete track')
+            axios
+              .get(window.APIURL+'/tracks/invalid', {
+                params: {
+                  id: id
+                }
+              })
+              .catch()
+              .then(() => {
+                this.playNext
+              })
+          })
+      },
       setAppState(state) {
         this.$store.commit('setAppState', state)
       },
@@ -232,6 +253,13 @@
             document.querySelector('.track--playing').classList.remove('track--playing')
           }
           document.querySelector('[data-id="'+track.id_yt+'"]').classList.add('track--playing')
+          let testVideo = ''
+          clearTimeout(testVideo)
+          testVideo = setTimeout(() => {
+            if(this.currentState == 'unstarted') {
+              this.isVideoDeleted(track._id, track.id_yt)
+            }
+          }, 1000)
         }
       },
       playPrev() {
@@ -502,7 +530,7 @@
       &.cover-image {
         opacity: 0;
         transition: opacity 1s;
-        main[data-player-state="paused"] & {
+        main[data-player-state="paused"] &, main[data-player-state="unstarted"] &  {
           transition: opacity 0s;
           opacity: 1;
         }
