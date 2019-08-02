@@ -8,6 +8,7 @@ export default new Vuex.Store({
     appState: '1-loading',
     appStyle: '',
     appTracks: {},
+    NbResult: 0,
 	},
 	mutations: {
 		setAppState(state, newState) {
@@ -18,6 +19,9 @@ export default new Vuex.Store({
     },
     setAppTracks(state, newTracks) {
       state.appTracks = newTracks
+    },
+    setAppNbResult(state, newNbResult) {
+      state.NbResult = newNbResult
     },
   },
   getters: {

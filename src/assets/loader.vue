@@ -44,8 +44,8 @@
     opacity: 0;
     .tracklist & {
       position: fixed;
-      top: calc(50vh - 44px);
-      left: calc(50vw - 44px);
+      top: calc(50vh - 22px);
+      left: calc(50vw - 22px);
     }
     .control-bar & {
       position: absolute;

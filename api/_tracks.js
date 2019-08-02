@@ -19,45 +19,29 @@ let Track = mongoose.model('Track', trackSchema)
 
 // Get All
 router.get('/', function(req, res) {
+  let find = { invalid: "0" }
+  let sort = {timestamp: -1}
+  let limit = 100
+  // style
   if(req.query.appStyle != '') {
-    Track
-      .find({ style: req.query.appStyle })
-      .sort({timestamp: -1})
-      .limit(100)
-      .exec(function (err, result) {
-        if (err) res.send(err)
-        res.json(result)
-      })
+    find = { style: req.query.appStyle, invalid: "0" }
   }
-  else {
-    Track.find()
-      .sort({timestamp: -1})
-      .limit(100)
-      .exec(function (err, result) {
-        if (err) res.send(err)
-        res.json(result)
-      })
+  // search
+  if(req.query.search) {
+    find = { $text: { $search: req.query.search }, invalid: "0" }
+    if(req.query.appStyle != '') {
+      find = { $text: { $search: req.query.search }, style: req.query.appStyle, invalid: "0" }
+    }
   }
-})
-
-// Search
-router.get('/s/:query', function(req, res) {
-  if(req.query.appStyle != '') {
-    Track
-      .find({ $text: { $search: req.params.query }, style: req.query.appStyle })
-      .exec(function(err, result) {
-        if (err) res.send(err)
-        res.json(result)
-      })
-  }
-  else {
-    Track
-    .find({ $text: { $search: req.params.query } })
-    .exec(function(err, result) {
+  Track.find(find)
+  .sort(sort)
+  .limit(limit)
+  .exec(function(err, items){
+    Track.find(find).count().exec(function(err, count){
       if (err) res.send(err)
-      res.json(result)
+      res.json({items, count})
     })
-  }
+  })
 })
 
 module.exports = router

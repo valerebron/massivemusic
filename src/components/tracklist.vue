@@ -50,47 +50,35 @@
     },
     methods: {
       loadTrack() {
+        // 1-local favorites
         if(this.$route.name == 'Favorites') {
           this.tracksState = 'loading'
           this.tracks = JSON.parse(localStorage.getItem('favorites'))
           this.tracksState = ''
           this.currentQuery = ''
           this.$store.commit('setAppTracks', this.tracks)
+          this.$store.commit('setAppNbResult', this.tracks.length)
           this.$emit('trackListReady')
         }
-        // all tracks
-        else if(this.currentQuery == 'all' || this.currentQuery == '') {
+        // 2-massive tracks
+        else {
           this.tracksState = 'loading'
           axios
             .get(window.APIURL+'/tracks', {
               params: {
-                appStyle: this.appStyle
+                search: this.currentQuery,
+                appStyle: this.appStyle,
               }
             })
             .then((res) => {
-              this.tracks = res.data
+              this.tracks = res.data.items
               this.tracksState = ''
-              this.currentQuery = ''
               this.$store.commit('setAppTracks', this.tracks)
+              this.$store.commit('setAppNbResult', res.data.count)
               let self = this
               setTimeout(function(){
                 self.$emit('trackListReady')
               }, 2000)
-            })
-        }
-        else {
-          // query
-          this.tracksState = 'loading'
-          axios
-            .get(window.APIURL+'/tracks/s/'+this.currentQuery, {
-              params: {
-                appStyle: this.appStyle
-              }
-            })
-            .then((res) => {
-              this.tracks = res.data
-              this.tracksState = ''
-              this.$store.commit('setAppTracks', this.tracks)
             })
         }
       },

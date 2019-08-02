@@ -14,10 +14,17 @@
         </button>
       </div>
       <div class="massive-header__bottom">
-        <input class="massive-header__search" type="search" v-model="currentQuery" @keydown.enter.escape="blurSearch($event)"/>
-        <i class="massive-header__search-reset" @click="resetSearch($event)">
-          <icon-close/>
-        </i>
+        <div class="massive-header__search-container">
+          <input class="massive-header__search" type="search" v-model="currentQuery" @keydown.enter.escape="blurSearch($event)"/>
+          <div class="massive-header__search-tools" @click="resetSearch($event)">
+            <i class="massive-header__search-count">
+              {{ this.$store.state.NbResult }}
+            </i>
+            <i class="massive-header__search-reset">
+              <icon-close/>
+            </i>
+          </div>
+        </div>
       </div>
     </header>
     <section class="massive-player">
@@ -392,22 +399,40 @@
     display: flex;
     flex-direction: column;
     background: linear-gradient(black, transparent);
-    &__search {
+    &__search-container {
+      @extend %appStyleBkgColor;
       width: 80%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__search {
+      width: 100%;
       font-size: 24px;
       height: $search-height;
-      border: none;
       @extend %appStyleBkgColor;
+      border: none;
       padding: 16px;
-      margin: 0 16px;
+      margin-right: 16px;
       font-size: 18px;
       color: black;
     }
+    &__search-tools {
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__search-count {
+      background: black;
+      @extend %appStyleColor;
+      padding: 4px 8px;
+      border-radius: 20px;
+    }
     &__search-reset {
-      position: relative;
-      right: 45px;
       color: black;
       cursor: pointer;
+      padding: 0 10px;
     }
     &__top {
       z-index: $z-layer-header;
@@ -417,18 +442,19 @@
       align-content: center;
     }
     &__bottom {
-      text-align: center;
       width: 100%;
+      display: flex;
+      align-self: center;
+      justify-content: center;
       position: relative;
       top: 0;
       transition: all 0.3s;
-      position: relative;
       height: $search-height;
       top: -$search-height;
       z-index: $z-layer-search;
       opacity: 0;
       .state-4-search & {
-        top: calc(20vh);
+        top: 0;
         opacity: 1;
       }
     }
