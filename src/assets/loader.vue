@@ -52,10 +52,7 @@
       bottom: 23px;
       left: calc(50vw - 34px);
     }
-    .loading & {
-        opacity: 1;
-    }
-    [data-player-state="buffering"] .control-bar & {
+    .loading &, [data-player-state="buffering"] .control-bar & {
       opacity: 1;
     }
   }

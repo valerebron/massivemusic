@@ -439,7 +439,8 @@
     bottom: -$player-height+10;
     transition: all .3s;
     width: 100%;
-    background: linear-gradient(transparent, black);
+    // background: linear-gradient(transparent, black);
+    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 50%,rgba(0,0,0,1) 100%);
     transition: 0.3s all;
     .state-3-player-open & {
       bottom: 0;
@@ -581,6 +582,9 @@
     }
     .player-volume {
       display: none;
+      // .state-6-player-full & {
+      //   display: block;
+      // }
       .volume-bar {
         display: flex;
         flex-direction: column;
