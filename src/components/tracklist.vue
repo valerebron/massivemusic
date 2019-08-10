@@ -137,11 +137,19 @@
     cursor: default;
     border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
     height: 50px;
+    transition: all 0.6s;
     &:hover {
       background-color: $color-selection;
     }
     &--playing {
       background-color: $color-selection;
+    }
+    &--invalidate {
+      // background-color: $invalidate-color;
+      height: 0;
+      line-height: 0;
+      font-size: 0;
+      border-bottom: 0;
     }
     &__index {
       text-align: center;

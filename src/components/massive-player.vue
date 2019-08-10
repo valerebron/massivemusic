@@ -1,5 +1,5 @@
 <template>
-  <main :data-player-state="currentState" :class="'state-'+this.$store.state.appState+' current-style-'+currentStyle+' app-style-'+this.$store.state.appStyle">
+  <main :data-player-state="this.$store.state.playerState" :class="'state-'+this.$store.state.appState+' current-style-'+currentStyle+' app-style-'+this.$store.state.appStyle">
     <header class="massive-header">
       <div class="massive-header__top">
         <navigation :toggle="toggle" />
@@ -30,7 +30,7 @@
     <section class="massive-player">
       <div class="massive-player__top">
         <img class="massive-player__top cover-image" :src="'https://i.ytimg.com/vi/'+currentYtid+'/hqdefault.jpg'" @click="togglePlay"/>
-        <youtube :fitParent="true" :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState"></youtube>
+        <youtube :fitParent="true" :ytid="firstTrack" ref="yt" :playerVars="playerVars" @ready="playerReady" @state-change="updatePlayerState" @error="playerError"></youtube>
       </div>
       <div class="massive-player__bottom">
         <div class="playback-bar">
@@ -47,6 +47,9 @@
             {{ totalTime }}
           </div>
         </div>
+        <!-- <div style="text-align:center">
+          {{ this.$store.state.playerState }}
+        </div> -->
         <p class="player-infos">
           <b class="current-title">
             {{ currentTitle }}
@@ -100,7 +103,6 @@
   import iconSearchClose from './icon-search-close.vue'
   import loader from '../assets/loader.vue'
   import axios from 'axios'
-import { setTimeout } from 'timers';
   export default {
     name: 'massiveplayer',
     components: {
@@ -139,24 +141,6 @@ import { setTimeout } from 'timers';
       player() {
         return this.$refs.yt.player
       },
-      currentState() {
-        switch(this.currentStateId) {
-          case -1:
-            return 'unstarted'
-          case 0:
-            return 'ended'
-          case 1:
-            return 'playing'
-          case 2:
-            return 'paused'
-          case 3:
-            return 'buffering'
-          case 5:
-            return 'video-cued'
-          default:
-            return ''
-        }
-      },
     },
     methods: {
       formatTime(time) {
@@ -171,23 +155,30 @@ import { setTimeout } from 'timers';
           return '0:00'
         }
       },
-      isVideoDeleted(id, id_yt) {
-        console.log(id)
+      isVideoDeleted(id_yt) {
         let url = 'https://www.youtube.com/oembed?format=json&url=http://www.youtube.com/watch?v='+id_yt
         axios
           .get(url)
           .catch(function() {
-            console.log('delete track')
-            axios
-              .get(window.APIURL+'/tracks/invalid', {
-                params: {
-                  id: id
-                }
-              })
-              .catch()
-              .then(() => {
-                this.playNext
-              })
+            console.log('video unreachable')
+          })
+      },
+      playerError() {
+        let id_yt = this.currentYtid
+        let self = this
+        axios
+          .get(window.APIURL+'/tracks', {
+            params: {
+              id_yt: id_yt,
+              action: 'invalidTrack'
+            }
+          })
+          .catch(function(e) {
+            console.log(e)
+          })
+          .then(() => {
+            document.querySelector('.track[data-id="'+id_yt+'"]').classList.add('track--invalidate')
+            self.playNext()
           })
       },
       setAppState(state) {
@@ -253,13 +244,6 @@ import { setTimeout } from 'timers';
             document.querySelector('.track--playing').classList.remove('track--playing')
           }
           document.querySelector('[data-id="'+track.id_yt+'"]').classList.add('track--playing')
-          let testVideo = ''
-          clearTimeout(testVideo)
-          testVideo = setTimeout(() => {
-            if(this.currentState == 'unstarted') {
-              this.isVideoDeleted(track._id, track.id_yt)
-            }
-          }, 1000)
         }
       },
       playPrev() {
@@ -345,7 +329,6 @@ import { setTimeout } from 'timers';
         if(this.isAppReady == false) {
           this.isAppReady = true
           this.loadFirstTrack()
-          // this.setAppState('2-init-screen')
           this.setAppState('3-player-open')
         }
       },
@@ -370,8 +353,8 @@ import { setTimeout } from 'timers';
       },
     },
     watch: {
-      $route: function(to) {
-        switch(to.name) {
+      $route: function(route) {
+        switch(route.name) {
           case 'Home':
             this.currentQuery = ''
             this.setAppState('3-player-open')
@@ -380,6 +363,31 @@ import { setTimeout } from 'timers';
             this.currentQuery = ''
             this.setAppState('3-player-open')
           break
+        }
+      },
+      currentStateId: function(currentStateId) {
+        switch(currentStateId) {
+          case -1:
+            this.$store.commit('setPlayerState', 'unstarted')
+            break;
+          case 0:
+            this.$store.commit('setPlayerState', 'ended')
+            break;
+          case 1:
+            this.$store.commit('setPlayerState', 'playing')
+            break;
+          case 2:
+            this.$store.commit('setPlayerState', 'paused')
+            break;
+          case 3:
+            this.$store.commit('setPlayerState', 'buffering')
+            break;
+          case 5:
+            this.$store.commit('setPlayerState', 'video-cued')
+            break;
+          default:
+            this.$store.commit('setPlayerState', '')
+            break;
         }
       },
     },
@@ -632,6 +640,9 @@ import { setTimeout } from 'timers';
       transition: height .3s;
       .state-5-nav &, .state-4-search & {
         height: 0px;
+      }
+      .current-title, .current-artist {
+        font-size: 20px;
       }
     }
     .player-volume {

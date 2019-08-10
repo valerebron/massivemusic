@@ -5,13 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
+    playerState: '',
     appState: '1-loading',
     appStyle: '',
     appTracks: {},
     NbResult: 0,
 	},
 	mutations: {
-		setAppState(state, newState) {
+		setPlayerState(state, newState) {
+      state.playerState = newState
+    },
+    setAppState(state, newState) {
       state.appState = newState
     },
     setAppStyle(state, newStyle) {
