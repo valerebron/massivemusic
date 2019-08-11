@@ -28,10 +28,9 @@ setup-bdd:
   stage: setup-bdd
   script:
     - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
-    - mkdir mongoconf
-    - cd mongoconf
     - pwd
-    - echo -e "#\!/usr/bin/env bash\necho 'Creating application user and db'\nmongo app_db --host localhost --port 27017 -u $MONGO_USER -p $MONGO_PASS --authenticationDatabase admin --eval \"db.createUser({user: '$MONGO_USER', pwd: '$MONGO_PASS', roles:[{role:'dbOwner', db: 'massivemusic'}]});\"" >> mongo-createuser-entrypoint.sh
+    - sed -i \"s/mongo_user/${MONGO_USER}/g\" mongo-conf/mongo-createuser-entrypoint.sh
+    - sed -i \"s/mongo_pass/${MONGO_PASS}/g\" mongo-conf/mongo-createuser-entrypoint.sh
 
 deploy:
   stage: deploy
