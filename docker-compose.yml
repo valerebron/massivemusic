@@ -6,7 +6,7 @@ services:
     container_name: massivemusic_mongo
     volumes:
       - /data/db/massivemusic2:/data/db
-      - mongo-conf:/docker-entrypoint-initdb.d/
+      - /builds/root/massivemusic2/mongo-conf:/docker-entrypoint-initdb.d/
     restart: always
     ports:
       - 33320:27017
