@@ -22,6 +22,7 @@ build-vue-app:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
+   - echo "gitlab path" && pwd
    - yarn && yarn build
 
 setup-bdd:
@@ -44,7 +45,9 @@ deploy:
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
+    - echo "shell path" && pwd
     - mkdir -p /data/db/massivemusic2
+    - rm config.json && mv configDist.json config.json
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
     - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER

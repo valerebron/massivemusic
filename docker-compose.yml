@@ -28,7 +28,7 @@ services:
 
   web:
     image: registry.osrp.xyz/root/massivemusic2
-    container_name: massivemusic_api
+    container_name: massivemusic_server
     restart: always
     ports:
       - 33330:33330
