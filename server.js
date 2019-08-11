@@ -19,7 +19,12 @@ api.use(function(request, response, next) {
 })
 
 // Connect mongo
-mongoose.connect('mongodb://'+config.bddHost+':'+config.bddPort+'/'+config.bddName, { useNewUrlParser: true })
+let bddlogin = ''
+console.log(process.env)
+if(config.bddHost != 'localhost') {
+  bddlogin = process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'
+}
+mongoose.connect('mongodb://'+bddlogin+config.bddHost+':'+config.bddPort+'/'+config.bddName, { useNewUrlParser: true })
 .then(() => console.log('connected to '+config.bddName))
 .catch((err) => console.error(err))
 

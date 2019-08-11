@@ -21,7 +21,6 @@ build-vue-app:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
-   - echo $MONGO_PASS
    - node -v
    - yarn && yarn build
 deploy:
