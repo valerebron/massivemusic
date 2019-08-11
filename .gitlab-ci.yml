@@ -26,6 +26,9 @@ build-vue-app:
 
 setup-bdd:
   stage: setup-bdd
+  tags: [shell]
+  dependencies:
+    - build-vue-app
   script:
     - sed -i "s/mongo_user/${MONGO_USER}/g" mongo-conf/mongo-createuser-entrypoint.sh
     - sed -i "s/mongo_pass/${MONGO_PASS}/g" mongo-conf/mongo-createuser-entrypoint.sh
