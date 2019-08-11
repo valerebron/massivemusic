@@ -3,7 +3,6 @@ cache:
   - node_modules/
 stages:
   - build-vue-app
-  - setup-bdd
   - deploy
 
 build-vue-app:
@@ -25,14 +24,6 @@ build-vue-app:
   script:
    - yarn && yarn build
 
-setup-bdd:
-  stage: setup-bdd
-  script:
-    - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
-    - sed -i "s/mongo_user/${MONGO_USER}/g" mongo-conf/mongo-createuser-entrypoint.sh
-    - sed -i "s/mongo_pass/${MONGO_PASS}/g" mongo-conf/mongo-createuser-entrypoint.sh
-    - sed -i "s/db_name/massivemusic/g" mongo-conf/mongo-createuser-entrypoint.sh
-
 deploy:
   stage: deploy
   tags: [shell]
@@ -43,6 +34,10 @@ deploy:
     - cd /var/www/html/massivemusic2 && git pull
     - rm config.json && mv configDist.json config.json
   script:
+    - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
+    - sed -i "s/mongo_user/${MONGO_USER}/g" mongo-conf/mongo-createuser-entrypoint.sh
+    - sed -i "s/mongo_pass/${MONGO_PASS}/g" mongo-conf/mongo-createuser-entrypoint.sh
+    - sed -i "s/db_name/massivemusic/g" mongo-conf/mongo-createuser-entrypoint.sh
     - mkdir -p /data/db/massivemusic2
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
