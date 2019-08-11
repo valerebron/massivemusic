@@ -3,6 +3,7 @@ cache:
   - node_modules/
 stages:
   - build-vue-app
+  - setup-bdd
   - deploy
 
 build-vue-app:
@@ -22,6 +23,16 @@ build-vue-app:
    - rm config.json && mv configDist.json config.json
   script:
    - yarn && yarn build
+
+setup-bdd:
+  stage: setup-bdd
+  script:
+    - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
+    - mkdir mongoconf
+    - cd mongoconf
+    - pwd
+    - echo -e "#\!/usr/bin/env bash\necho 'Creating application user and db'\nmongo app_db --host localhost --port 27017 -u $MONGO_USER -p $MONGO_PASS --authenticationDatabase admin --eval \"db.createUser({user: '$MONGO_USER', pwd: '$MONGO_PASS', roles:[{role:'dbOwner', db: 'massivemusic'}]});\"" >> mongo-createuser-entrypoint.sh
+
 deploy:
   stage: deploy
   tags: [shell]
@@ -35,7 +46,6 @@ deploy:
     - mkdir -p /data/db/massivemusic2
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
-    - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME

@@ -23,7 +23,6 @@ let bddlogin = ''
 if(config.bddHost != 'localhost') {
   bddlogin = process.env.MONGO_USER+':'+process.env.MONGO_PASS+'@'
 }
-console.log(bddlogin)
 mongoose.connect('mongodb://'+bddlogin+config.bddHost+':'+config.bddPort+'/'+config.bddName, { useNewUrlParser: true })
 .then(() => console.log('connected to '+config.bddName))
 .catch((err) => console.error(err))
