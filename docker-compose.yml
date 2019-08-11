@@ -3,6 +3,7 @@ services:
 
   mongo:
     image: mongo
+    container_name: massivemusic_mongo
     volumes:
       - /data/db/massivemusic2:/data/db
     restart: always
@@ -14,6 +15,7 @@ services:
 
   mongo-express:
     image: mongo-express
+    container_name: massivemusic_mongo-express
     restart: always
     ports:
       - 33321:8081
@@ -25,6 +27,7 @@ services:
 
   web:
     image: registry.osrp.xyz/root/massivemusic2
+    container_name: massivemusic_api
     restart: always
     ports:
       - 33330:33330
