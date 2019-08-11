@@ -11,6 +11,7 @@ build-vue-app:
   artifacts:
     paths:
       - node_modules/
+      - mongo-conf/
       - dist/
       - api/
       - config.js
@@ -28,7 +29,6 @@ setup-bdd:
   stage: setup-bdd
   script:
     - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
-    - pwd
     - sed -i "s/mongo_user/${MONGO_USER}/g" mongo-conf/mongo-createuser-entrypoint.sh
     - sed -i "s/mongo_pass/${MONGO_PASS}/g" mongo-conf/mongo-createuser-entrypoint.sh
 
