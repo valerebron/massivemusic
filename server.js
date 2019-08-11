@@ -41,7 +41,6 @@ api.listen(config.apiPort, function(){
 })
 
 // web
-// web.use(history())
 web.use(express.static('dist'))
 web.use((req, res) => res.sendFile(__dirname + '/dist/index.html'))
 web.listen(config.webPort, function(){
