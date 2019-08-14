@@ -186,6 +186,9 @@
       },
       updatePlayerState() {
         this.currentStateId = this.player.getPlayerState()
+        if(this.currentStateId == 0) {
+          this.playNext()
+        }
       },
       updatePlayerTime() {
         this.currentTime = this.formatTime(this.player.getCurrentTime())
