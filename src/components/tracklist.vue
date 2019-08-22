@@ -137,7 +137,8 @@
     cursor: default;
     border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
     height: 50px;
-    transition: all 0.6s;
+    filter: grayscale(0);
+    transition: all 0.3s;
     &:hover {
       background-color: $color-selection;
     }
@@ -146,6 +147,7 @@
     }
     &--invalidate {
       // background-color: $invalidate-color;
+      filter: grayscale(80%);
       height: 0;
       line-height: 0;
       font-size: 0;
