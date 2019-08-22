@@ -169,6 +169,29 @@
   }
 }
 
+%appStyleStroke {
+  transition: stroke 0.3s;
+  stroke: $primary-color;
+  .app-style-11 & {
+    stroke: $color-11;
+  }
+  .app-style-12 & {
+    stroke: $color-12;
+  }
+  .app-style-13 & {
+    stroke: $color-13;
+  }
+  .app-style-14 & {
+    stroke: $color-14;
+  }
+  .app-style-15 & {
+    stroke: $color-15;
+  }
+  .app-style-19 & {
+    stroke: $color-19;
+  }
+}
+
 %currentStyleStroke {
   transition: stroke 0.3s;
   stroke: $primary-color;
