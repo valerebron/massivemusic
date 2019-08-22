@@ -426,9 +426,6 @@
 </script>
 
 <style lang="scss">
-  .loader {
-    @extend %currentStyleStroke;
-  }
   .massive-header {
     position: fixed;
     z-index: $z-layer-header;
