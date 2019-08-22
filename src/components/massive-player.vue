@@ -426,6 +426,9 @@
 </script>
 
 <style lang="scss">
+  .loader {
+    @extend %currentStyleStroke;
+  }
   .massive-header {
     position: fixed;
     z-index: $z-layer-header;
@@ -505,7 +508,8 @@
     transition: all .3s;
     width: 100%;
     // background: linear-gradient(transparent, black);
-    background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 50%,rgba(0,0,0,1) 100%);
+    // background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 50%,rgba(0,0,0,1) 100%);
+    background-color: #000000a6;
     transition: 0.3s all;
     .state-3-player-open & {
       bottom: 0;
@@ -627,6 +631,7 @@
         }
         &__buffer {
           $buffer-color: $grey-6;
+          background-color: #7373734f;
           &::-moz-progress-bar {
             background-color: $buffer-color;
           }

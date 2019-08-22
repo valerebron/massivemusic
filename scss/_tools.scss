@@ -168,3 +168,26 @@
     background-color: $color-19;
   }
 }
+
+%currentStyleStroke {
+  transition: stroke 0.3s;
+  stroke: $primary-color;
+  .current-style-11 & {
+    stroke: $color-11;
+  }
+  .current-style-12 & {
+    stroke: $color-12;
+  }
+  .current-style-13 & {
+    stroke: $color-13;
+  }
+  .current-style-14 & {
+    stroke: $color-14;
+  }
+  .current-style-15 & {
+    stroke: $color-15;
+  }
+  .current-style-19 & {
+    stroke: $color-19;
+  }
+}
