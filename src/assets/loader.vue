@@ -38,10 +38,11 @@
 </template>
 
 <style lang="scss">
-  .content-loader {
+  .loader {
     pointer-events: none;
     transition: .1s opacity;
     opacity: 0;
+    @extend %currentStyleStroke;
     .tracklist & {
       position: fixed;
       top: calc(50vh - 22px);
