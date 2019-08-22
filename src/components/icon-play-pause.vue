@@ -17,6 +17,8 @@ export default {
     display: flex;
     width: 24px;
     height: 30px;
+    opacity: 1;
+    transition: opacity 0.3s;
     cursor: pointer;
     &__left, &__right {
       display: inline-block;
@@ -41,6 +43,9 @@ export default {
           clip-path: polygon(70% 0, 100% 0, 100% 100%, 70% 100%);
         }
       }
+    }
+    [data-player-state="buffering"] & {
+      opacity: 0;
     }
   }
 </style>
