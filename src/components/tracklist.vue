@@ -124,6 +124,9 @@
     &_search {
       z-index: $z-layer-search;
     }
+    .loader {
+      @extend %appStyleStroke;
+    }
   }
   .tracks {
     list-style-type: none;

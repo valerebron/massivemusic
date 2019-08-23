@@ -594,6 +594,11 @@
         width: 25px;
       }
     }
+    .player-play {
+      .loader {
+        @extend %currentStyleStroke;
+      }
+    }
     .playback-bar {
       display: flex;
       flex-direction: row;

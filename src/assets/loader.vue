@@ -42,7 +42,6 @@
     pointer-events: none;
     transition: .1s opacity;
     opacity: 0;
-    @extend %appStyleStroke;
     .tracklist & {
       position: fixed;
       top: calc(50vh - 22px);
