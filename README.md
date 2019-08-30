@@ -3,30 +3,20 @@
 
 Bass Music Streaming player
 
-## dependencies
-- node 9.1
-- yarn
+## App Design
+  - massivemusic2 webSocket (port 3310): push notifications [TODO]
+  - massivemusic2 api (port 3330)
+  - massivemusic2 web server (port 3340): rewrite all request to dist/index.html
 
-## Use
-  - `yarn dev` (dev environement)
-  - `git push` (deploy on prod)
-  
-  ## Config
-  - [config.json](config.json) (port and host for local use)
-  - [configDist.json](configDist.json) (port and host for prod use)
-  - [.gitlab-ci.yml](.gitlab-ci.yml) (deploy config)
+## Config
+  - [config.json](config.json)
+  - [configDist.json](configDist.json)
+  - [.gitlab-ci.yml](.gitlab-ci.yml)
   - massivemusic2-apache.conf add `FallbackResource index.html`
     (see: https://router.vuejs.org/guide/essentials/history-mode.html#html5-history-mode)
 
-## App Design
-  - massivemusic2 Socket (port 33310):
-    this websocket is used to push notifications to all users when a new post is added
-  - massivemusic2 Bdd (port 33320):
-    the mongo bdd, serve in a docker container. Schemas can be found in [api folder](api/) and example data in [db folder](db/)
-  - mongo express (port 33321):
-    Interface to admin mongodb
-  - massivemusic2 api (port 33330):
-    CRUD api set in config.json,
-    post http://localhost:33330/tags
-  - massivemusic2 web server (port 33340):
-    node express server for production, it rewrite all request to dist/index.html
+## Use
+  - `cd front && yarn dev` (frontdev environement)
+  - `docker-compose up` (launch massivemusic2 image)
+  - `php back/bin/console server:start 0.0.0.0:3330` (launch symfony web server)
+  - `git push` (deploy on prod)

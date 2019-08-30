@@ -1,29 +1,16 @@
-version: "3"
+version: "3.1"
 services:
 
-  mongo:
-    image: mongo
-    container_name: massivemusic_mongo
-    volumes:
-      - /data/db/massivemusic2:/data/db
-    restart: always
-    ports:
-      - 33320:27017
-  mongo-express:
-    image: mongo-express
-    container_name: massivemusic_mongo-express
-    restart: always
-    ports:
-      - 33321:8081
-    depends_on:
-      - mongo
-
-  web:
+  massivemusic:
     image: registry.osrp.xyz/root/massivemusic2
-    container_name: massivemusic_server
+    container_name: massivemusic
     restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}
+    volumes:
+      - /data/db/massivemusic2:/var/lib/postgresql/data
     ports:
-      - 33330:33330
-      - 33340:33340
-    depends_on:
-      - mongo
+      - 3320:5432
+      - 3330:8000
+      - 3340:80

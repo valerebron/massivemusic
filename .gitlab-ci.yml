@@ -10,11 +10,9 @@ build-vue-app:
   stage: build-vue-app
   artifacts:
     paths:
-      - node_modules/
-      - dist/
-      - api/
+      - front/node_modules/
+      - front/dist/
       - config.js
-      - server.js
       - docker-compose.yml
       - Dockerfile
   image: node:10.15-alpine
@@ -50,7 +48,7 @@ deploy:
     - rm config.json && mv configDist.json config.json
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
-    - export MONGO_PASS=$MONGO_PASS MONGO_USER=$MONGO_USER
+    - export DB_PASS=$DB_PASS DB_USER=$DB_USER
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
