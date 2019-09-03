@@ -4,7 +4,7 @@
       <div class="massive-header__top">
         <navigation :toggle="toggle" />
         <router-link to="/" tag="button">
-          <massive-logo/>
+          <logo/>
         </router-link>
         <!-- <div class="massive-current-search">
           {{ currentQuery }}
@@ -97,7 +97,7 @@
 
 <script>
   import navigation from './navigation.vue'
-  import massiveLogo from './massive-logo.vue'
+  import logo from './logo.vue'
   import iconPlayPause from './icon-play-pause.vue'
   import iconUpDown from './icon-up-down.vue'
   import iconSearchClose from './icon-search-close.vue'
@@ -107,7 +107,7 @@
     name: 'massiveplayer',
     components: {
       navigation,
-      massiveLogo,
+      logo,
       iconPlayPause,
       iconUpDown,
       iconSearchClose,

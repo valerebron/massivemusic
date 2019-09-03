@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 import VuePlayerPlugin, { Player  } from 'vue-youtube-iframe-api'
 
 import config from '../../config.json'
-import MassivePlayer from './components/massive-player.vue'
+import MassivePlayer from './components/player.vue'
 import TrackList from './components/tracklist.vue'
 
 // icons

@@ -3,7 +3,6 @@ cache:
   - node_modules/
 stages:
   - build-vue-app
-  - setup-bdd
   - deploy
 
 build-vue-app:
@@ -20,20 +19,7 @@ build-vue-app:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
-   - echo "gitlab path" && pwd
    - yarn && yarn build
-
-setup-bdd:
-  stage: setup-bdd
-  tags: [shell]
-  dependencies:
-    - build-vue-app
-  script:
-    - sed -i "s/mongo_user/${MONGO_USER}/g" mongo-conf/mongo-createuser-entrypoint.sh
-    - sed -i "s/mongo_pass/${MONGO_PASS}/g" mongo-conf/mongo-createuser-entrypoint.sh
-    - sed -i "s/db_name/massivemusic/g" mongo-conf/mongo-createuser-entrypoint.sh
-    - mkdir -p /data/db/mongo-conf
-    - cp mongo-conf/mongo-createuser-entrypoint.sh /data/db/mongo-conf
 
 deploy:
   stage: deploy
@@ -43,12 +29,11 @@ deploy:
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
-    - echo "shell path" && pwd
     - mkdir -p /data/db/massivemusic2
     - rm config.json && mv configDist.json config.json
+    - export DB_PASS=$DB_PASS
     - docker build -t $CI_REGISTRY_IMAGE .
     - docker push $CI_REGISTRY_IMAGE
-    - export DB_PASS=$DB_PASS DB_USER=$DB_USER
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME

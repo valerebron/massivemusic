@@ -7,7 +7,7 @@
 <script>
 import svgLogo from '../assets/logo.svg'
 export default {
-  name: 'massive-logo',
+  name: 'logo',
   components: {
     svgLogo,
   }
