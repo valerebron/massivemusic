@@ -501,7 +501,7 @@
   .massive-player {
     z-index: $z-layer-player;
     position: fixed;
-    bottom: -$player-height+10;
+    bottom: -$control-bar-height+10;
     transition: all .3s;
     width: 100%;
     // background: linear-gradient(transparent, black);
@@ -553,6 +553,8 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      height: $player-height;
+      transition: .3s height;
      .state-6-player-full & {
         position: fixed;
         width: 100%;
@@ -565,9 +567,12 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
-      height: $player-height;
+      height: $control-bar-height;
     }
     .player-next, .player-prev {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       // width: 0;
       // height: 0;
       // padding: 0;
@@ -657,9 +662,9 @@
     }
     .player-volume {
       display: none;
-      // .state-6-player-full & {
-      //   display: block;
-      // }
+      .state-6-player-full & {
+        display: block;
+      }
       .volume-bar {
         display: flex;
         flex-direction: column;
