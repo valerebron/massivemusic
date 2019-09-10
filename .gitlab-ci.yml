@@ -19,7 +19,7 @@ build-vue-app:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
-   - yarn && yarn build
+   - cd front && yarn && yarn build
 
 deploy:
   stage: deploy
