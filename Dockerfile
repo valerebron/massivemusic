@@ -15,4 +15,4 @@ RUN service postgresql start && su - postgres -c "psql -U postgres -d postgres -
 #3.2 feed database
 #RUN su - postgres -c "psql -d massivemusic -a -f /var/www/html/datas/massivemusic.sql"
 #4 launch servers
-CMD service apache2 start && service postgresql start && ls -lha
+CMD service apache2 start && service postgresql start && cd .. && ls -lha
