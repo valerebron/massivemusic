@@ -2,7 +2,7 @@ FROM php:7.3.8-apache
 #1 Add project files
 RUN mkdir -p /var/www/html/
 WORKDIR /var/www/html/
-COPY back .
+COPY back/ .
 COPY front/dist .
 COPY config.json .
 #2 Install psql
