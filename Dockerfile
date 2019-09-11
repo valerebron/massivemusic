@@ -11,6 +11,7 @@ RUN apt-get install -y libpq-dev postgresql postgresql-client postgresql-contrib
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 #3 config psql
+RUN echo $DB_PASS
 RUN service postgresql start && su - postgres -c "psql -U postgres -d postgres -c \"alter user postgres with password '${DB_PASS:-postgres}';\"" \
     && php bin/console doctrine:database:create
 #3.2 feed database
