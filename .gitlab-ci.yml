@@ -9,6 +9,7 @@ build-vue-app:
   stage: build-vue-app
   artifacts:
     paths:
+      - back/
       - front/node_modules/
       - front/dist/
       - config.js
