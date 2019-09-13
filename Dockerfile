@@ -13,4 +13,4 @@ RUN apt-get install -y libpq-dev postgresql postgresql-client postgresql-contrib
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 #4 launch servers
-CMD service apache2 start && service postgresql start && ./setdb.sh && php /var/www/html/bin/console server:run *:8000
+CMD service apache2 start && service postgresql start && php /var/www/html/bin/console server:run *:8000
