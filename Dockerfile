@@ -7,7 +7,7 @@ COPY back .
 COPY front/dist .
 COPY config.json .
 COPY setdb.sh .
-COPY Dockerfile .
+RUN chmod u+x setdb.sh .
 #2 Install psql
 RUN apt-get update
 RUN apt-get install -y libpq-dev postgresql postgresql-client postgresql-contrib
