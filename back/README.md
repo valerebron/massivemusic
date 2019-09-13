@@ -1,3 +1,4 @@
+// Symfony vocabs
 CONTROLLER : method on ROUTE call
 ENTITY : Table shema with getter & setter
 REPOSITORY : methods to select data
@@ -36,7 +37,6 @@ add fields
   -entity related: entity related name (Track)
   -relType: ManyToOne, OneToMany ...
 
-
 // Update entity
 php bin/console doctrine:cache:clear-metadata
 php bin/console doctrine:migrations:diff
@@ -44,28 +44,3 @@ php bin/console make:entity
 php bin/console doctrine:migrations:migrate --all-or-nothing
 
 // service container & injection de dependances (1h07)
-
-// Entities
-Track
-idYt string 11
-title string 255
-artist string 255
-duration smallint
-playCount integer
-invalid boolean
-createdAt datetime
-
-Style
-name string 255
-url string 255
-tracks relation OneToMany
-
-Member
-email string 255
-name string 255
-password string 255
-rank smallint
-createdAt datetime
-lastLogin datetime
-tracks relation OneToMany
-

@@ -48,7 +48,11 @@
         axios
           .get(window.APIURL+'/styles')
           .then((res) => {
+            console.log(res)
             this.styles = res.data
+          })
+          .catch(function(error){
+            console.log(error)
           })
       },
     },

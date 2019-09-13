@@ -19,11 +19,11 @@ class TrackController extends AbstractController
         $tracksArray = array();
         foreach($tracks as $key=>$track) {
             $tracksArray[$key] = [
-                'idYt'      => $track->getIdYt(),
+                'id_yt'      => $track->getIdYt(),
                 'title'     => $track->getTitle(),
                 'artist'    => $track->getArtist(),
-                'styleId'   => $track->getStyle()->getId(),
-                'memberId'  => $track->getMember()->getId(),
+                'style_id'   => $track->getStyle()->getId(),
+                'member_id'  => $track->getMember()->getId(),
                 'createdAt' => $track->getCreatedAt()->getTimestamp(),
                 'duration'  => $track->getDuration(),
                 'invalid'   => $track->getInvalid(),

@@ -1,12 +1,13 @@
 # massivemusic2 [![pipeline status](https://git.osrp.xyz/root/massivemusic2/badges/master/pipeline.svg)](https://git.osrp.xyz/root/massivemusic2/commits/master)
 # MassiveMusic 2
 
-Bass Music Streaming player
+BassMusic streaming Player
 
 ## App Design
-  - massivemusic2 webSocket (port 3310): push notifications [TODO]
-  - massivemusic2 api (port 3330)
-  - massivemusic2 web server (port 3340): rewrite all request to dist/index.html
+  - WebSocket  :**3310** (push notifications) [TODO]
+  - PostgreSql :**3320** (:3330/adminer.php)
+  - API        :**3330**
+  - WebServer  :**3340** (rewrite all request to dist/index.html)
 
 ## Config
   - [config.json](config.json)
@@ -14,9 +15,38 @@ Bass Music Streaming player
   - [.gitlab-ci.yml](.gitlab-ci.yml)
   - massivemusic2-apache.conf add `FallbackResource index.html`
     (see: https://router.vuejs.org/guide/essentials/history-mode.html#html5-history-mode)
+## Create & Feed database
+  - `php bin/console doctrine:database:create`
+  - `su - postgres -c "psql -d massivemusic -a -f /var/www/html/datas/massivemusic.sql"`
 
 ## Use
   - `cd front && yarn dev` (frontdev environement)
   - `docker-compose up` (launch massivemusic2 image)
   - `php back/bin/console server:start 0.0.0.0:3330` (launch symfony web server)
   - `git push` (deploy on prod)
+
+## Entities Structure
+
+1. Track
+idYt string 11
+title string 255
+artist string 255
+duration smallint
+playCount integer
+invalid boolean
+createdAt datetime
+
+2. Style
+name string 255
+url string 255
+tracks relation OneToMany
+
+3. Member
+email string 255
+name string 255
+password string 255
+rank smallint
+createdAt datetime
+lastLogin datetime
+tracks relation OneToMany
+

@@ -25,6 +25,7 @@ export default {
      @extend %appStyleBkgColor;
       padding: 10px;
       border-radius: 100px;
+      box-shadow: black 0 0 50px;
     }
   }
   body {
