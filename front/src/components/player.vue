@@ -54,7 +54,6 @@
           <b class="current-title">
             {{ currentTitle }}
           </b>
-          -
           <span class="current-artist">
             {{ currentArtist }}
           </span>
@@ -242,7 +241,7 @@
           this.currentYtid = track.id_yt
           this.currentTitle = track.title
           this.currentArtist = track.artist
-          this.currentStyle = track.style
+          this.currentStyle = track.style_id
           if(document.querySelector('.track--playing') !== null) {
             document.querySelector('.track--playing').classList.remove('track--playing')
           }
