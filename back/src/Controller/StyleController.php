@@ -26,6 +26,7 @@ class StyleController extends AbstractController
      */
     public function index(StyleRepository $repo)
     {
+        header("Access-Control-Allow-Origin: *");
         $stylesArray = $this->loopStyles($repo->findAll());
         return $this->json($stylesArray);
     }
@@ -35,6 +36,7 @@ class StyleController extends AbstractController
      */
     public function styleById(StyleRepository $repo, $id)
     {
+        header("Access-Control-Allow-Origin: *");
         $stylesArray = $this->loopStyles($repo->findById($id));
         return $this->json($stylesArray);
     }

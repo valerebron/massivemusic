@@ -48,6 +48,7 @@ class TrackController extends AbstractController
      */
     public function trackByIdYt(TrackRepository $repo, $idYt)
     {
+        header("Access-Control-Allow-Origin: *");
         $tracksArray = $this->loopTracks($repo->findOneByIdYt($idYt));
         return $this->json($tracksArray);
     }
@@ -57,6 +58,7 @@ class TrackController extends AbstractController
      */
     public function trackInvalidate(TrackRepository $repo, $idYt, ObjectManager $manager)
     {
+        header("Access-Control-Allow-Origin: *");
         $track = $repo->findOneByIdYt($idYt);
         $track->setInvalid(true);
         $manager->flush();
@@ -68,6 +70,7 @@ class TrackController extends AbstractController
      */
     public function trackByStyle(TrackRepository $repo, $idStyle)
     {
+        header("Access-Control-Allow-Origin: *");
         $tracksArray = $this->loopTracks($repo->findByStyle($idStyle));
         return $this->json($tracksArray);
     }
@@ -78,6 +81,7 @@ class TrackController extends AbstractController
      */
     public function trackByKeyword(TrackRepository $repo, $keyword = '', $idStyle = '')
     {
+        header("Access-Control-Allow-Origin: *");
         $tracksArray = $this->loopTracks($repo->findByKeyword($keyword, $idStyle));
         return $this->json($tracksArray);
     }
@@ -87,6 +91,7 @@ class TrackController extends AbstractController
     //  */
     // public function add(TrackRepository $repo, ObjectManager $manager)
     // {
+    //     header("Access-Control-Allow-Origin: *");
     //     $finder = new Finder();
     //     $finder->files()->name('tracks2.json')->in('../');
     //     foreach ($finder as $file) {

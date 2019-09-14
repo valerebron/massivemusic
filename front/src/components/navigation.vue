@@ -4,12 +4,12 @@
       <icon-burger-close/>
     </button>
     <div class="massive-nav__dialog">
-      <router-link :to="style.url" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
+      <router-link :to="style.slug" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
         <div class="massive-nav__dialog__link-container massive-nav__dialog__link-container--style">
           <icon-radio-on class="icon-radio-on" />
           <icon-radio-off class="icon-radio-off" />
           <span class="massive-nav__dialog__text">
-            {{ style.value }}
+            {{ style.name }}
           </span>
         </div>
       </router-link>
@@ -48,7 +48,6 @@
         axios
           .get(window.APIURL+'/styles')
           .then((res) => {
-            console.log(res)
             this.styles = res.data
           })
           .catch(function(error){

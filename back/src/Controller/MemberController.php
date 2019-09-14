@@ -30,6 +30,7 @@ class MemberController extends AbstractController
      */
     public function index(MemberRepository $repo)
     {
+        header("Access-Control-Allow-Origin: *");
         $membersArray = $this->loopMembers($repo->findAll());
         return $this->json($membersArray);
     }
@@ -39,6 +40,7 @@ class MemberController extends AbstractController
      */
     public function memberById(MemberRepository $repo, $id)
     {
+        header("Access-Control-Allow-Origin: *");
         $membersArray = $this->loopMembers($repo->findById($id));
         return $this->json($membersArray);
     }
