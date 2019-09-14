@@ -1,7 +1,7 @@
 FROM php:7.3.8-apache
 #1 Add project files
-ENV DB_PASS=$DB_PASS
-VOLUME /data/db/massivemusic2 /var/lib/postgresql/data
+ARG DB_PASS=postgres
+VOLUME /data/db/massivemusic /var/lib/postgresql/data
 RUN mkdir -p /var/www/html/
 WORKDIR /var/www/html/
 COPY back .
@@ -19,7 +19,7 @@ RUN service postgresql start &&\
     output=$(psql -c "SELECT datname FROM pg_catalog.pg_database WHERE datname='${dbname}'") &&\
     if [ "${output}" != *"${dbname}"* ] ; then \
       psql --command "CREATE DATABASE ${dbname}" && \
-      psql --command "CREATE USER ${dbname} WITH SUPERUSER PASSWORD '${DB_PASS:-postgres}'" &&\
+      psql --command "CREATE USER ${dbname} WITH SUPERUSER PASSWORD '${DB_PASS}'" &&\
       psql -d ${dbname} -a -f /var/www/html/datas/${dbname}.sql; fi
 #4 launch servers
 USER root
