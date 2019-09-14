@@ -2,7 +2,7 @@ FROM php:7.3.8-apache
 #1 Add project files
 ARG DB_PASS=postgres
 VOLUME /data/db/massivemusic /var/lib/postgresql/data
-#RUN mkdir -p /var/www/html/
+RUN mkdir -p /var/www/html/
 WORKDIR /var/www/html/
 COPY back .
 COPY front/dist .
