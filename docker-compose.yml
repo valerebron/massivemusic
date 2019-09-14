@@ -7,8 +7,6 @@ services:
     restart: always
     environment:
       DB_PASS: ${DB_PASS}
-    volumes:
-      - /data/db/massivemusic2:/var/lib/postgresql/data
     ports:
       - 3320:5432
       - 3330:8000
