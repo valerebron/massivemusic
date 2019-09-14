@@ -35,8 +35,7 @@ deploy:
   script:
     - mkdir -p /data/db/massivemusic2
     - rm config.json && mv configDist.json config.json
-    - export DB_PASS=$DB_PASS
-    - docker build -t $CI_REGISTRY_IMAGE .
+    - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS .
     - docker push $CI_REGISTRY_IMAGE
     - docker-compose up -d
   environment:

@@ -1,5 +1,6 @@
 FROM php:7.3.8-apache
 #1 Add project files
+ENV DB_PASS=$DB_PASS
 VOLUME /data/db/massivemusic2 /var/lib/postgresql/data
 RUN mkdir -p /var/www/html/
 WORKDIR /var/www/html/
