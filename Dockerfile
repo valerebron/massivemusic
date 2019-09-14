@@ -13,7 +13,7 @@ RUN apt-get install -y libpq-dev postgresql postgresql-client postgresql-contrib
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
 RUN docker-php-ext-install pdo pdo_pgsql pgsql
 #3 Set database
-RUN sed -i -e 's~BDDPASSWORD~'"$DB_PASS"'~g' .env
+RUN sed -i -e 's~postgres@localhost:5433~'"$DB_PASS@localhost:5432"'~g' .env
 USER postgres
 RUN service postgresql start &&\
     dbname="massivemusic" &&\

@@ -8,7 +8,7 @@
       </div> -->
       <loader/>
       <table class="tracks" @click="setAppState('3-player-open')">
-        <tr :class="'track style-'+track.style_id" v-for="(track,index) in tracks" :data-id="track.id_yt" :key="track.id_yt">
+        <tr :class="'track style-'+track.style_id" v-for="(track,index) in tracks.slice(0, 50)" :data-id="track.id_yt" :key="track.id_yt">
           <td @click="play(track)" class="track__index">{{ index + 1 }}</td>
           <td @click="play(track)">{{ track.title }}</td>
           <td class="track__action">{{ track.artist }} </td>
@@ -81,6 +81,7 @@
               }, 2000)
             })
             .catch(function(error){
+              console.log(window.APIURL+'/tracks')
               console.log(error)
             })
         }

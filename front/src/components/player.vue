@@ -18,7 +18,7 @@
           <input class="massive-header__search" type="search" v-model="currentQuery" @keydown.enter.escape="blurSearch($event)"/>
           <div class="massive-header__search-tools" @click="resetSearch($event)">
             <i class="massive-header__search-count">
-              {{ this.$store.state.NbResult }}
+              {{ this.$store.state.appTracks.length }}
             </i>
             <i class="massive-header__search-reset">
               <icon-close/>

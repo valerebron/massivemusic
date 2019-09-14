@@ -5,7 +5,6 @@ BassMusic streaming Player
 
 ## App Design
   - WebSocket  :**3310** (push notifications) [TODO]
-  - PostgreSql :**3320** (:3330/adminer.php)
   - API        :**3330**
   - WebServer  :**3340** (rewrite all request to dist/index.html)
 

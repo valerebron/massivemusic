@@ -8,6 +8,6 @@ services:
     environment:
       DB_PASS: ${DB_PASS}
     ports:
-      - 3320:5432
+      - 5432:5432
       - 3330:8000
       - 3340:80
