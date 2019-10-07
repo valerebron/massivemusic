@@ -21,70 +21,70 @@
   transition: all 0.3s;
   color: $primary-color;
   fill: $primary-color;
-  .app-style-11 & {
+  .route-style-11 & {
     color: $color-11;
     fill: $color-11;
   }
-  .app-style-12 & {
+  .route-style-12 & {
     color: $color-12;
     fill: $color-12;
   }
-  .app-style-13 & {
+  .route-style-13 & {
     color: $color-13;
     fill: $color-13;
   }
-  .app-style-14 & {
+  .route-style-14 & {
     color: $color-14;
     fill: $color-14;
   }
-  .app-style-15 & {
+  .route-style-15 & {
     color: $color-15;
     fill: $color-15;
   }
-  .app-style-19 & {
+  .route-style-19 & {
     color: $color-19;
     fill: $color-19;
   }
 }
 
 %appStyleColorLogo {
-  .state-5-nav {
+  .state-4-nav {
     .massive-logo {
       transition: all 0.3s;
       color: $primary-color;
       fill: $primary-color;
     }
-    &.app-style-11{
+    &.route-style-11{
       .massive-logo {
         color: $color-11;
         fill: $color-11;
       }
     }
-    &.app-style-12{
+    &.route-style-12{
       .massive-logo {
         color: $color-12;
         fill: $color-12;
       }
     }
-    &.app-style-13{
+    &.route-style-13{
       .massive-logo {
         color: $color-13;
         fill: $color-13;
       }
     }
-    &.app-style-14{
+    &.route-style-14{
       .massive-logo {
         color: $color-14;
         fill: $color-14;
       }
     }
-    &.app-style-15{
+    &.route-style-15{
       .massive-logo {
         color: $color-15;
         fill: $color-15;
       }
     }
-    &.app-style-19{
+    &.route-style-19{
       .massive-logo {
         color: $color-19;
         fill: $color-19;
@@ -126,22 +126,22 @@
 %appStyleBkgColor {
   transition: background-color 0.3s;
   background-color: $primary-color;
-  .app-style-11 & {
+  .route-style-11 & {
     background-color: $color-11;
   }
-  .app-style-12 & {
+  .route-style-12 & {
     background-color: $color-12;
   }
-  .app-style-13 & {
+  .route-style-13 & {
     background-color: $color-13;
   }
-  .app-style-14 & {
+  .route-style-14 & {
     background-color: $color-14;
   }
-  .app-style-15 & {
+  .route-style-15 & {
     background-color: $color-15;
   }
-  .app-style-19 & {
+  .route-style-19 & {
     background-color: $color-19;
   }
 }
@@ -172,22 +172,22 @@
 %appStyleStroke {
   transition: stroke 0.3s;
   stroke: $primary-color;
-  .app-style-11 & {
+  .route-style-11 & {
     stroke: $color-11;
   }
-  .app-style-12 & {
+  .route-style-12 & {
     stroke: $color-12;
   }
-  .app-style-13 & {
+  .route-style-13 & {
     stroke: $color-13;
   }
-  .app-style-14 & {
+  .route-style-14 & {
     stroke: $color-14;
   }
-  .app-style-15 & {
+  .route-style-15 & {
     stroke: $color-15;
   }
-  .app-style-19 & {
+  .route-style-19 & {
     stroke: $color-19;
   }
 }

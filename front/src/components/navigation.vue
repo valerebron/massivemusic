@@ -1,10 +1,10 @@
 <template>
   <nav class="massive-nav">
-    <button class="massive-nav__toggle" @click="toggle('5-nav')">
+    <button class="massive-nav__toggle" @click="toggleNav()">
       <icon-burger-close/>
     </button>
-    <div class="massive-nav__dialog">
-      <router-link :to="style.slug" :class="'massive-nav__dialog__link style-'+style.id" v-for="style in styles" :key="style.id">
+    <div class="massive-nav__dialog" @click="toggleNav()">
+      <router-link v-for="style in $store.getters.appStyles" :to="style.slug" :class="'massive-nav__dialog__link style-'+style.id" :key="style.id">
         <div class="massive-nav__dialog__link-container massive-nav__dialog__link-container--style">
           <icon-radio-on class="icon-radio-on" />
           <icon-radio-off class="icon-radio-off" />
@@ -19,44 +19,32 @@
           Favorites
         </div>
       </router-link>
-      <!-- <a class="massive-nav__dialog__link" href="#">
+      <a class="massive-nav__dialog__link" href="#">
         <div class="massive-nav__dialog__link-container">
           <icon-contact/>
           login
         </div>
-      </a> -->
+      </a>
     </div>
   </nav>
 </template>
 
 <script>
-  import iconBurgerClose from './icon-burger-close.vue'
-  import axios from 'axios'
+  import iconBurgerClose from '../assets/icon-burger-close.vue'
   export default {
     name: 'navigation',
     components: {
       iconBurgerClose,
     },
-    props: ['toggle'],
-    data() {
-      return {
-        styles: '',
-      }
-    },
     methods: {
-      getStyles() {
-        axios
-          .get(window.APIURL+'/styles')
-          .then((res) => {
-            this.styles = res.data
-          })
-          .catch(function(error){
-            console.log(error)
-          })
+      toggleNav() {
+        if(this.$store.getters.appState !== '4-nav') {
+          this.$store.dispatch('setAppStatus', '4-nav')
+        }
+        else {
+          this.$store.dispatch('setAppStatus', '2-init-screen')
+        }
       },
-    },
-    mounted: function(){
-      this.getStyles()
     },
   }
 </script>
@@ -77,7 +65,7 @@
       left: -100vw;
       display: flex;
       justify-content: center;
-      .state-5-nav & {
+      .state-4-nav & {
         left: 0;
       }
       transition: left 0.3s;
@@ -107,10 +95,11 @@
           transition: opacity 0.3s;
           opacity: 0;
         }
-        &:hover, &.router-link-active {
-          background-color: $color-selection;
+        &.router-link-active {
+          cursor: default;
         }
         &.router-link-active, &:hover {
+          background-color: $color-selection;
           .icon-radio-off {
             transition: opacity 0.2s;
             opacity: 0;

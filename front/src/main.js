@@ -1,13 +1,15 @@
 import Vue from 'vue'
-import store from '../store/appStateStore'
-import VueRouter from 'vue-router'
-import VuePlayerPlugin, { Player  } from 'vue-youtube-iframe-api'
-
+import store from './store'
+import router from './router'
 import config from '../../config.json'
-import MassivePlayer from './components/player.vue'
-import TrackList from './components/tracklist.vue'
+import App from './components/App.vue'
 
 // icons
+// let icons = ['search', 'radio-button-on', 'radio-button-off', 'star', 'star-outline', 'skip-backward', 'skip-forward', 'volume-high', 'volume-off', 'close', 'contact', 'trash']
+// foreach(icons as icon) {
+//   import iconSearch from '../assetsvue-ionicons/dist/md-search.vue'
+//   Vue.component('icon-search', iconSearch)
+// }
 import iconSearch from 'vue-ionicons/dist/md-search.vue'
 Vue.component('icon-search', iconSearch)
 import iconRadioOn from 'vue-ionicons/dist/md-radio-button-on.vue'
@@ -38,27 +40,8 @@ Vue.component('icon-trash', iconTrash)
 window.APIURL = config.apiHost
 Vue.config.productionTip = false
 
-Vue.use(VueRouter)
-Vue.use(VuePlayerPlugin)
-
-Vue.component('youtube', Player )
-
-// Routes
-const router = new VueRouter({
-  routes: [
-    { name: 'Home', path: '/', component: TrackList, props: { appStyle: '', appState: '3-player-open' }},
-    { name: 'Dubstep', path: '/dubstep', component: TrackList, props: { appStyle: 11 }},
-    { name: 'Drum & Bass', path: '/drumandbass', component: TrackList, props: { appStyle: 12 }},
-    { name: 'Dub', path: '/dub', component: TrackList, props: { appStyle: 13 }},
-    { name: 'Breakbeat', path: '/breakbeat', component: TrackList, props: { appStyle: 14 }},
-    { name: 'Deepbass', path: '/deepbass', component: TrackList, props: { appStyle: 15 }},
-    { name: 'Electro', path: '/electro', component: TrackList, props: { appStyle: 19 }},
-    { name: 'Favorites', path: '/favorites', component: TrackList, props: { appStyle: '', appState: '3-player-open' }},
-  ],
-  mode: 'history'
-})
 new Vue({
   store,
   router,
-  render: h => h(MassivePlayer),
+  render: h => h(App),
 }).$mount('.app')

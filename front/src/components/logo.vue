@@ -1,7 +1,14 @@
 <template>
-  <div class="massive-logo__wrapper">
+  <button class="massive-logo__wrapper" @click="goHome">
     <svgLogo class="massive-logo"/>
-  </div>
+    <h1 class="massive-logo__name">
+      massive<br>
+      music
+      <span class="massive-logo__extension">
+        .fr
+      </span>
+    </h1>
+  </button>
 </template>
 
 <script>
@@ -10,7 +17,15 @@ export default {
   name: 'logo',
   components: {
     svgLogo,
-  }
+  },
+  methods: {
+    goHome: function() {
+      this.$store.dispatch('setAppStatus', '2-init-screen')
+      this.$router.push({ name: 'home' })
+      //if same route, router do nothin, so :
+      this.$store.dispatch('resetTracks')
+    }
+  },
 }
 </script>
 
@@ -19,16 +34,37 @@ export default {
     position: relative;
     z-index: $z-layer-logo;
     width: 50px;
+    height: 34px;
     transition: fill .3s;
     fill: black;
-    &__wrapper {
-     @extend %appStyleBkgColor;
-      padding: 10px;
-      border-radius: 100px;
-      box-shadow: black 0 0 50px;
+    box-shadow: black 0 0 50px;
+    @extend %appStyleBkgColor;
+    padding: 8px 0;
+    border-radius: 100px;
+    &__name {
+      text-align-last: left;
+      padding-left: 8px;
+      font-size: 16px;
+      text-transform: uppercase;
+      transition: &ll 0.3s;
+      .state-4-nav & {
+        width: 0;
+      }
     }
-  }
-  body {
-    @extend %appStyleColorLogo;
+    &__extension {
+      text-transform: lowercase;
+      font-size: 14px;
+    }
+    &__wrapper {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      transition: all 0.3s;
+      .state-3-search & {
+        position: absolute;
+        left: 10px;
+        top: 12px;
+      }
+    }
   }
 </style>

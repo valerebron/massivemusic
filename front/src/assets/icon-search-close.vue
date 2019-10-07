@@ -41,7 +41,7 @@ export default {
     &__bar2 {
       clip-path: polygon(50% 50%, 90% 100%, 100% 90%, 50% 50%);
     }
-    .state-4-search & {
+    .state-3-search & {
       .icon-search-close {
         &__circle, &__circle2 {
           clip-path: circle(0);

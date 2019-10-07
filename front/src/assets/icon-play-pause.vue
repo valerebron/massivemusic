@@ -26,7 +26,7 @@ export default {
       width: 24px;
       height: 30px;
       @extend %currentStyleBkgColor;
-      transition: clip-path .2s ease, background-color .2s ease;
+      transition: clip-path .4s ease, background-color .2s ease;
     }
     &__left {
       clip-path: polygon(0 0, 50% 25%, 50% 75%, 0% 100%);
@@ -34,7 +34,7 @@ export default {
     &__right {
       clip-path: polygon(50% 25%, 100% 50%, 100% 50%, 50% 75%);
     }
-    [data-player-state="playing"] & {
+    .player-state-playing & {
       .play-button {
         &__left {
           clip-path: polygon(0 0, 30% 0, 30% 100%, 0% 100%);
@@ -44,7 +44,7 @@ export default {
         }
       }
     }
-    [data-player-state="buffering"] & {
+    .player-state-buffering & {
       opacity: 0;
     }
   }

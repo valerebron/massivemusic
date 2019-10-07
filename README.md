@@ -19,7 +19,8 @@ BassMusic streaming Player
   - `su - postgres -c "psql -d massivemusic -a -f /var/www/html/datas/massivemusic.sql"`
 
 ## Use
-  - `cd front && yarn dev` (frontdev environement)
+  - `cd front && yarn dev` (front dev environement)
+  - `php back/bin/console server:run` (back dev server)
   - `docker-compose up` (launch massivemusic2 image)
   - `php back/bin/console server:start 0.0.0.0:3330` (launch symfony web server)
   - `git push` (deploy on prod)
