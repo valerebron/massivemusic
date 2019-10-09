@@ -1,0 +1,123 @@
+<?php
+
+namespace Symfony\Component\VarExporter\Internal;
+
+return $getExpiry ? PHP_INT_MAX : Hydrator::hydrate(
+    $o = Registry::unserialize([
+        clone (Registry::$prototypes['Doctrine\\ORM\\Mapping\\ClassMetadata'] ?? Registry::p('Doctrine\\ORM\\Mapping\\ClassMetadata')),
+    ], [
+        1 => 'C:33:"Doctrine\\ORM\\Id\\SequenceGenerator":72:{a:2:{s:14:"allocationSize";i:1;s:12:"sequenceName";s:12:"style_id_seq";}}',
+    ]),
+    null,
+    [
+        'stdClass' => [
+            'name' => [
+                'App\\Entity\\Style',
+            ],
+            'namespace' => [
+                'App\\Entity',
+            ],
+            'rootEntityName' => [
+                'App\\Entity\\Style',
+            ],
+            'customRepositoryClassName' => [
+                'App\\Repository\\StyleRepository',
+            ],
+            'identifier' => [
+                [
+                    'id',
+                ],
+            ],
+            'generatorType' => [
+                2,
+            ],
+            'fieldMappings' => [
+                [
+                    'id' => [
+                        'fieldName' => 'id',
+                        'type' => 'integer',
+                        'scale' => 0,
+                        'length' => null,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'id' => true,
+                        'columnName' => 'id',
+                    ],
+                    'name' => [
+                        'fieldName' => 'name',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 255,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'name',
+                    ],
+                    'url' => [
+                        'fieldName' => 'url',
+                        'type' => 'string',
+                        'scale' => 0,
+                        'length' => 255,
+                        'unique' => false,
+                        'nullable' => false,
+                        'precision' => 0,
+                        'columnName' => 'url',
+                    ],
+                ],
+            ],
+            'fieldNames' => [
+                [
+                    'id' => 'id',
+                    'name' => 'name',
+                    'url' => 'url',
+                ],
+            ],
+            'columnNames' => [
+                [
+                    'id' => 'id',
+                    'name' => 'name',
+                    'url' => 'url',
+                ],
+            ],
+            'table' => [
+                [
+                    'name' => 'style',
+                ],
+            ],
+            'associationMappings' => [
+                [
+                    'tracks' => [
+                        'fieldName' => 'tracks',
+                        'mappedBy' => 'style',
+                        'targetEntity' => 'App\\Entity\\Track',
+                        'cascade' => [],
+                        'orphanRemoval' => false,
+                        'fetch' => 2,
+                        'type' => 4,
+                        'inversedBy' => null,
+                        'isOwningSide' => false,
+                        'sourceEntity' => 'App\\Entity\\Style',
+                        'isCascadeRemove' => false,
+                        'isCascadePersist' => false,
+                        'isCascadeRefresh' => false,
+                        'isCascadeMerge' => false,
+                        'isCascadeDetach' => false,
+                    ],
+                ],
+            ],
+            'idGenerator' => [
+                $o[1],
+            ],
+            'sequenceGeneratorDefinition' => [
+                [
+                    'sequenceName' => 'style_id_seq',
+                    'allocationSize' => 1,
+                    'initialValue' => 1,
+                ],
+            ],
+        ],
+    ],
+    $o[0],
+    []
+);

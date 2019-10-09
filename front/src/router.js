@@ -27,7 +27,7 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeResolve((to, from, next) => {
   if(to.name.startsWith('style-')) {
     let styleId = to.name.replace('style-', '')
     store.dispatch('resetTracks')

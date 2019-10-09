@@ -43,7 +43,8 @@
     },
     methods: {
       loadDatas() {
-        if(localStorage.getItem('stylesCached')) { // 1- cache
+         // 1- cache
+        if(localStorage.getItem('stylesCached') && localStorage.getItem('tracksCached')) {
           let stylesCached = JSON.parse(localStorage.getItem('stylesCached'))
           let tracksCached = JSON.parse(localStorage.getItem('tracksCached'))
           this.$store.dispatch('setAppStyles', stylesCached)

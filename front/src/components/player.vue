@@ -180,6 +180,7 @@
       }, 500)
       // Keyboard aliases
       window.onkeydown = function(e) {
+        console.log(e.key)
         switch(e.key) {
           case 'MediaPlayPause':
             self.play()
