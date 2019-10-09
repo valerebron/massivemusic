@@ -1,21 +1,21 @@
 <template>
     <section :class="'tracklist '">
       <table class="tracks">
-        <tr v-for="(track, index) in $store.getters.tracks" class="track" :data-id="track.id_yt" :key="track.id_yt" @click="play(track)">
-          <td :class="'track__index style-'+track.style_id">
+        <tr v-for="(track, index) in $store.getters.tracks" class="track" :data-id="track.id_yt" :key="track.id_yt">
+          <td :class="'track__index style-'+track.style_id" @click="play(track)">
             {{ index + 1 }}
           </td>
-          <td :class="'track__dot style-'+track.style_id">
+          <td :class="'track__dot style-'+track.style_id" @click="play(track)">
             ‧
           </td>
-          <td class="track__title">
+          <td :class="'track__title style-'+track.style_id" @click="play(track)">
             {{ track.title }}
           </td>
           <td>
-            <span :class="'track__artist style-'+track.style_id" @click.prevent="filterByArtist(track.artist)">
+            <span class="track__artist" @click.prevent="filterByArtist(track.artist)">
               {{ track.artist }}
             </span>
-            </td>
+          </td>
           <td @click.prevent="$store.dispatch('toggleFavorite', track.id_yt)" class="track__favorite">
             <icon-star-inline v-if="isFavorite(track.id_yt)" />
             <icon-star-outline style="opacity: 0.5" v-else />
@@ -33,6 +33,7 @@
         this.$store.dispatch('play', track)
       },
       filterByArtist(artist) {
+        this.$store.dispatch('setAppStatus', '2-init-screen')
         this.$store.dispatch('setFilter', {type: 'artist', value: artist})
       },
       isFavorite(id_yt) {
@@ -80,10 +81,11 @@
     &--invalidate {
       // background-color: $invalidate-color;
       filter: grayscale(80%);
-      height: 0;
-      line-height: 0;
-      font-size: 0;
-      border-bottom: 0;
+      opacity: 0.5;
+      // height: 0;
+      // line-height: 0;
+      // font-size: 0;
+      // border-bottom: 0;
     }
     &__index {
       text-align: center;
@@ -97,10 +99,9 @@
     }
     &__title {
       padding-left: 8px;
-      color: $grey-6;
     }
     &__artist {
-      cursor: pointer;
+      @extend %artistStyle;
     }
     &__favorite {
       cursor: pointer;

@@ -12,9 +12,16 @@ const actions = {
   setAppStatus(store, newStatus) {
     if(store.state.status == newStatus) {
       store.commit('SET_APP_STATUS', '2-init-screen')
+      document.querySelector('body').classList.remove('no-scroll')
     }
     else {
       store.commit('SET_APP_STATUS', newStatus)
+      if(['4-nav','5-player-full'].includes(newStatus)) {
+        document.querySelector('body').classList.add('no-scroll')
+      }
+      else {
+        document.querySelector('body').classList.remove('no-scroll')
+      }
     }
   },
 }

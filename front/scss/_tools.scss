@@ -17,6 +17,25 @@
   color: $color-19;
 }
 
+.style-bkg-11 {
+  background-color: $color-11;
+}
+.style-bkg-12 {
+  background-color: $color-12;
+}
+.style-bkg-13 {
+  background-color: $color-13;
+}
+.style-bkg-14 {
+  background-color: $color-14;
+}
+.style-bkg-15 {
+  background-color: $color-15;
+}
+.style-bkg-19 {
+  background-color: $color-19;
+}
+
 %appStyleColor {
   transition: all 0.3s;
   color: $primary-color;
@@ -212,5 +231,14 @@
   }
   .current-style-19 & {
     stroke: $color-19;
+  }
+}
+
+%artistStyle {
+  cursor: pointer;
+  color: $primary-color;
+  // font-weight: bold;
+  &:hover {
+    text-decoration: underline;
   }
 }

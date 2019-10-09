@@ -4,10 +4,6 @@ import axios from 'axios'
 const state = {
   playerStatusId: -1, // UNSTARTED: -1, ENDED: 0, PLAYING: 1, PAUSED: 2, BUFFERING: 3, CUED: 5
   track: {},
-  volume: 0,
-  duration: 0,
-  currentTime: 0,
-  loaded: 0,
 }
 
 const mutations = {
@@ -17,37 +13,26 @@ const mutations = {
   SET_TRACK(state, track) {
     state.track = track
   },
-  SET_PLAYER_VOLUME(state, newState) {
-    state.volume = newState
-  },
-  SET_PLAYER_DURATION(state, newState) {
-    state.duration = newState
-  },
-  SET_PLAYER_CURRENT_TIME(state, newState) {
-    state.currentTime = newState
-  },
-  SET_PLAYER_LOADED(state, newState) {
-    state.loaded = newState
-  },
 }
 
 const actions = {
   initPlayer(store) {
-    let player = window.PLAYER = YouTubePlayer('player')
+    let player = window.PLAYER = YouTubePlayer('player', {playerVars: {'controls': 0, 'showinfo': 0}})
     player.on('ready', function() {
+      if(localStorage.volume) {
+        player.setVolume(localStorage.volume)
+      }
+      else {
+        player.getVolume().then((volume) => { localStorage.volume = volume })
+      }
       store.dispatch('setAppStatus', '2-init-screen')
-      setInterval(function() {
-        player.getVolume().then((volume) => {store.commit('SET_PLAYER_VOLUME', volume)})
-        player.getDuration().then((duration) => {store.commit('SET_PLAYER_DURATION', duration)})
-        player.getCurrentTime().then((currentTime) => {store.commit('SET_PLAYER_CURRENT_TIME', currentTime)})
-        player.getVideoLoadedFraction().then((loaded) => {store.commit('SET_PLAYER_LOADED', loaded)})
-      }, 500)
+      store.dispatch('play', store.getters.firstTrack)
     })
     player.on('stateChange', function (event) {
       store.commit('SET_PLAYER_STATUS', event.target.getPlayerState())
     })
     player.on('error', function (event) {
-      console.log('player error', event.data)
+      console.log('player error:', event.data)
       let id_yt = store.getters.playerTrack.id_yt
       axios
         .get(window.APIURL+'/tracks', {
@@ -117,21 +102,6 @@ const getters = {
   },
   playerTrack(state) {
     return state.track
-  },
-  playerVolume(state) {
-    return state.volume
-  },
-  playerTotalTime(state) {
-    return state.duration
-  },
-  playerCurrentTime(state) {
-    return state.currentTime
-  },
-  playerProgress(state) {
-    return (state.currentTime / state.duration) * 100
-  },
-  playerBuffer(state) {
-    return state.loaded * 100
   },
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search" :class="isTerms">
     <div class="search__bar">
       <input class="search__input" type="search" v-model="searchTerms" @keydown.enter.escape="blurSearch($event)"/>
       <i class="search__count" @click="resetSearch($event)">
@@ -35,9 +35,12 @@
           clearTimeout(this.finishTyping)
           this.finishTyping = setTimeout(() => {
             this.$store.dispatch("setFilter", {type: 'search', value: value})
-          }, 200)
+          }, 800)
         }
-      }
+      },
+      isTerms() {
+        return (this.searchTerms != '' ? 'termsThere' : '')
+      },
     },
     methods: {
       toggleSearch() {
@@ -90,18 +93,27 @@
         width: calc(100% - #{$search-button-width});
         right: $search-button-width;
       }
+      .state-2-init-screen .termsThere & {
+        width: calc(40% - #{$search-button-width});
+        right: $search-button-width;
+        justify-content: flex-end;
+      }
     }
     &__input {
+      text-align: center;
       width: 0;
       background-color: transparent;
-      font-size: 24px;
+      font-size: 28px;
       height: $search-height;
       border: none;
-      font-size: 18px;
       padding-left: $search-button-width * 1.5;
       @extend %appStyleColor;
       .state-3-search & {
         width: 100%;
+      }
+      .state-2-init-screen .termsThere & {
+        padding: 0;
+        width: 40%;
       }
     }
     &__count {
@@ -111,9 +123,7 @@
       font-weight: bold;
       border-radius: 20px;
       cursor: pointer;
-      .state-3-search & {
-        padding: 4px 8px;
-      }
+      padding: 4px 8px;
     }
   }
 </style>

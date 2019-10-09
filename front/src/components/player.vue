@@ -7,7 +7,7 @@
     <div class="player__bottom">
       <div class="playback-bar">
         <div class="playback-bar__progress-time">
-          {{ currentTime }}
+          {{ formatTime(currentTime) }}
         </div>
         <div class="progress-bar">
           <progress class="progress-bar__buffer" :value="buffer" max="100"></progress>
@@ -16,25 +16,10 @@
           <progress class="progress-bar__progress" :value="progress" max="100"></progress>
         </div>
         <div class="playback-bar__progress-time">
-          {{ totalTime }}
-        </div>
-      </div>
-      <div class="player-volume">
-        <button @click="toggleVolume">
-          <icon-volume-high/>
-          <icon-volume-off/>
-        </button>
-        <div class="volume-bar">
-          <input class="volume-bar__cursor" type="range" max="100" :value="volume" @input="updatePlayerVolume"/>
-          <!-- for chrome only : -->
-          <progress class="volume-bar__progress" :value="volume" max="100"></progress>
+          {{ formatTime(duration) }}
         </div>
       </div>
       <div class="control-bar">
-        <button  class="player-star" @click="$store.dispatch('toggleFavorite', track.id_yt)">
-          <icon-star-inline v-if="isFavorite(track.id_yt)" />
-          <icon-star-outline v-else />
-        </button>
         <button  class="player-prev" @click="playPrev">
           <icon-prev/>
         </button>
@@ -45,14 +30,31 @@
         <button  class="player-next" @click="playNext">
           <icon-next/>
         </button>
-      <p class="player-infos">
-        <span class="player-title">
-          {{ track.title }}
-        </span>
-        <b class="player-artist" @click.prevent="filterByArtist(track.artist)">
-          {{ track.artist }}
-        </b>
-      </p>
+        <p class="player-infos">
+          <span class="player-title">
+            {{ track.title }}
+          </span>
+          <span class="player-artist" @click.prevent="filterByArtist(track.artist)">
+            {{ track.artist }}
+          </span>
+        </p>
+        <div class="player-volume">
+          <button @click="toggleVolume">
+            <div class="player-volume__icon-container">
+              <icon-volume-high class="player-volume__icon"/>
+              <i class="player-volume__crossed" :class="{ 'player-volume__crossed--muted': volume == 0 }"></i>
+            </div>
+          </button>
+          <div class="volume-bar">
+            <input class="volume-bar__cursor" type="range" max="100" :value="volume" @input="updatePlayerVolume"/>
+            <!-- for chrome only : -->
+            <progress class="volume-bar__progress" :value="volume" max="100"></progress>
+          </div>
+        </div>
+        <button  class="player-star" @click="$store.dispatch('toggleFavorite', track.id_yt)">
+          <icon-star-inline v-if="isFavorite(track.id_yt)" />
+          <icon-star-outline v-else />
+        </button>
         <button  class="player-up" @click="$store.dispatch('setAppStatus', '5-player-full')">
           <icon-up-down/>
         </button>
@@ -72,6 +74,14 @@
       iconUpDown,
       loader,
     },
+    data: function() {
+      return {
+        volume: 0,
+        duration: 0,
+        currentTime: 0,
+        loaded: 0,
+      }
+    },
     computed: {
       track: {
         get(){ return this.$store.getters.playerTrack },
@@ -80,22 +90,13 @@
       player() {
         return window.PLAYER
       },
-      volume: {
-        get(){ return this.$store.getters.playerVolume },
-        set(value){}
-      },
-      totalTime() {
-        return this.formatTime(this.$store.getters.playerTotalTime)
-      },
-      currentTime() {
-        return this.formatTime(this.$store.getters.playerCurrentTime)
-      },
       progress: {
-        get(){ return this.$store.getters.playerProgress },
-        set(value){}
+        get(){ return (this.currentTime / this.duration) * 100 },
+        set(){}
       },
-      buffer() {
-        return this.$store.getters.playerBuffer
+      buffer: {
+        get(){ return this.loaded * 100 },
+        set(){}
       },
     },
     methods: {
@@ -122,7 +123,7 @@
       },
       updatePlayerVolume(e) {
         this.player.setVolume(e.target.value)
-        this.volume = e.target.value
+        this.volume = localStorage.volume = e.target.value
       },
       seekPlayer(e) {
         let self = this
@@ -134,11 +135,17 @@
         })
       },
       toggleVolume() {
-        if(this.player.isMuted()) {
-          this.player.unMute()
+        if(this.volume == 0) {
+          if(localStorage.volume == 0) {
+            localStorage.volume = 33
+          }
+          this.player.setVolume(localStorage.volume)
+          this.volume = localStorage.volume
         }
         else {
-          this.player.mute()
+          localStorage.volume = this.volume
+          this.player.setVolume(0)
+          this.volume = 0
         }
       },
       play(track) {
@@ -157,13 +164,21 @@
         }
       },
       filterByArtist(artist) {
+        this.$store.dispatch('setAppStatus', '2-init-screen')
         this.$store.dispatch('setFilter', {type: 'artist', value: artist})
       },
     },
     mounted: function() {
       let self = this
       self.$store.dispatch('initPlayer')
-      // App keyboard aliases
+      // Update Player Infos
+      setInterval(function() {
+        self.player.getVolume().then((volume) => {self.volume = volume})
+        self.player.getDuration().then((duration) => {self.duration = duration})
+        self.player.getCurrentTime().then((currentTime) => {self.currentTime = currentTime})
+        self.player.getVideoLoadedFraction().then((loaded) => {self.loaded = loaded})
+      }, 500)
+      // Keyboard aliases
       window.onkeydown = function(e) {
         switch(e.key) {
           case 'MediaPlayPause':
@@ -188,15 +203,15 @@
   .player {
     z-index: $z-layer-player;
     position: fixed;
-    bottom: -$player-height - 10;
     transition: all .3s;
     width: 100%;
     // background: linear-gradient(transparent, black);
     // background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,1) 50%,rgba(0,0,0,1) 100%);
     background-color: #000000a6;
     transition: 0.3s all;
-    .state-2-init-screen & {
-      bottom: 0;
+    bottom: 0;
+    .state-4-nav &, .state-3-search & {
+      bottom: -$player-height - 10;
     }
     .state-5-player-full & {
       height: 100vh;
@@ -213,8 +228,18 @@
       .state-5-player-full & {
         position: fixed;
         width: 100%;
-        height: 50vh;
+        height: calc(100vh - $player-height);
         top: 0;
+      }
+      #player {
+        width: 100vw;
+        height: 0;
+        pointer-events: none;
+        transition: all 0.3s;
+        pointer-events: none;
+        .state-5-player-full & {
+          height: 100vh;
+        }
       }
       &.cover-image {
         opacity: 0;
@@ -232,10 +257,10 @@
       justify-content: space-between;
       height: $player-height;
       transition: .3s height;
+      transition: 1s opacity;
      .state-5-player-full & {
         position: fixed;
         width: 100%;
-        height: 50vh;
         bottom: 0;
         background-color: black;
       }
@@ -247,6 +272,7 @@
       height: $control-bar-height;
     }
     .player-next, .player-prev {
+      @extend %currentStyleColor;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -263,7 +289,7 @@
       }
       .state-5-player-full & {
         width: 44px;
-        height: 44px;
+        height: 64px;
         border: auto;
         svg {
           width: auto;
@@ -274,6 +300,7 @@
       .ion__svg {
         height: 25px;
         width: 25px;
+        @extend %currentStyleColor;
       }
     }
     .player-play {
@@ -283,6 +310,9 @@
         position: absolute;
         left: 0;
       }
+    }
+    .player-artist {
+      @extend %artistStyle;
     }
     .playback-bar {
       display: flex;
@@ -295,6 +325,7 @@
         color: white;
         text-shadow: 1px 1px black;
         padding: 0 8px;
+        cursor: default;
       }
       .progress-bar {
         flex-grow: 1;
@@ -336,30 +367,51 @@
       font-size: 16px;
       line-height: 24px;
       flex-grow: 2;
-      .state-4-nav &, .state-3-search & {
-        height: 0px;
-      }
       .player-title {
         @extend %currentStyleColor;
       }
     }
     .player-volume {
-      display: none;
-      .state-5-player-full & {
-        display: block;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      &__icon-container {
+        position: relative;
+      }
+      &__icon svg {
+        height: 2em;
+        width: 2em;
+        @extend %currentStyleColor;
+      }
+      &__crossed {
+        display: inline-block;
+        position: absolute;
+        left: 0px;
+        @extend %currentStyleBkgColor;
+        width: 26px;
+        height: 26px;
+        transition: clip-path .4s ease, background-color .2s ease;
+        clip-path: polygon(100% 100%, 75% 100%, 100% 100%, 75% 100%);
+        &--muted {
+          clip-path: polygon(10% 0, 25% 0, 100% 100%, 85% 100%);
+        }
       }
       .volume-bar {
         display: flex;
         flex-direction: column;
         position: relative;
         justify-content: center;
-        
+        width: 10vw;
         &__cursor {
           position: relative;
           left: 0;
           z-index: 10;
         }
         &__progress {
+          background-color: #7373734f;
+          &::-webkit-progress-bar {
+            background-color: #7373734f;
+          }
           z-index: 0;
           position: absolute;
           left: 0;

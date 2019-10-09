@@ -117,6 +117,9 @@ const getters = {
   tracks(state) {
     return state.tracks.filtered.slice(0, state.scope)
   },
+  firstTrack(state) {
+    return state.tracks.filtered[0]
+  },
   prevTrack(state) {
     return state.tracks.prev
   },
