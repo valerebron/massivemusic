@@ -228,7 +228,7 @@
       .state-5-player-full & {
         position: fixed;
         width: 100%;
-        height: calc(100vh - $player-height);
+        height: calc(100vh - #{$player-height});
         top: 0;
       }
       #player {
