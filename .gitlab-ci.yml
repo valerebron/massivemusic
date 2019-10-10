@@ -36,8 +36,6 @@ deploy:
     - rm config.json && mv configDist.json config.json
     - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS .
     - docker push $CI_REGISTRY_IMAGE
-    - docker stop massivemusic
-    - docker rm massivemusic
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
