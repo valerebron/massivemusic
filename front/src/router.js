@@ -27,28 +27,20 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-// let resolver = function(to, next) {
-//   if(to.name.startsWith('style-')) {
-//     let styleId = to.name.replace('style-', '')
-//     store.dispatch('resetTracks')
-//     store.dispatch('setFilter', {type: 'style', value: styleId})
-//   }
-//   if(to.name == 'favorites') {
-//     store.dispatch('resetTracks')
-//     store.dispatch('setFilter', {type: 'id_yt', value: JSON.parse(localStorage.getItem('favorites'))})
-//   }
-//   if(to.name == 'home') {
-//     store.dispatch('resetTracks')
-//   }
-//   next()
-// }
-
-// router.beforeEach((to, from, next) => {
-//   resolver(to, from, next)
-// })
-
-// router.afterEach((to, from, next) => {
-//   resolver(to, from, next)
-// })
+router.beforeEach((to, from, next) => {
+  if(to.name.startsWith('style-')) {
+    let styleId = to.name.replace('style-', '')
+    store.dispatch('resetTracks')
+    store.dispatch('setFilter', {type: 'style', value: styleId})
+  }
+  if(to.name == 'favorites') {
+    store.dispatch('resetTracks')
+    store.dispatch('setFilter', {type: 'id_yt', value: JSON.parse(localStorage.getItem('favorites'))})
+  }
+  if(to.name == 'home') {
+    store.dispatch('resetTracks')
+  }
+  next()
+})
 
 export default router
