@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import store from './store'
 import VueRouter from 'vue-router'
 import TrackList from './components/tracklist.vue'
 

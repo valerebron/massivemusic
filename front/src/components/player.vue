@@ -183,7 +183,7 @@
         // console.log(e.key)
         switch(e.key) {
           case 'MediaPlayPause':
-            self.play()
+            self.play(self.track)
           break
           case 'MediaTrackNext':
             self.playNext()
@@ -192,7 +192,7 @@
             self.playPrev()
           break
           case 'Escape':
-            self.dispatch('setAppStatus', '2-init-screen')
+            self.$store.dispatch('setAppStatus', '2-init-screen')
           break
         }
       }
