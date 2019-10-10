@@ -27,20 +27,4 @@ const router = new VueRouter({
   mode: 'history'
 })
 
-// router.beforeResolve((to, from, next) => {
-//   if(to.name.startsWith('style-')) {
-//     let styleId = to.name.replace('style-', '')
-//     store.dispatch('resetTracks')
-//     store.dispatch('setFilter', {type: 'style', value: styleId})
-//   }
-//   if(to.name == 'favorites') {
-//     store.dispatch('resetTracks')
-//     store.dispatch('setFilter', {type: 'id_yt', value: JSON.parse(localStorage.getItem('favorites'))})
-//   }
-//   if(to.name == 'home') {
-//     store.dispatch('resetTracks')
-//   }
-//   next()
-// })
-
 export default router

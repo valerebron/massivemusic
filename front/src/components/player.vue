@@ -180,7 +180,7 @@
       }, 500)
       // Keyboard aliases
       window.onkeydown = function(e) {
-        console.log(e.key)
+        // console.log(e.key)
         switch(e.key) {
           case 'MediaPlayPause':
             self.play()
@@ -211,7 +211,7 @@
     background-color: #000000a6;
     transition: 0.3s all;
     bottom: 0;
-    .state-4-nav &, .state-3-search & {
+    .state-4-nav & {
       bottom: -$player-height - 10;
     }
     .state-5-player-full & {

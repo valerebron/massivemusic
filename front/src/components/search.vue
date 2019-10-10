@@ -107,6 +107,7 @@
       height: $search-height;
       border: none;
       padding-left: $search-button-width * 1.5;
+      margin-right: 10px;
       @extend %appStyleColor;
       .state-3-search & {
         width: 100%;
