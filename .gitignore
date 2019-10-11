@@ -11,6 +11,9 @@ front/npm-debug.log*
 front/yarn-debug.log*
 front/yarn-error.log*
 
+# cached files
+back/var/cache
+
 # Editor directories and files
 .idea
 .vscode
