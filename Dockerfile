@@ -7,6 +7,7 @@ WORKDIR /var/www/html/
 COPY back .
 COPY front/dist .
 COPY config.json .
+COPY .htaccess .
 #2 Install psql
 RUN apt-get update
 RUN apt-get install -y libpq-dev postgresql postgresql-client postgresql-contrib
