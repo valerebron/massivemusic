@@ -2,7 +2,8 @@ FROM php:7.3.8-apache
 #1 Add project files
 ARG DB_PASS=postgres
 VOLUME /data/db/massivemusic /var/lib/postgresql/data
-WORKDIR /
+RUN mkdir -p /var/www/html/
+WORKDIR /var/www/html/
 COPY back .
 COPY front/dist .
 COPY config.json .
@@ -20,7 +21,7 @@ RUN service postgresql start &&\
     if [ "${output}" != *"${dbname}"* ] ; then \
       psql --command "CREATE DATABASE ${dbname}" && \
       psql --command "CREATE USER ${dbname} WITH SUPERUSER PASSWORD '${DB_PASS}'" &&\
-      psql -d ${dbname} -a -f /datas/${dbname}.sql; fi
+      psql -d ${dbname} -a -f /var/www/html/datas/${dbname}.sql; fi
 #4 launch servers
 USER root
-CMD service postgresql start && service apache2 start && php /bin/console server:run *:8000
+CMD service postgresql start && service apache2 start && php /var/www/html/bin/console server:run *:8000
