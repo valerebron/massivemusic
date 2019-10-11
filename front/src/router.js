@@ -7,6 +7,9 @@ Vue.use(VueRouter)
 
 // Routes
 const router = new VueRouter({
+  hashbang: false,
+  history: true,
+  mode: 'html5',
   routes: [
     { name: 'home', path: '/', component: TrackList },
     { name: 'style-11', path: '/dubstep', component: TrackList },
@@ -16,15 +19,8 @@ const router = new VueRouter({
     { name: 'style-15', path: '/deepbass', component: TrackList },
     { name: 'style-19', path: '/electro', component: TrackList },
     { name: 'favorites', path: '/favorites', component: TrackList },
-    // { name: 'member', path: '/member/:id', component: TrackList,
-    //   children: [
-    //     { path: '', component: memberHome },
-    //     { path: 'profile', component: memberProfile },
-    //     { path: 'tracks', component: memberTracks },
-    //   ],
-    // },
+    { name: '404', path: "*", component: TrackList },
   ],
-  mode: 'history'
 })
 
 router.beforeEach((to, from, next) => {

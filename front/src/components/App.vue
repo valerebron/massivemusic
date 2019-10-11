@@ -38,29 +38,10 @@
     },
     mounted: function() {
       this.loadDatas()
-      // this.resolveRoute()
       this.changeScopeOnScroll()
       this.trackPointerActivity()
     },
-    // watch: {
-    //   '$route': 'resolveRoute'
-    // },
     methods: {
-      resolveRoute() {
-        let routeName = this.$route.name
-        if(routeName.startsWith('style-')) {
-          let styleId = routeName.replace('style-', '')
-          this.$store.dispatch('resetTracks')
-          this.$store.dispatch('setFilter', {type: 'style', value: styleId})
-        }
-        if(routeName == 'favorites') {
-          this.$store.dispatch('resetTracks')
-          this.$store.dispatch('setFilter', {type: 'id_yt', value: JSON.parse(localStorage.getItem('favorites'))})
-        }
-        if(routeName == 'home') {
-          this.$store.dispatch('resetTracks')
-        }
-      },
       loadDatas() {
          // 1- cache
         if(localStorage.getItem('stylesCached') && localStorage.getItem('tracksCached')) {
