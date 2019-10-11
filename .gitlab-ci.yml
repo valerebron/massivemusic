@@ -15,6 +15,7 @@ build-vue-app:
       - config.js
       - docker-compose.yml
       - Dockerfile
+      - .htaccess
   image: node:10.15-alpine
   before_script:
    - apk update && apk add yarn -y
