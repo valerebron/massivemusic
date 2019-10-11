@@ -7,9 +7,7 @@ Vue.use(VueRouter)
 
 // Routes
 const router = new VueRouter({
-  hashbang: false,
-  history: true,
-  mode: 'html5',
+  mode: 'history',
   routes: [
     { name: 'home', path: '/', component: TrackList },
     { name: 'style-11', path: '/dubstep', component: TrackList },
