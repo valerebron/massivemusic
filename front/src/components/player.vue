@@ -391,7 +391,7 @@
         @extend %currentStyleBkgColor;
         width: 26px;
         height: 26px;
-        transition: clip-path .4s ease, background-color .2s ease;
+        transition: clip-path .2s ease, background-color .2s ease;
         clip-path: polygon(100% 100%, 75% 100%, 100% 100%, 75% 100%);
         &--muted {
           clip-path: polygon(10% 0, 25% 0, 100% 100%, 85% 100%);

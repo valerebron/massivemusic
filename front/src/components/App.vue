@@ -103,6 +103,10 @@
 </script>
 
 <style lang="scss">
+  html {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+  }
   body {
     &.no-scroll {
       overflow: hidden;
