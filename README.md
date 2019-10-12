@@ -12,8 +12,7 @@ BassMusic streaming Player
   - [config.json](config.json)
   - [configDist.json](configDist.json)
   - [.gitlab-ci.yml](.gitlab-ci.yml)
-  - massivemusic2-apache.conf add `FallbackResource index.html`
-    (see: https://router.vuejs.org/guide/essentials/history-mode.html#html5-history-mode)
+
 ## Create & Feed database
   - `php bin/console doctrine:database:create`
   - `su - postgres -c "psql -d massivemusic -a -f /var/www/html/datas/massivemusic.sql"`
