@@ -1,23 +1,3 @@
-// Z-index
-
-$z-layer-logo:         70;
-$z-button-search:      64;
-$z-layer-search:       60;
-$z-layer-player:       55;
-$z-layer-nav:          50;
-$z-layer-header:       40;
-$z-layer-pages:        20;
-$z-layer-tracklist:    10;
-$z-layer-zero:         0;
-
-// Sizes
-$global-ui-bar-height: 4px;
-$global-ui-bar-height-hover: 6px;
-
-$icon-width: 24px;
-$icon-height: 24px;
-
-// Colors
 $primary-color: rgb(194, 194, 194);
 $secondary-color: rgb(27, 18, 18);
 $third-color: grey;
@@ -44,12 +24,3 @@ $grey-6: #A0A0A0;
 $header-bkg: transparent;
 $app-bkg: black;
 $ui-bkg: rgba(0, 0, 0, 0.95);
-
-// sizes
-$header-height: 75px;
-$control-bar-height: 90px;
-$player-height: 100px;
-$search-height: 40px;
-$search-button-width: 60px;
-
-@import 'tools';

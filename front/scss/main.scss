@@ -1,13 +1,13 @@
-@import 'vars';
-@import 'body';
-@import 'a';
-@import 'input.range';
-@import 'input.search';
-@import 'progress';
-@import 'button';
-@import 'opensans';
-@import 'tools';
-
+@import '___vars/colors';
+@import '___vars/sizes';
+@import '___vars/z-index';
+@import '__fonts/opensans';
+@import '_tools/breakpoints';
+@import '_tools/style-colors';
+@import 'elements/a';
+@import 'elements/body';
+@import 'elements/button';
+@import 'elements/input.range';
+@import 'elements/input.search';
+@import 'elements/progress';
 @import '~vue-ionicons/ionicons.scss';
-
-// load by vue.config.js
