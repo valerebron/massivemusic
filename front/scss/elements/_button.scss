@@ -9,4 +9,7 @@ button {
   .massive-player & {
     @extend %currentStyleColor;
   }
+  &:active {
+    opacity: 0.5;
+  }
 }

@@ -373,7 +373,10 @@
       }
     }
     .player-volume {
-      display: flex;
+      display: none;
+      @include breakpoint(sm) {
+        display: flex;
+      }
       flex-direction: row;
       justify-content: center;
       &__icon-container {
