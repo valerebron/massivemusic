@@ -125,6 +125,8 @@
       border-radius: 20px;
       cursor: pointer;
       padding: 4px 8px;
+      right: 30px;
+      position: relative;
     }
   }
 </style>
