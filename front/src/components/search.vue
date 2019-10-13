@@ -94,9 +94,11 @@
         right: $search-button-width;
       }
       .state-2-init-screen .termsThere & {
-        width: calc(40% - #{$search-button-width});
-        right: $search-button-width;
-        justify-content: flex-end;
+        @include breakpoint(sm) {
+          width: calc(40% - #{$search-button-width});
+          right: $search-button-width;
+          justify-content: flex-end;
+        }
       }
     }
     &__input {
@@ -127,6 +129,9 @@
       padding: 4px 8px;
       right: 30px;
       position: relative;
+      .state-2-init-screen .termsThere & {
+        right: 0;
+      }
     }
   }
 </style>

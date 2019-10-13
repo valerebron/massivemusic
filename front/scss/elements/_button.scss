@@ -12,4 +12,8 @@ button {
   &:active {
     opacity: 0.5;
   }
+  &:focus {
+    background: #ffffff14;
+    // border-radius: 150px;
+  }
 }
