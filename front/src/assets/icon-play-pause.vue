@@ -6,9 +6,9 @@
 </template>
 
 <script>
-export default {
-  name: 'icon-play-pause'
-}
+  export default {
+    name: 'icon-play-pause'
+  }
 </script>
 
 

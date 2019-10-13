@@ -154,7 +154,7 @@ input[type=range] {
       background-color: $color-19;
     }
   }
-  &:hover {
+  &:hover, .touch & {
     &::-webkit-slider-runnable-track {
       @include input-range-bar-hover;
     }

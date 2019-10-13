@@ -36,7 +36,7 @@ export default {
     &__bottom {
       clip-path: polygon(0 70%, 100% 70%, 100% 80%, 0 80%);
     }
-    .state-4-nav & {
+    .state-nav & {
       .burger-close-icon {
         &__top {
           clip-path: polygon(0 10%, 90% 100%, 100% 90%, 10% 0);

@@ -55,7 +55,7 @@
           <icon-star-inline v-if="isFavorite(track.id_yt)" />
           <icon-star-outline v-else />
         </button>
-        <button  class="player-up" @click="$store.dispatch('setAppStatus', '5-player-full')">
+        <button  class="player-up" @click="$store.dispatch('setAppStatus', 'state-full')">
           <icon-up-down/>
         </button>
       </div>
@@ -164,7 +164,7 @@
         }
       },
       filterByArtist(artist) {
-        this.$store.dispatch('setAppStatus', '2-init-screen')
+        this.$store.dispatch('setAppStatus', 'init')
         this.$store.dispatch('setFilter', {type: 'artist', value: artist})
       },
     },
@@ -192,7 +192,7 @@
             self.playPrev()
           break
           case 'Escape':
-            self.$store.dispatch('setAppStatus', '2-init-screen')
+            self.$store.dispatch('setAppStatus', 'init')
           break
         }
       }
@@ -211,10 +211,10 @@
     background-color: #000000a6;
     transition: 0.3s all;
     bottom: 0;
-    .state-4-nav & {
+    .state-nav & {
       bottom: -$player-height - 10;
     }
-    .state-5-player-full & {
+    .state-full & {
       height: 100vh;
       bottom: 0;
     }
@@ -226,7 +226,7 @@
       width: 100%;
       object-fit: contain;
       background: black;
-      .state-5-player-full & {
+      .state-full & {
         position: fixed;
         width: 100%;
         height: calc(100vh - #{$player-height});
@@ -238,7 +238,7 @@
         pointer-events: none;
         transition: all 0.3s;
         pointer-events: none;
-        .state-5-player-full & {
+        .state-full & {
           height: 100vh;
         }
       }
@@ -259,7 +259,7 @@
       height: $player-height;
       transition: .3s height;
       transition: 1s opacity;
-     .state-5-player-full & {
+     .state-full & {
         position: fixed;
         width: 100%;
         bottom: 0;
@@ -288,7 +288,7 @@
         height: 20px;
         width: 20px;
       }
-      .state-5-player-full & {
+      .state-full & {
         width: 44px;
         height: 64px;
         border: auto;
@@ -368,13 +368,18 @@
       font-size: 16px;
       line-height: 24px;
       flex-grow: 2;
+      position: absolute;
+      top: 12px;
+      @include breakpoint(tablet) {
+        position: static;
+      }
       .player-title {
         @extend %currentStyleColor;
       }
     }
     .player-volume {
       display: none;
-      @include breakpoint(sm) {
+      @include breakpoint(phablet) {
         display: flex;
       }
       flex-direction: row;
@@ -406,6 +411,7 @@
         position: relative;
         justify-content: center;
         width: 10vw;
+        margin-top: -4px;
         &__cursor {
           position: relative;
           left: 0;

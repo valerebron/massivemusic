@@ -1,5 +1,5 @@
 const state = {
-  status: '1-loading',  // '2-init-screen' '3-search' '4-nav' '5-player-full'
+  status: 'state-loading',  // 'state-init' 'state-search' 'state-nav' 'state-full'
 }
 
 const mutations = {
@@ -11,12 +11,12 @@ const mutations = {
 const actions = {
   setAppStatus(store, newStatus) {
     if(store.state.status == newStatus) {
-      store.commit('SET_APP_STATUS', '2-init-screen')
+      store.commit('SET_APP_STATUS', 'init')
       document.querySelector('body').classList.remove('no-scroll')
     }
     else {
       store.commit('SET_APP_STATUS', newStatus)
-      if(['4-nav','5-player-full'].includes(newStatus)) {
+      if(['state-nav','state-full'].includes(newStatus)) {
         document.querySelector('body').classList.add('no-scroll')
       }
       else {

@@ -24,7 +24,7 @@
   .header {
     position: fixed;
     z-index: $z-layer-header;
-    .state-5-player-full & {
+    .state-full & {
       z-index: $z-layer-logo;
     }
     top: 0;

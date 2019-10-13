@@ -25,7 +25,7 @@ const actions = {
       else {
         player.getVolume().then((volume) => { localStorage.volume = volume })
       }
-      store.dispatch('setAppStatus', '2-init-screen')
+      store.dispatch('setAppStatus', 'init')
       store.dispatch('play', store.getters.firstTrack)
     })
     player.on('stateChange', function (event) {

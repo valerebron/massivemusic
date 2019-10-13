@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     goHome: function() {
-      this.$store.dispatch('setAppStatus', '2-init-screen')
+      this.$store.dispatch('setAppStatus', 'init')
       this.$router.push({ name: 'home' })
       //if same route, router do nothin, so :
       this.$store.dispatch('resetTracks')
@@ -42,12 +42,15 @@ export default {
     padding: 8px 0;
     border-radius: 100px;
     &__name {
+      .state-search & {
+        display: none;
+      }
       text-align-last: left;
       padding-left: 8px;
       font-size: 16px;
       text-transform: uppercase;
       transition: &ll 0.3s;
-      .state-4-nav & {
+      .state-nav & {
         width: 0;
       }
     }
@@ -58,12 +61,12 @@ export default {
     &__wrapper {
       display: flex;
       align-items: center;
-      padding: 0;
       transition: all 0.3s;
-      .state-3-search & {
+      .state-search & {
         position: absolute;
         left: 10px;
         top: 12px;
+        padding: 0;
       }
     }
   }

@@ -33,7 +33,7 @@
         this.$store.dispatch('play', track)
       },
       filterByArtist(artist) {
-        this.$store.dispatch('setAppStatus', '2-init-screen')
+        this.$store.dispatch('setAppStatus', 'init')
         this.$store.dispatch('setFilter', {type: 'artist', value: artist})
       },
       isFavorite(id_yt) {
@@ -45,7 +45,7 @@
           return false
         }
       },
-    }
+    },
   }
 </script>
 
@@ -74,6 +74,12 @@
     transition: all 0.2s;
     &:hover {
       background-color: $color-selection;
+    }
+    &:active {
+      opacity: 0.5;
+    }
+    &:focus {
+       background-color: $color-selection;
     }
     &--playing {
       background-color: $color-selection;

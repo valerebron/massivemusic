@@ -38,11 +38,11 @@
     },
     methods: {
       toggleNav() {
-        if(this.$store.getters.appState !== '4-nav') {
-          this.$store.dispatch('setAppStatus', '4-nav')
+        if(this.$store.getters.appState !== 'state-nav') {
+          this.$store.dispatch('setAppStatus', 'state-nav')
         }
         else {
-          this.$store.dispatch('setAppStatus', '2-init-screen')
+          this.$store.dispatch('setAppStatus', 'init')
         }
       },
     },
@@ -65,7 +65,7 @@
       left: -100vw;
       display: flex;
       justify-content: center;
-      .state-4-nav & {
+      .state-nav & {
         left: 0;
       }
       transition: left 0.3s;

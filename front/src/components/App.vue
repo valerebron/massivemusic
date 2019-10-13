@@ -1,6 +1,6 @@
 <template>
-  <main class="massive-app" :class="'state-'+appStatus+' route-'+this.$route.name+' current-style-'+playerStyle+' player-state-'+playerState+' '+pointerActivity">
-    <loader/>
+  <main class="massive-app" :class="appStatus+' route-'+this.$route.name+' current-style-'+playerStyle+' player-state-'+playerState+' '+pointerActivity+' '+touchClass">
+    <loader class="main-loader" />
     <theheader />
     <router-view></router-view>
     <player />
@@ -21,7 +21,8 @@
     },
     data: function() {
       return {
-        pointerActivity: 'pointer-active' // pointer-idle
+        pointerActivity: 'pointer-active', // pointer-idle
+        touchClass: '',
       }
     },
     computed: {
@@ -37,6 +38,7 @@
       },
     },
     mounted: function() {
+      this.touchClass = (("ontouchstart" in document.documentElement) ? ' touch' : ' no-touch')
       this.loadDatas()
       this.changeScopeOnScroll()
       this.trackPointerActivity()
@@ -49,7 +51,7 @@
           let tracksCached = JSON.parse(localStorage.getItem('tracksCached'))
           this.$store.dispatch('setAppStyles', stylesCached)
           this.$store.dispatch('initTracks', tracksCached)
-          this.$store.dispatch('setAppStatus', '2-init-screen')
+          this.$store.dispatch('setAppStatus', 'init')
         }
         else {  // 2- no cache
           axios
@@ -62,7 +64,7 @@
               .then((res) => {
                 this.$store.dispatch('initTracks', res.data)
                 localStorage.setItem('tracksCached', JSON.stringify(res.data))
-                this.$store.dispatch('setAppStatus', '2-init-screen')
+                this.$store.dispatch('setAppStatus', 'init')
               })
               .catch(function(error){
                 console.log(error)
@@ -112,27 +114,22 @@
       overflow: hidden;
     }
   }
-  .loader {
-    @extend %appStyleStroke;
-  }
+
   .massive-app {
-    .loader {
-      transition: opacity 0.3s;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      top: 0;
-    }
-    &.state-0-loading {
-      .loader {
-        opacity: 1;
-      }
-    }
-    &.pointer-idle.state-5-player-full {
+    &.pointer-idle.state-full {
       cursor: none;
       .player__bottom {
         opacity: 0;
       }
+    }
+  }
+
+  .main-loader {
+    @extend %appStyleStroke;
+    transition: opacity 0.3s;
+    position: fixed;
+    .state-0-loading & {
+      opacity: 1;
     }
   }
 </style>

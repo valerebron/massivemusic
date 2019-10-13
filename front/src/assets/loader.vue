@@ -42,6 +42,8 @@
     pointer-events: none;
     transition: .1s opacity;
     opacity: 0;
+    width: 100%;
+    height: 100%;
     .tracklist & {
       position: fixed;
       top: calc(50vh - 22px);
@@ -49,10 +51,11 @@
     }
     .control-bar & {
       position: absolute;
+      top: 0;
       bottom: 23px;
-      left: calc(50vw - 34px);
+      // left: calc(50vw - 34px);
     }
-    .state-1-loading &, .player-state-buffering .control-bar & {
+    .state-loading &, .player-state-buffering .control-bar & {
       opacity: 1;
     }
   }

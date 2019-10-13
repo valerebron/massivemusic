@@ -44,17 +44,17 @@
     },
     methods: {
       toggleSearch() {
-        if(this.appStatus != '3-search') {
-          this.appStatus = '3-search'
+        if(this.appStatus != 'state-search') {
+          this.appStatus = 'state-search'
           document.querySelector('.search__input').focus()
         }
         else {
-          this.appStatus = '2-init-screen'
+          this.appStatus = 'state-init'
         }
       },
       blurSearch($event) {
         $event.target.blur()
-        this.appStatus = '2-init-screen'
+        this.appStatus = 'state-init'
       },
       resetSearch() {
         document.querySelector('.search__input').value = ''
@@ -67,7 +67,7 @@
 
 <style lang="scss">
   .search {
-    .state-3-search & {
+    .state-search & {
       background-color: $ui-bkg;
     }
     &__button {
@@ -88,13 +88,13 @@
       align-self: center;
       height: 100%;
       z-index: $z-layer-search;
-      .state-3-search & {
+      .state-search & {
         background-color: $ui-bkg;
         width: calc(100% - #{$search-button-width});
         right: $search-button-width;
       }
-      .state-2-init-screen .termsThere & {
-        @include breakpoint(sm) {
+      .state-init .termsThere & {
+        @include breakpoint(tablet) {
           width: calc(40% - #{$search-button-width});
           right: $search-button-width;
           justify-content: flex-end;
@@ -111,10 +111,10 @@
       padding-left: $search-button-width * 1.5;
       margin-right: 10px;
       @extend %appStyleColor;
-      .state-3-search & {
+      .search & {
         width: 100%;
       }
-      .state-2-init-screen .termsThere & {
+      .state-init .termsThere & {
         padding: 0;
         width: 40%;
       }
@@ -129,7 +129,7 @@
       padding: 4px 8px;
       right: 30px;
       position: relative;
-      .state-2-init-screen .termsThere & {
+      .state-init .termsThere & {
         right: 0;
       }
     }
