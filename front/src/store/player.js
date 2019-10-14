@@ -26,7 +26,9 @@ const actions = {
         player.getVolume().then((volume) => { localStorage.volume = volume })
       }
       store.dispatch('setAppStatus', 'init')
-      store.dispatch('play', store.getters.firstTrack)
+      let firstId = store.getters.firstTrack.id_yt
+      window.PLAYER.loadVideoById(firstId)
+      document.querySelector('[data-id="'+firstId+'"]').classList.add('track--playing')
     })
     player.on('stateChange', function (event) {
       let newState = event.target.getPlayerState()
