@@ -29,7 +29,11 @@ const actions = {
       store.dispatch('play', store.getters.firstTrack)
     })
     player.on('stateChange', function (event) {
-      store.commit('SET_PLAYER_STATUS', event.target.getPlayerState())
+      let newState = event.target.getPlayerState()
+      store.commit('SET_PLAYER_STATUS', newState)
+      if(newState == 0) { // ended track
+        store.dispatch('play', store.getters.nextTrack)
+      }
     })
     player.on('error', function (event) {
       console.log('player error:', event.data)

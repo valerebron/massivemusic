@@ -86,10 +86,12 @@ const actions = {
   resetTracks(store) {
     store.commit('RESET_FILTERS')
     store.commit('APPLY_FILTERS')
+    store.dispatch('setNextTrack', store.getters.playerTrack)
   },
   setFilter(store, newFilter) {
     store.commit('UPDATE_FILTER', newFilter)
     store.commit('APPLY_FILTERS')
+    store.dispatch('setNextTrack', store.getters.playerTrack)
   },
   enlargeScope(store) {
     store.commit('ENLARGE_SCOPE')
