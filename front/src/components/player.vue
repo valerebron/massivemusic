@@ -306,6 +306,9 @@
     }
     .player-play {
       position: relative;
+      .play-button {
+        margin-left: 8px;
+      }
       .loader {
         @extend %currentStyleStroke;
         position: absolute;
