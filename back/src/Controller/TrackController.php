@@ -58,11 +58,16 @@ class TrackController extends AbstractController
      */
     public function trackInvalidate(TrackRepository $repo, $idYt, ObjectManager $manager)
     {
-        header("Access-Control-Allow-Origin: *");
-        $track = $repo->findOneByIdYt($idYt);
-        $track->setInvalid(true);
-        $manager->flush();
-        return $this->json(['invalidated' => $idYt]);
+        if($_SERVER['HTTP_ORIGIN'] == 'https://massivemusic.fr') {
+            header("Access-Control-Allow-Origin: *");
+            $track = $repo->findOneByIdYt($idYt);
+            $track->setInvalid(true);
+            $manager->flush();
+            return $this->json([$track->getIdYt(), $track->getTitle()]);
+        }
+        else {
+            return $this->json(['kill all humans']);
+        }
     }
 
     /**

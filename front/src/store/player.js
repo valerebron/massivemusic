@@ -35,37 +35,27 @@ const actions = {
         store.dispatch('play', store.getters.nextTrack)
       }
     })
-    player.on('error', function () {
-      axios
-      .get('https://api.massivemusic.fr/serv.php')
-      .then((r) => {
-        console.log(r)
-      })
-
-      // if([100, 101, 150].includes(event.data)) {
-      //   let id_yt = store.getters.playerTrack.id_yt
-      //   axios
-      //     .get(window.APIURL+'/tracks/invalidate'+id_yt)
-      //     .catch(function(event) {
-      //       console.log(event)
-      //     })
-      //     .then((r) => {
-      //       console.log(r)
-      //       if(document.querySelector('.track[data-id="'+id_yt+'"]')) {
-      //         document.querySelector('.track[data-id="'+id_yt+'"]').classList.add('track--invalidate')
-      //       }
-      //       let nextTrack = store.getters.nextTrack
-      //       if(nextTrack) {
-      //         store.dispatch('play', nextTrack)
-      //       }
-      //     })
-      // }
-      // else if(event.data == 2) {
-      //   console.log('id: '+id_yt+' invalide')
-      // }
-      // else if(event.data == 5) {
-      //   console.log('id: '+id_yt+' html5 player error')
-      // }
+    player.on('error', function (event) {
+      let id_yt = store.getters.playerTrack.id_yt
+      if([100, 101, 150].includes(event.data)) {
+        axios
+          .get(window.APIURL+'/tracks/invalidate'+id_yt)
+          .then(() => {
+            if(document.querySelector('.track[data-id="'+id_yt+'"]')) {
+              document.querySelector('.track[data-id="'+id_yt+'"]').classList.add('track--invalidate')
+            }
+            let nextTrack = store.getters.nextTrack
+            if(nextTrack) {
+              store.dispatch('play', nextTrack)
+            }
+          })
+      }
+      else if(event.data == 2) {
+        console.log('id: '+id_yt+' id error')
+      }
+      else if(event.data == 5) {
+        console.log('id: '+id_yt+' html5 player error')
+      }
     })
   },
   play(store, track) {
