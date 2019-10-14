@@ -36,6 +36,37 @@
   background-color: $color-19;
 }
 
+.style-hover-11 {
+  &.router-link-active, &:hover {
+    color: $color-11;
+  }
+}
+.style-hover-12 {
+  &.router-link-active, &:hover {
+    color: $color-12;
+  }
+}
+.style-hover-13 {
+  &.router-link-active, &:hover {
+    color: $color-13;
+  }
+}
+.style-hover-14 {
+  &.router-link-active, &:hover {
+    color: $color-14;
+  }
+}
+.style-hover-15 {
+  &.router-link-active, &:hover {
+    color: $color-15;
+  }
+}
+.style-hover-19 {
+  &.router-link-active, &:hover {
+    color: $color-19;
+  }
+}
+
 %appStyleColor {
   transition: all 0.3s;
   color: $primary-color;

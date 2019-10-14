@@ -36,5 +36,8 @@
     z-index: $z-layer-header;
     justify-content: space-between;
     align-content: center;
+    .state-nav & {
+      background-color: black;
+    }
   }
 </style>

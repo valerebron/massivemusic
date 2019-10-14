@@ -4,10 +4,8 @@
       <icon-burger-close/>
     </button>
     <div class="massive-nav__dialog" @click="toggleNav()">
-      <router-link v-for="style in $store.getters.appStyles" :to="style.slug" :class="'massive-nav__dialog__link style-'+style.id" :key="style.id">
+      <router-link v-for="style in $store.getters.appStyles" :to="style.slug" :class="'massive-nav__dialog__link style-bkg-'+style.id+' style-hover-'+style.id" :key="style.id">
         <div class="massive-nav__dialog__link-container massive-nav__dialog__link-container--style">
-          <icon-radio-on class="icon-radio-on" />
-          <icon-radio-off class="icon-radio-off" />
           <span class="massive-nav__dialog__text">
             {{ style.name }}
           </span>
@@ -59,65 +57,62 @@
     }
     &__dialog {
       background-color: black;
-      display: block;
       position: fixed;
-      top: 0;
+      bottom: 0;
       left: -100vw;
       display: flex;
       justify-content: center;
-      .state-nav & {
-        left: 0;
-      }
       transition: left 0.3s;
-      height: 100vh;
+      height: calc(100vh - #{$player-height} + 26px);
       width: 100%;
       display: flex;
       flex-direction: column;
+      .state-nav & {
+        left: 0;
+      }
       &.open {
         left: 0;
       }
       &__link {
+        flex-grow: 1;
         display: flex;
+        color: black;
+        background-color: $grey-6;
         justify-content: center;
         cursor: pointer;
         padding: 8px;
         font-size: 20px;
+        text-transform: uppercase;
+        &:active {
+          opacity: 0.5;
+        }
+        &:focus {
+          background: #ffffff14;
+          // border-radius: 150px;
+        }
         &--favorite {
           .ion__svg {
             color: $favorite-color;
           }
         }
-        .icon-radio-off {
-          transition: opacity 0.3s;
-          opacity: 1;
-        }
-        .icon-radio-on {
-          transition: opacity 0.3s;
-          opacity: 0;
-        }
         &.router-link-active {
           cursor: default;
         }
         &.router-link-active, &:hover {
+          color: white;
           background-color: $color-selection;
-          .icon-radio-off {
-            transition: opacity 0.2s;
-            opacity: 0;
-          }
-          .icon-radio-on {
-            transition: opacity 0.2s;
-            opacity: 1;
-          }
         }
       }
       &__link-container {
-        width: 150px;
+        width: 180px;
         text-align: left;
         align-items: center;
         display: flex;
         .ion {
           padding-right: 10px;
           height: 100%;
+          display: flex;
+          align-items: center;
         }
         &--style {
           position: relative;

@@ -42,7 +42,7 @@ export default {
     padding: 8px 0;
     border-radius: 100px;
     &__name {
-      .state-search & {
+      .state-search &, .state-nav & {
         display: none;
       }
       text-align-last: left;
