@@ -5,23 +5,15 @@
     </button>
     <div class="massive-nav__dialog" @click="toggleNav()">
       <router-link v-for="style in $store.getters.appStyles" :to="style.slug" :class="'massive-nav__dialog__link style-bkg-'+style.id+' style-hover-'+style.id" :key="style.id">
-        <div class="massive-nav__dialog__link-container massive-nav__dialog__link-container--style">
-          <span class="massive-nav__dialog__text">
-            {{ style.name }}
-          </span>
-        </div>
+        {{ style.name }}
       </router-link>
       <router-link to="favorites" class="massive-nav__dialog__link massive-nav__dialog__link--favorite">
-        <div class="massive-nav__dialog__link-container">
           <icon-star/>
           Favorites
-        </div>
       </router-link>
       <a class="massive-nav__dialog__link" href="#">
-        <div class="massive-nav__dialog__link-container">
-          <icon-contact/>
-          login
-        </div>
+        <icon-contact/>
+        login
       </a>
     </div>
   </nav>
@@ -74,15 +66,20 @@
         left: 0;
       }
       &__link {
+        text-shadow: 0 0 4px black;
         flex-grow: 1;
         display: flex;
-        color: black;
-        background-color: $grey-6;
+        color: white;
+        background-color: black;
         justify-content: center;
+        align-items: center;
         cursor: pointer;
         padding: 8px;
         font-size: 20px;
         text-transform: uppercase;
+        .ion {
+          padding-right: 10px;
+        }
         &:active {
           opacity: 0.5;
         }
@@ -90,39 +87,12 @@
           background: #ffffff14;
           // border-radius: 150px;
         }
-        &--favorite {
-          .ion__svg {
-            color: $favorite-color;
-          }
-        }
         &.router-link-active {
           cursor: default;
         }
         &.router-link-active, &:hover {
           color: white;
           background-color: $color-selection;
-        }
-      }
-      &__link-container {
-        width: 180px;
-        text-align: left;
-        align-items: center;
-        display: flex;
-        .ion {
-          padding-right: 10px;
-          height: 100%;
-          display: flex;
-          align-items: center;
-        }
-        &--style {
-          position: relative;
-          .ion {
-            position: absolute;
-            width: 14px;
-          }
-          .massive-nav__dialog__text {
-            padding-left: 30px;
-          }
         }
       }
     }
