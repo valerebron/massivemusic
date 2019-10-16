@@ -106,7 +106,7 @@ const getters = {
   },
   search(state) {
     return state.filters.search
-  }
+  },
 }
 
 export default {

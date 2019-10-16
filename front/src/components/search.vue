@@ -46,7 +46,7 @@
       toggleSearch() {
         if(this.appStatus != 'state-search') {
           this.appStatus = 'state-search'
-          document.querySelector('.search__input').focus()
+          document.getElementsByClassName('search__input')[0].focus()
         }
         else {
           this.appStatus = 'state-init'
@@ -57,8 +57,8 @@
         this.appStatus = 'state-init'
       },
       resetSearch() {
-        document.querySelector('.search__input').value = ''
-        document.querySelector('.search__input').focus()
+        document.getElementsByClassName('search__input')[0].value = ''
+        document.getElementsByClassName('search__input')[0].focus()
         this.searchTerms = ''
       },
     },

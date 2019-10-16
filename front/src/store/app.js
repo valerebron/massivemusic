@@ -12,15 +12,15 @@ const actions = {
   setAppStatus(store, newStatus) {
     if(store.state.status == newStatus) {
       store.commit('SET_APP_STATUS', 'init')
-      document.querySelector('body').classList.remove('no-scroll')
+      document.body.classList.remove('no-scroll')
     }
     else {
       store.commit('SET_APP_STATUS', newStatus)
       if(['state-nav','state-full'].includes(newStatus)) {
-        document.querySelector('body').classList.add('no-scroll')
+        document.body.classList.add('no-scroll')
       }
       else {
-        document.querySelector('body').classList.remove('no-scroll')
+        document.body.classList.remove('no-scroll')
       }
     }
   },

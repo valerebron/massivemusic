@@ -30,7 +30,7 @@ const actions = {
       store.dispatch('setAppStatus', 'init')
       let firstId = store.getters.firstTrack.id_yt
       window.PLAYER.loadVideoById(firstId)
-      document.querySelector('[data-id="'+firstId+'"]').classList.add('track--playing')
+      document.getElementsByClassName(firstId)[0].classList.add('track--playing')
     })
     player.on('stateChange', function (event) {
       let newState = event.target.getPlayerState()
@@ -43,10 +43,10 @@ const actions = {
       let id_yt = store.getters.playerTrack.id_yt
       if([100, 101, 150].includes(event.data)) {
         axios
-          .get(window.APIURL+'/tracks/invalidate'+id_yt)
+          .get(window.APIURL+'/tracks/invalidate/'+id_yt)
           .then(() => {
-            if(document.querySelector('.track[data-id="'+id_yt+'"]')) {
-              document.querySelector('.track[data-id="'+id_yt+'"]').classList.add('track--invalidate')
+            if(document.getElementsByClassName(id_yt)[0]) {
+              document.getElementsByClassName(id_yt)[0].classList.add('track--invalidate')
             }
             let nextTrack = store.getters.nextTrack
             if(nextTrack) {

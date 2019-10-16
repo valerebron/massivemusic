@@ -1,7 +1,7 @@
 <template>
-    <section :class="'tracklist '">
+    <section class="tracklist">
       <table class="tracks">
-        <tr v-for="(track, index) in $store.getters.tracks" class="track" :data-id="track.id_yt" :key="track.id_yt">
+        <tr v-for="(track, index) in $store.getters.tracks" class="track" :class="track.id_yt" :key="track.id_yt">
           <td :class="'track__index style-'+track.style_id" @click="play(track)">
             {{ index + 1 }}
           </td>
@@ -51,7 +51,7 @@
 
 <style lang="scss">
   .tracklist {
-    margin-top: $header-height + 40px;
+    margin-top: $header-height;
     margin-bottom: $header-height + 80px;
     z-index: $z-layer-tracklist;
     &__header {
