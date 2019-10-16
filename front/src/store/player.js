@@ -1,6 +1,8 @@
 import YouTubePlayer from 'youtube-player'
 import axios from 'axios'
 
+let playTimeout = ''
+
 const state = {
   playerStatusId: -1, // UNSTARTED: -1, ENDED: 0, PLAYING: 1, PAUSED: 2, BUFFERING: 3, CUED: 5
   track: {},
@@ -66,18 +68,20 @@ const actions = {
     let playerState = store.getters.playerState
     if(track) {
       if(track.id_yt != playerTrack.id_yt) {
-        player.seekTo(0)
-        if(document.querySelector('.track--playing') !== null) {
-          document.querySelector('.track--playing').classList.remove('track--playing')
+        if(document.getElementsByClassName('track--playing')[0]) {
+          document.getElementsByClassName('track--playing')[0].classList.remove('track--playing')
         }
-        if(document.querySelector('[data-id="'+track.id_yt+'"]')) {
-          document.querySelector('[data-id="'+track.id_yt+'"]').classList.add('track--playing')
+        if(document.getElementsByClassName(track.id_yt)[0]) {
+          document.getElementsByClassName(track.id_yt)[0].classList.add('track--playing')
         }
         store.commit('SET_TRACK', track)
-        player.stopVideo()
-        player.loadVideoById(track.id_yt)
-        store.dispatch('setPrevTrack', track)
-        store.dispatch('setNextTrack', track)
+        // prevent fast clicking prev/next buttons
+        clearTimeout(playTimeout)
+        playTimeout = setTimeout(()=>{
+          player.stopVideo()
+          player.seekTo(0)
+          player.loadVideoById(track.id_yt)
+        }, 333)
       }
       else {
         if(playerState == 'playing') {

@@ -5,8 +5,6 @@ const state = {
   tracks: {
     loaded: [],
     filtered: [],
-    prev: {},
-    next: {},
   },
   scope: 20,
   filters: {
@@ -66,12 +64,6 @@ const mutations = {
       }
     })
   },
-  SET_PREV_TRACK(state, track) {
-    state.tracks.prev = track
-  },
-  SET_NEXT_TRACK(state, track) {
-    state.tracks.next = track
-  },
   ENLARGE_SCOPE(state) {
     state.scope = state.scope * 2
   },
@@ -86,29 +78,13 @@ const actions = {
   resetTracks(store) {
     store.commit('RESET_FILTERS')
     store.commit('APPLY_FILTERS')
-    store.dispatch('setNextTrack', store.getters.playerTrack)
   },
   setFilter(store, newFilter) {
     store.commit('UPDATE_FILTER', newFilter)
     store.commit('APPLY_FILTERS')
-    store.dispatch('setNextTrack', store.getters.playerTrack)
   },
   enlargeScope(store) {
     store.commit('ENLARGE_SCOPE')
-  },
-  setPrevTrack(store, currentTrack) {
-    let currentIndex = store.state.tracks.filtered.findIndex(track => track.id_yt == currentTrack.id_yt)
-    let prevTrack = store.state.tracks.filtered[currentIndex - 1]
-    if(prevTrack) {
-      store.commit('SET_PREV_TRACK', prevTrack)
-    }
-  },
-  setNextTrack(store, currentTrack) {
-    let currentIndex = store.state.tracks.filtered.findIndex(track => track.id_yt == currentTrack.id_yt)
-    let nextTrack = store.state.tracks.filtered[currentIndex + 1]
-    if(nextTrack) {
-      store.commit('SET_NEXT_TRACK', nextTrack)
-    }
   },
 }
 
@@ -121,12 +97,6 @@ const getters = {
   },
   firstTrack(state) {
     return state.tracks.filtered[0]
-  },
-  prevTrack(state) {
-    return state.tracks.prev
-  },
-  nextTrack(state) {
-    return state.tracks.next
   },
   nb_tracks(state) {
     return state.tracks.filtered.length

@@ -152,13 +152,19 @@
         this.$store.dispatch('play', track)
       },
       playPrev() {
-        let prevTrack = this.$store.getters.prevTrack
-        if(prevTrack) {
-          this.play(prevTrack)
+        let id_yt = this.track.id_yt
+        let tracks = this.$store.state.tracklist.tracks.filtered
+        let index = tracks.findIndex(function(e) { return e.id_yt === id_yt })
+        let nextTrack = tracks[index - 1]
+        if(nextTrack) {
+          this.play(nextTrack)
         }
       },
       playNext() {
-        let nextTrack = this.$store.getters.nextTrack
+        let id_yt = this.track.id_yt
+        let tracks = this.$store.state.tracklist.tracks.filtered
+        let index = tracks.findIndex(function(e) { return e.id_yt === id_yt })
+        let nextTrack = tracks[index + 1]
         if(nextTrack) {
           this.play(nextTrack)
         }
