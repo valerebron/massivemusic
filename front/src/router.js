@@ -2,6 +2,7 @@ import Vue from 'vue'
 import store from './store'
 import VueRouter from 'vue-router'
 import TrackList from './components/tracklist.vue'
+import Login from './components/login.vue'
 
 Vue.use(VueRouter)
 
@@ -17,6 +18,7 @@ const router = new VueRouter({
     { name: 'style-15', path: '/deepbass', component: TrackList },
     { name: 'style-19', path: '/electro', component: TrackList },
     { name: 'favorites', path: '/favorites', component: TrackList },
+    { name: 'login', path: '/login', component: Login },
     { name: '404', path: "*", component: TrackList },
   ],
 })

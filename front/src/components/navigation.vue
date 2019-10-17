@@ -11,10 +11,10 @@
           <icon-star/>
           Favorites
       </router-link>
-      <a class="massive-nav__dialog__link" href="#">
+      <router-link to="login" class="massive-nav__dialog__link">
         <icon-contact/>
         login
-      </a>
+      </router-link>
     </div>
   </nav>
 </template>
