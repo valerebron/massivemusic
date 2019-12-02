@@ -1,12 +1,35 @@
 version: "3.1"
 services:
-
   massivemusic:
     image: registry.osrp.xyz/root/massivemusic2
     container_name: massivemusic
     restart: always
     environment:
       DB_PASS: ${DB_PASS}
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: mysql
+            host: mysql
+            user: root
+            password: ${DB_PASS}
+            rawAccess: true
+            migrations: true
+            port: 3306
     ports:
-      - 3330:8000
+      - 3330:4466
       - 3340:80
+  mysql:
+    image: mysql:5.7
+    container_name: massivemusic_db
+    restart: always
+    # Uncomment the next two lines to connect to your your database from outside the Docker environment, e.g. using a database GUI like Workbench
+    # ports:
+    # - "3320:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+    volumes:
+      - mysql:/var/lib/mysql
+volumes:
+  mysql:

@@ -1,0 +1,123 @@
+<template>
+    <section class="tracklist">
+      <table class="tracks">
+        <tr v-for="(track, index) in $store.getters.tracks" class="track" :class="track.id" :key="track.id">
+          <td :class="'track__index style-'+track.style.id" @click="play(track)">
+            {{ index + 1 }}
+          </td>
+          <td :class="'track__dot style-'+track.style.id" @click="play(track)">
+            ‧
+          </td>
+          <td :class="'track__title style-'+track.style.id" @click="play(track)">
+            {{ track.title }}
+          </td>
+          <td>
+            <span class="track__artist" @click.prevent="filterByArtist(track.artist)">
+              {{ track.artist }}
+            </span>
+          </td>
+          <td @click.prevent="$store.dispatch('toggleFavorite', track.id)" class="track__favorite">
+            <icon-star-inline v-if="isFavorite(track.id)" />
+            <icon-star-outline style="opacity: 0.5" v-else />
+          </td>
+        </tr>
+      </table>
+    </section>
+</template>
+
+<script>
+  export default {
+    name: 'tracklist',
+    methods: {
+      play(track) {
+        this.$store.dispatch('play', track)
+      },
+      filterByArtist(artist) {
+        this.$store.dispatch('setAppStatus', 'init')
+        this.$store.dispatch('setFilter', {type: 'artist', value: artist})
+      },
+      isFavorite(id) {
+        let favorites = this.$store.getters.favorites
+        if(favorites !== null && favorites.indexOf(id) != -1) {
+          return true
+        }
+        else {
+          return false
+        }
+      },
+    },
+    updated: function() {
+      if(window.playerReady && !window.tracklistReady) {
+        window.tracklistReady = true
+        this.$store.dispatch('loadFirstTrack')
+      }
+    },
+  }
+</script>
+
+<style lang="scss">
+  .tracklist {
+    margin-top: $header-height;
+    margin-bottom: $header-height + 80px;
+    z-index: $z-layer-tracklist;
+    &__header {
+      color: white;
+    }
+    &_search {
+      z-index: $z-layer-search;
+    }
+  }
+  .tracks {
+    list-style-type: none;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .track {
+    cursor: default;
+    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
+    height: 50px;
+    filter: grayscale(0);
+    transition: all 0.2s;
+    &:hover {
+      background-color: $color-selection;
+    }
+    &:active {
+      opacity: 0.5;
+    }
+    &:focus {
+       background-color: $color-selection;
+    }
+    &--playing {
+      background-color: $color-selection;
+    }
+    &--invalidate {
+      // background-color: $invalidate-color;
+      filter: grayscale(80%);
+      opacity: 0.5;
+      // height: 0;
+      // line-height: 0;
+      // font-size: 0;
+      // border-bottom: 0;
+    }
+    &__index {
+      text-align: center;
+    }
+    td {
+      vertical-align: middle;
+    }
+    &__dot {
+      font-size: 34px;
+      text-align-last: left;
+    }
+    &__title {
+      padding-left: 8px;
+    }
+    &__artist {
+      @extend %artistStyle;
+    }
+    &__favorite {
+      cursor: pointer;
+      color: $favorite-color;
+    }
+  }
+</style>

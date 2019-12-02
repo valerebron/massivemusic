@@ -13,38 +13,8 @@ BassMusic streaming Player
   - [configDist.json](configDist.json)
   - [.gitlab-ci.yml](.gitlab-ci.yml)
 
-## Create & Feed database
-  - `php bin/console doctrine:database:create`
-  - `su - postgres -c "psql -d massivemusic -a -f /var/www/html/datas/massivemusic.sql"`
-
 ## Use
-  - `cd front && yarn dev` (front dev environement)
-  - `php back/bin/console server:run` (back dev server)
+  - `cd front && yarn dev` (vue)
+  - `cd prisma && docker-compose up -d` (prisma)
   - `docker-compose up` (launch massivemusic2 image)
   - `git push` (deploy on prod)
-
-## Entities Structure
-
-1. Track
-idYt string 11
-title string 255
-artist string 255
-duration smallint
-playCount integer
-invalid boolean
-createdAt datetime
-
-2. Style
-name string 255
-url string 255
-tracks relation OneToMany
-
-3. Member
-email string 255
-name string 255
-password string 255
-rank smallint
-createdAt datetime
-lastLogin datetime
-tracks relation OneToMany
-

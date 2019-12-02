@@ -1,28 +1,34 @@
-FROM php:7.3.8-apache
-#1 Add project files
-ARG DB_PASS=postgres
-VOLUME /data/db/massivemusic /var/lib/postgresql/data
-RUN mkdir -p /var/www/html/
-WORKDIR /var/www/html/
-COPY back .
-COPY front/dist .
-COPY config.json .
+# BUILD docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .
+
+FROM prismagraphql/prisma:1.34
+
+#0 Vars
+ARG DB_PASS
+ARG PRISMA_CONFIG
+ENV WEB_DIR /var/www/localhost
+
+#1 Deps
+RUN apk update && apk upgrade
+RUN apk add yarn
+RUN rm -rf /var/cache/apk/*
+RUN yarn global add prisma ts-node
+
+#2 Files
+RUN mkdir -p $WEB_DIR
+WORKDIR $WEB_DIR
+COPY dist .
+COPY prisma .
 COPY .htaccess .
-#2 Install psql
-RUN apt-get update
-RUN apt-get install -y libpq-dev postgresql postgresql-client postgresql-contrib
-RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql
-RUN docker-php-ext-install pdo pdo_pgsql pgsql
-#3 Set database
-RUN sed -i -e 's~postgres@localhost:5433~'"$DB_PASS@localhost:5432"'~g' .env
-USER postgres
-RUN service postgresql start &&\
-    dbname="massivemusic" &&\
-    output=$(psql -c "SELECT datname FROM pg_catalog.pg_database WHERE datname='${dbname}'") &&\
-    if [ "${output}" != *"${dbname}"* ] ; then \
-      psql --command "CREATE DATABASE ${dbname}" && \
-      psql --command "CREATE USER ${dbname} WITH SUPERUSER PASSWORD '${DB_PASS}'" &&\
-      psql -d ${dbname} -a -f /var/www/html/datas/${dbname}.sql; fi
-#4 launch servers
-USER root
-CMD service postgresql start && service apache2 start && php /var/www/html/bin/console server:run *:8000
+COPY config.json .
+RUN chmod 777 index.html
+RUN chmod -R 777 ${WEB_DIR}*
+
+#3 Serve
+# RUN echo -e "\rapk add openrc apache2 --no-cache \r" >> /app/prerun_hook.sh
+# RUN echo -e "rc-service apache2 start" >> /app/prerun_hook.sh
+
+#4 Seed database
+#RUN chmod u+x /app/prerun_hook.sh
+#RUN echo -e "\r node-ts seeds/seedStyles.ts && node-ts seeds/seedUsers.ts && node-ts seeds/seedTracksWithoutDate.ts" > /app/prerun_hook.sh
+
+# RUN echo -e "rc-service apache2 start" > /app/prerun_hook.sh

@@ -1,0 +1,74 @@
+{
+  "name": "massivemusic2",
+  "version": "0.5.0",
+  "private": true,
+  "scripts": {
+    "lint": "vue-cli-service lint",
+    "build": "vue-cli-service build && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .",
+    "dev": "vue-cli-service serve",
+    "vbuild": "vue-cli-service build",
+    "dbuild": "docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .",
+    "serve": "export DB_PASS=root && docker-compose up",
+    "seed": "docker exec massivemusic 'node-ts /var/www/localhost/seeds/seedStyles.ts && node-ts /var/www/localhost/seeds/seedUsers.ts && node-ts /var/www/localhost/seeds/seedTracksWithoutDate.ts'"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@vue/cli": "^3.3.0",
+    "@vue/cli-service": "^3.2.0",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-cache-persist": "^0.1.1",
+    "apollo-client": "^2.6.4",
+    "apollo-link-http": "^1.5.16",
+    "fuse.js": "^3.4.5",
+    "graphql": "^0.13.2",
+    "graphql-tag": "^2.8.0",
+    "subscriptions-transport-ws": "^0.9.16",
+    "vue": "^2.5.17",
+    "vue-apollo": "^3.0.0-beta.5",
+    "vue-ionicons": "^3.0.4",
+    "vue-router": "^3.0.2",
+    "vue-svg-loader": "^0.12.0",
+    "vuex": "^3.1.1",
+    "youtube-player": "^5.5.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.2.1",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0-beta.5",
+    "file-loader": "^2.0.0",
+    "node-sass": "^4.10",
+    "sass-loader": "^7.1.0",
+    "vue-template-compiler": "^2.5.17"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": false
+    },
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended"
+    ],
+    "rules": {
+      "no-useless-escape": 0,
+      "no-console": 0
+    },
+    "parserOptions": {
+      "parser": "babel-eslint"
+    }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "author": "valere",
+  "license": "MIT"
+}

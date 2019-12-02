@@ -1,15 +1,16 @@
 .DS_Store
-front/node_modules
-front/dist
+node_modules
+dist
+prisma/node_modules
 
 # local env files
 .env.local
 .env.*.local
 
 # Log files
-front/npm-debug.log*
-front/yarn-debug.log*
-front/yarn-error.log*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # cached files
 back/var/cache
