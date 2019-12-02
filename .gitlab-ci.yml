@@ -21,7 +21,7 @@ build-vue-app:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
-   - cd front && yarn && yarn build
+   - yarn && yarn build
 
 deploy:
   stage: deploy
@@ -35,7 +35,6 @@ deploy:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
     - mkdir -p /var/www/html/massivemusic
-    - yarn build
     - cp -a dist/. /var/www/html/massivemusic/
     - rm config.json && mv configDist.json config.json
     - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS .
