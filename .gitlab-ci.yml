@@ -7,7 +7,7 @@ stages:
 
 build-vue-app:
   stage: build-vue-app
-  tags: [docker]
+  tags: [shell]
   artifacts:
     paths:
       - node_modules/
@@ -18,12 +18,12 @@ build-vue-app:
       - .htaccess
   image: node:10.15-alpine
   before_script:
+   - export PATH=$PATH:/usr/local/bin
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
+   - man docker
    - node -v
-   - echo "$SHELL"
-   - whoami
    - yarn upgrade
    - yarn
    - yarn build
