@@ -22,7 +22,8 @@ build-vue-app:
    - rm config.json && mv configDist.json config.json
   script:
    - node -v
-   - nvm use 1O.15.2
+   - echo "$SHELL"
+   - whoami
    - yarn upgrade
    - yarn
    - yarn build
