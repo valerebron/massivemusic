@@ -7,7 +7,7 @@ stages:
 
 build-vue-app:
   stage: build-vue-app
-  image: node:10.15.2
+  image: node:10.15.3
   artifacts:
     paths:
       - node_modules/
@@ -17,11 +17,11 @@ build-vue-app:
       - Dockerfile
       - .htaccess
   before_script:
+   - node -v
    - export PATH=$PATH:/usr/local/bin
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
-   - node -v
    - yarn upgrade
    - yarn
    - yarn build
