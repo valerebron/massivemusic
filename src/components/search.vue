@@ -1,7 +1,7 @@
 <template>
   <div class="search" :class="isTerms">
     <div class="search__bar">
-      <input class="search__input" type="search" v-model="searchTerms" @keydown.enter.escape="blurSearch($event)"/>
+      <input class="search__input" type="search" v-model="searchTerms" @keydown.enter.escape="blurSearch($event)" placeholder="Search"/>
       <i class="search__count" @click="resetSearch($event)">
         {{ $store.getters.nb_tracks }}
       </i>
