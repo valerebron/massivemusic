@@ -21,6 +21,8 @@ build-vue-app:
    - apk update && apk add yarn -y
    - rm config.json && mv configDist.json config.json
   script:
+   - nvm use 1O.15.2
+   - node -v
    - yarn upgrade
    - yarn
    - yarn build
