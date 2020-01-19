@@ -7,6 +7,7 @@ stages:
 
 build-vue-app:
   stage: build-vue-app
+  tags: [shell]
   artifacts:
     paths:
       - node_modules/
