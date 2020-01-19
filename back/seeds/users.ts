@@ -1,4 +1,4 @@
-import { prisma } from '../generated/prisma-client'
+const { prisma } = require('../generated/prisma-client')
 
 async function main() {
   let newUser = await prisma.createUser({ id: 1,	 email: 'contact@massivemusic.fr',name:	'MassiveMusic',password:	'4c8de06a3da368b50b3fdc45fe14f61dc160e2e4', role:	'ADMIN'})

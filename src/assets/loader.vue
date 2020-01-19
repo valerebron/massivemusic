@@ -37,7 +37,7 @@
   </svg>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
   .loader {
     pointer-events: none;
     transition: .1s opacity;

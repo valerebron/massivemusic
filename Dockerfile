@@ -11,17 +11,17 @@ ENV WEB_DIR /var/www/localhost
 RUN apk update && apk upgrade
 RUN apk add yarn
 RUN rm -rf /var/cache/apk/*
-RUN yarn global add prisma ts-node
+RUN yarn global add prisma ts-node typescript
 
 #2 Files
 RUN mkdir -p $WEB_DIR
 WORKDIR $WEB_DIR
 COPY dist .
-COPY prisma .
+COPY back .
 COPY .htaccess .
 COPY config.json .
-RUN chmod 777 index.html
-RUN chmod -R 777 ${WEB_DIR}*
+
+# RUN prisma deploy
 
 #3 Serve
 # RUN echo -e "\rapk add openrc apache2 --no-cache \r" >> /app/prerun_hook.sh
@@ -29,6 +29,6 @@ RUN chmod -R 777 ${WEB_DIR}*
 
 #4 Seed database
 #RUN chmod u+x /app/prerun_hook.sh
-#RUN echo -e "\r node-ts seeds/seedStyles.ts && node-ts seeds/seedUsers.ts && node-ts seeds/seedTracksWithoutDate.ts" > /app/prerun_hook.sh
+#RUN echo -e "\r ts-node seeds/seedStyles.ts && ts-node seeds/seedUsers.ts && ts-node seeds/seedTracksWithoutDate.ts" > /app/prerun_hook.sh
 
 # RUN echo -e "rc-service apache2 start" > /app/prerun_hook.sh

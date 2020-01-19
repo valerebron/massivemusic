@@ -14,7 +14,7 @@ BassMusic streaming Player
   - [.gitlab-ci.yml](.gitlab-ci.yml)
 
 ## Use
-  - `cd front && yarn dev` (vue)
-  - `cd prisma && docker-compose up -d` (prisma)
-  - `docker-compose up` (launch massivemusic2 image)
+  - `yarn dev` front (vue)
+  - `yarn seed` insert data base on /seeds scripts
+  - `yarn serve` bdd + prisma with defautl password
   - `git push` (deploy on prod)
