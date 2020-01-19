@@ -16,7 +16,6 @@ build-vue-app:
       - docker-compose.yml
       - Dockerfile
       - .htaccess
-  image: node:10.15-alpine
   before_script:
    - export PATH=$PATH:/usr/local/bin
    - apk update && apk add yarn -y
