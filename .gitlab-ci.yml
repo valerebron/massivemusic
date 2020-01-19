@@ -19,10 +19,9 @@ build-vue-app:
   before_script:
    - node -v
    - export PATH=$PATH:/usr/local/bin
-   - apk update && apk add yarn -y
+   - apk update && apk add yarn -y && apk add docker
    - rm config.json && mv configDist.json config.json
   script:
-   - yarn upgrade
    - yarn
    - yarn build
    - mkdir -p /var/www/html/massivemusic
