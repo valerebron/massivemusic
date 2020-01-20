@@ -7,7 +7,7 @@ stages:
 
 build-vue-app:
   stage: build-vue-app
-  image: node:10.18-alpine
+  image: docker:dind
   artifacts:
     paths:
       - node_modules/
@@ -18,7 +18,7 @@ build-vue-app:
       - .htaccess
   before_script:
    - apk update
-   - apk add docker
+   - apk add nodejs
    - apk add yarn
    - node -v
    - export PATH=$PATH:/usr/local/bin
