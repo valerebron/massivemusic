@@ -19,7 +19,7 @@ build-vue-app:
   before_script:
    - apk update
    - apk add docker
-   - apk add yarn -y
+   - apk add yarn
    - node -v
    - export PATH=$PATH:/usr/local/bin
    - rm config.json && mv configDist.json config.json
