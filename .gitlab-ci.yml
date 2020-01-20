@@ -19,8 +19,9 @@ build-vue-app:
   before_script:
    - rm config.json && mv configDist.json config.json
    - node -v
-   - PATH=$PATH:~/.nvm
+   - PATH=$PATH:/home/valere/.nvm/versions/node/v10.15.2/bin
    - echo $PATH
+   - node -v
   script:
    - yarn
    - yarn build
