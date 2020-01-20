@@ -18,6 +18,8 @@ build-vue-app:
       - .htaccess
   before_script:
    - rm config.json && mv configDist.json config.json
+   - node -v
+   - nvm use 10.15.2
   script:
    - yarn
    - yarn build
