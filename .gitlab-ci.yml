@@ -17,6 +17,7 @@ build-vue-app:
       - Dockerfile
       - .htaccess
   before_script:
+   - export PATH=$PATH:/home/valere/.nvm/versions/node/v10.15.2/bin/node
    - sudo apt update && apt install nodejs
    - node -v
    - rm config.json && mv configDist.json config.json
