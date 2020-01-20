@@ -17,7 +17,7 @@ build-vue-app:
       - Dockerfile
       - .htaccess
   before_script:
-   - apt update && apt install nodejs
+   - sudo apt update && apt install nodejs
    - node -v
    - rm config.json && mv configDist.json config.json
   script:
