@@ -15,10 +15,11 @@ build-vue-app:
       - docker-compose.yml
       - Dockerfile
       - .htaccess
-      - node_modules
   before_script:
    - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
    - rm config.json && mv configDist.json config.json
+   - rm -rf node_modules yarn.lock
+   - yarn
   script:
    - node -v
    - yarn build
