@@ -7,7 +7,7 @@ stages:
 
 build-vue-app:
   stage: build-vue-app
-  image: docker:dind
+  tags: [shell]
   artifacts:
     paths:
       - node_modules/
@@ -17,17 +17,12 @@ build-vue-app:
       - Dockerfile
       - .htaccess
   before_script:
-   - apk update
-   - apk add nodejs
-   - apk add yarn
+   - apt update && apt install nodejs
    - node -v
-   - export PATH=$PATH:/usr/local/bin
    - rm config.json && mv configDist.json config.json
   script:
    - yarn
-   - yarn global add @vue/cli
-   - vue-cli-service build
-   - docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .
+   - yarn build
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
 
