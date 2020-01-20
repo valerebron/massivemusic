@@ -20,8 +20,6 @@ build-vue-app:
    - export PATH="/home/valere/.nvm/versions/node/v10.15.2/bin:$PATH"
    - rm config.json && mv configDist.json config.json
   script:
-   - vue-cli-service build
-   - docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .
    - node -v
    - yarn
    - yarn build
