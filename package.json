@@ -43,6 +43,7 @@
     "file-loader": "^2.0.0",
     "node-sass": "^4.10",
     "sass-loader": "^7.1.0",
+    "vue": "^2.5.17",
     "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
