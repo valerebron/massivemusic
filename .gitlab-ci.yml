@@ -20,9 +20,8 @@ build-vue-app:
    - rm config.json && mv configDist.json config.json
   script:
    - node -v
-   - yarn upgrade
-   - yarn
-   - yarn build
+   - npm install
+   - npm run build
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
 
