@@ -22,8 +22,6 @@ build-vue-app:
    - node -v
   #  - PATH=$PATH:/home/valere/.nvm/versions/node/v10.15.2/bin
   script:
-   - echo $PATH
-   - nvm use 10.15.2
    - node -v
    - yarn
    - yarn build
