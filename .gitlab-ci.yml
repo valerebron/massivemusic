@@ -17,7 +17,7 @@ build-vue-app:
       - Dockerfile
       - .htaccess
   before_script:
-   - export PATH="/home/valere/.nvm/versions/node/v9.7.0/bin:$PATH"
+   - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
    - rm config.json && mv configDist.json config.json
   script:
    - node -v
