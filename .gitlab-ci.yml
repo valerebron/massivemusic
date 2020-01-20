@@ -15,12 +15,12 @@ build-vue-app:
       - docker-compose.yml
       - Dockerfile
       - .htaccess
+      - node_modules
   before_script:
    - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
    - rm config.json && mv configDist.json config.json
   script:
    - node -v
-   - yarn
    - yarn build
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
