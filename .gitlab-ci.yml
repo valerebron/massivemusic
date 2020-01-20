@@ -24,9 +24,9 @@ build-vue-app:
    - export PATH=$PATH:/usr/local/bin
    - rm config.json && mv configDist.json config.json
   script:
-   - docker -h
    - yarn
-   - yarn build
+   - vue-cli-service build
+   - docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
 
