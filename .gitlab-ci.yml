@@ -10,7 +10,6 @@ build-vue-app:
   tags: [shell]
   artifacts:
     paths:
-      - node_modules/
       - dist/
       - config.js
       - docker-compose.yml
