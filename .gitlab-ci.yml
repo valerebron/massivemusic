@@ -25,6 +25,7 @@ build-vue-app:
    - rm config.json && mv configDist.json config.json
   script:
    - yarn
+   - yarn global add @vue/cli
    - vue-cli-service build
    - docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .
    - mkdir -p /var/www/html/massivemusic
