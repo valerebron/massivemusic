@@ -17,10 +17,10 @@ build-vue-app:
       - Dockerfile
       - .htaccess
   before_script:
-  #  - export PATH="$JAVA_HOME/bin:$ANT_HOME/bin:$PATH"
+   - export PATH="/home/valere/.nvm/versions/node/v10.15.2/bin:$PATH"
    - rm config.json && mv configDist.json config.json
    - node -v
-   - PATH=$PATH:/home/valere/.nvm/versions/node/v10.15.2/bin
+  #  - PATH=$PATH:/home/valere/.nvm/versions/node/v10.15.2/bin
   script:
    - echo $PATH
    - nvm use 10.15.2
