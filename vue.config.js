@@ -15,4 +15,7 @@ module.exports = {
       .use('vue-svg-loader')
       .loader('vue-svg-loader')
   }
+  devServer: {
+    proxy: 'https://massivemusic.fr/',
+  }
 }
