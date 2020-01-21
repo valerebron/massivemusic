@@ -16,7 +16,7 @@ Vue.config.productionTip = false
 // apollo
 Vue.use(VueApollo)
 const apolloClient = new ApolloClient({
-  uri: 'http://localhost:3330'
+  uri: config.apiHost
 })
 const apolloProvider = new VueApollo({
   defaultClient: apolloClient,
