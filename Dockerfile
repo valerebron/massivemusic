@@ -21,7 +21,7 @@ COPY back .
 COPY .htaccess .
 COPY config.json .
 
-# RUN prisma deploy
+RUN prisma deploy
 
 #3 Serve
 # RUN echo -e "\rapk add openrc apache2 --no-cache \r" >> /app/prerun_hook.sh
