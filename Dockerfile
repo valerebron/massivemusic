@@ -1,5 +1,3 @@
-# BUILD docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .
-
 FROM prismagraphql/prisma:1.34
 
 #0 Vars

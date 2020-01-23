@@ -32,11 +32,10 @@ deploy:
   dependencies:
     - build-vue-app
   before_script:
-    - sed -i "s/secret: ''/secret: $PRISMA_SECRET/g" back/prisma.yml
     - rm config.json && mv configDist.json config.json
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
     script:
-    - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS .
+    - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS PRISMA_SECRET=$PRISMA_SECRET .
     - docker push $CI_REGISTRY_IMAGE
     - docker-compose up -d
   environment:
