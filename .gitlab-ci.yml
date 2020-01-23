@@ -17,7 +17,7 @@ build-front:
   script:
    - node -v
    - yarn build-front
-   - npm install -g prisma
+   - npm install prisma
    - set PRISMA_SECRET = $PRISMA_SECRET
    - export $PRISMA_SECRET
    - prisma deploy
