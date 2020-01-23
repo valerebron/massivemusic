@@ -1,17 +1,14 @@
 stages:
-  - build-vue-app
+  - build-front
   - deploy
 
-build-vue-app:
-  stage: build-vue-app
+build-front:
+  stage: build-front
   tags: [shell]
   artifacts:
     paths:
       - dist/
       - config.js
-      - docker-compose.yml
-      - Dockerfile
-      - .htaccess
   before_script:
    - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
    - rm config.json && mv configDist.json config.json
@@ -19,7 +16,7 @@ build-vue-app:
    - yarn
   script:
    - node -v
-   - yarn build
+   - vue-cli-service build
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
 
@@ -30,9 +27,10 @@ deploy:
     paths:
       - dist/
   dependencies:
-    - build-vue-app
+    - build-front
   before_script:
     - rm config.json && mv configDist.json config.json
+    - rm back/prisma.yml && mv back/prismaDist.yml back/prisma.yml
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
     - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS PRISMA_SECRET=$PRISMA_SECRET .

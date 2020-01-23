@@ -4,6 +4,8 @@ FROM prismagraphql/prisma:1.34
 ARG DB_PASS
 ARG PRISMA_SECRET
 ARG PRISMA_CONFIG
+
+ENV PRISMA_SECRET $PRISMA_SECRET
 ENV WEB_DIR /var/www/localhost
 
 #1 Deps
@@ -19,8 +21,6 @@ COPY dist .
 COPY back .
 COPY .htaccess .
 COPY config.json .
-
-RUN prisma deploy
 
 #3 Serve
 # RUN echo -e "\rapk add openrc apache2 --no-cache \r" >> /app/prerun_hook.sh
