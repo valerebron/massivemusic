@@ -2,6 +2,7 @@ FROM prismagraphql/prisma:1.34
 
 #0 Vars
 ARG DB_PASS
+ARG PRISMA_SECRET
 ARG PRISMA_CONFIG
 ENV WEB_DIR /var/www/localhost
 
