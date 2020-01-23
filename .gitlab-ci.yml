@@ -17,7 +17,9 @@ build-front:
   script:
    - node -v
    - yarn build-front
+   - npm install -g prisma
    - set PRISMA_SECRET = $PRISMA_SECRET
+   - export $PRISMA_SECRET
    - prisma deploy
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
