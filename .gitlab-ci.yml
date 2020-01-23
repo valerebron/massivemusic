@@ -33,7 +33,7 @@ deploy:
     - rm back/prisma.yml && mv back/prismaDist.yml back/prisma.yml
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
-    - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS PRISMA_SECRET=$PRISMA_SECRET .
+    - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS --build-arg PRISMA_SECRET=$PRISMA_SECRET .
     - docker push $CI_REGISTRY_IMAGE
     - docker-compose up -d
   environment:
