@@ -16,7 +16,7 @@ build-front:
    - yarn
   script:
    - node -v
-   - vue-cli-service build
+   - yarn build-front
    - mkdir -p /var/www/html/massivemusic
    - cp -a dist/. /var/www/html/massivemusic/
 
