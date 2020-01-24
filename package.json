@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "lint": "vue-cli-service lint",
-    "build-front": "vue-cli-service build",
-    "build-back": "docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .",
+    "build": "vue-cli-service build",
     "seed": "ts-node back/seeds/styles.ts && ts-node back/seeds/users.ts && ts-node back/seeds/tracks-no-date.ts",
     "dev": "export DB_PASS=root && docker-compose up -d && vue-cli-service serve"
   },
