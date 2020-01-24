@@ -36,7 +36,7 @@ deploy:
     - docker-compose pull
     - docker-compose up -d
     - docker exec massivemusic sed 's/3330/4466/g' prisma.yml
-    - docker exec massivemusic prisma deploy
+    - docker exec massivemusic export PRISMA_SECRET=$PRISMA_SECRET && prisma deploy
     - docker exec massivemusic sed 's/4466/3330/g' prisma.yml
   environment:
     name: review/$CI_COMMIT_REF_NAME
