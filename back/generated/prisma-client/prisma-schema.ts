@@ -6,7 +6,7 @@ export const typeDefs = /* GraphQL */ `type AggregateStyle {
   count: Int!
 }
 
-type AggregateTest {
+type AggregateTest3 {
   count: Int!
 }
 
@@ -33,9 +33,9 @@ type Mutation {
   upsertStyle(where: StyleWhereUniqueInput!, create: StyleCreateInput!, update: StyleUpdateInput!): Style!
   deleteStyle(where: StyleWhereUniqueInput!): Style
   deleteManyStyles(where: StyleWhereInput): BatchPayload!
-  createTest(data: TestCreateInput!): Test!
-  deleteTest(where: TestWhereUniqueInput!): Test
-  deleteManyTests(where: TestWhereInput): BatchPayload!
+  createTest3(data: Test3CreateInput!): Test3!
+  deleteTest3(where: Test3WhereUniqueInput!): Test3
+  deleteManyTest3s(where: Test3WhereInput): BatchPayload!
   createTrack(data: TrackCreateInput!): Track!
   updateTrack(data: TrackUpdateInput!, where: TrackWhereUniqueInput!): Track
   updateManyTracks(data: TrackUpdateManyMutationInput!, where: TrackWhereInput): BatchPayload!
@@ -71,9 +71,9 @@ type Query {
   style(where: StyleWhereUniqueInput!): Style
   styles(where: StyleWhereInput, orderBy: StyleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Style]!
   stylesConnection(where: StyleWhereInput, orderBy: StyleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StyleConnection!
-  test(where: TestWhereUniqueInput!): Test
-  tests(where: TestWhereInput, orderBy: TestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Test]!
-  testsConnection(where: TestWhereInput, orderBy: TestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestConnection!
+  test3(where: Test3WhereUniqueInput!): Test3
+  test3s(where: Test3WhereInput, orderBy: Test3OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Test3]!
+  test3sConnection(where: Test3WhereInput, orderBy: Test3OrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Test3Connection!
   track(where: TrackWhereUniqueInput!): Track
   tracks(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Track]!
   tracksConnection(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TrackConnection!
@@ -225,58 +225,58 @@ input StyleWhereUniqueInput {
 
 type Subscription {
   style(where: StyleSubscriptionWhereInput): StyleSubscriptionPayload
-  test(where: TestSubscriptionWhereInput): TestSubscriptionPayload
+  test3(where: Test3SubscriptionWhereInput): Test3SubscriptionPayload
   track(where: TrackSubscriptionWhereInput): TrackSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
-type Test {
+type Test3 {
   id: ID!
 }
 
-type TestConnection {
+type Test3Connection {
   pageInfo: PageInfo!
-  edges: [TestEdge]!
-  aggregate: AggregateTest!
+  edges: [Test3Edge]!
+  aggregate: AggregateTest3!
 }
 
-input TestCreateInput {
+input Test3CreateInput {
   id: ID
 }
 
-type TestEdge {
-  node: Test!
+type Test3Edge {
+  node: Test3!
   cursor: String!
 }
 
-enum TestOrderByInput {
+enum Test3OrderByInput {
   id_ASC
   id_DESC
 }
 
-type TestPreviousValues {
+type Test3PreviousValues {
   id: ID!
 }
 
-type TestSubscriptionPayload {
+type Test3SubscriptionPayload {
   mutation: MutationType!
-  node: Test
+  node: Test3
   updatedFields: [String!]
-  previousValues: TestPreviousValues
+  previousValues: Test3PreviousValues
 }
 
-input TestSubscriptionWhereInput {
+input Test3SubscriptionWhereInput {
   mutation_in: [MutationType!]
   updatedFields_contains: String
   updatedFields_contains_every: [String!]
   updatedFields_contains_some: [String!]
-  node: TestWhereInput
-  AND: [TestSubscriptionWhereInput!]
-  OR: [TestSubscriptionWhereInput!]
-  NOT: [TestSubscriptionWhereInput!]
+  node: Test3WhereInput
+  AND: [Test3SubscriptionWhereInput!]
+  OR: [Test3SubscriptionWhereInput!]
+  NOT: [Test3SubscriptionWhereInput!]
 }
 
-input TestWhereInput {
+input Test3WhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -291,12 +291,12 @@ input TestWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  AND: [TestWhereInput!]
-  OR: [TestWhereInput!]
-  NOT: [TestWhereInput!]
+  AND: [Test3WhereInput!]
+  OR: [Test3WhereInput!]
+  NOT: [Test3WhereInput!]
 }
 
-input TestWhereUniqueInput {
+input Test3WhereUniqueInput {
   id: ID
 }
 

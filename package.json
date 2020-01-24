@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "lint": "vue-cli-service lint",
-    "build": "vue-cli-service build",
+    "deploy": "(cd back; prisma deploy)",
+    "build": "vue-cli-service build && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .",
     "seed": "ts-node back/seeds/styles.ts && ts-node back/seeds/users.ts && ts-node back/seeds/tracks-no-date.ts",
     "dev": "export DB_PASS=root && docker-compose up -d && vue-cli-service serve"
   },

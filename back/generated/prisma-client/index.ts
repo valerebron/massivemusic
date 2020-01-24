@@ -17,7 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   style: (where?: StyleWhereInput) => Promise<boolean>;
-  test: (where?: TestWhereInput) => Promise<boolean>;
+  test3: (where?: Test3WhereInput) => Promise<boolean>;
   track: (where?: TrackWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -60,25 +60,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => StyleConnectionPromise;
-  test: (where: TestWhereUniqueInput) => TestNullablePromise;
-  tests: (args?: {
-    where?: TestWhereInput;
-    orderBy?: TestOrderByInput;
+  test3: (where: Test3WhereUniqueInput) => Test3NullablePromise;
+  test3s: (args?: {
+    where?: Test3WhereInput;
+    orderBy?: Test3OrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Test>;
-  testsConnection: (args?: {
-    where?: TestWhereInput;
-    orderBy?: TestOrderByInput;
+  }) => FragmentableArray<Test3>;
+  test3sConnection: (args?: {
+    where?: Test3WhereInput;
+    orderBy?: Test3OrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => TestConnectionPromise;
+  }) => Test3ConnectionPromise;
   track: (where: TrackWhereUniqueInput) => TrackNullablePromise;
   tracks: (args?: {
     where?: TrackWhereInput;
@@ -139,9 +139,9 @@ export interface Prisma {
   }) => StylePromise;
   deleteStyle: (where: StyleWhereUniqueInput) => StylePromise;
   deleteManyStyles: (where?: StyleWhereInput) => BatchPayloadPromise;
-  createTest: (data: TestCreateInput) => TestPromise;
-  deleteTest: (where: TestWhereUniqueInput) => TestPromise;
-  deleteManyTests: (where?: TestWhereInput) => BatchPayloadPromise;
+  createTest3: (data: Test3CreateInput) => Test3Promise;
+  deleteTest3: (where: Test3WhereUniqueInput) => Test3Promise;
+  deleteManyTest3s: (where?: Test3WhereInput) => BatchPayloadPromise;
   createTrack: (data: TrackCreateInput) => TrackPromise;
   updateTrack: (args: {
     data: TrackUpdateInput;
@@ -186,9 +186,9 @@ export interface Subscription {
   style: (
     where?: StyleSubscriptionWhereInput
   ) => StyleSubscriptionPayloadSubscription;
-  test: (
-    where?: TestSubscriptionWhereInput
-  ) => TestSubscriptionPayloadSubscription;
+  test3: (
+    where?: Test3SubscriptionWhereInput
+  ) => Test3SubscriptionPayloadSubscription;
   track: (
     where?: TrackSubscriptionWhereInput
   ) => TrackSubscriptionPayloadSubscription;
@@ -205,7 +205,7 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type TestOrderByInput = "id_ASC" | "id_DESC";
+export type Test3OrderByInput = "id_ASC" | "id_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -642,7 +642,7 @@ export interface StyleUpdateManyMutationInput {
   slug?: Maybe<String>;
 }
 
-export type TestWhereUniqueInput = AtLeastOne<{
+export type Test3WhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
@@ -682,7 +682,7 @@ export interface TrackUpdateManyWithoutUserInput {
   >;
 }
 
-export interface TestCreateInput {
+export interface Test3CreateInput {
   id?: Maybe<ID_Input>;
 }
 
@@ -744,7 +744,7 @@ export interface StyleCreateOneInput {
   connect?: Maybe<StyleWhereUniqueInput>;
 }
 
-export interface TestWhereInput {
+export interface Test3WhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -759,9 +759,9 @@ export interface TestWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  AND?: Maybe<TestWhereInput[] | TestWhereInput>;
-  OR?: Maybe<TestWhereInput[] | TestWhereInput>;
-  NOT?: Maybe<TestWhereInput[] | TestWhereInput>;
+  AND?: Maybe<Test3WhereInput[] | Test3WhereInput>;
+  OR?: Maybe<Test3WhereInput[] | Test3WhereInput>;
+  NOT?: Maybe<Test3WhereInput[] | Test3WhereInput>;
 }
 
 export interface StyleWhereInput {
@@ -812,15 +812,15 @@ export interface StyleWhereInput {
   NOT?: Maybe<StyleWhereInput[] | StyleWhereInput>;
 }
 
-export interface TestSubscriptionWhereInput {
+export interface Test3SubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TestWhereInput>;
-  AND?: Maybe<TestSubscriptionWhereInput[] | TestSubscriptionWhereInput>;
-  OR?: Maybe<TestSubscriptionWhereInput[] | TestSubscriptionWhereInput>;
-  NOT?: Maybe<TestSubscriptionWhereInput[] | TestSubscriptionWhereInput>;
+  node?: Maybe<Test3WhereInput>;
+  AND?: Maybe<Test3SubscriptionWhereInput[] | Test3SubscriptionWhereInput>;
+  OR?: Maybe<Test3SubscriptionWhereInput[] | Test3SubscriptionWhereInput>;
+  NOT?: Maybe<Test3SubscriptionWhereInput[] | Test3SubscriptionWhereInput>;
 }
 
 export interface TrackUpdateWithWhereUniqueWithoutUserInput {
@@ -1174,18 +1174,18 @@ export interface StyleConnectionSubscription
   aggregate: <T = AggregateStyleSubscription>() => T;
 }
 
-export interface AggregateTest {
+export interface AggregateTest3 {
   count: Int;
 }
 
-export interface AggregateTestPromise
-  extends Promise<AggregateTest>,
+export interface AggregateTest3Promise
+  extends Promise<AggregateTest3>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateTestSubscription
-  extends Promise<AsyncIterator<AggregateTest>>,
+export interface AggregateTest3Subscription
+  extends Promise<AsyncIterator<AggregateTest3>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1215,25 +1215,25 @@ export interface StyleSubscriptionPayloadSubscription
   previousValues: <T = StylePreviousValuesSubscription>() => T;
 }
 
-export interface TestConnection {
+export interface Test3Connection {
   pageInfo: PageInfo;
-  edges: TestEdge[];
+  edges: Test3Edge[];
 }
 
-export interface TestConnectionPromise
-  extends Promise<TestConnection>,
+export interface Test3ConnectionPromise
+  extends Promise<Test3Connection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TestEdge>>() => T;
-  aggregate: <T = AggregateTestPromise>() => T;
+  edges: <T = FragmentableArray<Test3Edge>>() => T;
+  aggregate: <T = AggregateTest3Promise>() => T;
 }
 
-export interface TestConnectionSubscription
-  extends Promise<AsyncIterator<TestConnection>>,
+export interface Test3ConnectionSubscription
+  extends Promise<AsyncIterator<Test3Connection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TestEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTestSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<Test3EdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTest3Subscription>() => T;
 }
 
 export interface TrackEdge {
@@ -1253,45 +1253,45 @@ export interface TrackEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface TestPreviousValues {
+export interface Test3PreviousValues {
   id: ID_Output;
 }
 
-export interface TestPreviousValuesPromise
-  extends Promise<TestPreviousValues>,
+export interface Test3PreviousValuesPromise
+  extends Promise<Test3PreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
 }
 
-export interface TestPreviousValuesSubscription
-  extends Promise<AsyncIterator<TestPreviousValues>>,
+export interface Test3PreviousValuesSubscription
+  extends Promise<AsyncIterator<Test3PreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
 }
 
-export interface TestSubscriptionPayload {
+export interface Test3SubscriptionPayload {
   mutation: MutationType;
-  node: Test;
+  node: Test3;
   updatedFields: String[];
-  previousValues: TestPreviousValues;
+  previousValues: Test3PreviousValues;
 }
 
-export interface TestSubscriptionPayloadPromise
-  extends Promise<TestSubscriptionPayload>,
+export interface Test3SubscriptionPayloadPromise
+  extends Promise<Test3SubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = TestPromise>() => T;
+  node: <T = Test3Promise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = TestPreviousValuesPromise>() => T;
+  previousValues: <T = Test3PreviousValuesPromise>() => T;
 }
 
-export interface TestSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<TestSubscriptionPayload>>,
+export interface Test3SubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<Test3SubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = TestSubscription>() => T;
+  node: <T = Test3Subscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = TestPreviousValuesSubscription>() => T;
+  previousValues: <T = Test3PreviousValuesSubscription>() => T;
 }
 
 export interface TrackPreviousValues {
@@ -1378,40 +1378,40 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface Test {
+export interface Test3 {
   id: ID_Output;
 }
 
-export interface TestPromise extends Promise<Test>, Fragmentable {
+export interface Test3Promise extends Promise<Test3>, Fragmentable {
   id: () => Promise<ID_Output>;
 }
 
-export interface TestSubscription
-  extends Promise<AsyncIterator<Test>>,
+export interface Test3Subscription
+  extends Promise<AsyncIterator<Test3>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
 }
 
-export interface TestNullablePromise
-  extends Promise<Test | null>,
+export interface Test3NullablePromise
+  extends Promise<Test3 | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
 }
 
-export interface TestEdge {
-  node: Test;
+export interface Test3Edge {
+  node: Test3;
   cursor: String;
 }
 
-export interface TestEdgePromise extends Promise<TestEdge>, Fragmentable {
-  node: <T = TestPromise>() => T;
+export interface Test3EdgePromise extends Promise<Test3Edge>, Fragmentable {
+  node: <T = Test3Promise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface TestEdgeSubscription
-  extends Promise<AsyncIterator<TestEdge>>,
+export interface Test3EdgeSubscription
+  extends Promise<AsyncIterator<Test3Edge>>,
     Fragmentable {
-  node: <T = TestSubscription>() => T;
+  node: <T = Test3Subscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1508,6 +1508,10 @@ export type String = string;
 
 export const models: Model[] = [
   {
+    name: "Test3",
+    embedded: false
+  },
+  {
     name: "User",
     embedded: false
   },
@@ -1517,10 +1521,6 @@ export const models: Model[] = [
   },
   {
     name: "Track",
-    embedded: false
-  },
-  {
-    name: "Test",
     embedded: false
   },
   {

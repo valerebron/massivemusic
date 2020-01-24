@@ -1,3 +1,7 @@
+type Test3 {
+  id: ID! @id
+}
+
 type User {
   id: ID! @id
   name: String!
@@ -26,10 +30,6 @@ type Track {
   user: User!
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
-}
-
-type Test {
-  id: ID! @id
 }
 
 enum userRole {

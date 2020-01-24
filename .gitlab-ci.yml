@@ -29,11 +29,11 @@ deploy:
   dependencies:
     - build-front
   before_script:
-    - rm config.json && mv configDist.json config.json
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   script:
     - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS --build-arg PRISMA_SECRET=$PRISMA_SECRET .
     - docker push $CI_REGISTRY_IMAGE
+    - docker-compose pull
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
