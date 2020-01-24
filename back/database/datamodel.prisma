@@ -28,6 +28,10 @@ type Track {
   updatedAt: DateTime! @updatedAt
 }
 
+type Test {
+  id: ID! @id
+}
+
 enum userRole {
   USER,
   ADMIN,

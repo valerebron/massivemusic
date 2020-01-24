@@ -17,6 +17,7 @@ export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
   style: (where?: StyleWhereInput) => Promise<boolean>;
+  test: (where?: TestWhereInput) => Promise<boolean>;
   track: (where?: TrackWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -59,6 +60,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => StyleConnectionPromise;
+  test: (where: TestWhereUniqueInput) => TestNullablePromise;
+  tests: (args?: {
+    where?: TestWhereInput;
+    orderBy?: TestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Test>;
+  testsConnection: (args?: {
+    where?: TestWhereInput;
+    orderBy?: TestOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TestConnectionPromise;
   track: (where: TrackWhereUniqueInput) => TrackNullablePromise;
   tracks: (args?: {
     where?: TrackWhereInput;
@@ -119,6 +139,9 @@ export interface Prisma {
   }) => StylePromise;
   deleteStyle: (where: StyleWhereUniqueInput) => StylePromise;
   deleteManyStyles: (where?: StyleWhereInput) => BatchPayloadPromise;
+  createTest: (data: TestCreateInput) => TestPromise;
+  deleteTest: (where: TestWhereUniqueInput) => TestPromise;
+  deleteManyTests: (where?: TestWhereInput) => BatchPayloadPromise;
   createTrack: (data: TrackCreateInput) => TrackPromise;
   updateTrack: (args: {
     data: TrackUpdateInput;
@@ -163,6 +186,9 @@ export interface Subscription {
   style: (
     where?: StyleSubscriptionWhereInput
   ) => StyleSubscriptionPayloadSubscription;
+  test: (
+    where?: TestSubscriptionWhereInput
+  ) => TestSubscriptionPayloadSubscription;
   track: (
     where?: TrackSubscriptionWhereInput
   ) => TrackSubscriptionPayloadSubscription;
@@ -178,6 +204,10 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type TestOrderByInput = "id_ASC" | "id_DESC";
+
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type userRole = "USER" | "ADMIN" | "ROBOT";
 
@@ -222,452 +252,6 @@ export type UserOrderByInput =
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
-
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export interface TrackCreateInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  artist: String;
-  duration: Int;
-  playcount?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-  style: StyleCreateOneInput;
-  user: UserCreateOneWithoutTracksInput;
-}
-
-export type StyleWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface UserUpdateInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  role?: Maybe<userRole>;
-  tracks?: Maybe<TrackUpdateManyWithoutUserInput>;
-}
-
-export interface UserUpdateOneRequiredWithoutTracksInput {
-  create?: Maybe<UserCreateWithoutTracksInput>;
-  update?: Maybe<UserUpdateWithoutTracksDataInput>;
-  upsert?: Maybe<UserUpsertWithoutTracksInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface TrackCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  artist: String;
-  duration: Int;
-  playcount?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-  style: StyleCreateOneInput;
-}
-
-export interface UserCreateWithoutTracksInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  role: userRole;
-}
-
-export interface TrackCreateManyWithoutUserInput {
-  create?: Maybe<TrackCreateWithoutUserInput[] | TrackCreateWithoutUserInput>;
-  connect?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
-}
-
-export interface TrackSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<TrackWhereInput>;
-  AND?: Maybe<TrackSubscriptionWhereInput[] | TrackSubscriptionWhereInput>;
-  OR?: Maybe<TrackSubscriptionWhereInput[] | TrackSubscriptionWhereInput>;
-  NOT?: Maybe<TrackSubscriptionWhereInput[] | TrackSubscriptionWhereInput>;
-}
-
-export type TrackWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface TrackUpdateManyDataInput {
-  title?: Maybe<String>;
-  artist?: Maybe<String>;
-  duration?: Maybe<Int>;
-  playcount?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-}
-
-export interface StyleCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  slug: String;
-}
-
-export interface TrackWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  artist?: Maybe<String>;
-  artist_not?: Maybe<String>;
-  artist_in?: Maybe<String[] | String>;
-  artist_not_in?: Maybe<String[] | String>;
-  artist_lt?: Maybe<String>;
-  artist_lte?: Maybe<String>;
-  artist_gt?: Maybe<String>;
-  artist_gte?: Maybe<String>;
-  artist_contains?: Maybe<String>;
-  artist_not_contains?: Maybe<String>;
-  artist_starts_with?: Maybe<String>;
-  artist_not_starts_with?: Maybe<String>;
-  artist_ends_with?: Maybe<String>;
-  artist_not_ends_with?: Maybe<String>;
-  duration?: Maybe<Int>;
-  duration_not?: Maybe<Int>;
-  duration_in?: Maybe<Int[] | Int>;
-  duration_not_in?: Maybe<Int[] | Int>;
-  duration_lt?: Maybe<Int>;
-  duration_lte?: Maybe<Int>;
-  duration_gt?: Maybe<Int>;
-  duration_gte?: Maybe<Int>;
-  playcount?: Maybe<Int>;
-  playcount_not?: Maybe<Int>;
-  playcount_in?: Maybe<Int[] | Int>;
-  playcount_not_in?: Maybe<Int[] | Int>;
-  playcount_lt?: Maybe<Int>;
-  playcount_lte?: Maybe<Int>;
-  playcount_gt?: Maybe<Int>;
-  playcount_gte?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-  invalid_not?: Maybe<Boolean>;
-  style?: Maybe<StyleWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TrackWhereInput[] | TrackWhereInput>;
-  OR?: Maybe<TrackWhereInput[] | TrackWhereInput>;
-  NOT?: Maybe<TrackWhereInput[] | TrackWhereInput>;
-}
-
-export interface StyleUpdateInput {
-  name?: Maybe<String>;
-  slug?: Maybe<String>;
-}
-
-export interface TrackScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  artist?: Maybe<String>;
-  artist_not?: Maybe<String>;
-  artist_in?: Maybe<String[] | String>;
-  artist_not_in?: Maybe<String[] | String>;
-  artist_lt?: Maybe<String>;
-  artist_lte?: Maybe<String>;
-  artist_gt?: Maybe<String>;
-  artist_gte?: Maybe<String>;
-  artist_contains?: Maybe<String>;
-  artist_not_contains?: Maybe<String>;
-  artist_starts_with?: Maybe<String>;
-  artist_not_starts_with?: Maybe<String>;
-  artist_ends_with?: Maybe<String>;
-  artist_not_ends_with?: Maybe<String>;
-  duration?: Maybe<Int>;
-  duration_not?: Maybe<Int>;
-  duration_in?: Maybe<Int[] | Int>;
-  duration_not_in?: Maybe<Int[] | Int>;
-  duration_lt?: Maybe<Int>;
-  duration_lte?: Maybe<Int>;
-  duration_gt?: Maybe<Int>;
-  duration_gte?: Maybe<Int>;
-  playcount?: Maybe<Int>;
-  playcount_not?: Maybe<Int>;
-  playcount_in?: Maybe<Int[] | Int>;
-  playcount_not_in?: Maybe<Int[] | Int>;
-  playcount_lt?: Maybe<Int>;
-  playcount_lte?: Maybe<Int>;
-  playcount_gt?: Maybe<Int>;
-  playcount_gte?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-  invalid_not?: Maybe<Boolean>;
-  createdAt?: Maybe<DateTimeInput>;
-  createdAt_not?: Maybe<DateTimeInput>;
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  createdAt_lt?: Maybe<DateTimeInput>;
-  createdAt_lte?: Maybe<DateTimeInput>;
-  createdAt_gt?: Maybe<DateTimeInput>;
-  createdAt_gte?: Maybe<DateTimeInput>;
-  updatedAt?: Maybe<DateTimeInput>;
-  updatedAt_not?: Maybe<DateTimeInput>;
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
-  updatedAt_lt?: Maybe<DateTimeInput>;
-  updatedAt_lte?: Maybe<DateTimeInput>;
-  updatedAt_gt?: Maybe<DateTimeInput>;
-  updatedAt_gte?: Maybe<DateTimeInput>;
-  AND?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
-  OR?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
-  NOT?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
-}
-
-export interface StyleUpdateManyMutationInput {
-  name?: Maybe<String>;
-  slug?: Maybe<String>;
-}
-
-export interface TrackUpsertWithWhereUniqueWithoutUserInput {
-  where: TrackWhereUniqueInput;
-  update: TrackUpdateWithoutUserDataInput;
-  create: TrackCreateWithoutUserInput;
-}
-
-export interface UserCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  email: String;
-  password: String;
-  role: userRole;
-  tracks?: Maybe<TrackCreateManyWithoutUserInput>;
-}
-
-export interface TrackUpdateWithWhereUniqueWithoutUserInput {
-  where: TrackWhereUniqueInput;
-  data: TrackUpdateWithoutUserDataInput;
-}
-
-export interface TrackUpdateManyMutationInput {
-  title?: Maybe<String>;
-  artist?: Maybe<String>;
-  duration?: Maybe<Int>;
-  playcount?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-}
-
-export interface TrackUpdateManyWithoutUserInput {
-  create?: Maybe<TrackCreateWithoutUserInput[] | TrackCreateWithoutUserInput>;
-  delete?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
-  connect?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
-  set?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
-  disconnect?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
-  update?: Maybe<
-    | TrackUpdateWithWhereUniqueWithoutUserInput[]
-    | TrackUpdateWithWhereUniqueWithoutUserInput
-  >;
-  upsert?: Maybe<
-    | TrackUpsertWithWhereUniqueWithoutUserInput[]
-    | TrackUpsertWithWhereUniqueWithoutUserInput
-  >;
-  deleteMany?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
-  updateMany?: Maybe<
-    TrackUpdateManyWithWhereNestedInput[] | TrackUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface UserUpsertWithoutTracksInput {
-  update: UserUpdateWithoutTracksDataInput;
-  create: UserCreateWithoutTracksInput;
-}
-
-export interface StyleSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<StyleWhereInput>;
-  AND?: Maybe<StyleSubscriptionWhereInput[] | StyleSubscriptionWhereInput>;
-  OR?: Maybe<StyleSubscriptionWhereInput[] | StyleSubscriptionWhereInput>;
-  NOT?: Maybe<StyleSubscriptionWhereInput[] | StyleSubscriptionWhereInput>;
-}
-
-export interface StyleCreateOneInput {
-  create?: Maybe<StyleCreateInput>;
-  connect?: Maybe<StyleWhereUniqueInput>;
-}
-
-export interface TrackUpdateManyWithWhereNestedInput {
-  where: TrackScalarWhereInput;
-  data: TrackUpdateManyDataInput;
-}
-
-export interface UserCreateOneWithoutTracksInput {
-  create?: Maybe<UserCreateWithoutTracksInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface StyleWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  slug?: Maybe<String>;
-  slug_not?: Maybe<String>;
-  slug_in?: Maybe<String[] | String>;
-  slug_not_in?: Maybe<String[] | String>;
-  slug_lt?: Maybe<String>;
-  slug_lte?: Maybe<String>;
-  slug_gt?: Maybe<String>;
-  slug_gte?: Maybe<String>;
-  slug_contains?: Maybe<String>;
-  slug_not_contains?: Maybe<String>;
-  slug_starts_with?: Maybe<String>;
-  slug_not_starts_with?: Maybe<String>;
-  slug_ends_with?: Maybe<String>;
-  slug_not_ends_with?: Maybe<String>;
-  AND?: Maybe<StyleWhereInput[] | StyleWhereInput>;
-  OR?: Maybe<StyleWhereInput[] | StyleWhereInput>;
-  NOT?: Maybe<StyleWhereInput[] | StyleWhereInput>;
-}
-
-export interface UserUpdateWithoutTracksDataInput {
-  name?: Maybe<String>;
-  email?: Maybe<String>;
-  password?: Maybe<String>;
-  role?: Maybe<userRole>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-}>;
-
-export interface StyleUpsertNestedInput {
-  update: StyleUpdateDataInput;
-  create: StyleCreateInput;
-}
-
-export interface StyleUpdateDataInput {
-  name?: Maybe<String>;
-  slug?: Maybe<String>;
-}
-
-export interface StyleUpdateOneRequiredInput {
-  create?: Maybe<StyleCreateInput>;
-  update?: Maybe<StyleUpdateDataInput>;
-  upsert?: Maybe<StyleUpsertNestedInput>;
-  connect?: Maybe<StyleWhereUniqueInput>;
-}
-
-export interface TrackUpdateInput {
-  title?: Maybe<String>;
-  artist?: Maybe<String>;
-  duration?: Maybe<Int>;
-  playcount?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-  style?: Maybe<StyleUpdateOneRequiredInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutTracksInput>;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface TrackUpdateWithoutUserDataInput {
-  title?: Maybe<String>;
-  artist?: Maybe<String>;
-  duration?: Maybe<Int>;
-  playcount?: Maybe<Int>;
-  invalid?: Maybe<Boolean>;
-  style?: Maybe<StyleUpdateOneRequiredInput>;
-}
 
 export interface UserWhereInput {
   id?: Maybe<ID_Input>;
@@ -754,6 +338,34 @@ export interface UserWhereInput {
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
+export interface StyleUpdateOneRequiredInput {
+  create?: Maybe<StyleCreateInput>;
+  update?: Maybe<StyleUpdateDataInput>;
+  upsert?: Maybe<StyleUpsertNestedInput>;
+  connect?: Maybe<StyleWhereUniqueInput>;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  role: userRole;
+  tracks?: Maybe<TrackCreateManyWithoutUserInput>;
+}
+
+export type StyleWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface TrackUpdateManyMutationInput {
+  title?: Maybe<String>;
+  artist?: Maybe<String>;
+  duration?: Maybe<Int>;
+  playcount?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+}
+
 export interface UserUpdateManyMutationInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
@@ -761,8 +373,495 @@ export interface UserUpdateManyMutationInput {
   role?: Maybe<userRole>;
 }
 
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
+
+export interface TrackUpdateManyWithWhereNestedInput {
+  where: TrackScalarWhereInput;
+  data: TrackUpdateManyDataInput;
+}
+
+export interface TrackSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TrackWhereInput>;
+  AND?: Maybe<TrackSubscriptionWhereInput[] | TrackSubscriptionWhereInput>;
+  OR?: Maybe<TrackSubscriptionWhereInput[] | TrackSubscriptionWhereInput>;
+  NOT?: Maybe<TrackSubscriptionWhereInput[] | TrackSubscriptionWhereInput>;
+}
+
+export interface TrackScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  artist?: Maybe<String>;
+  artist_not?: Maybe<String>;
+  artist_in?: Maybe<String[] | String>;
+  artist_not_in?: Maybe<String[] | String>;
+  artist_lt?: Maybe<String>;
+  artist_lte?: Maybe<String>;
+  artist_gt?: Maybe<String>;
+  artist_gte?: Maybe<String>;
+  artist_contains?: Maybe<String>;
+  artist_not_contains?: Maybe<String>;
+  artist_starts_with?: Maybe<String>;
+  artist_not_starts_with?: Maybe<String>;
+  artist_ends_with?: Maybe<String>;
+  artist_not_ends_with?: Maybe<String>;
+  duration?: Maybe<Int>;
+  duration_not?: Maybe<Int>;
+  duration_in?: Maybe<Int[] | Int>;
+  duration_not_in?: Maybe<Int[] | Int>;
+  duration_lt?: Maybe<Int>;
+  duration_lte?: Maybe<Int>;
+  duration_gt?: Maybe<Int>;
+  duration_gte?: Maybe<Int>;
+  playcount?: Maybe<Int>;
+  playcount_not?: Maybe<Int>;
+  playcount_in?: Maybe<Int[] | Int>;
+  playcount_not_in?: Maybe<Int[] | Int>;
+  playcount_lt?: Maybe<Int>;
+  playcount_lte?: Maybe<Int>;
+  playcount_gt?: Maybe<Int>;
+  playcount_gte?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+  invalid_not?: Maybe<Boolean>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
+  OR?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
+  NOT?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
+}
+
+export interface UserUpsertWithoutTracksInput {
+  update: UserUpdateWithoutTracksDataInput;
+  create: UserCreateWithoutTracksInput;
+}
+
+export interface StyleSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<StyleWhereInput>;
+  AND?: Maybe<StyleSubscriptionWhereInput[] | StyleSubscriptionWhereInput>;
+  OR?: Maybe<StyleSubscriptionWhereInput[] | StyleSubscriptionWhereInput>;
+  NOT?: Maybe<StyleSubscriptionWhereInput[] | StyleSubscriptionWhereInput>;
+}
+
+export interface UserUpdateWithoutTracksDataInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<userRole>;
+}
+
+export interface TrackUpdateWithoutUserDataInput {
+  title?: Maybe<String>;
+  artist?: Maybe<String>;
+  duration?: Maybe<Int>;
+  playcount?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+  style?: Maybe<StyleUpdateOneRequiredInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutTracksInput {
+  create?: Maybe<UserCreateWithoutTracksInput>;
+  update?: Maybe<UserUpdateWithoutTracksDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTracksInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type TrackWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserUpdateInput {
+  name?: Maybe<String>;
+  email?: Maybe<String>;
+  password?: Maybe<String>;
+  role?: Maybe<userRole>;
+  tracks?: Maybe<TrackUpdateManyWithoutUserInput>;
+}
+
+export interface TrackWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  artist?: Maybe<String>;
+  artist_not?: Maybe<String>;
+  artist_in?: Maybe<String[] | String>;
+  artist_not_in?: Maybe<String[] | String>;
+  artist_lt?: Maybe<String>;
+  artist_lte?: Maybe<String>;
+  artist_gt?: Maybe<String>;
+  artist_gte?: Maybe<String>;
+  artist_contains?: Maybe<String>;
+  artist_not_contains?: Maybe<String>;
+  artist_starts_with?: Maybe<String>;
+  artist_not_starts_with?: Maybe<String>;
+  artist_ends_with?: Maybe<String>;
+  artist_not_ends_with?: Maybe<String>;
+  duration?: Maybe<Int>;
+  duration_not?: Maybe<Int>;
+  duration_in?: Maybe<Int[] | Int>;
+  duration_not_in?: Maybe<Int[] | Int>;
+  duration_lt?: Maybe<Int>;
+  duration_lte?: Maybe<Int>;
+  duration_gt?: Maybe<Int>;
+  duration_gte?: Maybe<Int>;
+  playcount?: Maybe<Int>;
+  playcount_not?: Maybe<Int>;
+  playcount_in?: Maybe<Int[] | Int>;
+  playcount_not_in?: Maybe<Int[] | Int>;
+  playcount_lt?: Maybe<Int>;
+  playcount_lte?: Maybe<Int>;
+  playcount_gt?: Maybe<Int>;
+  playcount_gte?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+  invalid_not?: Maybe<Boolean>;
+  style?: Maybe<StyleWhereInput>;
+  user?: Maybe<UserWhereInput>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  AND?: Maybe<TrackWhereInput[] | TrackWhereInput>;
+  OR?: Maybe<TrackWhereInput[] | TrackWhereInput>;
+  NOT?: Maybe<TrackWhereInput[] | TrackWhereInput>;
+}
+
+export interface StyleCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  slug: String;
+}
+
+export interface TrackCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  artist: String;
+  duration: Int;
+  playcount?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+  style: StyleCreateOneInput;
+}
+
+export interface StyleUpdateInput {
+  name?: Maybe<String>;
+  slug?: Maybe<String>;
+}
+
+export interface TrackCreateManyWithoutUserInput {
+  create?: Maybe<TrackCreateWithoutUserInput[] | TrackCreateWithoutUserInput>;
+  connect?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
+}
+
+export interface StyleUpdateManyMutationInput {
+  name?: Maybe<String>;
+  slug?: Maybe<String>;
+}
+
+export type TestWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface StyleUpsertNestedInput {
+  update: StyleUpdateDataInput;
+  create: StyleCreateInput;
+}
+
+export interface TrackUpsertWithWhereUniqueWithoutUserInput {
+  where: TrackWhereUniqueInput;
+  update: TrackUpdateWithoutUserDataInput;
+  create: TrackCreateWithoutUserInput;
+}
+
+export interface StyleUpdateDataInput {
+  name?: Maybe<String>;
+  slug?: Maybe<String>;
+}
+
+export interface TrackUpdateManyWithoutUserInput {
+  create?: Maybe<TrackCreateWithoutUserInput[] | TrackCreateWithoutUserInput>;
+  delete?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
+  connect?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
+  set?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
+  disconnect?: Maybe<TrackWhereUniqueInput[] | TrackWhereUniqueInput>;
+  update?: Maybe<
+    | TrackUpdateWithWhereUniqueWithoutUserInput[]
+    | TrackUpdateWithWhereUniqueWithoutUserInput
+  >;
+  upsert?: Maybe<
+    | TrackUpsertWithWhereUniqueWithoutUserInput[]
+    | TrackUpsertWithWhereUniqueWithoutUserInput
+  >;
+  deleteMany?: Maybe<TrackScalarWhereInput[] | TrackScalarWhereInput>;
+  updateMany?: Maybe<
+    TrackUpdateManyWithWhereNestedInput[] | TrackUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface TestCreateInput {
+  id?: Maybe<ID_Input>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+}
+
+export interface TrackCreateInput {
+  id?: Maybe<ID_Input>;
+  title: String;
+  artist: String;
+  duration: Int;
+  playcount?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+  style: StyleCreateOneInput;
+  user: UserCreateOneWithoutTracksInput;
+}
+
+export interface TrackUpdateManyDataInput {
+  title?: Maybe<String>;
+  artist?: Maybe<String>;
+  duration?: Maybe<Int>;
+  playcount?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+}
+
+export interface TrackUpdateInput {
+  title?: Maybe<String>;
+  artist?: Maybe<String>;
+  duration?: Maybe<Int>;
+  playcount?: Maybe<Int>;
+  invalid?: Maybe<Boolean>;
+  style?: Maybe<StyleUpdateOneRequiredInput>;
+  user?: Maybe<UserUpdateOneRequiredWithoutTracksInput>;
+}
+
+export interface UserCreateWithoutTracksInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  email: String;
+  password: String;
+  role: userRole;
+}
+
+export interface UserCreateOneWithoutTracksInput {
+  create?: Maybe<UserCreateWithoutTracksInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface StyleCreateOneInput {
+  create?: Maybe<StyleCreateInput>;
+  connect?: Maybe<StyleWhereUniqueInput>;
+}
+
+export interface TestWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  AND?: Maybe<TestWhereInput[] | TestWhereInput>;
+  OR?: Maybe<TestWhereInput[] | TestWhereInput>;
+  NOT?: Maybe<TestWhereInput[] | TestWhereInput>;
+}
+
+export interface StyleWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  slug?: Maybe<String>;
+  slug_not?: Maybe<String>;
+  slug_in?: Maybe<String[] | String>;
+  slug_not_in?: Maybe<String[] | String>;
+  slug_lt?: Maybe<String>;
+  slug_lte?: Maybe<String>;
+  slug_gt?: Maybe<String>;
+  slug_gte?: Maybe<String>;
+  slug_contains?: Maybe<String>;
+  slug_not_contains?: Maybe<String>;
+  slug_starts_with?: Maybe<String>;
+  slug_not_starts_with?: Maybe<String>;
+  slug_ends_with?: Maybe<String>;
+  slug_not_ends_with?: Maybe<String>;
+  AND?: Maybe<StyleWhereInput[] | StyleWhereInput>;
+  OR?: Maybe<StyleWhereInput[] | StyleWhereInput>;
+  NOT?: Maybe<StyleWhereInput[] | StyleWhereInput>;
+}
+
+export interface TestSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TestWhereInput>;
+  AND?: Maybe<TestSubscriptionWhereInput[] | TestSubscriptionWhereInput>;
+  OR?: Maybe<TestSubscriptionWhereInput[] | TestSubscriptionWhereInput>;
+  NOT?: Maybe<TestSubscriptionWhereInput[] | TestSubscriptionWhereInput>;
+}
+
+export interface TrackUpdateWithWhereUniqueWithoutUserInput {
+  where: TrackWhereUniqueInput;
+  data: TrackUpdateWithoutUserDataInput;
+}
+
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AggregateStyle {
+  count: Int;
+}
+
+export interface AggregateStylePromise
+  extends Promise<AggregateStyle>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateStyleSubscription
+  extends Promise<AsyncIterator<AggregateStyle>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserPreviousValues {
@@ -799,87 +898,6 @@ export interface UserPreviousValuesSubscription
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
 }
 
-export interface StyleConnection {
-  pageInfo: PageInfo;
-  edges: StyleEdge[];
-}
-
-export interface StyleConnectionPromise
-  extends Promise<StyleConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<StyleEdge>>() => T;
-  aggregate: <T = AggregateStylePromise>() => T;
-}
-
-export interface StyleConnectionSubscription
-  extends Promise<AsyncIterator<StyleConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<StyleEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateStyleSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface TrackPreviousValues {
-  id: ID_Output;
-  title: String;
-  artist: String;
-  duration: Int;
-  playcount: Int;
-  invalid?: Boolean;
-  createdAt: DateTimeOutput;
-  updatedAt: DateTimeOutput;
-}
-
-export interface TrackPreviousValuesPromise
-  extends Promise<TrackPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  artist: () => Promise<String>;
-  duration: () => Promise<Int>;
-  playcount: () => Promise<Int>;
-  invalid: () => Promise<Boolean>;
-  createdAt: () => Promise<DateTimeOutput>;
-  updatedAt: () => Promise<DateTimeOutput>;
-}
-
-export interface TrackPreviousValuesSubscription
-  extends Promise<AsyncIterator<TrackPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  artist: () => Promise<AsyncIterator<String>>;
-  duration: () => Promise<AsyncIterator<Int>>;
-  playcount: () => Promise<AsyncIterator<Int>>;
-  invalid: () => Promise<AsyncIterator<Boolean>>;
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
-}
-
 export interface StyleEdge {
   node: Style;
   cursor: String;
@@ -895,6 +913,50 @@ export interface StyleEdgeSubscription
     Fragmentable {
   node: <T = StyleSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateUser {
+  count: Int;
+}
+
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Style {
+  id: ID_Output;
+  name: String;
+  slug: String;
+}
+
+export interface StylePromise extends Promise<Style>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  slug: () => Promise<String>;
+}
+
+export interface StyleSubscription
+  extends Promise<AsyncIterator<Style>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  slug: () => Promise<AsyncIterator<String>>;
+}
+
+export interface StyleNullablePromise
+  extends Promise<Style | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  slug: () => Promise<String>;
 }
 
 export interface TrackSubscriptionPayload {
@@ -920,6 +982,104 @@ export interface TrackSubscriptionPayloadSubscription
   node: <T = TrackSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
   previousValues: <T = TrackPreviousValuesSubscription>() => T;
+}
+
+export interface UserEdge {
+  node: User;
+  cursor: String;
+}
+
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
+    Fragmentable {
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface AggregateTrack {
+  count: Int;
+}
+
+export interface AggregateTrackPromise
+  extends Promise<AggregateTrack>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTrackSubscription
+  extends Promise<AsyncIterator<AggregateTrack>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TrackConnection {
+  pageInfo: PageInfo;
+  edges: TrackEdge[];
+}
+
+export interface TrackConnectionPromise
+  extends Promise<TrackConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TrackEdge>>() => T;
+  aggregate: <T = AggregateTrackPromise>() => T;
+}
+
+export interface TrackConnectionSubscription
+  extends Promise<AsyncIterator<TrackConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TrackEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTrackSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -993,36 +1153,265 @@ export interface UserNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface StyleConnection {
+  pageInfo: PageInfo;
+  edges: StyleEdge[];
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface StyleConnectionPromise
+  extends Promise<StyleConnection>,
     Fragmentable {
-  count: () => Promise<Long>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<StyleEdge>>() => T;
+  aggregate: <T = AggregateStylePromise>() => T;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface StyleConnectionSubscription
+  extends Promise<AsyncIterator<StyleConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<StyleEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateStyleSubscription>() => T;
 }
 
-export interface UserEdge {
-  node: User;
+export interface AggregateTest {
+  count: Int;
+}
+
+export interface AggregateTestPromise
+  extends Promise<AggregateTest>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTestSubscription
+  extends Promise<AsyncIterator<AggregateTest>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface StyleSubscriptionPayload {
+  mutation: MutationType;
+  node: Style;
+  updatedFields: String[];
+  previousValues: StylePreviousValues;
+}
+
+export interface StyleSubscriptionPayloadPromise
+  extends Promise<StyleSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = StylePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = StylePreviousValuesPromise>() => T;
+}
+
+export interface StyleSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<StyleSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = StyleSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = StylePreviousValuesSubscription>() => T;
+}
+
+export interface TestConnection {
+  pageInfo: PageInfo;
+  edges: TestEdge[];
+}
+
+export interface TestConnectionPromise
+  extends Promise<TestConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TestEdge>>() => T;
+  aggregate: <T = AggregateTestPromise>() => T;
+}
+
+export interface TestConnectionSubscription
+  extends Promise<AsyncIterator<TestConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TestEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTestSubscription>() => T;
+}
+
+export interface TrackEdge {
+  node: Track;
   cursor: String;
 }
 
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
+export interface TrackEdgePromise extends Promise<TrackEdge>, Fragmentable {
+  node: <T = TrackPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
+export interface TrackEdgeSubscription
+  extends Promise<AsyncIterator<TrackEdge>>,
     Fragmentable {
+  node: <T = TrackSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TestPreviousValues {
+  id: ID_Output;
+}
+
+export interface TestPreviousValuesPromise
+  extends Promise<TestPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface TestPreviousValuesSubscription
+  extends Promise<AsyncIterator<TestPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface TestSubscriptionPayload {
+  mutation: MutationType;
+  node: Test;
+  updatedFields: String[];
+  previousValues: TestPreviousValues;
+}
+
+export interface TestSubscriptionPayloadPromise
+  extends Promise<TestSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TestPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TestPreviousValuesPromise>() => T;
+}
+
+export interface TestSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TestSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TestSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TestPreviousValuesSubscription>() => T;
+}
+
+export interface TrackPreviousValues {
+  id: ID_Output;
+  title: String;
+  artist: String;
+  duration: Int;
+  playcount: Int;
+  invalid?: Boolean;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+}
+
+export interface TrackPreviousValuesPromise
+  extends Promise<TrackPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  title: () => Promise<String>;
+  artist: () => Promise<String>;
+  duration: () => Promise<Int>;
+  playcount: () => Promise<Int>;
+  invalid: () => Promise<Boolean>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+}
+
+export interface TrackPreviousValuesSubscription
+  extends Promise<AsyncIterator<TrackPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  title: () => Promise<AsyncIterator<String>>;
+  artist: () => Promise<AsyncIterator<String>>;
+  duration: () => Promise<AsyncIterator<Int>>;
+  playcount: () => Promise<AsyncIterator<Int>>;
+  invalid: () => Promise<AsyncIterator<Boolean>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+}
+
+export interface StylePreviousValues {
+  id: ID_Output;
+  name: String;
+  slug: String;
+}
+
+export interface StylePreviousValuesPromise
+  extends Promise<StylePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  slug: () => Promise<String>;
+}
+
+export interface StylePreviousValuesSubscription
+  extends Promise<AsyncIterator<StylePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  slug: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
   node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface Test {
+  id: ID_Output;
+}
+
+export interface TestPromise extends Promise<Test>, Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface TestSubscription
+  extends Promise<AsyncIterator<Test>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface TestNullablePromise
+  extends Promise<Test | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface TestEdge {
+  node: Test;
+  cursor: String;
+}
+
+export interface TestEdgePromise extends Promise<TestEdge>, Fragmentable {
+  node: <T = TestPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TestEdgeSubscription
+  extends Promise<AsyncIterator<TestEdge>>,
+    Fragmentable {
+  node: <T = TestSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -1080,229 +1469,12 @@ export interface TrackNullablePromise
   updatedAt: () => Promise<DateTimeOutput>;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
-}
-
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
-}
-
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
-}
-
-export interface TrackEdge {
-  node: Track;
-  cursor: String;
-}
-
-export interface TrackEdgePromise extends Promise<TrackEdge>, Fragmentable {
-  node: <T = TrackPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface TrackEdgeSubscription
-  extends Promise<AsyncIterator<TrackEdge>>,
-    Fragmentable {
-  node: <T = TrackSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface StylePreviousValues {
-  id: ID_Output;
-  name: String;
-  slug: String;
-}
-
-export interface StylePreviousValuesPromise
-  extends Promise<StylePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  slug: () => Promise<String>;
-}
-
-export interface StylePreviousValuesSubscription
-  extends Promise<AsyncIterator<StylePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  slug: () => Promise<AsyncIterator<String>>;
-}
-
-export interface StyleSubscriptionPayload {
-  mutation: MutationType;
-  node: Style;
-  updatedFields: String[];
-  previousValues: StylePreviousValues;
-}
-
-export interface StyleSubscriptionPayloadPromise
-  extends Promise<StyleSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = StylePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = StylePreviousValuesPromise>() => T;
-}
-
-export interface StyleSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<StyleSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = StyleSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = StylePreviousValuesSubscription>() => T;
-}
-
-export interface Style {
-  id: ID_Output;
-  name: String;
-  slug: String;
-}
-
-export interface StylePromise extends Promise<Style>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  slug: () => Promise<String>;
-}
-
-export interface StyleSubscription
-  extends Promise<AsyncIterator<Style>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  slug: () => Promise<AsyncIterator<String>>;
-}
-
-export interface StyleNullablePromise
-  extends Promise<Style | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  slug: () => Promise<String>;
-}
-
-export interface AggregateStyle {
-  count: Int;
-}
-
-export interface AggregateStylePromise
-  extends Promise<AggregateStyle>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateStyleSubscription
-  extends Promise<AsyncIterator<AggregateStyle>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface TrackConnection {
-  pageInfo: PageInfo;
-  edges: TrackEdge[];
-}
-
-export interface TrackConnectionPromise
-  extends Promise<TrackConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<TrackEdge>>() => T;
-  aggregate: <T = AggregateTrackPromise>() => T;
-}
-
-export interface TrackConnectionSubscription
-  extends Promise<AsyncIterator<TrackConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<TrackEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateTrackSubscription>() => T;
-}
-
-export interface AggregateTrack {
-  count: Int;
-}
-
-export interface AggregateTrackPromise
-  extends Promise<AggregateTrack>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateTrackSubscription
-  extends Promise<AsyncIterator<AggregateTrack>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-/*
-The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
-*/
-export type Int = number;
-
-export type Long = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
-
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
 export type Boolean = boolean;
+
+export type Long = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -1320,6 +1492,16 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 export type ID_Input = string | number;
 export type ID_Output = string;
 
+/*
+The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
+*/
+export type Int = number;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
+
 /**
  * Model Metadata
  */
@@ -1335,6 +1517,10 @@ export const models: Model[] = [
   },
   {
     name: "Track",
+    embedded: false
+  },
+  {
+    name: "Test",
     embedded: false
   },
   {

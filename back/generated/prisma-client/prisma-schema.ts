@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateStyle {
   count: Int!
 }
 
+type AggregateTest {
+  count: Int!
+}
+
 type AggregateTrack {
   count: Int!
 }
@@ -29,6 +33,9 @@ type Mutation {
   upsertStyle(where: StyleWhereUniqueInput!, create: StyleCreateInput!, update: StyleUpdateInput!): Style!
   deleteStyle(where: StyleWhereUniqueInput!): Style
   deleteManyStyles(where: StyleWhereInput): BatchPayload!
+  createTest(data: TestCreateInput!): Test!
+  deleteTest(where: TestWhereUniqueInput!): Test
+  deleteManyTests(where: TestWhereInput): BatchPayload!
   createTrack(data: TrackCreateInput!): Track!
   updateTrack(data: TrackUpdateInput!, where: TrackWhereUniqueInput!): Track
   updateManyTracks(data: TrackUpdateManyMutationInput!, where: TrackWhereInput): BatchPayload!
@@ -64,6 +71,9 @@ type Query {
   style(where: StyleWhereUniqueInput!): Style
   styles(where: StyleWhereInput, orderBy: StyleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Style]!
   stylesConnection(where: StyleWhereInput, orderBy: StyleOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StyleConnection!
+  test(where: TestWhereUniqueInput!): Test
+  tests(where: TestWhereInput, orderBy: TestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Test]!
+  testsConnection(where: TestWhereInput, orderBy: TestOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TestConnection!
   track(where: TrackWhereUniqueInput!): Track
   tracks(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Track]!
   tracksConnection(where: TrackWhereInput, orderBy: TrackOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TrackConnection!
@@ -215,8 +225,79 @@ input StyleWhereUniqueInput {
 
 type Subscription {
   style(where: StyleSubscriptionWhereInput): StyleSubscriptionPayload
+  test(where: TestSubscriptionWhereInput): TestSubscriptionPayload
   track(where: TrackSubscriptionWhereInput): TrackSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type Test {
+  id: ID!
+}
+
+type TestConnection {
+  pageInfo: PageInfo!
+  edges: [TestEdge]!
+  aggregate: AggregateTest!
+}
+
+input TestCreateInput {
+  id: ID
+}
+
+type TestEdge {
+  node: Test!
+  cursor: String!
+}
+
+enum TestOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type TestPreviousValues {
+  id: ID!
+}
+
+type TestSubscriptionPayload {
+  mutation: MutationType!
+  node: Test
+  updatedFields: [String!]
+  previousValues: TestPreviousValues
+}
+
+input TestSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TestWhereInput
+  AND: [TestSubscriptionWhereInput!]
+  OR: [TestSubscriptionWhereInput!]
+  NOT: [TestSubscriptionWhereInput!]
+}
+
+input TestWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [TestWhereInput!]
+  OR: [TestWhereInput!]
+  NOT: [TestWhereInput!]
+}
+
+input TestWhereUniqueInput {
+  id: ID
 }
 
 type Track {
