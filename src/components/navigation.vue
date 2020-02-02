@@ -51,12 +51,16 @@
       background-color: black;
       position: fixed;
       bottom: 0;
-      left: -100vw;
       display: flex;
       justify-content: center;
       transition: left 0.3s;
       height: calc(100vh - #{$player-height} + 26px);
       width: 100%;
+      left: -100vw;
+      @include breakpoint(tablet) {
+        width: 380px;
+        left: -380px;
+      }
       display: flex;
       flex-direction: column;
       .state-nav & {

@@ -176,6 +176,8 @@
   }
 
   .main-loader {
+    z-index: $z-layer-mainloader;
+    background-color: black;
     transition: opacity 0.3s;
     position: fixed;
     height: 100vh;
@@ -185,7 +187,7 @@
     align-items: center;
     top: 0;
     &__1, &__2 {
-      transition: width 0.6s;
+      transition: width 2s;
       position: absolute;
       height: 2px;
       width: 0px;
