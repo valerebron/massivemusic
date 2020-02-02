@@ -13,7 +13,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # cached files
-back/var/cache
+api/var/cache
 
 # Editor directories and files
 .idea
