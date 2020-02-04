@@ -307,7 +307,7 @@
       .ion__svg {
         height: 25px;
         width: 25px;
-        @extend %currentStyleColor;
+        fill: $favorite-color;
       }
     }
     .player-play {

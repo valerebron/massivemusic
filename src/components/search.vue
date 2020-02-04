@@ -105,7 +105,8 @@
       text-align: center;
       width: 0;
       background-color: transparent;
-      font-size: 28px;
+      font-size: 30px;
+      font-weight: bold;
       height: $search-height;
       border: none;
       padding-left: $search-button-width * 1.5;
