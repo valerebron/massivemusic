@@ -4,8 +4,7 @@ $input-range-container-bkg-color: transparent;
 $input-range-bar-bkg-color: transparent;
 $input-range-bar-progress-bkg-color: transparent;
 $input-range-bar-progress-bkg-color-hover: transparent;
-$input-range-pointer-size: 0;
-$input-range-pointer-size-hover: 12px;
+$input-range-pointer-size: 12px;
 $input-range-pointer-bkg-color: $third-color;
 
 @mixin input-range-container {
@@ -51,12 +50,12 @@ $input-range-pointer-bkg-color: $third-color;
   width: $input-range-pointer-size;
   border-radius: 50%;
   background-color: $input-range-pointer-bkg-color;
-  transition: height .3s, width .3s, background-color .3s;
+  transition: all .3s;
+  transform: scale(0, 0);
+  transform-origin: center;
 }
 @mixin input-range-pointer-hover {
-  height: $input-range-pointer-size-hover;
-  width: $input-range-pointer-size-hover;
-  transition: height .3s, width .3s, background-color .3s;
+  transform: scale(1, 1);
 }
 
 input[type=range] {
