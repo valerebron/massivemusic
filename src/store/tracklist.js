@@ -57,7 +57,16 @@ const mutations = {
         break
         case 'search':
             if(filter.value != '') {
-              let fuse = new Fuse(state.tracks.filtered, {keys: ['title', 'artist']})
+              let searchOptions = {
+                shouldSort: true,
+                threshold: 0.44,
+                location: 0,
+                distance: 100,
+                maxPatternLength: 32,
+                minMatchCharLength: 1,
+                keys: ['title', 'artist']
+              }
+              let fuse = new Fuse(state.tracks.filtered, searchOptions)
               state.tracks.filtered = fuse.search(filter.value)
             }
         break
