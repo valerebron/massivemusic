@@ -15,6 +15,12 @@
 <script>
   export default {
     name: 'login',
+    data: function() {
+      return {
+        name: '',
+        password: ''
+      }
+    },
     methods: {
       login: function(e) {
         console.log(e)

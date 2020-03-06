@@ -3,11 +3,11 @@
   "version": "0.5.0",
   "private": true,
   "scripts": {
+    "seed": "ts-node api/seeds/styles.ts && ts-node api/seeds/users.ts && ts-node api/seeds/tracks-no-date.ts",
+    "dev": "export DB_PASS=root && docker-compose up -d && vue-cli-service serve",
     "lint": "vue-cli-service lint",
     "deploy": "(cd api; prisma deploy)",
-    "build": "vue-cli-service build && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .",
-    "seed": "ts-node api/seeds/styles.ts && ts-node api/seeds/users.ts && ts-node api/seeds/tracks-no-date.ts",
-    "dev": "export DB_PASS=root && docker-compose up -d && vue-cli-service serve"
+    "build": "vue-cli-service build && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root ."
   },
   "main": "index.js",
   "dependencies": {
