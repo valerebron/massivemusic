@@ -71,6 +71,7 @@
     list-style-type: none;
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 160px; // represent player height
   }
   .track {
     cursor: default;
