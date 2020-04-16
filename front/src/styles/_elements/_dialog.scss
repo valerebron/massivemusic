@@ -1,0 +1,38 @@
+dialog {
+  z-index: $z-index-dialog;
+  display: flex;
+  height: 100vh;
+  position: fixed;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms;
+  transition: all .2s;
+  position: fixed;
+  z-index: $z-index-dialog;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  padding: 0;
+  margin: 0!important;
+  border: none;
+  transition: all .3s;
+  background-color: transparent;
+  &:target, .app[data-dialog='true'] & {
+    pointer-events: all;
+    opacity: 1;
+  }
+  > div {
+    position: relative;
+    display: block;
+    width: 100%;
+    background-color: rgb(36, 36, 36);
+    z-index: $z-index-dialog;
+    display: flex;
+    flex-direction: column;
+    @include breakpoint('tablet') {
+      width: $dialog-width;
+      border-radius: $dialog-border-radius;
+      box-shadow: 0 0 10px black;
+    }
+  }
+}

@@ -1,0 +1,87 @@
+type Query {
+  styles: [Style!]!
+  users: [User!]!
+  user(user_id: String): User!
+  tracks(search: String, style: Int, user: String, skip: Int, first: Int, orderBy: TrackOrderByInput, pending: String): Tracks!
+  info: String!
+}
+
+type Mutation {
+  post(
+    userId: String!
+    id: String!
+    title: String!
+    artist: String!
+    duration: Int!
+    style: Int!
+    token: String!
+  ): Track!
+  dropPost(
+    userId: String!
+    token: String!
+    trackId: String!
+  ): Track!
+  signup(
+    email: String!
+    password: String!
+    name: String!
+  ): AuthPayload
+  login(
+    email: String!
+    password: String!
+  ): AuthPayload
+  logout(
+    userId: String!
+    token: String!
+  ): User
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type Style {
+  id: String!
+  name: String!
+  slug: String!
+}
+
+type User {
+  id: String!
+  name: String!
+  email: String!
+  tracks: [Track!]!
+  role: String!
+}
+
+type Track {
+  id: String!
+  title:	String!	
+  artist:	String!	
+  duration:	Int!
+  playcount: Int!
+  invalid: Boolean!
+  style: Style!
+  user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+scalar DateTime
+
+enum TrackOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  title_ASC
+  title_DESC
+  artist_ASC
+  artist_DESC
+}
+
+type Tracks {
+  tracks: [Track!]!
+  count: Int!
+}

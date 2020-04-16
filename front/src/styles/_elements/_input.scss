@@ -1,0 +1,16 @@
+input {
+  padding: 10px 0;
+  margin: 10px 0;
+  border: none;
+  background-color: $ui-bkg;
+  color: $primary-color;
+  border: none;
+  padding: 10px;
+  text-align: center;
+  &::-moz-placeholder {
+    color: grey;
+  }
+  &:active, &:focus {
+    color: white;
+  }
+}

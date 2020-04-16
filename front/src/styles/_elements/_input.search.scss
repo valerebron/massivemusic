@@ -1,0 +1,7 @@
+input[type=search] {
+  -webkit-appearance:textfield;
+}
+input::-webkit-search-decoration,
+input::-webkit-search-cancel-button {
+    display: none;
+}

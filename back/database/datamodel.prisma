@@ -1,0 +1,36 @@
+type User {
+  id: ID! @id
+  name: String!
+  email: String! @unique
+  password: String!
+  role: userRole!
+  tracks: [Track!]
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  token: String
+}
+
+type Style {
+  id: ID! @id
+  name: String!
+  slug: String!
+}
+
+type Track {
+  id: ID! @id
+  title:	String!	
+  artist:	String!	
+  duration:	Int!
+  playcount:	Int! @default(value: 0)	
+  invalid:	Boolean @default(value: false)
+  style: Style!
+  user: User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+enum userRole {
+  USER,
+  ADMIN,
+  ROBOT,
+}

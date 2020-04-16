@@ -17,9 +17,9 @@ RUN yarn global add prisma ts-node typescript
 #2 Files
 RUN mkdir -p $WEB_DIR
 WORKDIR $WEB_DIR
-COPY dist .
-COPY api .
-COPY .htaccess .
+COPY front/dist .
+COPY back .
+COPY front/.htaccess .
 COPY config.json .
 
 #3 Serve

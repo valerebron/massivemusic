@@ -1,0 +1,15 @@
+input[type=text], input[type=password], input[type=email] {
+  padding: 10px 0;
+  text-align: center;
+  background-color: rgba(155, 155, 155, 0.15);
+  &::-moz-placeholder {
+    color: grey;
+  }
+  width: 100%;
+  &:active, &:focus {
+    border-bottom: 1px grey solid;
+  }
+  &:active, &:focus {
+    color: white;
+  }
+}

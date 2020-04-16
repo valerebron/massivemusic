@@ -1,0 +1,16 @@
+{
+  tracks(search: "brain damage", skip: 0, first: 100, orderBy: createdAt_DESC, style: 13) {
+    count
+    tracks {
+     	title
+    	invalid
+      style {
+        name
+        id
+      }
+      user {
+        name
+      } 
+    }
+  }
+}

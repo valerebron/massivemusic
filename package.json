@@ -1,73 +1,14 @@
 {
   "name": "massivemusic2",
-  "version": "0.5.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "seed": "ts-node api/seeds/styles.ts && ts-node api/seeds/users.ts && ts-node api/seeds/tracks-no-date.ts",
-    "dev": "export DB_PASS=root && docker-compose up -d && vue-cli-service serve",
-    "lint": "vue-cli-service lint",
-    "deploy": "(cd api; prisma deploy)",
-    "build": "vue-cli-service build && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root ."
+    "front": "cd front && yarn dev",
+    "back": "export DB_PASS=root && docker-compose up -d && cd back && yarn dev",
+    "dev": "yarn back & yarn front",
+    "seed": "cd back && yarn seed",
+    "build": "cd front && vue-cli-service build && cd ../back && yarn deploy && cd ../ && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root ."
   },
-  "main": "index.js",
-  "dependencies": {
-    "@vue/cli": "^3.3.0",
-    "@vue/cli-service": "^3.2.0",
-    "apollo-boost": "^0.4.7",
-    "apollo-client": "^2.6.8",
-    "apollo-link": "^1.2.13",
-    "fuse.js": "^3.4.5",
-    "graphql": "^14.5.8",
-    "graphql-tag": "^2.10.1",
-    "subscriptions-transport-ws": "^0.9.16",
-    "vue": "^2.5.17",
-    "vue-apollo": "^3.0.2",
-    "vue-ionicons": "^3.0.4",
-    "vue-moment": "^4.1.0",
-    "vue-router": "^3.0.2",
-    "vue-svg-loader": "^0.12.0",
-    "vuex": "^3.1.1",
-    "youtube-player": "^5.5.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-plugin-eslint": "^3.2.1",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.8.0",
-    "eslint-plugin-vue": "^5.0.0-beta.5",
-    "file-loader": "^2.0.0",
-    "node-sass": "^4.10",
-    "sass-loader": "^7.1.0",
-    "vue": "^2.5.17",
-    "vue-template-compiler": "^2.5.17"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": false
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {
-      "no-useless-escape": 0,
-      "no-console": 0
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ],
   "author": "valere",
   "license": "MIT"
 }

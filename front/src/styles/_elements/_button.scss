@@ -1,0 +1,17 @@
+button {
+  outline: 0;
+  border: none;
+  color: white;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 18px;
+  &:active {
+    opacity: 0.5;
+  }
+  &:focus {
+    background: #ffffff14;
+  }
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.068);
+  }
+}

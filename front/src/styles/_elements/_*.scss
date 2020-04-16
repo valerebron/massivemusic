@@ -1,0 +1,13 @@
+* {
+  scrollbar-color: $scrollbar-color $scrollbar-background-color;
+  -webkit-scrollbar-color: $scrollbar-color $scrollbar-background-color;
+  -webkit-scrollbar-width: thin;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    background-color: $scrollbar-background-color;
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $scrollbar-color;
+  } 
+}
