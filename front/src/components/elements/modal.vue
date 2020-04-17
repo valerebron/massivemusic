@@ -1,6 +1,6 @@
 <template>
   <dialog>
-    <a @click="close()" class="close-dialog"></a>
+    <a @click="$emit('close')" class="close-dialog"></a>
     <div>
       <slot></slot>
     </div>
@@ -9,14 +9,6 @@
 <script>
   export default {
     name: 'modals',
-    methods: {
-      close: function() {
-        this.$store.dispatch('modal', false)
-        if(this.$route.name === 'login') {
-          this.$router.push('/')
-        }
-      },
-    },
   }
 </script>
 

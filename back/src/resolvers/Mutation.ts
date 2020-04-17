@@ -61,11 +61,9 @@ export async function logout(parent, args, context, info) {
 }
 
 export async function post(parent, args, context, info) {
-
   const user = await context.prisma.user({ id: args.userId })
   if(args.token === user.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', user.name+' add a new track:  '+args.title+' - '+args.artist)
-  
     return context.prisma.createTrack({
       id: args.id,
       title: args.title,
@@ -81,14 +79,46 @@ export async function post(parent, args, context, info) {
   }
 }
 
-export async function dropPost(parent, args, context, info) {
-
+export async function editPost(parent, args, context, info) {
   const user = await context.prisma.user({ id: args.userId })
   if(args.token === user.token) {
-
     const userTrack = await context.prisma.track({ id: args.trackId }).user()
     if(userTrack || user.role === 'ADMIN') {
-      if(userTrack.id === user.id) {
+      if(userTrack.id === user.id || user.role === 'ADMIN') {
+        console.log('\x1b[34m%s\x1b[0m', '●', userTrack.name+' edit ['+args.trackId+']')
+        return context.prisma.updateTrack({
+          where: { id: args.trackId },
+          data: {
+            id: args.id,
+            title: args.title,
+            artist: args.artist,
+            style: {
+              connect: {
+                id: args.style
+              }
+            },
+          },
+        })
+      }
+      else {
+        throw new Error('not your track')
+      }
+    }
+    else {
+      throw new Error('track does not exist')
+    }
+  }
+  else {
+    throw new Error('invalid token')
+  }
+}
+
+export async function dropPost(parent, args, context, info) {
+  const user = await context.prisma.user({ id: args.userId })
+  if(args.token === user.token) {
+    const userTrack = await context.prisma.track({ id: args.trackId }).user()
+    if(userTrack || user.role === 'ADMIN') {
+      if(userTrack.id === user.id || user.role === 'ADMIN') {
         console.log('\x1b[34m%s\x1b[0m', '●', userTrack.name+' remove ['+args.trackId+']')
         return context.prisma.deleteTrack({ id: args.trackId }, info)
       }

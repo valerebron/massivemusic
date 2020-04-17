@@ -1,0 +1,15 @@
+form {
+  .item {
+    width: 90%!important;
+  }
+  .actions {
+    width: 100%;
+    margin-top: 20px;
+    background-color: $grey-1;
+    border-radius: 0 0 10px 10px;
+    > button {
+      width: 50%;
+      text-transform: uppercase;
+    }
+  }
+}

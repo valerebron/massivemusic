@@ -5,13 +5,16 @@
 @import '_elements/button';
 @import '_elements/dialog';
 @import '_elements/figure';
+@import '_elements/form';
 @import '_elements/html';
 @import '_elements/input';
 @import '_elements/input.text';
 @import '_elements/input.range';
 @import '_elements/input.search';
+@import '_elements/p';
 @import '_elements/select';
 @import '_elements/progress';
 @import '_elements/ul';
+@import 'helpers/_forms';
 @import 'helpers/_typo';
 @import '~vue-ionicons/ionicons';

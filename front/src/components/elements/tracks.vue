@@ -13,30 +13,48 @@
       <td class="track__artist" @click="search(track.artist)">
         {{ track.artist }}
       </td>
-     <td>
-       {{ Date.parse(track.createdAt) | moment('from', 'now') }}
-     </td>
+      <td>
+        {{ Date.parse(track.createdAt) | moment('from', 'now') }}
+      </td>
       <td @click.prevent="$store.dispatch('toggleFavorite', track)" class="track__favorite">
         <icon-star-inline v-if="$store.getters.isFavorite(track)" />
         <icon-star-outline v-else style="opacity: 0.5" />
       </td>
-      <td v-if="$route.name === 'my-tracks' || $route.name === 'pending-tracks'">
-        <button class="track__drop" @click="drop(track)">
+      <td v-if="isEditable">
+        <button class="track__update" @click="openEdit(track)">
+          <icon-sync/>
+        </button>
+        <button class="track__drop" @click="openDrop(track)">
           <icon-trash/>
         </button>
       </td>
     </tr>
+    <trackEdit v-if="isEditable && isEditOpen" :oldTrack="trackToEdit" @closeEdit="closeEdit()" />
+    <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
 </template>
 
 <script>
+  import trackEdit from './track-edit'
+  import trackDrop from './track-drop'
   export default {
     name: 'tracks',
+    components: { trackEdit, trackDrop },
     props: ['filter'],
     computed:{
       tracks: {
         get(){ return this.$store.getters.tracks },
       },
+      isEditable: {
+        get(){ return this.$route.name === 'my-tracks' || this.$route.name === 'pending-tracks' },
+      },
+    },
+    data: function() {
+      return {
+        isEditOpen: false,
+        isDropOpen: false,
+        trackToEdit: {},
+      }
     },
     methods: {
       play(track) {
@@ -50,8 +68,23 @@
           this.$store.dispatch('filterTracks', this.filter)
         }
       },
-      drop(track) {
-        this.$store.dispatch('dropTrack', track)
+      openEdit(track) {
+        this.trackToEdit = track
+        this.isEditOpen = true
+        this.$store.dispatch('modal', true)
+      },
+      closeEdit() {
+        this.$store.dispatch('modal', false)
+        this.isEditOpen = false
+      },
+      openDrop(track) {
+        this.trackToDrop = track
+        this.isDropOpen = true
+        this.$store.dispatch('modal', true)
+      },
+      closeDrop() {
+        this.$store.dispatch('modal', false)
+        this.isDropOpen = false
       },
       search(terms) {
         this.$store.dispatch('filterTracks', {type: 'search', value: terms})

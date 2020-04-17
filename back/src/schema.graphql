@@ -16,6 +16,16 @@ type Mutation {
     style: Int!
     token: String!
   ): Track!
+  editPost(
+    userId: String!
+    token: String!
+    trackId: String!
+    id: String
+    title:	String
+    artist:	String
+    invalid: Boolean
+    style: Int
+  ): Track!
   dropPost(
     userId: String!
     token: String!

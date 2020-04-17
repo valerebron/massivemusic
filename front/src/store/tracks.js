@@ -27,6 +27,17 @@ const mutations = {
     })
     state.count = state.count - 1
   },
+  EDIT_TRACK(state, editedTrack) {
+    state.tracks.map(track => {
+      if(track.id === editedTrack.id) {
+        track = editedTrack
+        if(editedTrack.id !== editedTrack.newId) {
+          track.id = editedTrack.newId
+        }
+      }
+    })
+    state.count = state.count - 1
+  },
   SET_COUNT(state, count) {
     state.count = count
   },
@@ -141,26 +152,6 @@ const actions = {
         console.log('%c●', 'color: red', 'filter error: ', error)
       })
     }
-  },
-  dropTrack(store, track) {
-    window.apollo.mutate({
-      variables: {
-        userId: store.getters.session.user.id,
-        token: store.getters.session.token,
-        trackId: track.id,
-      },
-      mutation: gql`mutation($userId: String!, $token: String!, $trackId: String!) {
-        dropPost(userId: $userId, token: $token, trackId: $trackId) {
-          id
-        }
-      }`,
-    }).then(() => {
-      store.commit('DROP_TRACK', track)
-      document.getElementsByClassName(track.id)[0].classList.add('track--dropped')
-    }).catch((error) => {
-      this.error = error.message.replace('GraphQL error: ', '')
-      console.log('%c●', 'color: red', 'dropped error: ', this.error)
-    })
   },
   filterFavorites(store) {
     store.commit('SET_FILTER', { type: 'user', value: '' })

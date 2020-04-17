@@ -1,22 +1,22 @@
 <template>
   <main class="add-tracks page--container">
     <youtube-explorer @clickOnTrack="open" />
-    <modal class="add-tracks__dialog">
+    <modal @close="close()">
       <iframe class="add-tracks__iframe" type="text/html" :src="'http://www.youtube.com/embed/'+this.track.id" frameborder="0"></iframe>
       <form class="add-tracks__form">
         <p class="add-tracks__original-title">{{ track.description}}</p>
-        <select class="add-tracks__item add-tracks__style" v-model="style">
+        <select v-model="style" class="item">
           <option v-for="style in $store.getters.styles" :key="style.id" :value="parseInt(style.id)">
             {{ style.name }}
           </option>
         </select>
-        <input type="text" class="add-tracks__item" :value="artist" placeholder="artist">
-        <input type="text" :class="'add-tracks__item style-'+track.style" :value="title" placeholder="title">
+        <input :value="artist"  type="text" class="item" placeholder="artist">
+        <input :value="title" type="text" :class="'item style-'+style" placeholder="title">
         <div class="actions">
-          <button class="add-tracks__add" @click.prevent="close">
+          <button @click.prevent="close">
             Cancel
           </button>
-          <button class="add-tracks__add" @click.prevent="add">
+          <button @click.prevent="add">
             Add
           </button>
         </div>
@@ -102,29 +102,13 @@
 
 <style lang="scss">
   .add-tracks {
-    &__dialog {
-      flex-direction: column;
-    }
     &__form {
       background-color: #202020;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       @include breakpoint('tablet') {
         border-radius: 0;
         border-bottom-left-radius: $dialog-border-radius;
         border-bottom-right-radius: $dialog-border-radius;
       }
-    }
-    &__item {
-      width: 90%!important;
-    }
-    .actions {
-      width: 100%;
-      padding-top: 20px;
-    }
-    &__add, &__cancel {
-      width: 50%;
     }
     &__iframe {
       text-align: center;

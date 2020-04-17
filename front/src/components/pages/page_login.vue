@@ -1,6 +1,6 @@
 <template>
   <main class="login">
-    <modal>
+    <modal @close="close()">
       <form class="login__form">
         <div v-if="error !== ''" class="login__error">
           {{ error }}
@@ -115,7 +115,13 @@
           this.error = error.message.replace('GraphQL error: ', '')
           console.log('%c●', 'color: red', 'login error: ', this.error)
         })
-      }
+      },
+      close: function() {
+        this.$store.dispatch('modal', false)
+        if(this.$route.name === 'login') {
+          this.$router.push('/')
+        }
+      },
     },
     mounted: function() {
       if(this.$store.getters.isOnline) {

@@ -32,6 +32,8 @@ import iconAdd from 'vue-ionicons/dist/md-add.vue'
 Vue.component('icon-add', iconAdd)
 import iconPending from 'vue-ionicons/dist/md-alert.vue'
 Vue.component('icon-pending', iconPending)
+import iconSync from 'vue-ionicons/dist/md-create.vue'
+Vue.component('icon-sync', iconSync)
 import iconHome from 'vue-ionicons/dist/md-home.vue'
 Vue.component('icon-home', iconHome)
 

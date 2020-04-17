@@ -7,6 +7,10 @@ input {
   border: none;
   padding: 10px;
   text-align: center;
+  &:invalid {
+    border-left: 3px red solid;
+    box-shadow: none;
+  }
   &::-moz-placeholder {
     color: grey;
   }
