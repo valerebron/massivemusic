@@ -8,20 +8,17 @@
     "dev": "npx nodemon --watch 'src/*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
     "deploy": "prisma deploy",
     "seed": "ts-node seeds/styles.ts && ts-node seeds/users.ts && ts-node seeds/tracks-no-date.ts",
-    "seed:test": "ts-node seeds/test.ts",
-    "seed:tracks": "ts-node seeds/tracks-no-date.ts",
-    "seed:styles": "ts-node seeds/styles.ts",
-    "seed:users": "ts-node seeds/users.ts"
+    "seed:test": "ts-node seeds/index.ts"
   },
   "dependencies": {
     "apollo-server": "^2.11.0",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
-    "nodemon": "^2.0.2",
-    "prisma": "^1.34.10",
-    "prisma-client-lib": "^1.34.10"
+    "moment": "^2.24.0",
+    "nodemon": "^2.0.2"
   },
   "devDependencies": {
+    "@prisma/cli": "^2.0.0-beta.2",
     "@typescript-eslint/eslint-plugin": "^2.12.0",
     "@typescript-eslint/parser": "^2.12.0",
     "eslint": "^6.7.2",

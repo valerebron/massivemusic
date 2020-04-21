@@ -1,0 +1,15 @@
+apollographql.vscode-apollo
+EliverLara.andromeda
+firefox-devtools.vscode-firefox-debug
+jolaleye.horizon-theme-vscode
+jprestidge.theme-material-theme
+miguelsolorio.min-theme
+Nimda.deepdark-material
+octref.vetur
+Prisma.prisma
+sdras.vue-vscode-snippets
+siddharthkp.codesandbox-black
+SolarLiner.linux-themes
+teabyii.ayu
+vangware.dark-plus-material
+zhuangtongfa.material-theme

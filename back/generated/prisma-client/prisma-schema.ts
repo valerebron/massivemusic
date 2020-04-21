@@ -221,6 +221,7 @@ type Subscription {
 
 type Track {
   id: ID!
+  yt_id: String!
   title: String!
   artist: String!
   duration: Int!
@@ -240,6 +241,7 @@ type TrackConnection {
 
 input TrackCreateInput {
   id: ID
+  yt_id: String!
   title: String!
   artist: String!
   duration: Int!
@@ -256,6 +258,7 @@ input TrackCreateManyWithoutUserInput {
 
 input TrackCreateWithoutUserInput {
   id: ID
+  yt_id: String!
   title: String!
   artist: String!
   duration: Int!
@@ -272,6 +275,8 @@ type TrackEdge {
 enum TrackOrderByInput {
   id_ASC
   id_DESC
+  yt_id_ASC
+  yt_id_DESC
   title_ASC
   title_DESC
   artist_ASC
@@ -290,6 +295,7 @@ enum TrackOrderByInput {
 
 type TrackPreviousValues {
   id: ID!
+  yt_id: String!
   title: String!
   artist: String!
   duration: Int!
@@ -314,6 +320,20 @@ input TrackScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  yt_id: String
+  yt_id_not: String
+  yt_id_in: [String!]
+  yt_id_not_in: [String!]
+  yt_id_lt: String
+  yt_id_lte: String
+  yt_id_gt: String
+  yt_id_gte: String
+  yt_id_contains: String
+  yt_id_not_contains: String
+  yt_id_starts_with: String
+  yt_id_not_starts_with: String
+  yt_id_ends_with: String
+  yt_id_not_ends_with: String
   title: String
   title_not: String
   title_in: [String!]
@@ -400,6 +420,7 @@ input TrackSubscriptionWhereInput {
 }
 
 input TrackUpdateInput {
+  yt_id: String
   title: String
   artist: String
   duration: Int
@@ -410,6 +431,7 @@ input TrackUpdateInput {
 }
 
 input TrackUpdateManyDataInput {
+  yt_id: String
   title: String
   artist: String
   duration: Int
@@ -418,6 +440,7 @@ input TrackUpdateManyDataInput {
 }
 
 input TrackUpdateManyMutationInput {
+  yt_id: String
   title: String
   artist: String
   duration: Int
@@ -443,6 +466,7 @@ input TrackUpdateManyWithWhereNestedInput {
 }
 
 input TrackUpdateWithoutUserDataInput {
+  yt_id: String
   title: String
   artist: String
   duration: Int
@@ -477,6 +501,20 @@ input TrackWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  yt_id: String
+  yt_id_not: String
+  yt_id_in: [String!]
+  yt_id_not_in: [String!]
+  yt_id_lt: String
+  yt_id_lte: String
+  yt_id_gt: String
+  yt_id_gte: String
+  yt_id_contains: String
+  yt_id_not_contains: String
+  yt_id_starts_with: String
+  yt_id_not_starts_with: String
+  yt_id_ends_with: String
+  yt_id_not_ends_with: String
   title: String
   title_not: String
   title_in: [String!]

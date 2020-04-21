@@ -99,7 +99,7 @@ const actions = {
           skip: store.state.filters.skip,
           first: store.state.tracksPerPage,
           pending: store.state.filters.pending,
-          orderBy: 'createdAt_DESC',
+          orderBy: 'createdAt_ASC',
         },
         query: gql`
           query(

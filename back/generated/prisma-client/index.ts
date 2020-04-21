@@ -192,6 +192,8 @@ export type StyleOrderByInput =
 export type TrackOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "yt_id_ASC"
+  | "yt_id_DESC"
   | "title_ASC"
   | "title_DESC"
   | "artist_ASC"
@@ -229,6 +231,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export interface TrackCreateInput {
   id?: Maybe<ID_Input>;
+  yt_id: String;
   title: String;
   artist: String;
   duration: Int;
@@ -260,6 +263,7 @@ export interface UserUpdateOneRequiredWithoutTracksInput {
 
 export interface TrackCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
+  yt_id: String;
   title: String;
   artist: String;
   duration: Int;
@@ -298,6 +302,7 @@ export type TrackWhereUniqueInput = AtLeastOne<{
 }>;
 
 export interface TrackUpdateManyDataInput {
+  yt_id?: Maybe<String>;
   title?: Maybe<String>;
   artist?: Maybe<String>;
   duration?: Maybe<Int>;
@@ -326,6 +331,20 @@ export interface TrackWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  yt_id?: Maybe<String>;
+  yt_id_not?: Maybe<String>;
+  yt_id_in?: Maybe<String[] | String>;
+  yt_id_not_in?: Maybe<String[] | String>;
+  yt_id_lt?: Maybe<String>;
+  yt_id_lte?: Maybe<String>;
+  yt_id_gt?: Maybe<String>;
+  yt_id_gte?: Maybe<String>;
+  yt_id_contains?: Maybe<String>;
+  yt_id_not_contains?: Maybe<String>;
+  yt_id_starts_with?: Maybe<String>;
+  yt_id_not_starts_with?: Maybe<String>;
+  yt_id_ends_with?: Maybe<String>;
+  yt_id_not_ends_with?: Maybe<String>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -415,6 +434,20 @@ export interface TrackScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  yt_id?: Maybe<String>;
+  yt_id_not?: Maybe<String>;
+  yt_id_in?: Maybe<String[] | String>;
+  yt_id_not_in?: Maybe<String[] | String>;
+  yt_id_lt?: Maybe<String>;
+  yt_id_lte?: Maybe<String>;
+  yt_id_gt?: Maybe<String>;
+  yt_id_gte?: Maybe<String>;
+  yt_id_contains?: Maybe<String>;
+  yt_id_not_contains?: Maybe<String>;
+  yt_id_starts_with?: Maybe<String>;
+  yt_id_not_starts_with?: Maybe<String>;
+  yt_id_ends_with?: Maybe<String>;
+  yt_id_not_ends_with?: Maybe<String>;
   title?: Maybe<String>;
   title_not?: Maybe<String>;
   title_in?: Maybe<String[] | String>;
@@ -509,6 +542,7 @@ export interface TrackUpdateWithWhereUniqueWithoutUserInput {
 }
 
 export interface TrackUpdateManyMutationInput {
+  yt_id?: Maybe<String>;
   title?: Maybe<String>;
   artist?: Maybe<String>;
   duration?: Maybe<Int>;
@@ -646,6 +680,7 @@ export interface StyleUpdateOneRequiredInput {
 }
 
 export interface TrackUpdateInput {
+  yt_id?: Maybe<String>;
   title?: Maybe<String>;
   artist?: Maybe<String>;
   duration?: Maybe<Int>;
@@ -667,6 +702,7 @@ export interface UserSubscriptionWhereInput {
 }
 
 export interface TrackUpdateWithoutUserDataInput {
+  yt_id?: Maybe<String>;
   title?: Maybe<String>;
   artist?: Maybe<String>;
   duration?: Maybe<Int>;
@@ -869,6 +905,7 @@ export interface PageInfoSubscription
 
 export interface TrackPreviousValues {
   id: ID_Output;
+  yt_id: String;
   title: String;
   artist: String;
   duration: Int;
@@ -882,6 +919,7 @@ export interface TrackPreviousValuesPromise
   extends Promise<TrackPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  yt_id: () => Promise<String>;
   title: () => Promise<String>;
   artist: () => Promise<String>;
   duration: () => Promise<Int>;
@@ -895,6 +933,7 @@ export interface TrackPreviousValuesSubscription
   extends Promise<AsyncIterator<TrackPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  yt_id: () => Promise<AsyncIterator<String>>;
   title: () => Promise<AsyncIterator<String>>;
   artist: () => Promise<AsyncIterator<String>>;
   duration: () => Promise<AsyncIterator<Int>>;
@@ -1056,6 +1095,7 @@ export interface UserEdgeSubscription
 
 export interface Track {
   id: ID_Output;
+  yt_id: String;
   title: String;
   artist: String;
   duration: Int;
@@ -1067,6 +1107,7 @@ export interface Track {
 
 export interface TrackPromise extends Promise<Track>, Fragmentable {
   id: () => Promise<ID_Output>;
+  yt_id: () => Promise<String>;
   title: () => Promise<String>;
   artist: () => Promise<String>;
   duration: () => Promise<Int>;
@@ -1082,6 +1123,7 @@ export interface TrackSubscription
   extends Promise<AsyncIterator<Track>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  yt_id: () => Promise<AsyncIterator<String>>;
   title: () => Promise<AsyncIterator<String>>;
   artist: () => Promise<AsyncIterator<String>>;
   duration: () => Promise<AsyncIterator<Int>>;
@@ -1097,6 +1139,7 @@ export interface TrackNullablePromise
   extends Promise<Track | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  yt_id: () => Promise<String>;
   title: () => Promise<String>;
   artist: () => Promise<String>;
   duration: () => Promise<Int>;

@@ -1,8 +1,0 @@
-dialog {
-  padding: 0 25px;  // gutters
-  width: 100%;
-  background-color: red;
-  @include breakpoint(phablet) {
-    width: 390px;
-  }
-}

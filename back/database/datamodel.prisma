@@ -18,6 +18,7 @@ type Style {
 
 type Track {
   id: ID! @id
+  yt_id: String! @length(min: 11, max: 11)
   title:	String!	
   artist:	String!	
   duration:	Int!
