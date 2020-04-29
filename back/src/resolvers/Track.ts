@@ -1,8 +1,8 @@
 module.exports = {
   user(parent, args, context, info) {
-    return context.prisma.track({ id: parent.id }).user()
+    return context.prisma.track.findOne({ where: { id: parent.id } }).User()
   },
   style(parent, args, context, info) {
-    return context.prisma.track({ id: parent.id }).style()
+    return context.prisma.track.findOne({ where: { id: parent.id } }).Style()
   },
 }

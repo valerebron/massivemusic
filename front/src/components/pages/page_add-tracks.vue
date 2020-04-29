@@ -2,16 +2,16 @@
   <main class="add-tracks page--container">
     <youtube-explorer @clickOnTrack="open" />
     <modal @close="close()">
-      <iframe class="add-tracks__iframe" type="text/html" :src="'http://www.youtube.com/embed/'+this.track.id" frameborder="0"></iframe>
+      <iframe class="add-tracks__iframe" type="text/html" :src="'http://www.youtube.com/embed/'+this.track.yt_id" frameborder="0"></iframe>
       <form class="add-tracks__form">
         <p class="add-tracks__original-title">{{ track.description}}</p>
         <select v-model="style" class="item">
-          <option v-for="style in $store.getters.styles" :key="style.id" :value="parseInt(style.id)">
+          <option v-for="style in $store.getters.styles" :key="style.id" :value="style.id">
             {{ style.name }}
           </option>
         </select>
-        <input :value="artist"  type="text" class="item" placeholder="artist">
-        <input :value="title" type="text" :class="'item style-'+style" placeholder="title">
+        <input :value="artist"  type="text" class="item" placeholder="artist" @keydown.enter.prevent="add()">
+        <input :value="title" type="text" class="item" placeholder="title" @keydown.enter.prevent="add()">
         <div class="actions">
           <button @click.prevent="close">
             Cancel
@@ -47,7 +47,7 @@
       open: function(track) {
         this.track = track
         this.artist = track.artist
-        this.title = track.title
+        this.title = track._title
         this.$store.dispatch('modal', true)
       },
       close: function() {
@@ -58,17 +58,17 @@
         if(this.$store.getters.isOnline) {
           this.$apollo.mutate({
             variables: {
-              userId: this.$store.getters.session.user.id,
-              id: this.track.id,
+              user_id: this.$store.getters.session.user.id,
+              yt_id: this.track.yt_id,
               title: this.title,
               artist: this.artist,
               duration: this.track.duration,
-              style: this.style,
+              style: parseInt(this.style),
               token: this.$store.getters.session.token,
             },
-            mutation: gql`mutation($userId: String!, $id: String!, $title: String!, $artist: String!, $duration: Int!, $style: Int!, $token: String!) {
-              post(userId: $userId, id: $id, title: $title, artist: $artist, duration: $duration, style: $style, token: $token) {
-                id
+            mutation: gql`mutation($user_id: Int!, $yt_id: String!, $title: String!, $artist: String!, $duration: Int!, $style: Int!, $token: String!) {
+              post(user_id: $user_id, yt_id: $yt_id, title: $title, artist: $artist, duration: $duration, style: $style, token: $token) {
+                yt_id
                 title
                 artist
                 duration

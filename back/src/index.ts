@@ -1,14 +1,15 @@
 const config = require ('../../config.json')
-const { ApolloServer } = require('apollo-server')
-const { prisma } = require('../generated/prisma-client')
 
+import { ApolloServer } from 'apollo-server'
 import { importSchema } from 'graphql-import'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 const Query = require('./resolvers/Query')
 const User = require('./resolvers/User')
 const Track = require('./resolvers/Track')
 const Mutation = require('./resolvers/Mutation')
-
 const typeDefs = importSchema('./src/schema.graphql')
 
 const resolvers = {

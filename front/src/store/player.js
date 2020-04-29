@@ -34,7 +34,7 @@ const actions = {
       }
     })
     player.on('error', function (event) {
-      let id = store.getters.playerTrack.id
+      let id = store.getters.playerTrack.yt_id
       if([100, 101, 150].includes(event.data)) {
         // axios
         //   .get(window.APIURL+'/tracks/invalidate/'+id)
@@ -61,14 +61,14 @@ const actions = {
     let playerTrack = store.getters.playerTrack
     let playerState = store.getters.playerState
     if(track) {
-      if(track.id != playerTrack.id) {
+      if(track.yt_id != playerTrack.yt_id) {
         console.log('player ui')
         store.dispatch('ui', {type: 'player', value: true})
         if(document.getElementsByClassName('track--playing')[0]) {
           document.getElementsByClassName('track--playing')[0].classList.remove('track--playing')
         }
-        if(document.getElementsByClassName(track.id)[0]) {
-          document.getElementsByClassName(track.id)[0].classList.add('track--playing')
+        if(document.getElementsByClassName(track.yt_id)[0]) {
+          document.getElementsByClassName(track.yt_id)[0].classList.add('track--playing')
         }
         store.commit('SET_TRACK', track)
         // prevent fast clicking prev/next buttons
@@ -76,7 +76,7 @@ const actions = {
         playTimeout = setTimeout(()=>{
           player.stopVideo()
           player.seekTo(0)
-          player.loadVideoById(track.id)
+          player.loadVideoById(track.yt_id)
         }, 333)
       }
       else {
@@ -92,7 +92,7 @@ const actions = {
   loadFirstTrack(store) {
     let firstTrack = store.getters.firstTrack
     store.commit('SET_TRACK', firstTrack)
-    window.PLAYER.loadVideoById(firstTrack.id)
+    window.PLAYER.loadVideoById(firstTrack.yt_id)
   }
 }
 

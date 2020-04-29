@@ -1,7 +1,7 @@
 <template>
   <section class="player">
     <div class="player__top">
-      <!-- <img class="player__top cover-image" :src="'https://i.ytimg.com/vi/'+track.id+'/hqdefault.jpg'" @click="play(track)"/> -->
+      <!-- <img class="player__top cover-image" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/hqdefault.jpg'" @click="play(track)"/> -->
       <div id="player"></div>
     </div>
     <div class="player__bottom">
@@ -151,7 +151,7 @@
         this.$store.dispatch('play', track)
       },
       playPrev() {
-        let id = this.track.id
+        let id = this.track.yt_id
         let tracks = this.$store.state.tracks
         let index = tracks.findIndex(function(e) { return e.id === id })
         let nextTrack = tracks[index - 1]
@@ -160,7 +160,7 @@
         }
       },
       playNext() {
-        let id = this.track.id
+        let id = this.track.yt_id
         let tracks = this.$store.state.tracks
         let index = tracks.findIndex(function(e) { return e.id === id })
         let nextTrack = tracks[index + 1]

@@ -2,7 +2,7 @@
   <main class="login">
     <modal @close="close()">
       <form class="login__form">
-        <div v-if="error !== ''" class="login__error">
+        <div v-if="error !== ''" class="error-dialog">
           {{ error }}
         </div>
         <router-link v-if="$route.name === 'login'" class="login__sign" to="signup" tag="button">
@@ -11,10 +11,10 @@
         <router-link v-if="$route.name === 'signup'" class="login__sign" to="login" tag="button">
           Login ?
         </router-link>
-        <input class="login__email" type="email" v-model="email" placeholder="email" required>
-        <input class="login__password" type="password" v-model="password" placeholder="password" required>
-        <input v-if="$route.name === 'signup'" class="login__name" type="text" v-model="name" placeholder="name" required>
-        <button class="login__button" @click.prevent="submit">
+        <input class="login__credential" type="email" v-model="credential" placeholder="email or name" required @keydown.enter.prevent="submit()">
+        <input class="login__password" type="password" v-model="password" placeholder="password" required @keydown.enter.prevent="submit">
+        <input v-if="$route.name === 'signup'" class="login__name" type="text" v-model="name" placeholder="name" required @keydown.enter.prevent="submit()">
+        <button class="login__button" @click.prevent="submit()">
           <template v-if="$route.name === 'login'">login</template>
           <template v-if="$route.name === 'signup'">signup</template>
         </button>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+  import SHA1 from 'sha1'
   import gql from 'graphql-tag'
   import modal from '../elements/modal'
   export default {
@@ -32,7 +33,7 @@
     data: function() {
       return {
         error: '',
-        email: '',
+        credential: '',
         password: '',
         name: '',
         isOpen: true,
@@ -47,22 +48,24 @@
           this.signup()
         }
       },
-      login: function() {
+      login: async function() {
         this.$apollo.mutate({
           variables: {
-            email: this.email,
-            password: this.password,
+            credential: this.credential,
+            hash: await SHA1(this.password),
           },
-          mutation: gql`mutation($email: String!, $password: String!) {
-            login(email: $email, password: $password) {
+          mutation: gql`mutation($credential: String!, $hash: String!) {
+            login(credential: $credential, hash: $hash) {
               token
               user {
                 id
                 email
                 name
                 role
+                createdAt
+                updatedAt
                 tracks {
-                  id
+                  yt_id
                   title
                   artist
                   style {
@@ -77,27 +80,29 @@
           this.$store.dispatch('login', res.data.login)
           this.$router.push('user')
         }).catch((error) => {
-          this.error = error.message.replace('GraphQL error: ', '')
-          console.log('%c●', 'color: red', 'login error: ', this.error)
+          this.error = window.formatError(error.message)
+          console.log('%c●', 'color: red', 'login error')
         })
       },
       signup: function() {
         this.$apollo.mutate({
           variables: {
             name: this.name,
-            email: this.email,
-            password: this.password,
+            email: this.credential,
+            hash: SHA1(this.password),
           },
-          mutation: gql`mutation($name: String!, $email: String!, $password: String!) {
-            signup(name: $name, email: $email, password: $password) {
+          mutation: gql`mutation($name: String!, $email: String!, $hash: String!) {
+            signup(name: $name, email: $email, hash: $hash) {
               token
               user {
                 id
                 email
                 name
                 role
+                createdAt
+                updatedAt
                 tracks {
-                  id
+                  yt_id
                   title
                   artist
                   style {
@@ -112,8 +117,8 @@
           this.$store.dispatch('login', res.data.signup)
           this.$router.push('user')
         }).catch((error) => {
-          this.error = error.message.replace('GraphQL error: ', '')
-          console.log('%c●', 'color: red', 'login error: ', this.error)
+          this.error = window.formatError(error.message)
+          console.log('%c●', 'color: red', 'signup error')
         })
       },
       close: function() {
@@ -160,19 +165,6 @@
     &__sign {
       margin: 20px 0;
       text-align: center;
-    }
-    &__error {
-      background-color: rgba(255, 0, 0, 0.445);
-      padding: 20px;
-      margin-bottom: 20px;
-      width: 100%;
-      text-align: center;
-      padding-left: 0;
-      padding-right: 0;
-      @include breakpoint('tablet') {
-        border-top-left-radius: $dialog-border-radius;
-        border-top-right-radius: $dialog-border-radius;
-      }
     }
   }
 </style>

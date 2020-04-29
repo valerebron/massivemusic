@@ -1,15 +1,15 @@
 <template>
   <nav class="nav">
     <template v-if="$store.getters.isOnline">
-      <router-link
-        to="user"
-        class="nav__link nav__link--user"
-      >{{ $store.getters.session.user.name }}</router-link>
+      <router-link to="user" class="nav__link nav__link--user">
+        {{ $store.getters.session.user.name }}
+      </router-link>
+      <router-link v-if="$store.getters.isAdmin" to="admin" class="nav__link">
+        <icon-admin />
+        admin
+      </router-link>
       <router-link to="add-tracks" class="nav__link">
         <icon-add />add Tracks
-      </router-link>
-      <router-link v-if="$store.getters.isAdmin" to="pending-tracks" class="nav__link">
-        <icon-pending />pending Tracks
       </router-link>
     </template>
     <router-link v-else to="login" class="nav__link">
@@ -23,6 +23,12 @@
       <router-link to="my-tracks" class="nav__link">
         <icon-contact />
         my tracks
+      </router-link>
+      <router-link to="pending-tracks" class="nav__link">
+        <icon-pending />pending Tracks
+      </router-link>
+      <router-link to="invalid-tracks" class="nav__link">
+        <icon-invalid />invalid Tracks
       </router-link>
     </template>
     <router-link to="/" class="nav__link">
@@ -65,7 +71,7 @@ export default {
           this.$store.dispatch('initStyles', res.data.styles)
         })
         .catch(error => {
-          console.log('%c●', 'color: red', 'logout: ', error)
+          console.log('%c●', 'color: red', 'loadStyle: ', error)
         });
     },
     logout: function() {
@@ -76,12 +82,12 @@ export default {
         this.$apollo
           .mutate({
             variables: {
-              userId: session.user.id,
+              user_id: session.user.id,
               token: session.token
             },
             mutation: gql`
-              mutation($userId: String!, $token: String!) {
-                logout(userId: $userId, token: $token) {
+              mutation($user_id: Int!, $token: String!) {
+                logout(user_id: $user_id, token: $token) {
                   id
                 }
               }

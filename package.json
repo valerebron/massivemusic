@@ -3,12 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "front": "cd front && yarn dev",
-    "back": "export DB_PASS=root && docker-compose up -d && cd back && yarn dev",
+    "install": "cd back && yarn && cd ../front && yarn",
     "dev": "yarn back & yarn front",
     "seed": "cd back && yarn seed",
-    "build": "cd front && vue-cli-service build && cd ../back && yarn deploy && cd ../ && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root ."
+    "generate": "cd back && yarn generate",
+    "migrate": "cd back && yarn migrate",
+    "build": "cd front && vue-cli-service build && cd ../back && yarn deploy && cd ../ && docker build -t registry.osrp.xyz/root/massivemusic2 --build-arg DB_PASS=root .",
+    "front": "cd front && yarn dev",
+    "back": "export DB_PASS=root && docker-compose up -d && cd back && yarn dev",
+    "kill": "kill $(lsof -t -i:3330)"
   },
   "author": "valere",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {}
 }

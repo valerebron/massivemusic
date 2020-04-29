@@ -20,4 +20,15 @@
     cursor: normal;
     background-color: #000000d7;
   }
+  .error-dialog {
+    background-color: rgba(255, 0, 0, 0.445);
+    padding: 20px;
+    margin-bottom: 20px;
+    width: calc(100% - 40px);
+    text-align: center;
+    @include breakpoint('tablet') {
+      border-top-left-radius: $dialog-border-radius;
+      border-top-right-radius: $dialog-border-radius;
+    }
+  }
 </style>

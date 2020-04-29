@@ -1,6 +1,6 @@
 <template>
   <main class="pending-tracks">
-    <tracks :filter="{ type: 'pending', value: 'only' }"/>
+    <tracks :filter="{ type: 'pending', value: $store.getters.session.user.id }"/>
   </main>
 </template>
 
@@ -11,7 +11,7 @@
     components: {
       tracks
     },
-    beforeCreated() {
+    mounted() {
       if(!this.$store.getters.isOnline) {
         this.$router.push('login')
       }

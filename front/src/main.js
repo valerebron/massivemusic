@@ -15,13 +15,17 @@ import App from './components/App.vue'
 
 window.APIURL = config.apiHost
 Vue.config.productionTip = false
+window.formatError = function(error) {
+  let regex = /\x1b/g
+  return error.replace(regex, '_rep_').replace(/_rep_\[[0-9][0-9]m/g, '').replace(/_rep_\[[0-9]m/g, '').replace('GraphQL error: ', '')
+}
 
 Vue.use(VueApollo)
 const apolloClient = new ApolloClient({
   uri: config.apiHost,
   onError: ({ networkError, graphQLErrors }) => {
     if(graphQLErrors) {
-      console.log('%c●', 'color: red', 'graphQLErrors', graphQLErrors[0].extensions.exception.stacktrace)
+      console.log(window.formatError(graphQLErrors[0].message))
     }
     if(networkError) {
       console.log('%c●', 'color: red', 'networkError', networkError)

@@ -1,49 +1,47 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-type User {
-  id: String @id
-  name: String
-  email: String @unique
-  password: String
-  role: userRole
-  track: Track[]
-  createdAt: DateTime
-  updatedAt: DateTime
-  token: String ?
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-type Style {
-  id: String @id
-  name: String
-  slug: String
+model Style {
+  id    Int    @id @default(autoincrement())
+  name  String
+  slug  String
+  Track Track[]
 }
 
-type Track {
-  id: String @id
-  yt_id: String @length(min: 11, max: 11)
-  title:	String	
-  artist:	String	
-  duration:	Int
-  playcount:	Int @default(value: 0)	
-  invalid:	Boolean @default(value: false)
-  style: Style
-  user: User
-  createdAt: DateTime
-  updatedAt: DateTime
+model Track {
+  id        Int       @id @default(autoincrement())
+  yt_id     String
+  title     String
+  artist    String
+  duration  Int
+  playcount Int?      @default(0)
+  pending   Boolean?  @default(true)
+  invalid   Boolean?  @default(false)
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  style     Int?
+  Style     Style?    @relation(fields: [style], references: [id])
+  user      Int?
+  User      User?     @relation(fields: [user], references: [id])
+
+  @@index([style], name: "style")
+  @@index([user], name: "user")
 }
 
-enum userRole {
-  USER,
-  ADMIN,
-  ROBOT,
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String    @unique
+  password  String
+  role      String
+  token     String?
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  Track     Track[]
 }

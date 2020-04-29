@@ -9,13 +9,13 @@ const mutations = {
     }
   },
   REMOVE_FAVORITE(state, track) {
-    state.tracks = state.tracks.filter(favorite => favorite.id !== track.id)
+    state.tracks = state.tracks.filter(favorite => favorite.yt_id !== track.yt_id)
   },
 }
 
 const actions = {
   toggleFavorite(store, track) {
-    if(track.id) {
+    if(track.yt_id) {
       if(store.getters.isFavorite(track)) {
         store.commit('REMOVE_FAVORITE', track)
       }
@@ -32,7 +32,7 @@ const getters = {
   },
   isFavorite(state) {
     return function(track) {
-      return state.tracks.some(favorite => favorite.id === track.id)
+      return state.tracks.some(favorite => favorite.yt_id === track.yt_id)
     }
   },
 }

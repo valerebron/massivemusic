@@ -1,6 +1,6 @@
 <template>
-  <table class="tracks" :key="filter.type">
-    <tr v-for="(track, index) in tracks" class="track" :class="[{'track--invalid': track.invalid}, track.id]" :key="track.id">
+  <table class="tracks" :key="filter.type+filter.value">
+    <tr v-for="(track, index) in tracks" class="track" :class="[{'track--invalid': track.invalid},{'track--pending': track.pending}, track.yt_id]" :key="track.yt_id">
       <td :class="'track__index style-'+track.style.id" @click="play(track)">
         {{ index + 1 }}
       </td>
@@ -16,13 +16,18 @@
       <td>
         {{ Date.parse(track.createdAt) | moment('from', 'now') }}
       </td>
-      <td @click.prevent="$store.dispatch('toggleFavorite', track)" class="track__favorite">
-        <icon-star-inline v-if="$store.getters.isFavorite(track)" />
-        <icon-star-outline v-else style="opacity: 0.5" />
+      <td class="track__favorite" v-if="isFavoritable">
+        <button @click.prevent="$store.dispatch('toggleFavorite', track)">
+          <icon-star-inline v-if="$store.getters.isFavorite(track)" />
+          <icon-star-outline v-else style="opacity: 0.5" />
+        </button>
       </td>
       <td v-if="isEditable">
         <button class="track__update" @click="openEdit(track)">
           <icon-sync/>
+        </button>
+        <button class="track__validate" @click="openValidate(track)">
+          <icon-valid/>
         </button>
         <button class="track__drop" @click="openDrop(track)">
           <icon-trash/>
@@ -30,29 +35,35 @@
       </td>
     </tr>
     <trackEdit v-if="isEditable && isEditOpen" :oldTrack="trackToEdit" @closeEdit="closeEdit()" />
+    <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
 </template>
 
 <script>
   import trackEdit from './track-edit'
+  import trackValidate from './track-validate'
   import trackDrop from './track-drop'
   export default {
     name: 'tracks',
-    components: { trackEdit, trackDrop },
+    components: { trackEdit, trackValidate, trackDrop },
     props: ['filter'],
     computed:{
       tracks: {
         get(){ return this.$store.getters.tracks },
       },
       isEditable: {
-        get(){ return this.$route.name === 'my-tracks' || this.$route.name === 'pending-tracks' },
+        get(){ return this.$route.name === 'my-tracks' || this.$route.name === 'admin' || this.$route.name === 'invalid-tracks' || this.$route.name === 'pending-tracks' },
+      },
+      isFavoritable: {
+        get(){ return this.$route.name !== 'invalid-tracks' && this.$route.name !== 'pending-tracks' },
       },
     },
     data: function() {
       return {
         isEditOpen: false,
         isDropOpen: false,
+        isValidateOpen: false,
         trackToEdit: {},
       }
     },
@@ -86,6 +97,15 @@
         this.$store.dispatch('modal', false)
         this.isDropOpen = false
       },
+      openValidate(track) {
+        this.trackToValidate = track
+        this.isValidateOpen = true
+        this.$store.dispatch('modal', true)
+      },
+      closeValidate() {
+        this.$store.dispatch('modal', false)
+        this.isValidateOpen = false
+      },
       search(terms) {
         this.$store.dispatch('filterTracks', {type: 'search', value: terms})
       },
@@ -113,6 +133,10 @@
       height: 50px;
       filter: grayscale(0);
       transition: all 0.2s;
+      td:last-child {
+        display: flex;
+        justify-content: flex-end;
+      }
       &:hover {
         background-color: $color-selection;
       }
@@ -127,6 +151,10 @@
       }
       &--invalid {
         background-color: $invalidate-color;
+        filter: grayscale(80%);
+      }
+      &--pending {
+        background-color: $pending-color;
         filter: grayscale(80%);
       }
       &--invalidate, &--dropped {

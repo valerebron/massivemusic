@@ -1,16 +1,19 @@
 import gql from 'graphql-tag'
 
+let initial_filters = {
+  search: '',
+  style: 0,
+  user: 0,
+  skip: 0,
+  pending: 0,
+  invalid: 0,
+}
+
 const state = {
   tracks: [],
   tracksPerPage: 50,
   order: 'createdAt_DESC',
-  filters: {
-    search: '',
-    style: 0,
-    user: '',
-    pending: 'without',
-    skip: 0,
-  },
+  filters: initial_filters,
   count: 0,
 }
 
@@ -23,16 +26,16 @@ const mutations = {
   },
   DROP_TRACK(state, track) {
     state.tracks = state.tracks.filter(function (elt) {
-      return elt.id !== track.id
+      return elt.yt_id !== track.yt_id
     })
     state.count = state.count - 1
   },
   EDIT_TRACK(state, editedTrack) {
     state.tracks.map(track => {
-      if(track.id === editedTrack.id) {
+      if(track.yt_id === editedTrack.yt_id) {
         track = editedTrack
-        if(editedTrack.id !== editedTrack.newId) {
-          track.id = editedTrack.newId
+        if(editedTrack.yt_id !== editedTrack.yt_id) {
+          track.yt_id = editedTrack.yt_id
         }
       }
     })
@@ -45,13 +48,7 @@ const mutations = {
     state.filters[filter.type] = filter.value
   },
   RESET_FILTERS(state) {
-    state.filters = {
-      search: '',
-      style: 0,
-      user: '',
-      pending: 'without',
-      skip: 0,
-    }
+    state.filters = initial_filters
   },
 }
 
@@ -60,23 +57,25 @@ const actions = {
     store.commit('RESET_FILTERS')
   },
   filterTracks(store, filter) {
-    if (filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
+    if (filter.value !== store.state.filters[filter.type] || filter.type === 'skip' || store.state.filters.invalid !== 0 || store.state.filters.pending !== 0) {
       if (filter.type === 'home') {
-        store.commit('SET_FILTER', { type: 'user', value: '' })
+        store.commit('SET_FILTER', { type: 'user', value: 0 })
         store.commit('SET_FILTER', { type: 'style', value: 0 })
-        store.commit('SET_FILTER', { type: 'pending', value: 'with' })
       }
       if (filter.type === 'style') {
-        store.commit('SET_FILTER', { type: 'user', value: '' })
-        store.commit('SET_FILTER', { type: 'pending', value: 'without' })
-      }
-      if (filter.type === 'user') {
-        store.commit('SET_FILTER', { type: 'pending', value: 'with' })
+        store.commit('SET_FILTER', { type: 'user', value: 0 })
       }
       if (filter.type === 'pending') {
-        store.commit('SET_FILTER', { type: 'user', value: '' })
-        store.commit('SET_FILTER', { type: 'style', value: 0 })
-        store.commit('SET_FILTER', { type: 'pending', value: 'only' })
+        store.commit('SET_FILTER', { type: 'pending', value: filter.value })
+      }
+      else {
+        store.commit('SET_FILTER', { type: 'pending', value: 0 })
+      }
+      if (filter.type === 'invalid') {
+        store.commit('SET_FILTER', { type: 'invalid', value: filter.value })
+      }
+      else {
+        store.commit('SET_FILTER', { type: 'invalid', value: 0 })
       }
       if (filter.type === 'skip') {
         if (store.state.filters.skip + store.state.tracksPerPage >= store.state.count) {
@@ -98,18 +97,22 @@ const actions = {
           user: store.state.filters.user,
           skip: store.state.filters.skip,
           first: store.state.tracksPerPage,
+          orderBy: 'createdAt',
+          orderDirection: 'desc',
           pending: store.state.filters.pending,
-          orderBy: 'createdAt_ASC',
+          invalid: store.state.filters.invalid,
         },
         query: gql`
           query(
               $search: String,
               $style: Int,
-              $user: String,
+              $user: Int,
               $skip: Int!,
               $first: Int!,
-              $pending: String,
-              $orderBy: TrackOrderByInput,
+              $orderBy: TrackOrderByInput!,
+              $orderDirection: TrackOrderDirectionInput!,
+              $pending: Int,
+              $invalid: Int,
           ) {
             tracks(
               search: $search,
@@ -117,15 +120,19 @@ const actions = {
               user: $user,
               skip: $skip,
               first: $first,
-              pending: $pending,
               orderBy: $orderBy,
+              orderDirection: $orderDirection,
+              pending: $pending,
+              invalid: $invalid,
             ) {
               count
               tracks {
                 id
+                yt_id
                 title
                 artist
                 duration
+                pending
                 invalid
                 createdAt
                 style {
@@ -148,14 +155,13 @@ const actions = {
           store.commit('SET_TRACKS', res.data.tracks.tracks)
           store.commit('SET_COUNT', res.data.tracks.count)
         }
-      }).catch((error) => {
-        console.log('%c●', 'color: red', 'filter error: ', error)
+      }).catch(() => {
+        console.log('%c●', 'color: red', 'filter error')
       })
     }
   },
   filterFavorites(store) {
-    store.commit('SET_FILTER', { type: 'user', value: '' })
-    store.commit('SET_FILTER', { type: 'style', value: 0 })
+    store.commit('RESET_FILTERS')
     let favorites = store.getters.favorites
     store.commit('SET_TRACKS', favorites)
     store.commit('SET_COUNT', favorites.length)

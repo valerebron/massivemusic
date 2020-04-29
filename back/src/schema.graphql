@@ -1,15 +1,15 @@
 type Query {
   styles: [Style!]!
   users: [User!]!
-  user(user_id: String): User!
-  tracks(search: String, style: Int, user: String, skip: Int, first: Int, orderBy: TrackOrderByInput, pending: String): Tracks!
+  user(user_id: Int): User!
+  tracks(search: String, style: Int, user: Int, skip: Int, first: Int, orderBy: TrackOrderByInput, orderDirection: TrackOrderDirectionInput, pending: Int, invalid: Int): Tracks!
   info: String!
 }
 
 type Mutation {
   post(
-    userId: String!
-    id: String!
+    user_id: Int!
+    yt_id: String!
     title: String!
     artist: String!
     duration: Int!
@@ -17,31 +17,37 @@ type Mutation {
     token: String!
   ): Track!
   editPost(
-    userId: String!
+    id: Int!
+    user_id: Int!
     token: String!
-    trackId: String!
-    id: String
+    yt_id: String
     title:	String
     artist:	String
+    pending: Boolean
     invalid: Boolean
     style: Int
   ): Track!
   dropPost(
-    userId: String!
+    id: Int!
+    user_id: Int!
     token: String!
-    trackId: String!
+  ): Track!
+  validatePost(
+    id: Int!
+    user_id: Int!
+    token: String!
   ): Track!
   signup(
     email: String!
-    password: String!
+    hash: String!
     name: String!
   ): AuthPayload
   login(
-    email: String!
-    password: String!
+    credential: String!
+    hash: String!
   ): AuthPayload
   logout(
-    userId: String!
+    user_id: Int!
     token: String!
   ): User
 }
@@ -52,28 +58,32 @@ type AuthPayload {
 }
 
 type Style {
-  id: String!
+  id: Int!
   name: String!
   slug: String!
 }
 
 type User {
-  id: String!
+  id: Int!
   name: String!
   email: String!
   tracks: [Track!]!
   role: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type Track {
-  id: String!
+  id:     Int!
+  yt_id:  String!
   title:	String!	
   artist:	String!	
   duration:	Int!
   playcount: Int!
-  invalid: Boolean!
+  invalid: Boolean
+  pending: Boolean
   style: Style!
-  user: User!
+  user: User
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -81,14 +91,15 @@ type Track {
 scalar DateTime
 
 enum TrackOrderByInput {
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  title_ASC
-  title_DESC
-  artist_ASC
-  artist_DESC
+  createdAt
+  updatedAt
+  title
+  artist
+}
+
+enum TrackOrderDirectionInput {
+  asc
+  desc
 }
 
 type Tracks {

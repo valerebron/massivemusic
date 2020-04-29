@@ -21,7 +21,9 @@ export default {
   methods: {
     goHome: function() {
       this.$store.dispatch('filterTracks', {type: 'search', value: ''})
+      if(this.$route.name !== 'home') {
       this.$router.push('/')
+      }
     },
   },
 }
@@ -36,7 +38,6 @@ export default {
     &__name {
       overflow: hidden;
       transition: all .3s;
-      width: 80px;
       opacity: 1;
       text-align-last: left;
       padding-left: 8px;

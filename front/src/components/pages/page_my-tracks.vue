@@ -11,7 +11,7 @@
     components: {
       tracks
     },
-    beforeCreated() {
+    mounted() {
       if(!this.$store.getters.isOnline) {
         this.$router.push('login')
       }

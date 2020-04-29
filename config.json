@@ -1,7 +1,6 @@
 {
   "bddName": "massivemusic",
-  "apiHost": "http://localhost:3335",
-  "prismaPort": "3330",
-  "nodePort": "3335",
+  "apiHost": "http://localhost:3330",
+  "nodePort": "3330",
   "webPort": "3340"
 }

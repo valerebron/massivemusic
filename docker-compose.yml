@@ -1,22 +1,39 @@
-version: "3.1"
+version: '3'
+
 services:
-  postgresql:
-    image: postgres
-    container_name: massivemusic_db
+  dbmysql:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: massivemusic
+      MYSQL_USER: prisma
+      MYSQL_PASSWORD: prisma
     ports:
-    - 3320:5432
+      - 3320:3306
+    volumes:
+      - /var/lib/massive/data:/var/lib/mysql
+  dbpostgres:
+    image: postgres
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
+      POSTGRES_DB: massivemusic
+    ports:
+      - 3321:5432
     volumes:
-      - postgres:/var/lib/postgresql/data
+      - /var/lib/massivePG/data:/var/lib/postgres
   adminer:
-      image: adminer
-      restart: always
-      ports:
-          - 8888:8080
-      links:
-          - postgresql
-volumes:
-  postgres:
+    image: adminer
+    ports:
+      - 8080:8080
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PWA_PORT: 3320
+      PWA_HOST: dbmysql
+      PWA_USER: root
+      PWA_PASSWORD: root
+    ports:
+      - 8082:80

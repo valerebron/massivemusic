@@ -4,9 +4,9 @@
 BassMusic streaming App
 
 ## App Design
-  - Prisma server :**3330**
-  - Node server   :**3335**
-  - Web server  :**3340**
+  - Database   :**3320**
+  - Node       :**3330**
+  - Web        :**3340**
 
 ## Config
   - [config.json](config.json)

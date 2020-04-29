@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url = "***"
+}
+
+model Style {
+  id    String  @id
+  name  String
+  slug  String
+  Track Track[]
+}
+
+model Track {
+  id        String  @default(autoincrement()) @id
+  yt_id     String
+  artist    String
+  createdAt DateTime
+  duration  Int
+  invalid   Boolean?
+  playcount Int
+  style     String?
+  title     String
+  updatedAt DateTime
+  user      String?
+  Style     Style?   @relation(fields: [style], references: [id])
+  User      User?    @relation(fields: [user], references: [id])
+
+  @@index([style], name: "style")
+  @@index([user], name: "user")
+}
+
+model User {
+  id        String  @default(autoincrement()) @id
+  createdAt DateTime
+  email     String   @unique
+  name      String
+  password  String
+  role      String
+  token     String?
+  updatedAt DateTime
+  Track     Track[]
+}

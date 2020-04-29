@@ -1,5 +1,5 @@
 <template>
-  <modal :key="track.id" @close="close()">
+  <modal :key="track.yt_id" @close="close()">
     <form class="drop-track">
       <p>Delete track : <br><br>{{ track.title }} from {{ track.artist }} ?</p>
       <div class="actions">
@@ -25,18 +25,18 @@
       drop: function(track) {
         this.$apollo.mutate({
           variables: {
-            userId: this.$store.getters.session.user.id,
+            user_id: this.$store.getters.session.user.id,
             token: this.$store.getters.session.token,
-            trackId: track.id,
+            id: track.id,
           },
-          mutation: gql`mutation($userId: String!, $token: String!, $trackId: String!) {
-            dropPost(userId: $userId, token: $token, trackId: $trackId) {
+          mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!) {
+            dropPost(user_id: $user_id, token: $token, id: $id) {
               id
             }
           }`,
         }).then(() => {
           this.$store.commit('DROP_TRACK', track)
-          document.getElementsByClassName(track.id)[0].classList.add('track--dropped')
+          document.getElementsByClassName(track.yt_id)[0].remove()
           this.close()
         }).catch((error) => {
           this.error = error.message.replace('GraphQL error: ', '')

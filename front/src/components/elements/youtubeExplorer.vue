@@ -91,7 +91,7 @@ export default {
             track.artist = track.description.split(' - ')[0]
           }
           track.duration = track.lengthSeconds,
-          track.id = track.videoId
+          track.yt_id = track.videoId
           track.style = 11
           return track
         })
@@ -127,7 +127,6 @@ export default {
       })
     },
     send(track) {
-      track.title = track._title
       this.$emit('clickOnTrack', track)
     }
   },

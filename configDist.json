@@ -1,7 +1,6 @@
 {
   "bddName": "massivemusic",
   "apiHost": "https://api.massivemusic.fr",
-  "prismaPort": "3330",
-  "nodePort": "3335",
+  "nodePort": "3330",
   "webPort": "3340"
 }
