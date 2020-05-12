@@ -13,7 +13,6 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
     volumes:
       - /var/lib/${DB_NAME}/data:/var/lib/mysql
-      - ./back/seeds/massivemusic.sql:/docker-entrypoint-initdb.d/init.sql
   app:
     container_name: massivemusic_app
     depends_on:
