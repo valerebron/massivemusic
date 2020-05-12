@@ -6,6 +6,7 @@ deploy:
   before_script:
     - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
+    - sed -i "s|root|$CI_DB_USER|g" .env
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - sed -i "s|ENDPOINT=http://localhost:$APP_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
     - export $(cat .env | xargs)
