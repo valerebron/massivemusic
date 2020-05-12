@@ -1,20 +1,14 @@
 import Vue from 'vue'
 import store from './store'
 import router from './router'
-import config from '../../config.json'
-
 import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
-
 import vueMoment from 'vue-moment'
-
 import './styles/main.scss'
 import './assets/icons.js'
-
 import App from './components/App.vue'
 
-window.APIURL = config.apiHost
-Vue.config.productionTip = false
+window.env = process.env
 window.formatError = function(error) {
   let regex = /\x1b/g
   return error.replace(regex, '_rep_').replace(/_rep_\[[0-9][0-9]m/g, '').replace(/_rep_\[[0-9]m/g, '').replace('GraphQL error: ', '')
@@ -22,7 +16,7 @@ window.formatError = function(error) {
 
 Vue.use(VueApollo)
 const apolloClient = new ApolloClient({
-  uri: config.apiHost,
+  uri: process.env.VUE_APP_ENDPOINT,
   onError: ({ networkError, graphQLErrors }) => {
     if(graphQLErrors) {
       console.log(window.formatError(graphQLErrors[0].message))
@@ -45,5 +39,3 @@ new Vue({
   apolloProvider,
   render: h => h(App),
 })
-
-Vue.http.headers.common['Access-Control-Request-Method'] = '*'

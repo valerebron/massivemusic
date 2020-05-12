@@ -8,9 +8,9 @@
 </template>
 
 <script>
-  import theheader from './layouts/header'
-  import navigation from './layouts/navigation'
-  import player from './layouts/player'
+  import theheader from './base/header'
+  import navigation from './base/navigation'
+  import player from './base/player'
   export default {
     name: 'app',
     components: {
@@ -70,7 +70,7 @@
       },
       trackPointerActivity() {
         let self = this
-        let pointerTimeout =''
+        let pointerTimeout = ''
         window.onmousemove = function() {
           self.pointerIdle = false
           clearTimeout(pointerTimeout)

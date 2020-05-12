@@ -2,6 +2,7 @@
   <nav class="nav">
     <template v-if="$store.getters.isOnline">
       <router-link to="user" class="nav__link nav__link--user">
+        <img class="gravatar" :src="gravatar" alt="">
         {{ $store.getters.session.user.name }}
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="admin" class="nav__link">
@@ -53,6 +54,11 @@
 import gql from 'graphql-tag'
 export default {
   name: 'navigation',
+  computed: {
+    gravatar: {
+      get() { return this.$store.getters.myGravatar },
+    },
+  },
   methods: {
     loadStyles() {
       this.$apollo
@@ -163,8 +169,13 @@ export default {
     padding: 10px 16px;
     font-size: 16px;
     text-transform: capitalize;
-    .ion {
-      padding-right: 10px;
+    .ion, .gravatar {
+      margin-right: 10px;
+    }
+    .gravatar {
+      width: 16px;
+      height: 16px;
+      border-radius: 16px;
     }
     &:active {
       opacity: 0.5;

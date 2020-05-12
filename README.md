@@ -1,16 +1,14 @@
-# massivemusic2 [![pipeline status](https://git.osrp.xyz/root/massivemusic2/badges/master/pipeline.svg)](https://git.osrp.xyz/root/massivemusic2/commits/master)
-# MassiveMusic 2
+# massivemusic [![pipeline status](https://git.osrp.xyz/root/massivemusic2/badges/master/pipeline.svg)](https://git.osrp.xyz/root/massivemusic2/commits/master)
+# MassiveMusic
 
 BassMusic streaming App
 
 ## App Design
   - Database   :**3320**
   - Node       :**3330**
-  - Web        :**3340**
 
 ## Config
-  - [config.json](config.json)
-  - [configDist.json](configDist.json)
+  - [.env](.env)
 
 ## Use
   - `yarn seed` insert datas in bdd -> [back/seeds](back/seeds)
