@@ -10,9 +10,8 @@ deploy:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - sed -i "s|ENDPOINT=http://127.0.0.1:$API_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
     - export $(cat .env | xargs)
-    - rm -rf node_modules yarn.lock
-    - cd front && npx vue-cli-service build
-    - docker-compose build
+    - rm -rf yarn.lock
+    - yarn build
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
