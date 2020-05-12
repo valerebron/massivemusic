@@ -10,9 +10,6 @@ deploy:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - sed -i "s|ENDPOINT=http://127.0.0.1:$API_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
     - export $(cat .env | xargs)
-    - cd front
-    - vue-cli-service serve
-    - cd ..
     - docker-compose build
     - docker-compose up -d
   environment:
