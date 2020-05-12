@@ -62,7 +62,6 @@ const actions = {
     let playerState = store.getters.playerState
     if(track) {
       if(track.yt_id != playerTrack.yt_id) {
-        console.log('player ui')
         store.dispatch('ui', {type: 'player', value: true})
         if(document.getElementsByClassName('track--playing')[0]) {
           document.getElementsByClassName('track--playing')[0].classList.remove('track--playing')

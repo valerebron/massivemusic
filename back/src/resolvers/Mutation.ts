@@ -20,9 +20,9 @@ export async function signup(parent, args, context, info) {
 
 export async function login(parent, args, context, info) {
   let user = await context.prisma.user.findOne({
-      where: {
-        email: args.credential
-      }
+    where: {
+      email: args.credential
+    }
   })
 
   if(!user) {
@@ -84,7 +84,7 @@ export async function post(parent, args, context, info) {
           connect: { id: args.style },
         },
         User: {
-          connect: { id: args.user_id }
+          connect: { id: args.user_id },
         },
         pending: true,
         invalid: false,

@@ -13,7 +13,7 @@
       <td class="track__artist" @click="search(track.artist)">
         {{ track.artist }}
       </td>
-      <td>
+      <td class="track__createdat">
         {{ Date.parse(track.createdAt) | moment('from', 'now') }}
       </td>
       <td class="track__favorite" v-if="isFavoritable">
@@ -179,6 +179,9 @@
       }
       &__artist {
         @extend %artistStyle;
+      }
+      &__createdat {
+        font-size: 12px;
       }
       &__favorite {
         cursor: pointer;

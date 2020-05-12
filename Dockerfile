@@ -1,33 +1,20 @@
-FROM prismagraphql/prisma:1.34
+FROM node:buster
 
-#0 Vars
-ARG DB_PASS
-ARG PRISMA_SECRET
-ARG PRISMA_CONFIG
-
-ENV PRISMA_SECRET $PRISMA_SECRET
 ENV WEB_DIR /var/www/localhost
 
-#1 Deps
-RUN apk update && apk upgrade
-RUN apk add yarn
-RUN rm -rf /var/cache/apk/*
-RUN yarn global add prisma ts-node typescript
+RUN apt update -y
+RUN apt upgrade -y
+RUN apt install yarn -y
+RUN yarn global add @prisma/cli typescript
 
-#2 Files
 RUN mkdir -p $WEB_DIR
 WORKDIR $WEB_DIR
-COPY front/dist .
-COPY back .
-COPY front/.htaccess .
-COPY config.json .
 
-#3 Serve
-# RUN echo -e "\rapk add openrc apache2 --no-cache \r" >> /app/prerun_hook.sh
-# RUN echo -e "rc-service apache2 start" >> /app/prerun_hook.sh
+COPY front ./front
+COPY back ./back
+COPY .env .
 
-#4 Seed database
-#RUN chmod u+x /app/prerun_hook.sh
-#RUN echo -e "\r ts-node seeds/seedStyles.ts && ts-node seeds/seedUsers.ts && ts-node seeds/seedTracksWithoutDate.ts" > /app/prerun_hook.sh
+RUN cd back && yarn
+RUN cd front && yarn
 
-# RUN echo -e "rc-service apache2 start" > /app/prerun_hook.sh
+CMD cd back && npx ts-node src/index.ts

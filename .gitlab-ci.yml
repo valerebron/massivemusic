@@ -1,43 +1,19 @@
 stages:
-  - build-front
   - deploy
-
-build-front:
-  stage: build-front
-  tags: [shell]
-  artifacts:
-    paths:
-      - dist/
-      - config.js
-  before_script:
-   - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
-   - rm config.json && mv configDist.json config.json
-   - rm -rf node_modules yarn.lock
-   - yarn
-  script:
-   - node -v
-   - yarn build
-   - mkdir -p /var/www/html/massivemusic
-   - cp -a dist/. /var/www/html/massivemusic/
-
 deploy:
   stage: deploy
   tags: [shell]
-  artifacts:
-    paths:
-      - dist/
-  dependencies:
-    - build-front
   before_script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
   script:
-    - docker build -t $CI_REGISTRY_IMAGE --build-arg DB_PASS=$DB_PASS --build-arg PRISMA_SECRET=$PRISMA_SECRET .
-    - docker push $CI_REGISTRY_IMAGE
-    - docker-compose pull
+    - sed -i "s|password|$CI_DB_PASS|g" .env
+    - sed -i "s|ENDPOINT=http://localhost:$APP_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
+    - export $(cat .env | xargs)
+    - rm -rf node_modules yarn.lock
+    - yarn
+    - yarn build
+    - docker-compose build
     - docker-compose up -d
-    - docker exec massivemusic sed 's/3330/4466/g' prisma.yml
-    - docker exec massivemusic export PRISMA_SECRET=$PRISMA_SECRET && prisma deploy
-    - docker exec massivemusic sed 's/4466/3330/g' prisma.yml
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://massivemusic.fr

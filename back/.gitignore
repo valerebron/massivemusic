@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+/migrations
 
 # Logs
 logs
@@ -9,6 +10,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+
+# Locks
+package-lock.json
+yarn.lock
 
 # OS
 .DS_Store
