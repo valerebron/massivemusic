@@ -8,11 +8,11 @@ deploy:
   script:
     - sed -i "s|root|$CI_DB_USER|g" .env
     - sed -i "s|password|$CI_DB_PASS|g" .env
-    - sed -i "s|ENDPOINT=http://localhost:$APP_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
+    - sed -i "s|ENDPOINT=http://localhost:$API_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
     - export $(cat .env | xargs)
     - rm -rf node_modules yarn.lock
     - yarn
-    - yarn build
+    - cd front && npx vue-cli-service build
     - docker-compose build
     - docker-compose up -d
   environment:
