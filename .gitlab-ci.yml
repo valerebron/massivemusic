@@ -8,6 +8,7 @@ deploy:
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
+    - yarn install
     - yarn build:front
     - yarn build:back
     - docker-compose up -d
