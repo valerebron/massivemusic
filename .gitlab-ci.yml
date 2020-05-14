@@ -3,6 +3,8 @@ stages:
 deploy:
   stage: deploy
   tags: [shell]
+  before_script:
+    - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
