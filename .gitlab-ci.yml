@@ -10,6 +10,7 @@ deploy:
     - export $(cat .env | xargs)
     - yarn install --frozen-lockfile --check-files
     - yarn build:front
+    - yarn generate
     - docker-compose build
     - docker-compose up -d
   cache:
