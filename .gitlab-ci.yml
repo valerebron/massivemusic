@@ -8,7 +8,8 @@ deploy:
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
-    - docker-compose build
+    - yarn build:front
+    - yarn build:back
     - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
