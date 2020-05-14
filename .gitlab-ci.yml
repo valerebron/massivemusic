@@ -2,7 +2,7 @@ stages:
   - deploy
 deploy:
   stage: deploy
-  image: node:alpine
+  tags: [shell]
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
