@@ -2,16 +2,17 @@ stages:
   - deploy
 deploy:
   stage: deploy
-  tags: [shell]
-  before_script:
-    - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
+  image: node:alpine
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
-    - yarn install
+    - yarn install --frozen-lockfile --check-files
     - yarn build:front
-    - yarn build:back
+    - docker-compose build
     - docker-compose up -d
+  cache:
+    paths:
+      - node_modules/
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://massivemusic.fr

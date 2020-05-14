@@ -1,10 +1,9 @@
-FROM node:buster
+FROM node:alpine
 
 ENV WEB_DIR /var/www/localhost
 
-RUN apt update -y && \
-    apt upgrade -y && \
-    apt install yarn -y && \
+RUN apk update && \
+    apk upgrade && \
     yarn global add @prisma/cli typescript
 
 RUN mkdir -p $WEB_DIR
