@@ -13,10 +13,8 @@ COPY front ./front
 COPY back ./back
 COPY .env .
 
-RUN cd back && \
-    yarn && \
-    npx prisma generate && \
-    cd ../front && \
-    yarn
+RUN cd back && yarn
+RUN cd back && npx prisma generate
+RUN cd front yarn
 
 CMD cd back && npx ts-node src/index.ts
