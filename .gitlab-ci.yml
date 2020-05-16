@@ -9,9 +9,9 @@ deploy:
   before_script:
     - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
+    - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - sed -i "s|massivemusic_db|localhost:$DB_PORT|g" .env
-    - export $(cat .env | xargs)
     - cd back
     - yarn --frozen-lockfile --check-files
     - npx prisma generate
