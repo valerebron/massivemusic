@@ -8,7 +8,7 @@ deploy:
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
-    - yarn install --frozen-lockfile --check-files
+    - cd back && yarn --frozen-lockfile --check-files && npx prisma generate
     - yarn build:front
     - docker-compose build
     - docker-compose up -d
