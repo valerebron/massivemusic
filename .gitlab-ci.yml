@@ -12,7 +12,7 @@ deploy:
     - yarn --frozen-lockfile --check-files
     - npx prisma generate
     - cd ../front
-    - yarn
+    - yarn --frozen-lockfile --check-files
     - npx vue-cli-service build
     - cd ../
     - docker-compose build
