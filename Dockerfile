@@ -1,9 +1,9 @@
-FROM node:alpine
+FROM node:stretch-slim
 
 ENV WEB_DIR /var/www/localhost
 
-RUN apk update && \
-    apk upgrade && \
+RUN apt update && \
+    apt upgrade && \
     yarn global add @prisma/cli@alpha typescript
 
 RUN mkdir -p $WEB_DIR
