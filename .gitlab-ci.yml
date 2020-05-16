@@ -8,9 +8,11 @@ deploy:
   script:
     - sed -i "s|password|$CI_DB_PASS|g" .env
     - export $(cat .env | xargs)
-    - cd back && yarn --frozen-lockfile --check-files && npx prisma generate
-    - cd front && npx vue-cli-service build
-    - ls -lha
+    - cd back
+    - yarn --frozen-lockfile --check-files && npx prisma generate
+    - cd ../front
+    - npx vue-cli-service build
+    - cd ../
     - docker-compose build
     - docker-compose up -d
   cache:
