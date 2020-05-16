@@ -37,7 +37,7 @@ api.listen(options).then(() => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'api running on : http://localhost:'+env.API_PORT)
 })
 
-web.use(express.static('../front/dist'))
+web.use(express.static('../front'))
 web.listen(parseInt(process.env.WEB_PORT), () => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'web running on http://localhost:'+env.WEB_PORT)
 })
