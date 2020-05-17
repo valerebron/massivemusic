@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     container_name: massivemusic_db
-    image: mysql:5.7
+    image: mysql
     ports:
     - ${DB_PORT}:3306
     environment:
