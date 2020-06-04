@@ -22,3 +22,8 @@ services:
       - ${WEB_PORT_DIST}:${WEB_PORT}
       - ${API_PORT_DIST}:${API_PORT}
     restart: always
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6060:8080
