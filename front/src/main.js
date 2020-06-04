@@ -16,7 +16,7 @@ window.formatError = function(error) {
 
 Vue.use(VueApollo)
 const apolloClient = new ApolloClient({
-  uri: process.env.VUE_APP_ENDPOINT,
+  uri: window.env.VUE_APP_ENDPOINT,
   onError: ({ networkError, graphQLErrors }) => {
     if(graphQLErrors) {
       console.log(window.formatError(graphQLErrors[0].message))
