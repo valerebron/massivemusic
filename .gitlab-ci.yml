@@ -4,16 +4,23 @@ deploy:
   stage: deploy
   tags: [shell]
   before_script:
-    - export PATH="/home/valere/.nvm/versions/node/v10.2.0/bin:$PATH"
+    - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
-    - sed -i "s|password|$CI_DB_PASS|g" .env
-    - sed -i "s|ENDPOINT=http://localhost:$APP_PORT|ENDPOINT=$CI_ENDPOINT|g" .env
     - export $(cat .env | xargs)
-    - rm -rf node_modules yarn.lock
-    - yarn
-    - yarn build
+    - sed -i "s|password|$CI_DB_PASS|g" .env
+    - sed -i "s|http://127.0.0.1:3330|$CI_ENDPOINT|g" .env
+    - cd back
+    - yarn --frozen-lockfile --check-files
+    - npx prisma generate
+    - cd ../front
+    - yarn --frozen-lockfile --check-files
+    - npx vue-cli-service build
+    - cd ../
     - docker-compose build
     - docker-compose up -d
+  cache:
+    paths:
+      - node_modules/
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://massivemusic.fr

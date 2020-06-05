@@ -10,6 +10,12 @@ form {
     > button {
       width: 50%;
       text-transform: uppercase;
+      &:first-child {
+        border-radius: 0 0 0 9px;
+      }
+      &:last-child {
+        border-radius: 0 0 9px 0;
+      }
     }
   }
 }

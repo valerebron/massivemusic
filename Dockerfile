@@ -1,20 +1,17 @@
-FROM node:buster
+FROM node:stretch-slim
 
 ENV WEB_DIR /var/www/localhost
 
-RUN apt update -y
-RUN apt upgrade -y
-RUN apt install yarn -y
-RUN yarn global add @prisma/cli typescript
+RUN apt update && \
+    apt upgrade && \
+    apt -qy install openssl && \
+    yarn global add typescript
 
 RUN mkdir -p $WEB_DIR
 WORKDIR $WEB_DIR
 
-COPY front ./front
+COPY front/dist ./front
 COPY back ./back
 COPY .env .
-
-RUN cd back && yarn
-RUN cd front && yarn
 
 CMD cd back && npx ts-node src/index.ts

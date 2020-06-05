@@ -3,16 +3,16 @@ version: '3'
 services:
   db:
     container_name: massivemusic_db
-    image: mysql:5.7
+    image: mysql
     ports:
     - ${DB_PORT}:3306
     environment:
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
       MYSQL_DATABASE: ${DB_NAME}
     volumes:
       - /var/lib/${DB_NAME}/data:/var/lib/mysql
       - ./back/seeds/massivemusic.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: always
   app:
     container_name: massivemusic_app
     depends_on:
@@ -21,3 +21,9 @@ services:
     ports:
       - ${WEB_PORT_DIST}:${WEB_PORT}
       - ${API_PORT_DIST}:${API_PORT}
+    restart: always
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 6060:8080

@@ -3,10 +3,10 @@
     <form class="drop-track">
       <p>Delete track : <br><br>{{ track.title }} from {{ track.artist }} ?</p>
       <div class="actions">
-        <button class="action" @click.prevent="close()">
+        <button @click.prevent="close()">
           Cancel
         </button>
-        <button class="action" @click.prevent="drop(track)">
+        <button class="drop" @click.prevent="drop(track)">
           Delete
         </button>
       </div>
