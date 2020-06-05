@@ -3,14 +3,12 @@ stages:
 deploy:
   stage: deploy
   tags: [shell]
-  variables:
-    DOCKER_PRIVILEGED: "true"
-    DOCKER_DRIVER: "overlay"
   before_script:
     - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
+    - sed -i "s|http://127.0.0.1:3330|$CI_ENDPOINT|g" .env
     - cd back
     - yarn --frozen-lockfile --check-files
     - npx prisma generate
