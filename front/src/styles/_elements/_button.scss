@@ -13,5 +13,14 @@ button {
   }
   &:hover {
     background-color: rgba(255, 255, 255, 0.068);
+    &.edit {
+      background-color: $edit-color;
+    }
+    &.validate {
+      background-color: $validate-color;
+    }
+    &.drop {
+      background-color: $invalidate-color;
+    }
   }
 }

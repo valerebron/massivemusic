@@ -13,10 +13,10 @@
       <input v-model="newTrack.artist" type="text" class="item" placeholder="artist" required @keydown.enter.prevent="edit()">
       <input v-model="newTrack.title" type="text" :class="'item style-'+newTrack.style" placeholder="title" required @keydown.enter.prevent="edit()">
       <div class="actions">
-        <button class="action" @click.prevent="close()">
+        <button @click.prevent="close()">
           Cancel
         </button>
-        <button class="action" @click.prevent="edit()">
+        <button class="edit" @click.prevent="edit()">
           Edit
         </button>
       </div>

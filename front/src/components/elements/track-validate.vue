@@ -3,10 +3,10 @@
     <form class="drop-track">
       <p>Validate track : <br><br>{{ track.title }} from {{ track.artist }} ?</p>
       <div class="actions">
-        <button class="action" @click.prevent="close()">
+        <button @click.prevent="close()">
           Cancel
         </button>
-        <button class="action" @click.prevent="validate(track)">
+        <button class="validate" @click.prevent="validate(track)">
           Validate
         </button>
       </div>
