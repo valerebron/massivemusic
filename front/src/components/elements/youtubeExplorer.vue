@@ -21,7 +21,7 @@
       <figure class="track__thumb">
         <img
           class="track__thumb__pic"
-          :src="'https://tube.osrp.xyz/vi/'+track.videoId+'/mqdefault.jpg'"
+          :src="'https://invidio.us/vi/'+track.videoId+'/mqdefault.jpg'"
           :alt="track.description"
         />
         <figcaption class="track__thumb__cap">{{ formatSeconds(track.lengthSeconds) }}</figcaption>
@@ -56,7 +56,7 @@ export default {
   },
   data: function() {
     return {
-      endpoint: 'https://tube.osrp.xyz/api/v1/search?sort_by=relevance',
+      endpoint: 'https://invidio.us/api/v1/search?sort_by=relevance',
       tracksRaw: [],
       page: 1,
       query: '',
