@@ -15,6 +15,8 @@ const state = {
   order: 'createdAt_DESC',
   filters: initial_filters,
   count: 0,
+  count_pending: 0,
+  count_invalid: 0,
 }
 
 const mutations = {
@@ -43,6 +45,12 @@ const mutations = {
   },
   SET_COUNT(state, count) {
     state.count = count
+  },
+  SET_COUNT_PENDING(state, count) {
+    state.count_pending = count
+  },
+  SET_COUNT_INVALID(state, count) {
+    state.count_invalid = count
   },
   SET_FILTER(state, filter) {
     state.filters[filter.type] = filter.value
@@ -154,6 +162,12 @@ const actions = {
           window.scroll(0, 0)
           store.commit('SET_TRACKS', res.data.tracks.tracks)
           store.commit('SET_COUNT', res.data.tracks.count)
+          if(filter.type === 'pending') {
+            store.commit('SET_COUNT_PENDING', res.data.tracks.count)
+          }
+          if(filter.type === 'invalid') {
+            store.commit('SET_COUNT_INVALID', res.data.tracks.count)
+          }
         }
       }).catch(() => {
         console.log('%c●', 'color: red', 'filter error')
@@ -178,6 +192,8 @@ const getters = {
   style: state => state.style,
   user: state => state.user,
   count: state => state.count,
+  count_pending: state => state.count_pending,
+  count_invalid: state => state.count_invalid,
 }
 
 export default {

@@ -26,10 +26,18 @@
         my tracks
       </router-link>
       <router-link to="pending-tracks" class="nav__link">
-        <icon-pending />pending Tracks
+        <icon-pending />
+        pending
+        <i v-if="$store.getters.count_pending !== 0" class="counter counter__pending">
+          {{ $store.getters.count_pending }}
+        </i>
       </router-link>
       <router-link to="invalid-tracks" class="nav__link">
-        <icon-invalid />invalid Tracks
+        <icon-invalid />
+        invalid
+        <i v-if="$store.getters.count_invalid !== 0" class="counter counter__invalid">
+          {{ $store.getters.count_invalid }}
+        </i>
       </router-link>
     </template>
     <router-link to="/" class="nav__link">

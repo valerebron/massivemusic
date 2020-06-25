@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <input v-model="terms" class="search__input" type="search" placeholder="Search"/>
-    <i class="search__count">
+    <i class="search__count counter">
       {{ $store.getters.count }}
     </i>
     <button class="search__button" @click="toggle">
@@ -65,15 +65,6 @@
     }
     &__count {
       @extend %appStyleBkgColor;
-      color: black;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: bold;
-      border-radius: 20px;
-      padding: 4px 8px;
-      position: absolute;
-      right: 10px;
-      cursor: default;
     }
     &__input, &__count {
       display: none;
