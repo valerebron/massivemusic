@@ -1,0 +1,19 @@
+.counter {
+  color: black;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: bold;
+  border-radius: 20px;
+  padding: 4px 8px;
+  position: absolute;
+  right: 10px;
+  cursor: default;
+  &__pending {
+    background-color: $pending-color;
+    color: white;
+  }
+  &__invalid {
+    background-color: $invalidate-color;
+    color: white;
+  }
+}
