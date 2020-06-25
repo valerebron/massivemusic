@@ -16,7 +16,7 @@
           <button @click.prevent="close">
             Cancel
           </button>
-          <button @click.prevent="add">
+          <button class="validate" @click.prevent="add">
             Add
           </button>
         </div>
