@@ -99,6 +99,11 @@
           }
         }
       },
+      closeNavIfMobile() {
+        if(window.innerWidth < 769) {
+          this.$store.dispatch('ui', {type: 'nav', value: false})
+        }
+      },
     },
     beforeCreate: function() {
       window.apollo = this.$apollo
@@ -106,9 +111,15 @@
     },
     mounted: function() {
       this.$store.dispatch('ui', {type: 'intro', value: false})
+      this.closeNavIfMobile()
       this.changeScopeOnScroll()
       this.trackPointerActivity()
       this.keyboardAlias()
+    },
+    watch: {
+      $route() {
+        this.closeNavIfMobile()
+      },
     },
   }
 </script>

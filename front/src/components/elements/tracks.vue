@@ -182,6 +182,10 @@
       }
       &__createdat {
         font-size: 12px;
+        display: none;
+        @include breakpoint(desktop) {
+          display: block;
+        }
       }
       &__favorite {
         cursor: pointer;
