@@ -50,7 +50,9 @@
     display: flex;
     align-items: center;
     position: relative;
+      @include breakpoint(tablet) {
     margin-right: 20px;
+    }
     &__input {
       background-color: rgb(49, 49, 49);
       font-size: 16px;
@@ -58,6 +60,14 @@
       color: black;
       text-transform: uppercase;
       border-radius: 20px;
+      transition: all 0.3s;
+      display: inline-flex;
+      width: 0;
+      padding: 0;
+      @include breakpoint('tablet') {
+        width: auto;
+        padding: 10px 0;
+      }
       body[class*="route-style"] & {
         background-color: rgb(24, 24, 24);
         color: white;
@@ -65,8 +75,6 @@
     }
     &__count {
       @extend %appStyleBkgColor;
-    }
-    &__input, &__count {
       display: none;
       @include breakpoint('tablet') {
         display: inline-flex;

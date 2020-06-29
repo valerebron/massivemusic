@@ -173,9 +173,16 @@
     }
     &--search {
       .logo {
-        background-color: red;
-        &__name {
-          display: none;
+        display: none;
+      }
+      .search {
+        flex-grow: 1;
+        justify-content: right;
+        &__input {
+          display: block;
+          flex-grow: 1;
+          margin: 0 10px;
+          padding: 10px 0;
         }
       }
     }

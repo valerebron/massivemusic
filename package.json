@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "install": "cd back && yarn && cd ../front && yarn",
+    "deps": "cd back && yarn && cd ../front && yarn",
     "build:front": "cd front && npx vue-cli-service build",
     "build:back": "docker-compose build",
     "build": "yarn build:front && yarn build:back",
@@ -13,6 +13,7 @@
     "seed:test": "cd back && npx ts-node seeds/index.ts",
     "dev:front": "cd front && npx vue-cli-service serve",
     "dev:back": "cd back && npx nodemon --watch 'src/*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
+    "install": "yarn deps && yarn generate && yarn build",
     "dev": "yarn dev:front & yarn dev:back & docker-compose up",
     "kill": "kill $(lsof -t -i:3330)"
   },

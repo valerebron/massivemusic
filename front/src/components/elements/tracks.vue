@@ -184,7 +184,7 @@
         font-size: 12px;
         display: none;
         @include breakpoint(desktop) {
-          display: block;
+          display: table-cell;
         }
       }
       &__favorite {
