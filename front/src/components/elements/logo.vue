@@ -20,6 +20,7 @@ export default {
   },
   methods: {
     goHome: function() {
+      this.$store.dispatch('ui', {type: 'full', value: false})
       this.$store.dispatch('filterTracks', {type: 'search', value: ''})
       if(this.$route.name !== 'home') {
       this.$router.push('/')

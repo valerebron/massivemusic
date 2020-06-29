@@ -18,11 +18,6 @@
       navigation,
       player,
     },
-    data: function() {
-      return {
-        pointerIdle: false,
-      }
-    },
     computed: {
       route: function() {
         return this.$route.name
@@ -41,7 +36,6 @@
             'app--player' : this.$store.getters.ui.player,
             'app--search' : this.$store.getters.ui.search,
             'app--full' : this.$store.getters.ui.full,
-            'pointer-idle': this.pointerIdle,
             'touch': ("ontouchstart" in document.documentElement),
             'no-touch': !("ontouchstart" in document.documentElement),
           },
@@ -66,17 +60,6 @@
               }
             }
           }, 100)
-        }
-      },
-      trackPointerActivity() {
-        let self = this
-        let pointerTimeout = ''
-        window.onmousemove = function() {
-          self.pointerIdle = false
-          clearTimeout(pointerTimeout)
-          pointerTimeout = setTimeout(()=>{
-            self.pointerIdle = true
-          }, 3000)
         }
       },
       keyboardAlias() {
@@ -201,10 +184,17 @@
     }
     &--full {
       overflow: hidden;
+      .header, .player__bottom {
+        background-color: #00000075;
+      }
       .header {
         z-index: $z-index-logo;
         .nav-toggle, .search {
           display: none;
+        }
+        .logo {
+          width: 100%;
+          justify-content: center;
         }
       }
       .player {
@@ -223,7 +213,6 @@
           position: fixed;
           width: 100%;
           bottom: 0;
-          background-color: #000000b3;
         }
         .player-next {
           width: 44px;
@@ -234,19 +223,8 @@
           }
         }
       }
-      .header, .player {
-        background-color: transparent;
-      }
       .up-down-icon {
         transform: rotateX(0deg);
-      }
-      &.pointer-idle {
-        cursor: none;
-        .player {
-          &__bottom {
-            opacity: 0;
-          }
-        }
       }
     }
     &[data-dialog='true'] {
