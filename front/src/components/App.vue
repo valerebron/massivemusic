@@ -96,7 +96,6 @@
       this.$store.dispatch('ui', {type: 'intro', value: false})
       this.closeNavIfMobile()
       this.changeScopeOnScroll()
-      this.trackPointerActivity()
       this.keyboardAlias()
     },
     watch: {

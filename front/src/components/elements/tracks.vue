@@ -114,12 +114,10 @@
       },
     },
     mounted() {
-      // console.log('mounted')
       this.$store.commit('RESET_FILTERS')
       this.load()
     },
     updated() {
-      // console.log('updated')
       this.load()
     },
   }
