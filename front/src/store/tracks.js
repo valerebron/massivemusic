@@ -69,7 +69,7 @@ const mutations = {
 
 const actions = {
   filterTracks(store, filter) {
-    if (filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
+    if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
       console.log(filter)
       let newSkip = store.state.filters.skip + store.state.tracksPerPage
       switch(filter.type) {
@@ -77,7 +77,7 @@ const actions = {
           store.commit('RESET_FILTERS')
         break
         case 'skip':
-          if (newSkip >= store.state.count) {
+          if(newSkip >= store.state.count) {
             return
           }
           else {
@@ -150,7 +150,7 @@ const actions = {
           }
         `,
       }).then((res) => {
-        if (filter.type === 'skip') {
+        if(filter.type === 'skip') {
           store.commit('PUSH_TRACKS', res.data.tracks.tracks)
         }
         else {
