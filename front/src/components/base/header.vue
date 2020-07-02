@@ -53,5 +53,8 @@
         color: black;
       }
     }
+    .nav-toggle, .search__button {
+      font-size: 24px;
+    }
   }
 </style>

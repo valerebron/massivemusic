@@ -153,7 +153,13 @@ export default {
     width: 100%;
     @include breakpoint(tablet) {
       width: auto;
+      justify-content: flex-start;
     }
+    align-items: center;
+    cursor: pointer;
+    padding: 20px 16px!important;
+    font-size: 16px;
+    text-transform: capitalize;
     &--favorite.router-link-exact-active {
       .ion svg {
         fill: $favorite-color;
@@ -169,14 +175,6 @@ export default {
         margin-right: 16px;
       }
     }
-    @include breakpoint(tablet) {
-      justify-content: flex-start;
-    }
-    align-items: center;
-    cursor: pointer;
-    padding: 10px 16px;
-    font-size: 16px;
-    text-transform: capitalize;
     .ion, .gravatar {
       margin-right: 10px;
     }
