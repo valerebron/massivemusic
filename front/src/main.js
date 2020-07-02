@@ -20,6 +20,10 @@ const apolloClient = new ApolloClient({
   onError: ({ networkError, graphQLErrors }) => {
     if(graphQLErrors) {
       console.log(window.formatError(graphQLErrors[0].message))
+      if(window.formatError(graphQLErrors[0].message) == 'invalid token') {
+        store.commit('RESET_SESSION')
+        router.push('login')
+      }
     }
     if(networkError) {
       console.log('%c●', 'color: red', 'networkError', networkError)
