@@ -39,7 +39,7 @@
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
   <section v-else class="no-track">
-    No tracks sorry
+    No track sorry
   </section>
 </template>
 
