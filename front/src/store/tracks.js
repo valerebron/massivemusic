@@ -56,48 +56,43 @@ const mutations = {
     state.filters[filter.type] = filter.value
   },
   RESET_FILTERS(state) {
-    state.filters = initial_filters
+    state.filters = {
+      search: '',
+      style: 0,
+      user: 0,
+      skip: 0,
+      pending: 0,
+      invalid: 0,
+    }
   },
 }
 
 const actions = {
-  resetTracks(store) {
-    store.commit('RESET_FILTERS')
-  },
   filterTracks(store, filter) {
-    if (filter.value !== store.state.filters[filter.type] || filter.type === 'skip' || store.state.filters.invalid !== 0 || store.state.filters.pending !== 0) {
-      if (filter.type === 'home') {
-        store.commit('SET_FILTER', { type: 'user', value: 0 })
-        store.commit('SET_FILTER', { type: 'style', value: 0 })
-      }
-      if (filter.type === 'style') {
-        store.commit('SET_FILTER', { type: 'user', value: 0 })
-      }
-      if (filter.type === 'pending') {
-        store.commit('SET_FILTER', { type: 'pending', value: filter.value })
-      }
-      else {
-        store.commit('SET_FILTER', { type: 'pending', value: 0 })
-      }
-      if (filter.type === 'invalid') {
-        store.commit('SET_FILTER', { type: 'invalid', value: filter.value })
-      }
-      else {
-        store.commit('SET_FILTER', { type: 'invalid', value: 0 })
-      }
-      if (filter.type === 'skip') {
-        if (store.state.filters.skip + store.state.tracksPerPage >= store.state.count) {
-          return
-        }
-        else {
-          filter.value = store.state.filters.skip + store.state.tracksPerPage
+    if (filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
+      console.log(filter)
+      let newSkip = store.state.filters.skip + store.state.tracksPerPage
+      switch(filter.type) {
+        case 'reset':
+          store.commit('RESET_FILTERS')
+        break
+        case 'skip':
+          if (newSkip >= store.state.count) {
+            return
+          }
+          else {
+            filter.value = newSkip
+            store.commit('SET_FILTER', filter)
+          }
+        break
+        default:
+          store.commit('SET_FILTER', {type: 'user', value: 0})
+          store.commit('SET_FILTER', {type: 'style', value: 0})
+          store.commit('SET_FILTER', {type: 'pending', value: 0})
+          store.commit('SET_FILTER', {type: 'invalid', value: 0})
           store.commit('SET_FILTER', filter)
-        }
+        break
       }
-      else {
-        store.commit('SET_FILTER', { type: 'skip', value: 0 })
-      }
-      store.commit('SET_FILTER', filter)
       window.apollo.query({
         variables: {
           search: store.state.filters.search,
@@ -179,6 +174,10 @@ const actions = {
     let favorites = store.getters.favorites
     store.commit('SET_TRACKS', favorites)
     store.commit('SET_COUNT', favorites.length)
+  },
+  resetCounters(store) {
+    store.commit('SET_COUNT_PENDING', 0)
+    store.commit('SET_COUNT_INVALID', 0)
   },
 }
 
