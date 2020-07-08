@@ -161,7 +161,7 @@ export default {
     }
     align-items: center;
     cursor: pointer;
-    padding: 20px 16px!important;
+    padding: 14px 16px!important;
     font-size: 16px;
     text-transform: capitalize;
     &--favorite.router-link-exact-active {

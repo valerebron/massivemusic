@@ -166,6 +166,10 @@
           margin: 0 10px;
           padding: 10px 0;
         }
+        &__count {
+          display: inline-block;
+          right: 80px;
+        }
       }
     }
     &--player {
@@ -212,6 +216,9 @@
           position: fixed;
           width: 100%;
           bottom: 0;
+          .player-infos {
+            text-shadow: black 0px 0px 4px;
+          }
         }
         .player-next {
           width: 44px;

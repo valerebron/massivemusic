@@ -23,13 +23,13 @@
         </button>
       </td>
       <td v-if="isEditable">
-        <button class="track__update" @click="openEdit(track)">
+        <button class="edit" @click="openEdit(track)">
           <icon-sync/>
         </button>
-        <button class="track__validate" @click="openValidate(track)">
+        <button class="validate" @click="openValidate(track)">
           <icon-valid/>
         </button>
-        <button class="track__drop" @click="openDrop(track)">
+        <button class="drop" @click="openDrop(track)">
           <icon-trash/>
         </button>
       </td>
@@ -39,7 +39,7 @@
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
   <section v-else class="no-track">
-    No track sorry
+    No track :(
   </section>
 </template>
 
