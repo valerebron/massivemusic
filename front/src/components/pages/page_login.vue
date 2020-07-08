@@ -78,7 +78,7 @@
         }).then((res) => {
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.login)
-          this.$store.dispatch('reset_counters')
+          this.$store.dispatch('resetCounters')
           this.$router.push('user')
         }).catch((error) => {
           this.error = window.formatError(error.message)
