@@ -1,4 +1,5 @@
 import YouTubePlayer from 'youtube-player'
+import gql from 'graphql-tag'
 
 let playTimeout = ''
 
@@ -34,19 +35,22 @@ const actions = {
       }
     })
     player.on('error', function (event) {
-      let id = store.getters.playerTrack.yt_id
-      if([100, 101, 150].includes(event.data)) {
-        // axios
-        //   .get(window.APIURL+'/tracks/invalidate/'+id)
-        //   .then(() => {
-        //     if(document.getElementsByClassName(id)[0]) {
-        //       document.getElementsByClassName(id)[0].classList.add('track--invalidate')
-        //     }
-        //     let nextTrack = store.getters.nextTrack
-        //     if(nextTrack) {
-        //       store.dispatch('play', nextTrack)
-        //     }
-        //   })
+      let id = store.getters.playerTrack.id
+      if([100, 101, 150, 2].includes(event.data)) {
+        window.apollo.mutate({
+          variables: {
+            id: id,
+          },
+          mutation: gql`mutation($id: Int!) {
+            invalidatePost(id: $id) {
+              id
+            }
+          }`,
+        }).then(() => {
+          document.getElementsByClassName(store.getters.playerTrack.yt_id)[0].classList.add('track--invalid')
+        }).catch((error) => {
+          console.log('%c●', 'color: red', 'invalidate error: ', error.message.replace('GraphQL error: ', ''))
+        })
       }
       else if(event.data == 2) {
         console.log('%c●', 'color: red', 'id: '+id+' id error')

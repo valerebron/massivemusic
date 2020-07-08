@@ -11,6 +11,7 @@ import pagePendingTracks from './components/pages/page_pending-tracks.vue'
 import pageInvalidTracks from './components/pages/page_invalid-tracks.vue'
 import pageFavorites from './components/pages/page_favorites.vue'
 import pageStyle from './components/pages/page_style.vue'
+import pageTest from './components/pages/page_test.vue'
 
 Vue.use(VueRouter)
 
@@ -25,6 +26,7 @@ let routes = [
   { name: 'user', path: '/user', component: pageUser },
   { name: 'pending-tracks', path: '/pending-tracks', component: pagePendingTracks },
   { name: 'invalid-tracks', path: '/invalid-tracks', component: pageInvalidTracks },
+  { name: 'test', path: '/test', component: pageTest },
 ]
 // should use store.getters.styles (unfortunatly can't add route async)
 const styles = [{"id":11,"name":"Dubstep","slug":"dubstep"},{"id":12,"name":"Drum & Bass","slug":"drumandbass"},{"id":13,"name":"Dub","slug":"dub"},{"id":14,"name":"Break Beat","slug":"breakbeat"},{"id":15,"name":"Deep Bass","slug":"deepbass"},{"id":19,"name":"Electro","slug":"electro"}]
