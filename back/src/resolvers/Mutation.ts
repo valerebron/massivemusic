@@ -161,6 +161,7 @@ export async function validatePost(parent, args, context, info) {
           where: { id: args.id },
           data: {
             pending: false,
+            invalid: false,
           },
         })
       }
@@ -175,4 +176,15 @@ export async function validatePost(parent, args, context, info) {
   else {
     throw new Error('invalid token')
   }
+}
+
+export async function invalidatePost(parent, args, context, info) {
+  console.log('\x1b[34m%s\x1b[0m', '●', 'invalidate track-id:',args.id)
+  return context.prisma.track.update({
+    where: { id: args.id },
+    data: {
+      pending: false,
+      invalid: true,
+    },
+  })
 }

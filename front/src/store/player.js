@@ -54,12 +54,20 @@ const actions = {
       else if(event.data == 5) {
         console.log('%c●', 'color: red', 'id: '+id+' html5 player error')
       }
+      document.getElementsByClassName('player-next')[0].click()
     })
   },
   play(store, track) {
     let player = window.PLAYER
     let playerTrack = store.getters.playerTrack
     let playerState = store.getters.playerState
+
+    let currentIndex = store.getters.tracks.indexOf(track) + 1
+    let limit = store.getters.tracksPerPage + store.getters.filters.skip - 5
+    if(currentIndex > limit) {
+      store.dispatch('filterTracks', { type: 'skip', value: '' })
+    }
+
     if(track) {
       if(track.yt_id != playerTrack.yt_id) {
         store.dispatch('ui', {type: 'player', value: true})
@@ -89,7 +97,7 @@ const actions = {
     }
   },
   loadFirstTrack(store) {
-    let firstTrack = store.getters.firstTrack
+    let firstTrack = store.getters.first
     store.commit('SET_TRACK', firstTrack)
     window.PLAYER.loadVideoById(firstTrack.yt_id)
   }

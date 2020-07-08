@@ -151,21 +151,24 @@
         this.$store.dispatch('play', track)
       },
       playPrev() {
-        let id = this.track.yt_id
-        let tracks = this.$store.state.tracks
-        let index = tracks.findIndex(function(e) { return e.id === id })
+        let yt_id = this.track.yt_id
+        let tracks = this.$store.state.tracks.tracks
+        let index = tracks.findIndex((e) => { return e.yt_id === yt_id })
         let nextTrack = tracks[index - 1]
         if(nextTrack) {
           this.play(nextTrack)
         }
       },
       playNext() {
-        let id = this.track.yt_id
-        let tracks = this.$store.state.tracks
-        let index = tracks.findIndex(function(e) { return e.id === id })
+        let yt_id = this.track.yt_id
+        let tracks = this.$store.state.tracks.tracks
+        let index = tracks.findIndex(function(e) { return e.yt_id === yt_id })
         let nextTrack = tracks[index + 1]
         if(nextTrack) {
           this.play(nextTrack)
+        }
+        else {
+          this.$store.dispatch('filterTracks', { type: 'skip', value: '' })
         }
       },
       filterByArtist(artist) {

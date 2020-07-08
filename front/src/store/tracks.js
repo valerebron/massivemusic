@@ -70,7 +70,6 @@ const mutations = {
 const actions = {
   filterTracks(store, filter) {
     if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
-      console.log(filter)
       let newSkip = store.state.filters.skip + store.state.tracksPerPage
       switch(filter.type) {
         case 'reset':
@@ -193,6 +192,7 @@ const getters = {
   count: state => state.count,
   count_pending: state => state.count_pending,
   count_invalid: state => state.count_invalid,
+  tracksPerPage: state => state.tracksPerPage,
 }
 
 export default {

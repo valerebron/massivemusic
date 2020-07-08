@@ -9,6 +9,10 @@
         <icon-admin />
         admin
       </router-link>
+      <router-link v-if="$store.getters.isAdmin" to="test" class="nav__link">
+        <icon-admin />
+        test tracks
+      </router-link>
       <router-link to="add-tracks" class="nav__link">
         <icon-add />add Tracks
       </router-link>
