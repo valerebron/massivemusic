@@ -2,9 +2,9 @@ stages:
   - deploy
 deploy:
   stage: deploy
-  tags: [shell]
+  image: node:10.19.0-alpine
   before_script:
-    - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
+    - apk add docker-compose
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
