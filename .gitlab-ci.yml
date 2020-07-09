@@ -2,10 +2,9 @@ stages:
   - deploy
 deploy:
   stage: deploy
-  image: docker:dind
+  tags: [shell]
   before_script:
-    - apk add --update npm yarn docker-compose
-    - apk add --repository http://dl-cdn.alpinelinux.org/alpine/v3.9/main/ nodejs=10.19.0-r0
+    - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
