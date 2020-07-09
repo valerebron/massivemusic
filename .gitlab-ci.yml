@@ -4,10 +4,8 @@ deploy:
   stage: deploy
   image: node:10.19.0-alpine
   before_script:
-    - apk update
-    - apk add docker docker-compose
+    - apk add --update openrc docker docker-compose
     - rc-update add docker boot
-    - service docker start
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
