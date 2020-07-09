@@ -6,6 +6,7 @@ deploy:
   before_script:
     - apk update
     - apk add docker docker-compose
+    - rc-update add docker boot
     - service docker start
   script:
     - export $(cat .env | xargs)
