@@ -4,7 +4,7 @@ deploy:
   stage: deploy
   image: node:10.19.0-alpine
   before_script:
-    - apk add docker-compose
+    - apk add docker docker-compose
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
