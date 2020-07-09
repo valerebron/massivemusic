@@ -4,9 +4,8 @@ deploy:
   stage: deploy
   image: node:10.19.0-alpine
   before_script:
+    - apk update
     - apk add docker docker-compose
-    - groupadd docker
-    - usermod -aG docker $(whoami)
     - service docker start
   script:
     - export $(cat .env | xargs)
