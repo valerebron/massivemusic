@@ -5,9 +5,9 @@ deploy:
   image: node:10.19.0-alpine
   before_script:
     - apk add docker docker-compose
-    - sudo groupadd docker
-    - sudo usermod -aG docker $(whoami)
-    - sudo service docker start
+    - groupadd docker
+    - usermod -aG docker $(whoami)
+    - service docker start
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
