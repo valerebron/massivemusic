@@ -148,7 +148,7 @@
         background-color: $color-selection;
       }
       &--playing {
-        background-color: $color-selection;
+        background-color: $color-selection!important;
       }
       &--invalid {
         background-color: $invalidate-color;

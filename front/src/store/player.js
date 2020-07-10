@@ -34,9 +34,9 @@ const actions = {
         document.getElementsByClassName('player-next')[0].click()
       }
     })
-    player.on('error', function (event) {
+    player.on('error', function (event) { // 2-invalidID 5-HTML5PlayerError 100-removedOrPrivate 101-150-forbiddenVideo
       let id = store.getters.playerTrack.id
-      if([100, 101, 150, 2].includes(event.data)) {
+      if([2 ,100, 101, 150].includes(event.data)) {
         window.apollo.mutate({
           variables: {
             id: id,
