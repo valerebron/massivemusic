@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import createPersistedState from 'vuex-persistedstate'
+import VuexPersist from 'vuex-persist'
 
 import ui from './store/ui'
 import styles from './store/styles'
@@ -11,6 +11,11 @@ import favorites from './store/favorites'
 import player from './store/player'
 
 Vue.use(Vuex)
+
+const vuexLocalStorage = new VuexPersist({
+  storage: window.localStorage, // or window.sessionStorage or localForage instance.
+  reducer: (state) => ({ session: state.session, favorites: state.favorites, player: state.player }),
+})
 
 export default new Vuex.Store({
   strict: true,
@@ -22,5 +27,5 @@ export default new Vuex.Store({
     favorites,
     player,
   },
-  plugins: [createPersistedState()],
+  plugins: [vuexLocalStorage.plugin],
 })
