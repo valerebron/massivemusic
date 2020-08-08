@@ -33,6 +33,11 @@
           <icon-trash/>
         </button>
       </td>
+      <td class="track__user">
+        <router-link :to="'/user/'+track.user.id+'/profile'" class="track__user__link">
+          <img class="track__user__avatar" :src="'/avatars/'+track.user.id+'-30px.png'" :alt="track.user.name">
+        </router-link>
+      </td>
     </tr>
     <trackEdit v-if="isEditable && isEditOpen" :oldTrack="trackToEdit" @closeEdit="closeEdit()" />
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
@@ -195,6 +200,24 @@
       &__drop {
         .ion {
           pointer-events: none;
+        }
+      }
+      &__user {
+        display: none;
+        @include breakpoint(tablet) {
+          display: table-cell;
+        }
+        &__link {
+          text-align: center;
+          display: flex;
+          border-radius: 40px;
+          overflow: hidden;
+          width: 30px;
+          height: 30px;
+        }
+        &__avatar {
+          width: 30px;
+          height: 30px;
         }
       }
     }

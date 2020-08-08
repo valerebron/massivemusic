@@ -79,7 +79,7 @@
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.login)
           this.$store.dispatch('resetCounters')
-          this.$router.push('user')
+          this.$router.push('/user/me/profile')
         }).catch((error) => {
           this.error = window.formatError(error.message)
           console.log('%c●', 'color: red', 'login error')
@@ -116,7 +116,7 @@
         }).then((res) => {
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.signup)
-          this.$router.push('user')
+          this.$router.push('/user/me/profile')
         }).catch((error) => {
           this.error = window.formatError(error.message)
           console.log('%c●', 'color: red', 'signup error')
@@ -131,7 +131,7 @@
     },
     mounted: function() {
       if(this.$store.getters.isOnline) {
-        this.$router.push('user')
+        this.$router.push('/user/me/profile')
       }
       else {
         this.$store.dispatch('modal', true)

@@ -1,5 +1,3 @@
-import MD5 from 'crypto-js/md5'
-
 const state = {
   token: '',
   user: {},
@@ -43,10 +41,6 @@ const getters = {
   },
   isAdmin(state) {
     return (state.user.role === 'ADMIN' ? true : false)
-  },
-  myGravatar(state) {
-    let hash = MD5(state.user.email)
-    return 'https://secure.gravatar.com/avatar/'+hash+'?s=320&d=identicon'
   },
 }
 

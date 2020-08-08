@@ -1,8 +1,19 @@
 <template>
   <nav class="nav">
+    <router-link to="/" class="nav__link">
+      <icon-home />all styles
+    </router-link>
+    <router-link
+      class="nav__link nav__link--style"
+      :class="'style-hover-bkg-'+style.id"
+      v-for="style in $store.getters.styles"
+      :to="'/'+style.slug"
+      :key="style.id">
+      {{ style.name }}
+    </router-link>
     <template v-if="$store.getters.isOnline">
-      <router-link to="user" class="nav__link nav__link--user">
-        <img class="gravatar" :src="gravatar" alt="">
+      <router-link to="/user/me/profile" class="nav__link nav__link--user">
+        <img class="avatar" :src="myAvatar" :alt="$store.getters.session.user.name">
         {{ $store.getters.session.user.name }}
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="admin" class="nav__link">
@@ -67,8 +78,8 @@ import gql from 'graphql-tag'
 export default {
   name: 'navigation',
   computed: {
-    gravatar: {
-      get() { return this.$store.getters.myGravatar },
+    myAvatar: {
+      get() { return '/avatars/'+this.$store.getters.session.user.id+'-30px.png' },
     },
   },
   methods: {
@@ -179,10 +190,10 @@ export default {
         margin-right: 16px;
       }
     }
-    .ion, .gravatar {
+    .ion, .avatar {
       margin-right: 10px;
     }
-    .gravatar {
+    .avatar {
       width: 16px;
       height: 16px;
       border-radius: 16px;

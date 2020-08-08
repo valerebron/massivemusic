@@ -96,7 +96,7 @@ const actions = {
         variables: {
           search: store.state.filters.search,
           style: store.state.filters.style,
-          user: store.state.filters.user,
+          user: parseInt(store.state.filters.user),
           skip: store.state.filters.skip,
           first: store.state.tracksPerPage,
           orderBy: 'createdAt',
@@ -143,6 +143,8 @@ const actions = {
                 user {
                   id
                   name
+                  email
+                  role
                 }
               }
             }

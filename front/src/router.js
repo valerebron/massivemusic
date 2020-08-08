@@ -5,6 +5,9 @@ import pageHome from './components/pages/page_home.vue'
 import pageAdmin from './components/pages/page_admin.vue'
 import pageLogin from './components/pages/page_login.vue'
 import pageUser from './components/pages/page_user.vue'
+import pageUsers from './components/pages/page_users.vue'
+import userProfile from './components/elements/user-profile.vue'
+import userTracks from './components/elements/user-tracks.vue'
 import pageAddTracks from './components/pages/page_add-tracks.vue'
 import pageMyTracks from './components/pages/page_my-tracks.vue'
 import pagePendingTracks from './components/pages/page_pending-tracks.vue'
@@ -23,7 +26,11 @@ let routes = [
   { name: 'add-tracks', path: '/add-tracks', component: pageAddTracks },
   { name: 'my-tracks', path: '/my-tracks', component: pageMyTracks },
   { name: 'signup', path: '/signup', component: pageLogin },
-  { name: 'user', path: '/user', component: pageUser },
+  { name: 'users', path: '/users', component: pageUsers },
+  { name: 'user', path: '/user/:user_id', component: pageUser, children: [
+    { path: 'profile', component: userProfile },
+    { path: 'tracks', component: userTracks },
+  ] },
   { name: 'pending-tracks', path: '/pending-tracks', component: pagePendingTracks },
   { name: 'invalid-tracks', path: '/invalid-tracks', component: pageInvalidTracks },
   { name: 'test', path: '/test', component: pageTest },

@@ -9,11 +9,12 @@ module.exports = {
   },
   user: async (parent, args, context, info) => {
     console.log('user query')
-    return await context.prisma.user.findOne({
+    let user = await context.prisma.user.findOne({
       where: {
         id: args.user_id
       }
     })
+    return user
   },
   tracks: async (parent, args, context, info) => {
     let andArray = []
