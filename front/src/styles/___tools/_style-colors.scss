@@ -68,32 +68,32 @@
 }
 
 .style-hover-bkg-11 {
-  &.router-link-active::before, &:hover {
+  &.router-link-active, &::before {
     background-color: $color-11;
   }
 }
 .style-hover-bkg-12 {
-  &.router-link-active::before, &:hover {
+  &.router-link-active, &::before {
     background-color: $color-12;
   }
 }
 .style-hover-bkg-13 {
-  &.router-link-active::before, &:hover {
+  &.router-link-active, &::before {
     background-color: $color-13;
   }
 }
 .style-hover-bkg-14 {
-  &.router-link-active::before, &:hover {
+  &.router-link-active, &::before {
     background-color: $color-14;
   }
 }
 .style-hover-bkg-15 {
-  &.router-link-active::before, &:hover {
+  &.router-link-active, &::before {
     background-color: $color-15;
   }
 }
 .style-hover-bkg-19 {
-  &.router-link-active::before, &:hover {
+  &.router-link-active, &::before {
     background-color: $color-19;
   }
 }

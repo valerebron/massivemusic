@@ -22,7 +22,7 @@
           <icon-star-outline v-else style="opacity: 0.5" />
         </button>
       </td>
-      <td v-if="isEditable">
+      <td v-if="isEditable" class="track__actions">
         <button class="edit" @click="openEdit(track)">
           <icon-sync/>
         </button>
@@ -139,10 +139,6 @@
       height: 50px;
       filter: grayscale(0);
       transition: all 0.2s;
-      td:last-child {
-        display: flex;
-        justify-content: flex-end;
-      }
       &:hover {
         background-color: $color-selection;
       }
@@ -193,7 +189,14 @@
           display: table-cell;
         }
       }
+      &__actions {
+        text-align: center;
+      }
       &__favorite {
+        display: none;
+        @include breakpoint(phablet) {
+          display: table-cell;
+        }
         cursor: pointer;
         color: $favorite-color;
       }

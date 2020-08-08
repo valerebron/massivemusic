@@ -24,30 +24,26 @@
         <icon-admin />
         test tracks
       </router-link>
-      <router-link to="add-tracks" class="nav__link">
+      <router-link to="/add-tracks" class="nav__link nav__link--add-tracks">
         <icon-add />add Tracks
       </router-link>
     </template>
-    <router-link v-else to="login" class="nav__link">
+    <router-link v-else to="/login" class="nav__link">
       <icon-login />login
     </router-link>
-    <router-link to="favorites" class="nav__link nav__link--favorite">
+    <router-link to="/favorites" class="nav__link nav__link--favorite">
       <icon-star />
       favorites
     </router-link>
     <template v-if="$store.getters.isOnline">
-      <router-link to="my-tracks" class="nav__link">
-        <icon-contact />
-        my tracks
-      </router-link>
-      <router-link to="pending-tracks" class="nav__link">
+      <router-link to="/pending-tracks" class="nav__link">
         <icon-pending />
         pending
         <i v-if="$store.getters.count_pending !== 0" class="counter counter__pending">
           {{ $store.getters.count_pending }}
         </i>
       </router-link>
-      <router-link to="invalid-tracks" class="nav__link">
+      <router-link to="/invalid-tracks" class="nav__link">
         <icon-invalid />
         invalid
         <i v-if="$store.getters.count_invalid !== 0" class="counter counter__invalid">
@@ -55,17 +51,6 @@
         </i>
       </router-link>
     </template>
-    <router-link to="/" class="nav__link">
-      <icon-home />all styles
-    </router-link>
-    <router-link
-      class="nav__link nav__link--style"
-      :class="'style-hover-bkg-'+style.id"
-      v-for="style in $store.getters.styles"
-      :to="style.slug"
-      :key="style.id">
-      {{ style.name }}
-    </router-link>
     <div v-if="$store.getters.isOnline" @click="logout" class="nav__link">
       <icon-logout/>
       logout
@@ -175,6 +160,11 @@ export default {
     padding: 14px 16px!important;
     font-size: 16px;
     text-transform: capitalize;
+    &--add-tracks.router-link-exact-active {
+      .ion svg {
+        fill: $validate-color;
+      }
+    }
     &--favorite.router-link-exact-active {
       .ion svg {
         fill: $favorite-color;
