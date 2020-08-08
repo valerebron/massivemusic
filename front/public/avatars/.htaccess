@@ -1,0 +1,6 @@
+RewriteEngine On
+
+#affiche l'avatar par defaut en cas de 404
+
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f
+RewriteRule \.(gif|jpe?g|png|bmp) default-30px.png [NC,L]
