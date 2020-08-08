@@ -1,7 +1,6 @@
 const crypto = require('crypto')
 
 export async function signup(parent, args, context, info) {
-  console.log(args)
   const token = crypto.randomBytes(64).toString('hex')
   const user  = await context.prisma.user.create({
     data: {

@@ -8,6 +8,8 @@ services:
     - ${DB_PORT}:3306
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_PASSWORD: ${DB_PASS}
+      MYSQL_USER: ${DB_NAME}
       MYSQL_DATABASE: ${DB_NAME}
     volumes:
       - /var/lib/${DB_NAME}/data:/var/lib/mysql
@@ -22,8 +24,3 @@ services:
       - ${WEB_PORT_DIST}:${WEB_PORT}
       - ${API_PORT_DIST}:${API_PORT}
     restart: always
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 6060:8080

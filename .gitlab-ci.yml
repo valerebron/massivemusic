@@ -8,7 +8,7 @@ deploy:
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
-    - sed -i "s|http://127.0.0.1:3330|$CI_ENDPOINT|g" .env
+    - sed -i "s|http://127.0.0.1:$API_PORT_DIST|$CI_ENDPOINT|g" .env
     - cd back
     - yarn --frozen-lockfile --check-files
     - npx prisma generate

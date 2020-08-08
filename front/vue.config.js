@@ -8,7 +8,7 @@ process.env.VUE_APP_DB_USER = env.DB_USER
 process.env.VUE_APP_DB_PASS = env.DB_PASS
 process.env.VUE_APP_DB_URL = env.DB_URL
 module.exports = {
-  publicPath: './',
+  publicPath: '/',
   css: {
     sourceMap: true,
     loaderOptions: {
