@@ -7,6 +7,7 @@ let initial_filters = {
   skip: 0,
   pending: 0,
   invalid: 0,
+  reset: 0,
 }
 
 const state = {
@@ -74,6 +75,7 @@ const actions = {
       switch(filter.type) {
         case 'reset':
           store.commit('RESET_FILTERS')
+          store.commit('SET_FILTER', filter)
         break
         case 'skip':
           if(newSkip >= store.state.count) {

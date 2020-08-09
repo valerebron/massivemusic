@@ -13,10 +13,21 @@
 <script>
   export default {
     name: 'search',
+    data: function() {
+      return {
+        searchTimeout: '',
+      }
+    },
     computed: {
       terms: {
         get() { return this.$store.getters.filters.search },
-        set(terms) { this.search(terms) },
+        set(terms) {
+          let self = this
+          clearTimeout(this.searchTimeout)
+          this.searchTimeout = setTimeout(function() {
+            self.search(terms)
+          }, 500)
+        },
       },
     },
     methods: {

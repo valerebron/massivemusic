@@ -1,6 +1,6 @@
 <template>
   <main class="home">
-    <tracks :filter="{ type: '', value: '' }"/>
+    <tracks :filter="{ type: 'reset', value: Date.now() }"/>
   </main>
 </template>
 
@@ -10,9 +10,6 @@
     name: 'home',
     components: {
       tracks
-    },
-    mounted() {
-      this.$store.dispatch('filterTracks', {type: 'reset', value: Date.now()})
     },
   }
 </script>
