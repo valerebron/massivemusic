@@ -68,7 +68,6 @@
       background-color: rgb(49, 49, 49);
       font-size: 16px;
       font-weight: bold;
-      color: black;
       text-transform: uppercase;
       border-radius: 20px;
       transition: all 0.3s;

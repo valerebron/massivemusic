@@ -5,7 +5,6 @@ import VuexPersist from 'vuex-persist'
 
 import ui from './store/ui'
 import styles from './store/styles'
-import users from './store/users'
 import tracks from './store/tracks'
 import session from './store/session'
 import favorites from './store/favorites'
@@ -23,7 +22,6 @@ export default new Vuex.Store({
   modules: {
     ui,
     styles,
-    users,
     tracks,
     session,
     favorites,
