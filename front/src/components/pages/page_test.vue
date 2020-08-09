@@ -60,9 +60,15 @@
         let self = this
         document.querySelector('.tracks tr:first-child td:nth-child(2)').click()
         window.PLAYER.on('stateChange', function(event) {
-          if(event.data == 1) {
+          let playerState = this.$store.getters.playerState(event.data)
+          if(playerState === 'playing') {
             document.getElementsByClassName('player-next')[0].click()
             self.tested_count = self.tested_count + 1
+          }
+          if(playerState === 'buffering') {
+            setTimeout(function() {
+              document.getElementsByClassName('player-next')[0].click()
+            }, 8000)
           }
         })
         window.PLAYER.on('error', function() {
