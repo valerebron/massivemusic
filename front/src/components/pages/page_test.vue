@@ -58,14 +58,13 @@
       test: function() {
         this.chronometre()
         let self = this
-        document.querySelector('.tracks tr:first-child td:nth-child(2)').click()
+        document.querySelector('.tracks tr:first-child .track__title').click()
         window.PLAYER.on('stateChange', function(event) {
-          let playerState = this.$store.getters.playerState(event.data)
-          if(playerState === 'playing') {
+          if(event.data === 1) {
             document.getElementsByClassName('player-next')[0].click()
             self.tested_count = self.tested_count + 1
           }
-          if(playerState === 'buffering') {
+          if(event.data === 3) {
             setTimeout(function() {
               document.getElementsByClassName('player-next')[0].click()
             }, 8000)
