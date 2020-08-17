@@ -6,14 +6,11 @@
           <figure class="user-list__figure">
             <img class="user-list__avatar" :src="'/avatars/'+user.id+'-100px.png'" />
             <figcaption class="user-list__captions">
-              {{ user.id }}
-              <h2>{{ user.name }}</h2>
-              <h4>added {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
+              {{ user.id }} - {{ user.name }}
               <h5>
                 <input type="text" :value="user.email">
-                <input type="text" :value="convertEmail(user.email)">
+                <input type="text" :value="JSON.parse(user.email).style">
               </h5>
-              <button @click="up(user.id, convertEmail(user.email))">translate</button>
             </figcaption>
           </figure>
         <!-- </router-link> -->
@@ -28,7 +25,8 @@
     name: 'users',
     data: function() {
       return {
-        users: {}
+        users: {},
+        emails: [{id:102,style:11,enableTracks:0},{id:103,style:12,enableTracks:0},{id:104,style:11,enableTracks:1},{id:105,style:12,enableTracks:1},{id:106,style:19,enableTracks:1},{id:107,style:11,enableTracks:1},{id:108,style:12,enableTracks:1},{id:109,style:12,enableTracks:1},{id:110,style:14,enableTracks:1},{id:111,style:14,enableTracks:1},{id:112,style:14,enableTracks:1},{id:113,style:14,enableTracks:1},{id:114,style:19,enableTracks:1},{id:116,style:12,enableTracks:1},{id:117,style:12,enableTracks:1},{id:118,style:11,enableTracks:1},{id:119,style:13,enableTracks:1},{id:204,style:11,enableTracks:1},{id:206,style:11,enableTracks:1},{id:207,style:15,enableTracks:1},{id:208,style:12,enableTracks:1},{id:210,style:12,enableTracks:1},{id:211,style:11,enableTracks:1},{id:212,style:12,enableTracks:1},{id:214,style:13,enableTracks:1},{id:222,style:11,enableTracks:1},{id:224,style:11,enableTracks:1},{id:240,style:12,enableTracks:1},{id:242,style:12,enableTracks:1},{id:253,style:11,enableTracks:1},{id:258,style:11,enableTracks:1},{id:259,style:13,enableTracks:1},{id:261,style:11,enableTracks:1},{id:263,style:11,enableTracks:1},{id:265,style:13,enableTracks:1},{id:268,style:13,enableTracks:1},{id:276,style:12,enableTracks:0},{id:278,style:12,enableTracks:0},{id:280,style:12,enableTracks:0},{id:281,style:19,enableTracks:1},{id:282,style:13,enableTracks:1},{id:284,style:11,enableTracks:1},{id:285,style:11,enableTracks:0},{id:286,style:13,enableTracks:0},{id:287,style:13,enableTracks:0},{id:306,style:19,enableTracks:1},{id:319,style:19,enableTracks:0},{id:322,style:15,enableTracks:0},{id:330,style:19,enableTracks:1}],
       }
     },
     methods: {
@@ -249,7 +247,7 @@
           return false
         }
       },
-      up(id, email) {
+      editEmail(id, email) {
         window.apollo.mutate({
           variables: { id: id, email: email },
           mutation: gql`
@@ -260,17 +258,13 @@
               }
             }
           `,
-        }).then((res) => {
-          console.log(res)
         })
       },
-      convertEmail(email) {
-        let unserialized = this.unserialize(email)
-        let newObject = { style: unserialized.genre, enableTracks: unserialized.activateTrackByDefault, timestamp: Date.now() }
-        return JSON.stringify(newObject)
-      }
     },
     mounted: function() {
+      this.emails.map(email => {
+        this.editEmail(email.id, JSON.stringify(email))
+      })
       window.apollo.query({
         variables: { role: 'ROBOT' },
         query: gql`
@@ -287,9 +281,6 @@
         `,
       }).then((res) => {
         this.users = res.data.users.reverse()
-        res.data.users.map(user => {
-          this.up(user.id, this.convertEmail(user.email))
-        })
       }).catch(() => {
         console.log('%c●', 'color: red', 'user error')
       })
