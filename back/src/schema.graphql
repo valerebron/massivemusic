@@ -1,6 +1,6 @@
 type Query {
   styles: [Style!]!
-  users: [User!]!
+  users(role: String): [User!]!
   user(user_id: Int): User!
   tracks(search: String, style: Int, user: Int, skip: Int, first: Int, orderBy: TrackOrderByInput, orderDirection: TrackOrderDirectionInput, pending: Int, invalid: Int): Tracks!
   info: String!
@@ -52,6 +52,10 @@ type Mutation {
   logout(
     user_id: Int!
     token: String!
+  ): User
+  editUser(
+    id: Int
+    email: String
   ): User
 }
 

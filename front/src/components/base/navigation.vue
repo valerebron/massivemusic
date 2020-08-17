@@ -16,11 +16,15 @@
         <img class="avatar" :src="myAvatar" :alt="$store.getters.session.user.name">
         {{ $store.getters.session.user.name }}
       </router-link>
-      <router-link v-if="$store.getters.isAdmin" to="admin" class="nav__link">
+      <router-link v-if="$store.getters.isAdmin" to="/admin" class="nav__link">
         <icon-admin />
         admin
       </router-link>
-      <router-link v-if="$store.getters.isAdmin" to="test" class="nav__link">
+      <router-link v-if="$store.getters.isAdmin" to="/bots" class="nav__link">
+        <icon-admin />
+        bots
+      </router-link>
+      <router-link v-if="$store.getters.isAdmin" to="/test" class="nav__link">
         <icon-admin />
         test tracks
       </router-link>

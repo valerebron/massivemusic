@@ -13,6 +13,9 @@
           </h3>
           <h4>subscribed {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
           <h5>last login {{ Date.parse(user.updatedAt) | moment('from', 'now') }}</h5>
+          <template v-if="user.role === 'ROBOT' && $store.getters.isAdmin">
+            {{ unserialize(user.email) }}
+          </template>
         </figcaption>
       </figure>
     </div>
@@ -33,6 +36,7 @@
     },
     methods: {
       fetchUser: function() {
+        console.log(unserialize)
         if(this.$route.params.user_id === 'me') {
           this.user = this.$store.getters.session.user
         }

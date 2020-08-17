@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 
 import pageHome from './components/pages/page_home.vue'
 import pageAdmin from './components/pages/page_admin.vue'
+import pageBots from './components/pages/page_bots.vue'
 import pageLogin from './components/pages/page_login.vue'
 import pageUser from './components/pages/page_user.vue'
 import pageUsers from './components/pages/page_users.vue'
@@ -21,6 +22,7 @@ Vue.use(VueRouter)
 let routes = [
   { name: 'home', path: '/', component: pageHome },
   { name: 'admin', path: '/admin', component: pageAdmin },
+  { name: 'bots', path: '/bots', component: pageBots },
   { name: 'favorites', path: '/favorites', component: pageFavorites },
   { name: 'login', path: '/login', component: pageLogin },
   { name: 'add-tracks', path: '/add-tracks', component: pageAddTracks },

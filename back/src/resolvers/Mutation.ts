@@ -69,6 +69,21 @@ export async function logout(parent, args, context, info) {
   }
 }
 
+export async function editUser(parent, args, context, info) {
+  // const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  // if(args.token === user.token || user.role === 'ADMIN') {
+    return context.prisma.user.update({
+      where: { id: args.id },
+      data: {
+        email: args.email,
+      },
+    })
+  // }
+  // else {
+  //   throw new Error('invalid token')
+  // }
+}
+
 export async function post(parent, args, context, info) {
   const user = await context.prisma.user.findOne( { where: { id: args.user_id } })
   if(args.token === user.token) {

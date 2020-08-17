@@ -5,7 +5,17 @@ module.exports = {
   },
   users: async (parent, args, context, info) => {
     console.log('users query')
-    return await context.prisma.user.findMany()
+    let where = {}
+    if(args.role) {
+      console.log('with role ', args.role)
+      where = {
+        role: args.role
+      }
+    }
+
+    return await context.prisma.user.findMany({
+      where: where,
+    })
   },
   user: async (parent, args, context, info) => {
     console.log('user query')
