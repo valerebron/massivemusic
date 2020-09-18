@@ -1,0 +1,18 @@
+input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  &:checked + .slider {
+    background-color: $validate-color;
+  }
+  
+  &:focus + .slider {
+    box-shadow: 0 0 1px $validate-color;
+  }
+  
+  &:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+}

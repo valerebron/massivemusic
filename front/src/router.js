@@ -1,21 +1,23 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import pageHome from './components/pages/page_home.vue'
-import pageAdmin from './components/pages/page_admin.vue'
-import pageBots from './components/pages/page_bots.vue'
-import pageLogin from './components/pages/page_login.vue'
-import pageUser from './components/pages/page_user.vue'
-import pageUsers from './components/pages/page_users.vue'
-import userProfile from './components/elements/user-profile.vue'
-import userTracks from './components/elements/user-tracks.vue'
-import pageAddTracks from './components/pages/page_add-tracks.vue'
-import pageMyTracks from './components/pages/page_my-tracks.vue'
-import pagePendingTracks from './components/pages/page_pending-tracks.vue'
-import pageInvalidTracks from './components/pages/page_invalid-tracks.vue'
-import pageFavorites from './components/pages/page_favorites.vue'
-import pageStyle from './components/pages/page_style.vue'
-import pageTest from './components/pages/page_test.vue'
+import pageHome from './components/pages/home.vue'
+import pageAdmin from './components/pages/admin.vue'
+import pageBots from './components/pages/bots.vue'
+import pageLogin from './components/pages/login.vue'
+import pageUser from './components/pages/user.vue'
+import pageUsers from './components/pages/users.vue'
+import pageProfile from './components/pages/profile.vue'
+import pageEditProfile from './components/pages/profile-edit.vue'
+import pageUserTracks from './components/pages/user-tracks.vue'
+import pageAddTracks from './components/pages/add-tracks.vue'
+import pageAddBots from './components/pages/add-bots.vue'
+import pageMyTracks from './components/pages/my-tracks.vue'
+import pagePendingTracks from './components/pages/pending-tracks.vue'
+import pageInvalidTracks from './components/pages/invalid-tracks.vue'
+import pageFavorites from './components/pages/favorites.vue'
+import pageStyle from './components/pages/style.vue'
+import pageTest from './components/pages/test.vue'
 
 Vue.use(VueRouter)
 
@@ -26,12 +28,14 @@ let routes = [
   { name: 'favorites', path: '/favorites', component: pageFavorites },
   { name: 'login', path: '/login', component: pageLogin },
   { name: 'add-tracks', path: '/add-tracks', component: pageAddTracks },
+  { name: 'add-bots', path: '/add-bots', component: pageAddBots },
   { name: 'my-tracks', path: '/my-tracks', component: pageMyTracks },
   { name: 'signup', path: '/signup', component: pageLogin },
   { name: 'users', path: '/users', component: pageUsers },
   { name: 'user', path: '/user/:user_id', component: pageUser, children: [
-    { path: 'profile', component: userProfile },
-    { path: 'tracks', component: userTracks },
+    { path: 'profile', component: pageProfile },
+    { path: 'edit', component: pageEditProfile },
+    { path: 'tracks', component: pageUserTracks },
   ] },
   { name: 'pending-tracks', path: '/pending-tracks', component: pagePendingTracks },
   { name: 'invalid-tracks', path: '/invalid-tracks', component: pageInvalidTracks },

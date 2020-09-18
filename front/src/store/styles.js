@@ -3,8 +3,8 @@ const state = {
 }
 
 const mutations = {
-  SET_STYLES(state, tracks) {
-    state.styles = tracks
+  SET_STYLES(state, styles) {
+    state.styles = styles
   },
 }
 

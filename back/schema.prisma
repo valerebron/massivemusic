@@ -16,7 +16,7 @@ model Style {
 
 model Track {
   id        Int       @id @default(autoincrement())
-  yt_id     String
+  yt_id     String    @unique
   title     String
   artist    String
   duration  Int
@@ -35,13 +35,24 @@ model Track {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String    @unique
-  password  String
-  role      String
-  token     String?
-  createdAt DateTime? @default(now())
-  updatedAt DateTime? @updatedAt
-  Track     Track[]
+  id                      Int       @id @default(autoincrement())
+  email                   String    @unique
+  name                    String    @unique
+  password                String
+  role                    String
+  token                   String?
+  createdAt               DateTime? @default(now())
+  updatedAt               DateTime? @updatedAt
+  Track                   Track[]
+  channel_id              String?
+  channel_style           Int?
+  channel_enable_tracks   Boolean?
+  channel_description     String?
+  channel_avatar_small    String?
+  channel_avatar_medium   String?
+  channel_avatar_high     String?
+  channel_last_sync_date  DateTime?
+
+  Style     Style?    @relation(fields: [channel_style], references: [id])
+  @@index([channel_style], name: "style")
 }

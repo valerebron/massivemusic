@@ -8,9 +8,9 @@
 </template>
 
 <script>
-  import theheader from './base/header'
-  import navigation from './base/navigation'
-  import player from './base/player'
+  import theheader from '@/components/templates/header'
+  import navigation from '@/components/templates/navigation'
+  import player from '@/components/templates/player'
   export default {
     name: 'app',
     components: {
@@ -124,7 +124,16 @@
         }
       }
       &--container {
-        width: $page-width;
+        width: $page-width-phablet;
+        @include breakpoint(tablet) {
+          width: $page-width-tablet;
+        }
+        @include breakpoint(desktop) {
+          width: $page-width-desktop;
+        }
+        @include breakpoint(bigscreen) {
+          width: $page-width-bigscreen;
+        }
         margin: 0 auto;
       }
     }
@@ -217,7 +226,7 @@
           width: 100%;
           bottom: 0;
           .player-infos {
-            text-shadow: black 0px 0px 4px;
+            text-shadow: black 0px 0px 1px;
           }
         }
         .player-next {

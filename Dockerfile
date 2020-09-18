@@ -10,8 +10,9 @@ RUN apt update && \
 RUN mkdir -p $WEB_DIR
 WORKDIR $WEB_DIR
 
-COPY front/dist ./front
+COPY front/dist ./front/dist
 COPY back ./back
 COPY .env .
+COPY package.json .
 
 CMD cd back && npx ts-node src/index.ts

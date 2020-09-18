@@ -6,6 +6,7 @@ import VuexPersist from 'vuex-persist'
 import ui from './store/ui'
 import styles from './store/styles'
 import tracks from './store/tracks'
+import users from './store/users'
 import session from './store/session'
 import favorites from './store/favorites'
 import player from './store/player'
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     session,
     favorites,
     player,
+    users,
   },
   plugins: [vuexLocalStorage.plugin],
 })

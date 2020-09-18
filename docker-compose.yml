@@ -3,7 +3,7 @@ version: '3'
 services:
   db:
     container_name: massivemusic_db
-    image: mysql
+    image: mysql:5.7
     ports:
     - ${DB_PORT}:3306
     environment:
@@ -21,6 +21,6 @@ services:
       - db
     build: .
     ports:
-      - ${WEB_PORT_DIST}:${WEB_PORT}
-      - ${API_PORT_DIST}:${API_PORT}
+      - ${WEB_PORT_DOCKER}:${WEB_PORT}
+      - ${API_PORT_DOCKER}:${API_PORT}
     restart: always

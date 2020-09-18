@@ -8,7 +8,9 @@ deploy:
   script:
     - export $(cat .env | xargs)
     - sed -i "s|password|$CI_DB_PASS|g" .env
-    - sed -i "s|http://127.0.0.1:$API_PORT_DIST|$CI_ENDPOINT|g" .env
+    - sed -i "s|$ENDPOINT|$CI_ENDPOINT|g" .env
+    - sed -i "s|$API_PORT_DOCKER|$API_PORT|g" .docker-compose.yml
+    - sed -i "s|$WEB_PORT_DOCKER|$WEB_PORT|g" .docker-compose.yml
     - cd back
     - yarn --frozen-lockfile --check-files
     - npx prisma generate

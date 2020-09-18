@@ -3,6 +3,7 @@ import * as express from 'express'
 import { ApolloServer } from 'apollo-server'
 import { importSchema } from 'graphql-import'
 import { PrismaClient } from '@prisma/client'
+// import cron from './cron'
 
 const history = require('connect-history-api-fallback')
 const prisma = new PrismaClient()
@@ -39,7 +40,10 @@ api.listen(options).then(() => {
 })
 
 web.use(history())
-web.use(express.static('../front'))
+web.use(express.static('../front/dist'))
+web.get('avatars/*', function(req, res) {
+  res.sendfile('avatars/0-300px.png')
+})
 web.listen(parseInt(process.env.WEB_PORT), () => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'web running on http://localhost:'+env.WEB_PORT)
 })

@@ -1,8 +1,21 @@
 type Query {
+  tracks(
+    search: String
+    style: Int
+    user: Int
+    skip: Int
+    first: Int
+    orderBy: TrackOrderByInput
+    orderDirection: TrackOrderDirectionInput
+    pending: Int
+    invalid: Int
+  ): Tracks!
   styles: [Style!]!
   users(role: String): [User!]!
   user(user_id: Int): User!
-  tracks(search: String, style: Int, user: Int, skip: Int, first: Int, orderBy: TrackOrderByInput, orderDirection: TrackOrderDirectionInput, pending: Int, invalid: Int): Tracks!
+  searchTrack(search: String, token: String): tracksPayload
+  searchChannel(search: String, token: String): channelsPayload
+  getChannelDesc(id: String): String
   info: String!
 }
 
@@ -54,9 +67,49 @@ type Mutation {
     token: String!
   ): User
   editUser(
-    id: Int
+    id: Int!
+    name: String
     email: String
+    token: String!
+    channel_style: Int
+    channel_enable_tracks: Boolean
+    channel_description: String
   ): User
+  dropUser(
+    id: Int!
+    token: String!
+  ): User
+  addBot(
+    name: String!
+    email: String!
+    token: String!
+    channel_id: String
+    channel_style: Int
+    channel_enable_tracks: Boolean
+    channel_description: String
+    channel_avatar_small: String
+    channel_avatar_medium: String
+    channel_avatar_high: String
+  ): User
+  syncBot(
+    id: Int!
+    token: String!
+  ): [Track]
+}
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type tracksPayload {
+  token: String
+  tracks: [Video]
+}
+
+type channelsPayload {
+  token: String
+  channels: [Channel]
 }
 
 type AuthPayload {
@@ -78,6 +131,13 @@ type User {
   role: String!
   createdAt: DateTime!
   updatedAt: DateTime!
+  channel_id:             String
+  channel_style:          Int
+  channel_enable_tracks:  Boolean
+  channel_description:    String
+  channel_avatar_small:   String
+  channel_avatar_medium:  String
+  channel_avatar_high:    String
 }
 
 type Track {
@@ -93,6 +153,24 @@ type Track {
   user: User
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type Channel {
+  name: String
+  channel_id: String
+  nb_videos: Int
+  nb_subscriber: Int
+  official: Boolean
+  channel_avatar_small: String
+  channel_avatar_medium: String
+}
+
+type Video {
+  id:  String
+  title:	String
+  artist: String
+  duration:	Int,
+  publishedAt: String,
 }
 
 scalar DateTime

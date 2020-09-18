@@ -1,0 +1,20 @@
+<template>
+  <main class="admin">
+    <tracks :filter="{ type: 'reset', value: Date.now() }"/>
+  </main>
+</template>
+
+<script>
+  import tracks from '@/components/organisms/tracks.vue'
+  export default {
+    name: 'admin',
+    components: {
+      tracks
+    },
+    mounted() {
+      if(!this.$store.getters.isAdmin) {
+        this.$router.push('home')
+      }
+    },
+  }
+</script>

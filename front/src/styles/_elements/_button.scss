@@ -1,10 +1,16 @@
 button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   outline: 0;
   border: none;
   color: white;
   background-color: transparent;
   cursor: pointer;
   padding: 18px;
+  .ion {
+    margin-right: 8px;
+  }
   &:active {
     opacity: 0.5;
   }

@@ -30,15 +30,27 @@ import iconLogin from 'vue-ionicons/dist/md-log-in.vue'
 Vue.component('icon-login', iconLogin)
 import iconAdd from 'vue-ionicons/dist/md-add.vue'
 Vue.component('icon-add', iconAdd)
+import iconAddBot from 'vue-ionicons/dist/md-person-add.vue'
+Vue.component('icon-add-bot', iconAddBot)
 import iconPending from 'vue-ionicons/dist/md-alarm.vue'
 Vue.component('icon-pending', iconPending)
 import iconInvalid from 'vue-ionicons/dist/md-alert.vue'
 Vue.component('icon-invalid', iconInvalid)
-import iconSync from 'vue-ionicons/dist/md-create.vue'
-Vue.component('icon-sync', iconSync)
+import iconEdit from 'vue-ionicons/dist/md-create.vue'
+Vue.component('icon-edit', iconEdit)
 import iconHome from 'vue-ionicons/dist/md-home.vue'
 Vue.component('icon-home', iconHome)
 import iconValid from 'vue-ionicons/dist/md-checkmark.vue'
 Vue.component('icon-valid', iconValid)
-import iconAdmin from 'vue-ionicons/dist/md-flash.vue'
+import iconAdmin from 'vue-ionicons/dist/md-key.vue'
 Vue.component('icon-admin', iconAdmin)
+import iconUsers from 'vue-ionicons/dist/md-people.vue'
+Vue.component('icon-users', iconUsers)
+import iconYoutube from 'vue-ionicons/dist/logo-youtube.vue'
+Vue.component('icon-youtube', iconYoutube)
+import iconRadio from 'vue-ionicons/dist/md-sync.vue'
+Vue.component('icon-radio', iconRadio)
+import iconBack from 'vue-ionicons/dist/md-arrow-back.vue'
+Vue.component('icon-back', iconBack)
+import iconSync from 'vue-ionicons/dist/md-flash.vue'
+Vue.component('icon-sync', iconSync)

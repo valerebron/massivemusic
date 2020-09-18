@@ -4,7 +4,10 @@ $global-ui-bar-height-hover: 6px;
 $header-height: 75px;
 $nav-width: 200px;
 
-$page-width: 600px;
+$page-width-phablet: 100%;
+$page-width-tablet: 568px;
+$page-width-desktop: 792px;
+$page-width-bigscreen: 1000px;
 
 $dialog-width: 400px;
 $dialog-border-radius: 10px;
@@ -12,7 +15,7 @@ $dialog-border-radius: 10px;
 $search-height: 40px;
 $search-button-width: 60px;
 
-$youtube-explorer-search-height: 50px;
+$explorer-search-height: 50px;
 
 $icon-width: 24px;
 $icon-height: 24px;

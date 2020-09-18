@@ -12,8 +12,12 @@ const mutations = {
     state.token = ''
     state.user = {}
   },
-  UPDATE_USER_TRACK(state, track) {
+  PUSH_USER_TRACK(state, track) {
     state.user.tracks.push(track)
+  },
+  UPDATE_USER_INFOS(state, user) {
+    state.user.channel_description = user.channel_description
+    state.user.channel_style = user.channel_style
   },
 }
 
@@ -24,9 +28,9 @@ const actions = {
   logout(store) {
     store.commit('RESET_SESSION')
   },
-  addTrackToSession(store, track) {
-    store.commit('UPDATE_USER_TRACK', track)
-  },
+  updateMe(store, user) {
+    store.commit('UPDATE_USER_INFOS', user)
+  }
 }
 
 const getters = {

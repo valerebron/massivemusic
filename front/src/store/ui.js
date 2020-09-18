@@ -26,9 +26,7 @@ const actions = {
 }
 
 const getters = {
-  ui(state) {
-    return state
-  },
+  ui: state => state,
 }
 
 export default {

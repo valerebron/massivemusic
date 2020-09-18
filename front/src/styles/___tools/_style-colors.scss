@@ -17,22 +17,22 @@
   color: $color-19;
 }
 
-.style-bkg-11 {
+.style-bkg-11, .style-bkg-11:focus {
   background-color: darken($color-11, 8%);
 }
-.style-bkg-12 {
+.style-bkg-12, .style-bkg-12:focus {
   background-color: darken($color-12, 8%);
 }
-.style-bkg-13 {
+.style-bkg-13, .style-bkg-13:focus {
   background-color: darken($color-13, 8%);
 }
-.style-bkg-14 {
+.style-bkg-14, .style-bkg-14:focus {
   background-color: darken($color-14, 8%);
 }
-.style-bkg-15 {
+.style-bkg-15, .style-bkg-15:focus {
   background-color: darken($color-15, 8%);
 }
-.style-bkg-19 {
+.style-bkg-19, .style-bkg-19:focus {
   background-color: darken($color-19, 8%);
 }
 
@@ -68,32 +68,32 @@
 }
 
 .style-hover-bkg-11 {
-  &.router-link-active, &::before {
+  &.router-link-active, &::before, &:hover {
     background-color: $color-11;
   }
 }
 .style-hover-bkg-12 {
-  &.router-link-active, &::before {
+  &.router-link-active, &::before, &:hover {
     background-color: $color-12;
   }
 }
 .style-hover-bkg-13 {
-  &.router-link-active, &::before {
+  &.router-link-active, &::before, &:hover {
     background-color: $color-13;
   }
 }
 .style-hover-bkg-14 {
-  &.router-link-active, &::before {
+  &.router-link-active, &::before, &:hover {
     background-color: $color-14;
   }
 }
 .style-hover-bkg-15 {
-  &.router-link-active, &::before {
+  &.router-link-active, &::before, &:hover {
     background-color: $color-15;
   }
 }
 .style-hover-bkg-19 {
-  &.router-link-active, &::before {
+  &.router-link-active, &::before, &:hover {
     background-color: $color-19;
   }
 }
