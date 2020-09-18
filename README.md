@@ -8,6 +8,8 @@ BassMusic streaming App
   - GQL API  :**3330**
   - WEB      :**3340**
 
+## NODE.js expected version ">=10"
+
 ## Config
   - [.env](.env)
 

@@ -3,7 +3,7 @@ FROM node:stretch-slim
 ENV WEB_DIR /var/www/localhost
 
 RUN apt update && \
-    apt upgrade && \
+    apt upgrade -y && \
     apt -qy install openssl && \
     yarn global add typescript
 
