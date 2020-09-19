@@ -1,5 +1,5 @@
 <template>
-  <modal :key="oldTrack.yt_id" @close="close()">
+  <modal :key="trackToEdit.yt_id" @close="close()">
     <iframe class="edit-tracks__iframe" type="text/html" :src="'http://www.youtube-nocookie.com/embed/'+newTrack.id" frameborder="0"></iframe>
     <form class="edit-track">
       <div v-if="error !== ''" class="error-dialog">
@@ -26,12 +26,11 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
   import modal from '@/components/atoms/modal'
   export default {
     name: 'track-edit',
     components: { modal },
-    props: ['oldTrack'],
+    props: ['trackToEdit'],
     data: function() {
       return {
         error: '',
@@ -49,34 +48,22 @@
     },
     methods: {
       load: function() {
-        if(this.oldTrack.style) {
-          this.newTrack = this.oldTrack // as javascript copy by reference, this is useless REFACTO
+        if(this.trackToEdit.style) {
+          this.newTrack = this.trackToEdit // as javascript copy by reference, this is useless REFACTO
         }
       },
-      edit: function() {
-        this.$apollo.mutate({
-          variables: {
-            user_id: this.$store.getters.session.user.id,
-            token: this.$store.getters.session.token,
-            id: this.newTrack.id,
-            yt_id: this.newTrack.yt_id,
-            title: this.newTrack.title,
-            artist: this.newTrack.artist,
-            style:  this.newTrack.style.id,
-          },
-          mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!, $yt_id: String, $title: String, $artist: String, $style: Int) {
-            editPost(user_id: $user_id, token: $token, id: $id, yt_id: $yt_id, title: $title, artist: $artist, style: $style) {
-              id
-            }
-          }`,
-        }).then((res) => {
-          let track = res.data.editPost
-          this.$store.commit('EDIT_TRACK', track)
-          this.close()
-        }).catch((error) => {
-          this.error = error.message.replace('GraphQL error: ', '')
-          console.log('%c●', 'color: red', 'edit error: ', this.error)
-        })
+      edit: async function() {
+        let track = {
+          user_id: this.$store.getters.session.user.id,
+          token: this.$store.getters.session.token,
+          id: this.newTrack.id,
+          yt_id: this.newTrack.yt_id,
+          title: this.newTrack.title,
+          artist: this.newTrack.artist,
+          style:  this.newTrack.style.id,
+        }
+        await this.$store.dispatch('editTrack', track)
+        this.close()
       },
       close: function() {
         this.$emit('closeEdit')

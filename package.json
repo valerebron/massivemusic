@@ -12,7 +12,7 @@
     "migrate:up": "export $(egrep -v '^#' .env | xargs) && cd back && npx prisma migrate up --experimental",
     "dev:front": "cd front && npx vue-cli-service serve",
     "dev:back": "cd back && npx nodemon --ext ts,graphql --watch 'src/*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
-    "install": "yarn deps && yarn generate && yarn build",
+    "install": "yarn deps && yarn build",
     "dev": "yarn dev:front & yarn dev:back & docker-compose up",
     "kill": "kill $(lsof -t -i:3330)"
   },

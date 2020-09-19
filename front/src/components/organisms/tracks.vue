@@ -39,7 +39,7 @@
         </router-link>
       </td>
     </tr>
-    <trackEdit v-if="isEditable && isEditOpen" :oldTrack="trackToEdit" @closeEdit="closeEdit()" />
+    <trackEdit v-if="isEditable && isEditOpen" :trackToEdit="trackToEdit" @closeEdit="closeEdit()" />
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
@@ -77,8 +77,8 @@
         isEditOpen: false,
         isDropOpen: false,
         isValidateOpen: false,
-        trackToEdit: {},
         isLoading: false,
+        trackToEdit: {},
       }
     },
     methods: {
@@ -86,18 +86,18 @@
         this.$store.dispatch('play', track)
       },
       async load() {
-        this.isLoading = true
         if(this.filter.type === 'favorites') {
           this.$store.dispatch('filterFavorites')
-          this.isLoading = false
         }
         else {
           await this.$store.dispatch('filterTracks', this.filter)
-          this.isLoading = false
         }
       },
       openEdit(track) {
-        this.trackToEdit = track
+        // console.log(track)
+        // this.trackToEdit = 'testeu'
+        Object.assign(this.trackToEdit, track)
+        // this.trackToEdit = track
         this.isEditOpen = true
         this.$store.dispatch('modal', true)
       },
@@ -128,12 +128,16 @@
       },
     },
     async mounted() {
+      this.isLoading = true
       this.$store.commit('RESET_FILTERS')
       await this.load()
+      this.isLoading = false
     },
-    updated() {
-      if(!this.isLoading) { // avoid infinite loop
-        this.load()
+    async updated() {
+      if(this.isLoading === false) {
+        this.isLoading = true
+        await this.load()
+        this.isLoading = false
       }
     },
   }

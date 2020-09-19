@@ -63,7 +63,9 @@
       sync: async function() {
         this.isLoading = true
         let newTracks = await this.$store.dispatch('syncTracks', this.$props.user)
-        this.$props.user.tracks.push(...newTracks)
+        if(newTracks) {
+          this.$props.user.tracks.push(...newTracks)
+        }
         this.isLoading = false
       },
     },

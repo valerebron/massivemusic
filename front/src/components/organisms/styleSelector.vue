@@ -25,7 +25,7 @@ export default {
       let newButton = event.target
       newButton.className = ''
       newButton.classList.add('selected', 'style-bkg-'+style.id)
-      this.$emit('changeStyle')
+      this.$emit('changeStyle', style)
     },
   },
 }

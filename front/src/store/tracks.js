@@ -33,13 +33,10 @@ const mutations = {
     })
     state.count = state.count - 1
   },
-  EDIT_TRACK(state, editedTrack) {
+  UPDATE_TRACK(state, editedTrack) {
     state.tracks.map(track => {
       if(track.yt_id === editedTrack.yt_id) {
         track = editedTrack
-        if(editedTrack.yt_id !== editedTrack.yt_id) {
-          track.yt_id = editedTrack.yt_id
-        }
       }
     })
     state.count = state.count - 1
@@ -72,7 +69,6 @@ const actions = {
   async filterTracks(store, filter) {
     if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
       let newSkip = store.state.filters.skip + store.state.tracksPerPage
-      console.log('newSkip = '+store.state.filters.skip+' + '+store.state.tracksPerPage)
       switch(filter.type) {
         case 'reset':
           store.commit('RESET_FILTERS')
@@ -252,6 +248,39 @@ const actions = {
     }).catch((error) => {
       console.log('%c●', 'color: red', 'add-track error: ', error)
     })
+  },
+  async editTrack(store, track) {
+    let res = await window.apollo.mutate({
+      variables: {...track},
+      mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!, $yt_id: String, $title: String, $artist: String, $style: Int) {
+        editPost(user_id: $user_id, token: $token, id: $id, yt_id: $yt_id, title: $title, artist: $artist, style: $style) {
+          id
+        }
+      }`,
+    }).catch((error) => {
+      this.error = error.message.replace('GraphQL error: ', '')
+      console.log('%c●', 'color: red', 'edit error: ', this.error)
+    })
+    track = res.data.editPost
+    store.commit('UPDATE_TRACK', track)
+    return track
+  },
+  async dropTrack(store, track) {
+    await window.apollo.mutate({
+      variables: {
+        user_id: store.getters.session.user.id,
+        token: store.getters.session.token,
+        id: track.id,
+      },
+      mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!) {
+        dropPost(user_id: $user_id, token: $token, id: $id) {
+          id
+        }
+      }`,
+    }).catch((error) => {
+      console.log('%c●', 'color: red', 'drop error: ', error)
+    })
+    store.commit('DROP_TRACK', track)
   },
   resetCounters(store) {
     console.log('reset counters')
