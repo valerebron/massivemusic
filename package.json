@@ -10,7 +10,6 @@
     "build": "yarn build:front && yarn build:back",
     "migrate:save": "export $(egrep -v '^#' .env | xargs) && cd back && npx prisma migrate save --experimental",
     "migrate:up": "export $(egrep -v '^#' .env | xargs) && cd back && npx prisma migrate up --experimental",
-    "seed:test": "cd back && npx ts-node seeds/index.ts",
     "dev:front": "cd front && npx vue-cli-service serve",
     "dev:back": "cd back && npx nodemon --ext ts,graphql --watch 'src/*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
     "install": "yarn deps && yarn generate && yarn build",

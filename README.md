@@ -14,7 +14,6 @@ BassMusic streaming App
   - [.env](.env)
 
 ## Use
-  - `yarn seed` insert datas in bdd -> [back/seeds](back/seeds)
   - `yarn dev` launch vue & node dev server
   - `yarn build` build dist folder & docker image -> [Dockerfile](Dockerfile)
   - `git push` deploy on prod -> [.gitlab-ci.yml](.gitlab-ci.yml)
