@@ -52,15 +52,20 @@
         this.$store.dispatch('modal', false)
       },
       add: async function() {
-        this.channel.channel_enable_tracks = document.querySelector('.add-bots__enable-tracks input').checked
-        this.channel.channel_style = parseInt(document.querySelector('.add-bots__style .selected').dataset.key)
-        this.channel.token = this.$store.getters.session.token
-        this.channel.email = this.channel.name.replace(/[^a-zA-Z]/g, '').toLowerCase()+'@youtube.com'
-        this.channel.channel_avatar_high = this.channel.channel_avatar_medium
-        await this.$store.dispatch('addUser', this.channel)
-        this.$store.dispatch('modal', false)
-        window.scroll(0,0)
-        this.$router.push('/bots')
+        if(document.querySelector('.add-bots__style .selected')) {
+          this.channel.channel_enable_tracks = document.querySelector('.add-bots__enable-tracks input').checked
+          this.channel.channel_style = parseInt(document.querySelector('.add-bots__style .selected').dataset.key)
+          this.channel.token = this.$store.getters.session.token
+          this.channel.email = this.channel.name.replace(/[^a-zA-Z]/g, '').toLowerCase()+'@youtube.com'
+          this.channel.channel_avatar_high = this.channel.channel_avatar_medium
+          await this.$store.dispatch('addBot', this.channel)
+          this.$store.dispatch('modal', false)
+          window.scroll(0,0)
+          this.$router.push('/bots')
+        }
+        else {
+          console.log('choose a style before')
+        }
       },
     },
     mounted: function() {

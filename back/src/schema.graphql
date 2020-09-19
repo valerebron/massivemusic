@@ -50,6 +50,10 @@ type Mutation {
     user_id: Int!
     token: String!
   ): Track!
+  validateAllPending(
+    user_id: Int!
+    token: String!
+  ): Int
   invalidatePost(
     id: Int!
   ): Track!

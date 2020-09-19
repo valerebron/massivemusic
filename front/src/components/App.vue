@@ -54,8 +54,9 @@
           isfinishScrolling = setTimeout(function() {
             if(document.getElementsByClassName('tracks')[0]) {
               let scrollHeight = document.getElementsByClassName('tracks')[0].scrollHeight
-              let frameHeight = window.innerHeight - (document.getElementsByClassName('player')[0].clientHeight + document.getElementsByClassName('header')[0].clientHeight )
-              if(document.scrollingElement.scrollTop === scrollHeight - frameHeight) {
+              let frameHeight = window.innerHeight - (document.getElementsByClassName('player')[0].clientHeight + document.getElementsByClassName('header')[0].clientHeight)
+              let offset = 300
+              if(document.scrollingElement.scrollTop + frameHeight + offset > scrollHeight) {
                 that.$store.dispatch('filterTracks', { type: 'skip', value: '' })
               }
             }

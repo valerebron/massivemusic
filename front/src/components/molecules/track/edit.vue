@@ -55,7 +55,6 @@
       edit: async function() {
         let track = {
           user_id: this.$store.getters.session.user.id,
-          token: this.$store.getters.session.token,
           id: this.newTrack.id,
           yt_id: this.newTrack.yt_id,
           title: this.newTrack.title,

@@ -29,6 +29,9 @@ const actions = {
             createdAt
             updatedAt
             channel_avatar_medium
+            tracks {
+              id
+            }
           }
         }
       `,
@@ -37,7 +40,7 @@ const actions = {
     })
     store.commit('SET_USERS', res.data.users)
   },
-  async addUser(store, user) {
+  async addBot(store, user) {
     let res = await window.apollo.mutate({
       variables: { ...user },
       mutation: gql`mutation($name: String!, $email: String!, $token: String!, $channel_id: String!, $channel_style: Int!, $channel_enable_tracks: Boolean!, $channel_description: String!, $channel_avatar_small: String!, $channel_avatar_medium: String!, $channel_avatar_high: String!) {

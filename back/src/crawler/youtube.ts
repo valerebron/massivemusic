@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from 'axios'
 import * as moment from 'moment'
 import * as fs from 'fs'
-import { type } from 'os'
 
 let chrono: number = 0
 let interval = setInterval(() => chrono++, 1000)
@@ -227,12 +226,14 @@ async function formatVideo(video: any, speedDate?: boolean) {
       // title formating
       video.original_title = video.title
       video.title = cleanTitle(video.title)
+
       if(video.title.split('-').length === 1) {
         video.artist = ''
       }
       else {
-        video.title = video.original_title.split('-')[1]
-        video.artist = video.original_title.split('-')[0]
+        let splited = video.original_title.match(/([^,]*)-(.*)/)
+        video.artist = splited[1]
+        video.title = splited[2]
       }
       // duration formating
       if(video.lengthText) {

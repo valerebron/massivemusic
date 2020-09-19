@@ -131,6 +131,9 @@ export async function addBot(parent, args, context, info) {
       console.log(error)
     })
   }
+  else {
+    throw new Error('invalid token')
+  }
 }
 
 export async function syncBot(parent, args, context, info) {
@@ -292,6 +295,22 @@ export async function validatePost(parent, args, context, info) {
     else {
       throw new Error('track does not exist')
     }
+  }
+  else {
+    throw new Error('invalid token')
+  }
+}
+
+export async function validateAllPending(parent, args, context, info) {
+  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  if(args.token === user.token && user.role === 'ADMIN') {
+    console.log('\x1b[34m%s\x1b[0m', '●', 'validate All Pending tracks')
+    return context.prisma.track.updateMany({
+      where: { pending: true },
+      data: {
+        pending: false,
+      },
+    })
   }
   else {
     throw new Error('invalid token')

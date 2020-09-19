@@ -20,6 +20,10 @@
         <icon-admin />
         admin
       </router-link>
+      <router-link v-if="$store.getters.isAdmin" to="/bots" class="nav__link">
+        <icon-youtube />
+        bots
+      </router-link>
       <router-link to="/users" class="nav__link">
         <icon-users />
         users

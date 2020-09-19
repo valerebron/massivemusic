@@ -197,10 +197,9 @@
     bottom: 0;
     transition: all .3s;
     width: 100%;
-    height: 0;
     background-color: $app-bkg;
     transition: 0.3s all;
-    transform: translateY(100%);
+    transform: translateY(110%);
     &__top {
       z-index: $z-index-player;
       height: 0vh;

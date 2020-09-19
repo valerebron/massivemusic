@@ -63,6 +63,13 @@ const mutations = {
       invalid: 0,
     }
   },
+  UNPENDING_ALL_TRACKS(state) {
+    state.tracks.map(track => {
+      if(track.pending) {
+        track.pending = false
+      }
+    })
+  },
 }
 
 const actions = {
@@ -251,7 +258,7 @@ const actions = {
   },
   async editTrack(store, track) {
     let res = await window.apollo.mutate({
-      variables: {...track},
+      variables: {...track, token: store.getters.session.token},
       mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!, $yt_id: String, $title: String, $artist: String, $style: Int) {
         editPost(user_id: $user_id, token: $token, id: $id, yt_id: $yt_id, title: $title, artist: $artist, style: $style) {
           id
@@ -264,6 +271,18 @@ const actions = {
     track = res.data.editPost
     store.commit('UPDATE_TRACK', track)
     return track
+  },
+  async validateAllPending(store) {
+    await window.apollo.mutate({
+      variables: {
+        user_id: store.getters.session.user.id,
+        token: store.getters.session.token,
+      },
+      mutation: gql`mutation($user_id: Int!, $token: String!) {
+        validateAllPending(user_id: $user_id, token: $token)
+      }`,
+    }).catch((e)=>{console.log(e)})
+    store.commit('UNPENDING_ALL_TRACKS')
   },
   async dropTrack(store, track) {
     await window.apollo.mutate({
@@ -283,7 +302,6 @@ const actions = {
     store.commit('DROP_TRACK', track)
   },
   resetCounters(store) {
-    console.log('reset counters')
     store.commit('SET_COUNT_PENDING', 0)
     store.commit('SET_COUNT_INVALID', 0)
   },

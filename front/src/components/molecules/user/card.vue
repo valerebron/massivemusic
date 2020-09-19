@@ -3,6 +3,10 @@
     <figure class="card__figure">
       <router-link :to="'/user/'+user.id+'/profile'">
         <avatar class="card__avatar" :user="user" size="medium" />
+        <router-link :to="'/user/'+user.id+'/tracks'" class="card__nb-track" v-if="user.tracks && user.tracks.length !== 0">
+          {{ user.tracks.length }}
+          <icon-youtube v-if="user.role === 'ROBOT'" />
+        </router-link>
         <h4 class="card__name">{{ user.name }}</h4>
       </router-link>
     </figure>
@@ -37,6 +41,13 @@
     }
     &__name {
       font-style: normal;
+    }
+    &__nb-track {
+      background-color: beige;
+      color: black;
+      border-radius: 16px;
+      padding: 2px 4px;
+      font-size: 12px;
     }
   }
 </style>

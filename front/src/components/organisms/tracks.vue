@@ -7,10 +7,10 @@
       <td :class="'track__dot style-'+track.style.id" @click="play(track)">
         ‧
       </td>
-      <td :class="'track__title style-'+track.style.id" @click="play(track)">
+      <td :class="'track__title style-'+track.style.id" @click="play(track)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
       </td>
-      <td class="track__artist" @click="search(track.artist)">
+      <td class="track__artist" @click="search(track.artist)" :contenteditable="isEditable" @blur="update($event, track, 'artist')">
         {{ track.artist }}
       </td>
       <td class="track__createdat">
@@ -43,23 +43,19 @@
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
-  <section class="loading-full-page" v-else-if="isLoading">
-    <loader :isLoading="isLoading"/>
-  </section>
   <section v-else class="no-track">
     No track :(
   </section>
 </template>
 
 <script>
-  import loader from '@/components/atoms/loader'
   import avatar from '@/components/atoms/avatar'
   import trackEdit from '@/components/molecules/track/edit'
   import trackValidate from '@/components/molecules/track/validate'
   import trackDrop from '@/components/molecules/track/drop'
   export default {
     name: 'tracks',
-    components: { trackEdit, trackValidate, trackDrop, avatar, loader },
+    components: { trackEdit, trackValidate, trackDrop, avatar },
     props: ['filter'],
     computed:{
       tracks: {
@@ -77,13 +73,14 @@
         isEditOpen: false,
         isDropOpen: false,
         isValidateOpen: false,
-        isLoading: false,
         trackToEdit: {},
       }
     },
     methods: {
       play(track) {
-        this.$store.dispatch('play', track)
+        if(!this.isEditable) {
+          this.$store.dispatch('play', track)
+        }
       },
       async load() {
         if(this.filter.type === 'favorites') {
@@ -93,11 +90,15 @@
           await this.$store.dispatch('filterTracks', this.filter)
         }
       },
-      openEdit(track) {
-        // console.log(track)
-        // this.trackToEdit = 'testeu'
+      async update(event, track, type) {
         Object.assign(this.trackToEdit, track)
-        // this.trackToEdit = track
+        this.trackToEdit[type] = event.target.innerText
+        this.trackToEdit['user_id'] = track.user.id,
+        this.trackToEdit['style'] = track.style.id,
+        await this.$store.dispatch('editTrack', this.trackToEdit)
+      },
+      openEdit(track) {
+        Object.assign(this.trackToEdit, track)
         this.isEditOpen = true
         this.$store.dispatch('modal', true)
       },
@@ -124,21 +125,17 @@
         this.isValidateOpen = false
       },
       search(terms) {
-        this.$store.dispatch('filterTracks', {type: 'search', value: terms})
+        if(!this.isEditable) {
+          this.$store.dispatch('filterTracks', {type: 'search', value: terms})
+        }
       },
     },
     async mounted() {
-      this.isLoading = true
       this.$store.commit('RESET_FILTERS')
       await this.load()
-      this.isLoading = false
     },
-    async updated() {
-      if(this.isLoading === false) {
-        this.isLoading = true
-        await this.load()
-        this.isLoading = false
-      }
+    updated() {
+      this.load()
     },
   }
 </script>
