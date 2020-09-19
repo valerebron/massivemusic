@@ -1,13 +1,15 @@
 <template>
-  <figure class="user">
+  <figure class="user" :class="{ loading : isLoading }">
     <div class="user__image-container">
       <avatar :user="user" size="big" />
       <button @click="sync" v-if="user.role === 'ROBOT'" :class="'style-bkg-'+user.channel_style">
-        <icon-sync />
+        <span class="user__sync-button">
+          <icon-sync />
+          <loader :isLoading="isLoading"/>
+        </span>
         <span class="typo-one-line">
           sync channel
         </span>
-        <loader :isLoading="isLoading"/>
       </button>
     </div>
     <figcaption class="user__captions">
@@ -97,6 +99,17 @@
       @include breakpoint(tablet) {
         padding-left: 40px;
       }
+    }
+    &__sync-button {
+      .ion {
+        .loading & {
+          display: none;
+        }
+      }
+    }
+    .loader {
+      margin-left: 0!important;
+      margin-right: 8px;
     }
   }
 </style>

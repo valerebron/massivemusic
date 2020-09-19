@@ -43,7 +43,7 @@
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
-  <section v-else-if="isLoading">
+  <section class="loading-full-page" v-else-if="isLoading">
     <loader :isLoading="isLoading"/>
   </section>
   <section v-else class="no-track">

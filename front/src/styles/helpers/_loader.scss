@@ -1,0 +1,11 @@
+.loading-full-page {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .loader {
+    width: 30px;
+    height: 30px;
+  }
+}
