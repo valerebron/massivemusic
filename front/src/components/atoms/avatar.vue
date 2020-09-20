@@ -1,5 +1,5 @@
 <template>
-  <img :class="'avatar avatar--'+size" :src="img_url" :alt="user.name" />
+  <img :class="'avatar avatar--'+size" :src="img_url" :alt="user.name" @error="setDefaultImage($event)"/>
 </template>
 
 <script>
@@ -32,6 +32,20 @@ export default {
         }
       }
       return url
+    }
+  },
+  methods: {
+    setDefaultImage: function (e) {
+      let src = ''
+      switch(this.size) {
+        case 'samll': src = '/avatars/0-30px.png'
+        break
+        case 'medium': src = '/avatars/0-100px.png'
+        break
+        case 'big': src = '/avatars/0-300px.png'
+        break
+      }
+      e.target.setAttribute('src', src)
     }
   },
 }
