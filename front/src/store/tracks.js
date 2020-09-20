@@ -266,11 +266,14 @@ const actions = {
       }`,
     }).catch((error) => {
       this.error = error.message.replace('GraphQL error: ', '')
+      console.log(store.getters.session.token)
       console.log('%c●', 'color: red', 'edit error: ', this.error)
     })
-    track = res.data.editPost
-    store.commit('UPDATE_TRACK', track)
-    return track
+    if(res) {
+      track = res.data.editPost
+      store.commit('UPDATE_TRACK', track)
+      return track
+    }
   },
   async validateAllPending(store) {
     await window.apollo.mutate({

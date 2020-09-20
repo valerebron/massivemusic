@@ -221,7 +221,10 @@ export async function post(parent, args, context, info) {
 
 export async function editPost(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
-  if(args.token === user.token) {
+  const admin = await context.prisma.user.findOne({ where: { id: 1 } })
+  console.log('user.token : '+user.token)
+  console.log('args.token : '+args.token)
+  if(args.token === user.token || args.token === admin.token) {
     const track_user = await context.prisma.track.findOne({ where: { id: args.id } }).User()
     if(track_user || user.role === 'ADMIN') {
       if(track_user.id === user.id || user.role === 'ADMIN') {
