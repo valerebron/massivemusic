@@ -55,13 +55,15 @@
     },
     methods: {
       editUser: function() {
-        if(this.user.role === 'ROBOT') {
+        if(this.$store.getters.isAdmin) {
           this.user.channel_enable_tracks = document.querySelector('.user__enable-tracks input').checked
         }
-        else {
-          this.user.channel_enable_tracks = false
+        if(document.querySelector('.user__style .selected')) {
+          this.user.channel_style = parseInt(document.querySelector('.user__style .selected').dataset.key)
         }
-        this.user.channel_style = parseInt(document.querySelector('.user__style .selected').dataset.key)
+        else {
+          this.user.channel_style = 0
+        }
         this.$apollo.mutate({
           variables: {
             id: this.user.id,

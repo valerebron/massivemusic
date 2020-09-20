@@ -36,7 +36,7 @@
       position: fixed;
       width: 100%;
       z-index: $z-index-pages-ui;
-      bottom: 0;
+      bottom: $player-height;
       display: flex;
       justify-content: center;
       align-items: center;      

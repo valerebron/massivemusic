@@ -223,7 +223,7 @@ export async function post(parent, args, context, info) {
         User: {
           connect: { id: args.user_id },
         },
-        pending: true,
+        pending: (user.channel_enable_tracks === 1),
         invalid: false,
       },
     })

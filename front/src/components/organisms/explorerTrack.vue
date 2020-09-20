@@ -100,12 +100,10 @@
             }`,
           }).then((res) => {
             if(this.token === '') {
-              this.tracks = (res.data.searchTrack ? res.data.searchTrack.tracks : [])
+              this.tracks = (res.data.searchTrack.tracks[0]?.duration ? res.data.searchTrack.tracks : [])
             }
             else {
               this.tracks.concat(res.data.searchTrack.tracks)
-              console.log(res.data.searchTrack.tracks[0].id)
-              console.log(this.tracks)
             }
             this.token = (res.data.searchTrack.token ? res.data.searchTrack.token : [])
             window.scroll(0,0)
@@ -129,12 +127,14 @@
         this.getTracks()
       },
       send(track) {
-        if(track.id === 'didyoumean') {
-          this.query = track.title
-          this.search()
-        }
-        else {
-          this.$emit('clickOnTrack', track)
+        if(track) {
+          if(track.id === 'didyoumean') {
+            this.query = track.title
+            this.search()
+          }
+          else {
+            this.$emit('clickOnTrack', track)
+          }
         }
       }
     },

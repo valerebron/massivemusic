@@ -5,13 +5,9 @@
       <iframe class="add-tracks__iframe" type="text/html" :src="'https://www.youtube-nocookie.com/embed/'+track.id" frameborder="0"></iframe>
       <form class="add-tracks__form">
         <p class="add-tracks__original-title">{{ track.title}}</p>
-        <select v-model="track.style" class="item">
-          <option v-for="style in $store.getters.styles" :key="style.id" :value="style.id">
-            {{ style.name }}
-          </option>
-        </select>
-        <input :value="track.artist"  type="text" class="item" placeholder="artist" @keydown.enter.prevent="add()">
-        <input :value="track.title" type="text" class="item" placeholder="title" @keydown.enter.prevent="add()">
+        <styleSelector class="add-bots__style" @changeStyle="changeStyle($event)" preSelected="0"/>
+        <input v-model="track.artist"  type="text" class="item" placeholder="artist" @keydown.enter.prevent="add()">
+        <input v-model="track.title" type="text" class="item" placeholder="title" @keydown.enter.prevent="add()">
         <div class="actions">
           <button @click.prevent="close">
             Cancel
@@ -27,11 +23,13 @@
 
 <script>
   import explorerTrack from '@/components/organisms/explorerTrack'
+  import styleSelector from '@/components/organisms/styleSelector'
   import modal from '@/components/atoms/modal'
   export default {
     name: 'addTracks',
     components: {
       explorerTrack,
+      styleSelector,
       modal,
     },
     data: function() {
@@ -61,6 +59,9 @@
           this.$router.push('/login')
         }
       },
+      changeStyle: function(style) {
+        this.track.style = style.id
+      }
     },
     mounted: function() {
       if(!this.$store.getters.isOnline) {

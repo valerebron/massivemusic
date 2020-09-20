@@ -6,11 +6,7 @@
         {{ error }}
       </div>
       <input v-model="newTrack.yt_id" pattern="[a-zA-Z0-9_\-]{11}" type="text" class="item" placeholder="id">
-      <select v-model="newTrack.style.id" class="item">
-        <option v-for="style in styles" :key="style.id" :value="style.id">
-          {{ style.name }}
-        </option>
-      </select>
+      <styleSelector class="add-bots__style" :preSelected="newTrack.style"/>
       <input v-model="newTrack.artist" type="text" class="item" placeholder="artist" required @keydown.enter.prevent="edit()">
       <input v-model="newTrack.title" type="text" :class="'item style-'+newTrack.style" placeholder="title" required @keydown.enter.prevent="edit()">
       <div class="actions">
@@ -27,9 +23,10 @@
 
 <script>
   import modal from '@/components/atoms/modal'
+  import styleSelector from '@/components/organisms/styleSelector'
   export default {
     name: 'track-edit',
-    components: { modal },
+    components: { modal, styleSelector },
     props: ['trackToEdit'],
     data: function() {
       return {

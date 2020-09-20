@@ -5,7 +5,7 @@
       <form class="add-bots__form">
         <avatar v-if="channel !== ''" class="add-bots__avatar" :user="channel" size="medium" />
         <input v-model="channel.name" type="text" class="item" placeholder="name" @keydown.enter.prevent="add()">
-        <styleSelector class="add-bots__style" :preSelected="0"></styleSelector>
+        <styleSelector class="add-bots__style" preSelected="0"/>
         <textarea name="description" placeholder="About you" v-model="channel.channel_description" id="" cols="30" rows="10"></textarea>
         <p>Enable Tracks ?</p>
         <checkbox class="add-bots__enable-tracks" :state="channel.channel_enable_tracks"></checkbox>

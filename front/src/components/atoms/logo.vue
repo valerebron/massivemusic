@@ -47,6 +47,9 @@ export default {
       font-size: 14px;
       text-transform: uppercase;
       transition: &ll 0.3s;
+      .app--full & {
+        color: white!important;
+      }
     }
     &__extension {
       text-transform: lowercase;
