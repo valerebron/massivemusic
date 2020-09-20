@@ -3,7 +3,6 @@ import * as express from 'express'
 import { ApolloServer } from 'apollo-server'
 import { importSchema } from 'graphql-import'
 import { PrismaClient } from '@prisma/client'
-// import cron from './cron'
 
 const history = require('connect-history-api-fallback')
 const prisma = new PrismaClient()

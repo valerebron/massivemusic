@@ -68,17 +68,12 @@ export async function searchVideo(terms: string, token?: string) {
       let datas: any = JSON.parse(raw).contents.sectionListRenderer
       items = datas.contents[0].itemSectionRenderer.contents
       token = datas.continuations?.[0]?.reloadContinuationData?.continuation || ''
-      console.log('basic token')
-      console.log(token)
     }
     // more videos
     else {
       let data = (await axios.get('https://youtube.com/browse_ajax?ctoken='+token, headersAJAX)).data
       items = data[1].response.continuationContents?.gridContinuation?.items || ''
       token = data[1].response.continuationContents?.gridContinuation?.continuations?.[0]?.nextContinuationData?.continuation || ''
-      console.log(data)
-      console.log('new token')
-      console.log(token)
     }
     for(let i = 0; i < items.length; i++) {
       videos.push(await formatVideo(items[i], true))
@@ -186,7 +181,6 @@ export async function getChannelVideos(id: string, published_after?: Date) {
         token = data[1].response.continuationContents?.gridContinuation?.continuations?.[0]?.nextContinuationData?.continuation || ''
         for(let i = 0; i < newVideos.length; i++) {
           let video = await formatVideo(newVideos[i])
-          console.log(video.id)
           if(moment(video.publishedAt).isBefore(published_after) && published_after) {
             return videos
           }
