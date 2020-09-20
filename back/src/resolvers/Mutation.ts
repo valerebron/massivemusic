@@ -332,6 +332,22 @@ export async function validateAllPending(parent, args, context, info) {
   }
 }
 
+export async function validateAllInvalid(parent, args, context, info) {
+  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  if(args.token === user.token && user.role === 'ADMIN') {
+    console.log('\x1b[34m%s\x1b[0m', '●', 'validate All Invalid tracks')
+    return context.prisma.track.updateMany({
+      where: { invalid: true },
+      data: {
+        invalid: false,
+      },
+    })
+  }
+  else {
+    throw new Error('invalid token')
+  }
+}
+
 export async function invalidatePost(parent, args, context, info) {
   console.log('\x1b[34m%s\x1b[0m', '●', 'invalidate track-id:',args.id)
   return context.prisma.track.update({

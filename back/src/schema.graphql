@@ -54,6 +54,10 @@ type Mutation {
     user_id: Int!
     token: String!
   ): Int
+  validateAllInvalid(
+    user_id: Int!
+    token: String!
+  ): Int
   invalidatePost(
     id: Int!
   ): Track!

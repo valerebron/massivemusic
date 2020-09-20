@@ -30,17 +30,16 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+  .dock {
+    position: fixed;
+    z-index: $z-index-pages-ui;
+    bottom: $player-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;      
+  }
   .pending-tracks {
-    .dock {
-      position: fixed;
-      width: 100%;
-      z-index: $z-index-pages-ui;
-      bottom: $player-height;
-      display: flex;
-      justify-content: center;
-      align-items: center;      
-    }
     &__unpending-all {
       display: flex;
       background-color: black;

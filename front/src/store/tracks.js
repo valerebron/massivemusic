@@ -70,6 +70,13 @@ const mutations = {
       }
     })
   },
+  VALIDATE_ALL_TRACKS(state) {
+    state.tracks.map(track => {
+      if(track.invalid) {
+        track.invalid = false
+      }
+    })
+  },
 }
 
 const actions = {
@@ -286,6 +293,18 @@ const actions = {
       }`,
     }).catch((e)=>{console.log(e)})
     store.commit('UNPENDING_ALL_TRACKS')
+  },
+  async validateAllInvalid(store) {
+    await window.apollo.mutate({
+      variables: {
+        user_id: store.getters.session.user.id,
+        token: store.getters.session.token,
+      },
+      mutation: gql`mutation($user_id: Int!, $token: String!) {
+        validateAllInvalid(user_id: $user_id, token: $token)
+      }`,
+    }).catch((e)=>{console.log(e)})
+    store.commit('VALIDATE_ALL_TRACKS')
   },
   async dropTrack(store, track) {
     await window.apollo.mutate({
