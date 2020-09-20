@@ -35,6 +35,7 @@
         this.$store.dispatch('filterTracks', {type: 'search', value: terms})
       },
       open() {
+        this.$store.dispatch('ui', {type: 'nav', value: false})
         this.$store.dispatch('ui', {type: 'search', value: true})
       },
       close() {

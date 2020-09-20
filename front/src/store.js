@@ -15,7 +15,7 @@ Vue.use(Vuex)
 
 const vuexLocalStorage = new VuexPersist({
   storage: window.localStorage, // or window.sessionStorage or localForage instance.
-  reducer: (state) => ({ session: state.session, favorites: state.favorites, player: state.player }),
+  reducer: (state) => ({ session: state.session, favorites: state.favorites, ui: state.ui, player: state.player }),
 })
 
 export default new Vuex.Store({
