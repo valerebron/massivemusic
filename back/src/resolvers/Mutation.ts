@@ -81,6 +81,9 @@ export async function logout(parent, args, context, info) {
 export async function editUser(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.id } })
   const admin = await context.prisma.user.findOne({ where: { id: 1 } })
+  if(args.token !== admin.token && args.channel_enable_tracks === true && user.channel_enable_tracks === false) {  // protect enable track to be activate by non-admin
+    throw new Error('forbiden')
+  }
   if(args.token === user.token || args.token === admin.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', ' edit user '+args.id)
     return context.prisma.user.update({
