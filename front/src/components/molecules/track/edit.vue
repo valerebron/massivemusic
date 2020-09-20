@@ -1,6 +1,6 @@
 <template>
   <modal :key="trackToEdit.yt_id" @close="close()">
-    <iframe class="edit-tracks__iframe" type="text/html" :src="'http://www.youtube-nocookie.com/embed/'+newTrack.id" frameborder="0"></iframe>
+    <iframe class="edit-tracks__iframe" type="text/html" :src="'https://www.youtube-nocookie.com/embed/'+newTrack.id" frameborder="0"></iframe>
     <form class="edit-track">
       <div v-if="error !== ''" class="error-dialog">
         {{ error }}

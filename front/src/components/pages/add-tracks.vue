@@ -2,7 +2,7 @@
   <main class="add-tracks page--container">
     <explorerTrack @clickOnTrack="open" />
     <modal @close="close()">
-      <iframe class="add-tracks__iframe" type="text/html" :src="'http://www.youtube-nocookie.com/embed/'+track.id" frameborder="0"></iframe>
+      <iframe class="add-tracks__iframe" type="text/html" :src="'https://www.youtube-nocookie.com/embed/'+track.id" frameborder="0"></iframe>
       <form class="add-tracks__form">
         <p class="add-tracks__original-title">{{ track.title}}</p>
         <select v-model="track.style" class="item">
