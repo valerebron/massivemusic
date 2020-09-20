@@ -1,5 +1,5 @@
 <template>
-  <figure class="user">
+  <figure class="user" v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
     <avatar :user="user" size="big" />
     <figcaption class="user__captions">
       <h2 class="user__name">
@@ -14,18 +14,18 @@
       <styleSelector class="user__style" @changeStyle="editUser" :preSelected="user.channel_style"></styleSelector>
       <input type="text" v-model="user.email" disabled>
       <textarea name="description" placeholder="About you" @change="editUser" v-model="user.channel_description" id="" cols="30" rows="10"></textarea>
-      <p v-if="user.role === 'ROBOT'">
-        Enable Tracks ?
-        <checkbox class="user__enable-tracks" @changeCheckbox="editUser" :state="user.channel_enable_tracks"></checkbox>
-      </p>
-      <template v-if="$store.getters.isAdmin && user.role !== 'ADMIN'">
+      <template v-if="$store.getters.isAdmin">
+        <p>
+          Enable Tracks ?
+          <checkbox class="user__enable-tracks" @changeCheckbox="editUser" :state="user.channel_enable_tracks"></checkbox>
+        </p>
         <button class="user__drop" @click="openDrop(user)">
           <icon-trash/>
           DELETE
         </button>
         <drop @closeDrop="closeDrop" :user="user"/>
       </template>
-      <router-link v-if="$route.params.user_id === 'me' || $store.getters.isAdmin" :to="'/user/'+$route.params.user_id+'/profile'" tag="button">
+      <router-link :to="'/user/'+$route.params.user_id+'/profile'" tag="button">
         <icon-back/>
         go back to profile
       </router-link>
