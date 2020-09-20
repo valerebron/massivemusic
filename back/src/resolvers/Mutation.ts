@@ -139,7 +139,6 @@ export async function addBot(parent, args, context, info) {
 export async function syncBot(parent, args, context, info) {
   const admin = await context.prisma.user.findOne({ where: { id: 1 } })
   const bot = await context.prisma.user.findOne({ where: { id: args.id }})
-  console.log('launch')
   const botDates = await context.prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
   const lastTrackCreated = botDates[0].createdAt
   if(args.token === admin.token || args.token === bot.token) {
@@ -147,17 +146,21 @@ export async function syncBot(parent, args, context, info) {
     var tracks = []
     // 1 FIRST SCAN
     if(bot.channel_last_sync_date === null) {
-      console.log('first Sync')
       if(bot.tracks.length !== 0) {
+        console.log('first Sync with tracks')
+        console.log('begin at '+lastTrackCreated)
         tracks = await youtube.getChannelVideos(bot.channel_id, lastTrackCreated)
       }
       else {
+        console.log('first Sync')
+        console.log('get all tracks')
         tracks = await youtube.getChannelVideos(bot.channel_id)
       }
     }
     // 2 UPDATE SCAN
     else {
       console.log('update Sync')
+      console.log('begin at '+bot.channel_last_sync_date)
       tracks = await youtube.getChannelVideos(bot.channel_id, bot.channel_last_sync_date)
     }
     console.log('total tracks: '+tracks.length)
