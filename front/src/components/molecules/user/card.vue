@@ -24,7 +24,6 @@
 
 <style lang="scss">
   .card {
-    float: left;
     border-radius: 26px;
     margin: 10px;
     &__link {
@@ -72,6 +71,10 @@
       margin-top: -10px;
       .ion {
         margin-left: 4px;
+      }
+      &:hover {
+        text-decoration: none!important;
+        box-shadow: white 0 0 4px;
       }
     }
   }

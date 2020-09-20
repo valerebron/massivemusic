@@ -166,6 +166,9 @@ export default {
     color: white;
     justify-content: center;
     width: 100%;
+    &:hover {
+      text-decoration: none;
+    }
     @include breakpoint(tablet) {
       width: auto;
       justify-content: flex-start;

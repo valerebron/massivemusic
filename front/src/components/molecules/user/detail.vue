@@ -19,11 +19,11 @@
           .
         </span>
       </h1>
-      <a v-if="user.role === 'ROBOT'" target="_blank" :href="'https://youtube.com/channel/'+user.channel_id+''" :title="user.name">
+      <a v-if="user.role === 'ROBOT'" class="link" target="_blank" :href="'https://youtube.com/channel/'+user.channel_id+''" :title="user.name">
         see channel on youtube
       </a>
       <h3>
-        <router-link :to="'/user/'+$route.params.user_id+'/tracks'">
+        <router-link :to="'/user/'+$route.params.user_id+'/tracks'" class="link">
           <b>{{ this.user.tracks.length }}</b> track
         </router-link>
       </h3>
