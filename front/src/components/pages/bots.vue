@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div>
+    <div class="user-list">
       <card v-for="bot in bots" :user="bot" :key="bot.id" />
     </div>
   </section>

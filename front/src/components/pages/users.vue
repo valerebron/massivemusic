@@ -24,7 +24,7 @@
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .user-list {
     display: flex;
     flex-wrap: wrap;
