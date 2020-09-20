@@ -225,7 +225,6 @@ const actions = {
     })
   },
   async addTrack(store, track) {
-    console.log('add track')
     window.apollo.mutate({
       variables: {
         user_id: store.getters.session.user.id,

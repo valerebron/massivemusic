@@ -126,6 +126,7 @@
       },
       search(terms) {
         if(!this.isEditable) {
+          this.$store.dispatch('ui', {type: 'search', value: true})
           this.$store.dispatch('filterTracks', {type: 'search', value: terms})
         }
       },
