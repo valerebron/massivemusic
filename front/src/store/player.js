@@ -30,14 +30,36 @@ const actions = {
     player.on('stateChange', function (event) {
       let newState = event.target.getPlayerState()
       store.commit('SET_PLAYER_STATE', newState)
-      if(newState == 0) { // ended track
+      if(newState === 0) { // ended track
         document.getElementsByClassName('player-next')[0].click()
+      }
+      if(newState === 1) {                      // if playing
+        if(store.getters.playerTrack.invalid) { // invalid track
+          window.apollo.mutate({                // re-validate it
+            variables: {
+              user_id: store.getters.session.user.id,
+              token: store.getters.session.token,
+              id: store.getters.playerTrack.id,
+            },
+            mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!) {
+              validatePost(user_id: $user_id, token: $token, id: $id) {
+                id
+              }
+            }`,
+          }).then(() => {
+            let validatedTrack = {...store.getters.playerTrack}
+            validatedTrack = false
+            store.commit('UPDATE_TRACK', validatedTrack)
+          }).catch((error) => {
+            this.error = error.message.replace('GraphQL error: ', '')
+            console.log('%c●', 'color: red', 'validate error: ', this.error)
+          })
+        }
       }
     })
     player.on('error', function (event) { // 2-invalidID 5-HTML5PlayerError 100-removedOrPrivate 101-150-forbiddenVideo
       let id = store.getters.playerTrack.id
       if([2 ,100, 101, 150].includes(event.data)) {
-        console.log('player error: '+event.data+' for: '+store.getters.playerTrack.yt_id)
         window.apollo.mutate({
           variables: {
             id: id,
