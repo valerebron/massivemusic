@@ -251,6 +251,7 @@ const actions = {
       }`,
     }).then((res) => {
       store.commit('PUSH_USER_TRACK', res.data.post)
+      store.commit('PUSH_TRACK', res.data.post)
     }).catch((error) => {
       console.log('%c●', 'color: red', 'add-track error: ', error)
     })

@@ -59,7 +59,7 @@ const actions = {
     })
     player.on('error', function (event) { // 2-invalidID 5-HTML5PlayerError 100-removedOrPrivate 101-150-forbiddenVideo
       let id = store.getters.playerTrack.id
-      if([2 ,100, 101, 150].includes(event.data)) {
+      if([100, 101, 150].includes(event.data)) {
         window.apollo.mutate({
           variables: {
             id: id,
@@ -74,11 +74,12 @@ const actions = {
         }).catch((error) => {
           console.log('%c●', 'color: red', 'invalidate error: ', error.message.replace('GraphQL error: ', ''))
         })
+        document.getElementsByClassName('player-next')[0].click()
       }
       else if(event.data == 5) {
         console.log('%c●', 'color: red', 'id: '+id+' html5 player error')
+        document.getElementsByClassName('player-next')[0].click()
       }
-      document.getElementsByClassName('player-next')[0].click()
     })
   },
   play(store, track) {
