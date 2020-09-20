@@ -29,6 +29,7 @@ const actions = {
             createdAt
             updatedAt
             channel_avatar_medium
+            channel_style
             tracks {
               id
             }
