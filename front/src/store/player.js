@@ -96,12 +96,6 @@ const actions = {
     if(track) {
       if(track.yt_id != playerTrack.yt_id) {
         store.dispatch('ui', {type: 'player', value: true})
-        if(document.getElementsByClassName('track--playing')[0]) {
-          document.getElementsByClassName('track--playing')[0].classList.remove('track--playing')
-        }
-        if(document.getElementsByClassName(track.yt_id)[0]) {
-          document.getElementsByClassName(track.yt_id)[0].classList.add('track--playing')
-        }
         store.commit('SET_TRACK', track)
         // prevent fast clicking prev/next buttons
         clearTimeout(playTimeout)

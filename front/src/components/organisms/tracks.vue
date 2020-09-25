@@ -1,6 +1,15 @@
 <template>
   <table v-if="tracks.length!==0" class="tracks" :key="filter.type+filter.value">
-    <tr v-for="(track, index) in tracks" class="track" :class="[{'track--invalid': track.invalid},{'track--pending': track.pending}, track.yt_id]" :key="track.yt_id">
+    <tr
+      v-for="(track, index) in tracks"
+      class="track"
+      :class="{
+        'track--invalid': track.invalid,
+        'track--pending': track.pending,
+        'track--playing': (track.yt_id === $store.getters.playerTrack.yt_id)
+      }"
+      :key="track.yt_id"
+    >
       <td :class="'track__index style-'+track.style.id" @click="play(track)">
         {{ index + 1 }}
       </td>
