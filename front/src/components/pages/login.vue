@@ -41,10 +41,10 @@
     },
     methods: {
       submit: function() {
-        if(this.$route.name === 'login') {
+        if(this.$route.name === 'login' && this.credential !== '' && this.password !== '') {
           this.login()
         }
-        if(this.$route.name === 'signup') {
+        if(this.$route.name === 'signup' && this.credential !== '' && this.password !== '' && this.name !== '') {
           this.signup()
         }
       },

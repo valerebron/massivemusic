@@ -5,20 +5,25 @@ const moment = require('moment')
 const usetube = require('usetube')
 
 export async function signup(parent, args, context, info) {
-  const token = crypto.randomBytes(64).toString('hex')
-  const user  = await context.prisma.user.create({
-    data: {
-      name: args.name,
-      email: args.email,
-      password: args.hash,
-      role: 'USER',
-      token: token,
-    },
-  })
-
-  console.log('\x1b[34m%s\x1b[0m', '●', 'new user: '+user.name)
-
-  return {token, user}
+  if(args.name !== '' && args.email !== '' && args.hash !== '') {
+    const token = crypto.randomBytes(64).toString('hex')
+    const user  = await context.prisma.user.create({
+      data: {
+        name: args.name,
+        email: args.email,
+        password: args.hash,
+        role: 'USER',
+        token: token,
+      },
+    })
+  
+    console.log('\x1b[34m%s\x1b[0m', '●', 'new user: '+user.name)
+  
+    return {token, user}
+  }
+  else {
+    throw new Error('empty field')
+  }
 }
 
 export async function login(parent, args, context, info) {
