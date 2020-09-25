@@ -15,7 +15,7 @@
         Did you mean : <b> {{ channel.name }}</b> ?
       </div>
       <template v-else>
-        <img class="avatar avatar--medium" :src="channel.channel_avatar_medium" />
+        <img @error="'/avatars/0-100px.png'" class="avatar avatar--medium" :src="channel.channel_avatar_medium" />
         <div>
           <h3 class="channel__name">
             {{ channel.name }}
