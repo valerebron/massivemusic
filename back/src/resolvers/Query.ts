@@ -1,6 +1,6 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
 const got = require('got')
-import * as youtube from '../crawler/youtube'
+const usetube = require('usetube')
 
 module.exports = {
   styles: async (parent, args, context, info) => {
@@ -112,14 +112,14 @@ module.exports = {
   },
   searchTrack: async (parent, args, context, info) => {
     console.log('search tracks '+args.search)
-    return await youtube.searchVideo(args.search, args.token)
+    return await usetube.searchVideo(args.search, args.token)
   },
   searchChannel: async (parent, args, context, info) => {
     console.log('search channels '+args.search)
-    return await youtube.searchChannel(args.search)
+    return await usetube.searchChannel(args.search)
   },
   getChannelDesc: async (parent, args, context, info) => {
     console.log('youtube channel desc query')
-    return await youtube.getChannelDesc(args.id)
+    return await usetube.getChannelDesc(args.id)
   },
 }

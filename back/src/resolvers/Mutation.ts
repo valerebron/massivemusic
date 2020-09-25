@@ -2,7 +2,7 @@ const env = require('dotenv').config({ path: '../.env' }).parsed
 const got = require('got')
 const crypto = require('crypto')
 const moment = require('moment')
-import * as youtube from '../crawler/youtube'
+const usetube = require('usetube')
 
 export async function signup(parent, args, context, info) {
   const token = crypto.randomBytes(64).toString('hex')
@@ -152,19 +152,19 @@ export async function syncBot(parent, args, context, info) {
       if(bot.tracks.length !== 0) {
         console.log('first Sync with tracks')
         console.log('begin at '+lastTrackCreated)
-        tracks = await youtube.getChannelVideos(bot.channel_id, lastTrackCreated)
+        tracks = await usetube.getChannelVideos(bot.channel_id, lastTrackCreated)
       }
       else {
         console.log('first Sync')
         console.log('get all tracks')
-        tracks = await youtube.getChannelVideos(bot.channel_id)
+        tracks = await usetube.getChannelVideos(bot.channel_id)
       }
     }
     // 2 UPDATE SCAN
     else {
       console.log('update Sync')
       console.log('begin at '+bot.channel_last_sync_date)
-      tracks = await youtube.getChannelVideos(bot.channel_id, bot.channel_last_sync_date)
+      tracks = await usetube.getChannelVideos(bot.channel_id, bot.channel_last_sync_date)
     }
     console.log('total tracks: '+tracks.length)
 
