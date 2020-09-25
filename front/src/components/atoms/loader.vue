@@ -66,6 +66,10 @@
     }
     .player-buffering .control-bar & {
       opacity: 1;
+      display: block;
+      height: 100%;
+      width: 100%;
+      margin: 0;
     }
     button & {
       width: 19px;
