@@ -3,7 +3,9 @@
     <button class="nav-toggle" @click="toggleNav">
       <template v-if="this.$store.getters.isOnline">
         <avatar :user="user" size="small"/>
-        <p>{{ user.name }}</p>
+        <p class="nav-toggle__name">
+          {{ user.name }}
+        </p>
       </template>
       <icon-nav v-else/>
     </button>
@@ -58,6 +60,12 @@
     align-content: center;
     .nav-toggle {
       z-index: $z-index-header-elt;
+      &__name {
+        display: none;
+        @include breakpoint('tablet') {
+          display: flex;
+        }
+      }
     }
     .nav-toggle, .logo__name, .search__button svg {
       color: $app-color;

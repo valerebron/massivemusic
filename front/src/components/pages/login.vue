@@ -9,7 +9,7 @@
           class="login__avatar"
           :user="avatar"
           size="medium"
-          @click="clickOnAvatar"
+          @click="clickOnUpload()"
         />
         <h3 v-if="$route.name === 'signup'">
           {{ name }}
@@ -32,7 +32,7 @@
           v-model="password"
           placeholder="Password"
           required
-          @keydown.enter.prevent="submit"
+          @keydown.enter.prevent="submit()"
         >
         <input
           v-if="$route.name === 'signup'"
@@ -65,7 +65,6 @@
   import upload from '@/components/atoms/upload'
   import avatar from '@/components/atoms/avatar'
 
-
   export default {
     name: 'login',
     components: { modal, upload, avatar },
@@ -81,7 +80,7 @@
       }
     },
     methods: {
-      clickOnAvatar() {
+      clickOnUpload() {
         document.querySelector('.upload__input').click()
       },
       onFileSelected: async function (url, b64) {

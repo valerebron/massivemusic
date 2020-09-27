@@ -1,5 +1,5 @@
 <template>
-  <figure class="user" v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
+  <figure class="user user--edit" v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
     <avatar :user="userImage" size="big" @click="clickOnAvatar" />
     <figcaption class="user__captions">
       <h2 class="user__name">
@@ -131,8 +131,10 @@
 
 <style lang="scss">
   .user {
-    .avatar {
-      cursor: pointer;
+    &--edit {
+      .avatar {
+        cursor: pointer;
+      } 
     }
     &__drop {
       float: right;

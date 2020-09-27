@@ -334,7 +334,7 @@
       margin: 0;
       overflow: hidden;
       transition: height .3s;
-      font-size: 2.5vw;
+      font-size: 14px;
       line-height: 140%;
       flex-grow: 2;
       top: 12px;
@@ -342,10 +342,16 @@
         height: 100%;
         justify-content: center;
         position: static;
-        font-size: 2vw;
       }
       @include breakpoint(tablet, only) {
         flex-direction: column;
+        font-size: 2vw;
+      }
+      @include breakpoint(desktop, only) {
+        font-size: 1.8vw;
+      }
+      @include breakpoint(bigscreen) {
+        font-size: 1.5vw;
       }
       .player-title {
         @extend %currentStyleColor;

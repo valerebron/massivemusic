@@ -3,11 +3,11 @@
     <tr
       v-for="(track, index) in tracks"
       class="track"
-      :class="{
+      :class="[{
         'track--invalid': track.invalid,
         'track--pending': track.pending,
-        'track--playing': (track.yt_id === $store.getters.playerTrack.yt_id)
-      }"
+        'track--playing' : (track.yt_id === $store.getters.playerTrack.yt_id)
+      }, 'style-bkg-'+track.style.id]"
       :key="track.yt_id"
     >
       <td :class="'track__index style-'+track.style.id" @click="play(track)">
@@ -170,8 +170,13 @@
       &:focus {
         background-color: $color-selection;
       }
+      background-color: transparent;
       &--playing {
-        background-color: $color-selection!important;
+        .track {
+          &__title, &__dot, &__index {
+           color: white;
+          }
+        }
       }
       &--invalid {
         background-color: $invalidate-color;

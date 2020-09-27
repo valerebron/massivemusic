@@ -10,7 +10,7 @@
       visbility="hidden"
       class="upload__input"
     >
-    <button class="upload__button" @click="uploadButton">
+    <button class="upload__button" @click.prevent="uploadButton">
       Upload avatar
     </button>
   </div>

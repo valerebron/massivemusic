@@ -17,22 +17,22 @@
   color: $color-19;
 }
 
-.style-bkg-11, .style-bkg-11:focus {
+.style-bkg-11, .style-bkg-11:focus, .style-bkg-11.track--playing {
   background-color: darken($color-11, 8%);
 }
-.style-bkg-12, .style-bkg-12:focus {
+.style-bkg-12, .style-bkg-12:focus, .style-bkg-12.track--playing {
   background-color: darken($color-12, 8%);
 }
-.style-bkg-13, .style-bkg-13:focus {
+.style-bkg-13, .style-bkg-13:focus, .style-bkg-13.track--playing {
   background-color: darken($color-13, 8%);
 }
-.style-bkg-14, .style-bkg-14:focus {
+.style-bkg-14, .style-bkg-14:focus, .style-bkg-14.track--playing {
   background-color: darken($color-14, 8%);
 }
-.style-bkg-15, .style-bkg-15:focus {
+.style-bkg-15, .style-bkg-15:focus, .style-bkg-15.track--playing {
   background-color: darken($color-15, 8%);
 }
-.style-bkg-19, .style-bkg-19:focus {
+.style-bkg-19, .style-bkg-19:focus, .style-bkg-19.track--playing {
   background-color: darken($color-19, 8%);
 }
 
