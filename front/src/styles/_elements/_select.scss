@@ -24,13 +24,13 @@ select {
   }
   &:focus {
     border-color: #aaa;
-    color: white;
+    color: $app-color;
     outline: none;
   }
   option {
     border: none;
     background-color: #353535;
-    color: white;
+    color: $app-color;
     font-weight:normal;
     text-align: center;
   }

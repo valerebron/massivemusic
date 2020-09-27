@@ -151,6 +151,7 @@
     }
     &__search-input {
       width: 100%;
+      box-shadow: $app-bkg 0 0 30px;
       height: $explorer-search-height;
       border-bottom: 1px darken($youtube-red, 30%) solid;
       background-color: $app-bkg;

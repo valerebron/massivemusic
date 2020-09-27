@@ -1,35 +1,53 @@
 <template>
-  <img :class="'avatar avatar--'+size" :src="img_url" :alt="user.name" @error="setDefaultImage($event)"/>
+  <img
+    :class="'avatar avatar--'+size"
+    :src="imgUrl"
+    :alt="user.name"
+    @load="isLoaded = true"
+    @error="setDefaultImage($event)"
+    @click="$emit('click')"
+    v-show="isLoaded"
+  />
 </template>
 
 <script>
 export default {
   name: 'avatar',
   props: ['user', 'size'],
+  data: function() {
+    return {
+      isLoaded: false,
+    }
+  },
   computed: {
-    img_url: function() {
+    imgUrl: function() {
       let url = ''
-      if(this.user.role === 'ROBOT') {
-        if(this.size === 'small') {
-          url =this.user.channel_avatar_small
+      if(this.user.role) {
+        if(this.user.role === 'ROBOT') {
+          if(this.size === 'small') {
+            url = this.user.channel_avatar_small
+          }
+          if(this.size === 'medium') {
+            url = this.user.channel_avatar_medium
+          }
+          if(this.size === 'big') {
+            url = this.user.channel_avatar_medium
+          }
         }
-        if(this.size === 'medium') {
-          url =this.user.channel_avatar_medium
-        }
-        if(this.size === 'big') {
-          url =this.user.channel_avatar_medium
+        else {
+          if(this.size === 'small') {
+            url = '/avatars/'+this.user.id+'-30px.png'
+          }
+          if(this.size === 'medium') {
+            url = '/avatars/'+this.user.id+'-100px.png'
+          }
+          if(this.size === 'big') {
+            url = '/avatars/'+this.user.id+'-300px.png'
+          }
         }
       }
       else {
-        if(this.size === 'small') {
-          url ='/avatars/'+this.user.id+'-30px.png'
-        }
-        if(this.size === 'medium') {
-          url ='/avatars/'+this.user.id+'-100px.png'
-        }
-        if(this.size === 'big') {
-          url ='/avatars/'+this.user.id+'-300px.png'
-        }
+        url = this.user
       }
       return url
     }
@@ -53,18 +71,19 @@ export default {
 
 <style lang="scss">
 .avatar {
-  border-radius: 300px;
+  border-radius: 100%;
+  object-fit: cover;
   &--small {
-    max-width: 30px;
-    max-height: 30px;
+    width: 30px;
+    height: 30px;
   }
   &--medium {
-    max-width: 100px;
-    max-height: 100px;
+    width: 100px;
+    height: 100px;
   }
   &--big {
-    max-width: 300px;
-    max-height: 300px;
+    width: 300px;
+    height: 300px;
   }
 }
 </style>

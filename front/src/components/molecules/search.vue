@@ -81,7 +81,7 @@
       }
       body[class*="route-style"] & {
         background-color: rgb(24, 24, 24);
-        color: white;
+        color: $app-color;
       }
     }
     &__count {

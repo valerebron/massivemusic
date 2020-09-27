@@ -10,6 +10,6 @@ input[type=text], input[type=password], input[type=email], textarea {
     border-bottom: 1px grey solid;
   }
   &:active, &:focus {
-    color: white;
+    color: $app-color;
   }
 }

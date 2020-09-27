@@ -78,10 +78,10 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    @include breakpoint(tablet) {
+    @include breakpoint(desktop) {
       flex-direction: row;
+      padding-top: 10vh;
     }
-    padding-top: 10vh;
     &__name {
       display: flex;
       flex-direction: row;
@@ -98,7 +98,7 @@
     }
     &__captions {
       padding: 10px;
-      @include breakpoint(tablet) {
+      @include breakpoint(desktop) {
         padding-left: 40px;
       }
     }

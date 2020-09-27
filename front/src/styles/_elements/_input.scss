@@ -3,7 +3,7 @@ input, textarea {
   margin: 10px 0;
   border: none;
   background-color: $ui-bkg;
-  color: $primary-color;
+  color: $app-color;
   border: none;
   padding: 10px;
   text-align: center;
@@ -15,6 +15,6 @@ input, textarea {
     color: grey;
   }
   &:active, &:focus {
-    color: white;
+    color: $app-color;
   }
 }

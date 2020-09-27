@@ -92,7 +92,7 @@
       }
     }
     &__original-title {
-      color: white;
+      color: $app-color;
       padding-bottom: 12px;
       text-align: center;
     }

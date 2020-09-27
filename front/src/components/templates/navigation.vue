@@ -14,7 +14,7 @@
     <template v-if="$store.getters.isOnline">
       <router-link to="/user/me/profile" class="nav__link nav__link--user">
         <avatar :user="$store.getters.session.user" size="small" />
-        {{ $store.getters.session.user.name }}
+        my Account
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/admin" class="nav__link">
         <icon-admin />
@@ -22,7 +22,7 @@
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/bots" class="nav__link">
         <icon-youtube />
-        bots
+        channel
       </router-link>
       <router-link to="/users" class="nav__link">
         <icon-users />
@@ -30,7 +30,7 @@
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/add-bots" class="nav__link">
         <icon-add-bot />
-        add bots
+        add channel
       </router-link>
       <router-link to="/add-tracks" class="nav__link nav__link--add-tracks">
         <icon-add />
@@ -163,7 +163,7 @@ export default {
     text-shadow: 0 0 1px black;
     flex-grow: 1;
     display: flex;
-    color: white;
+    color: $app-color;
     justify-content: center;
     width: 100%;
     &:hover {
@@ -216,12 +216,12 @@ export default {
     }
     &:first-child {
       @include breakpoint(tablet) {
-        margin-top: 20px;
+        padding-top: 20px!important;
       }
     }
     &:last-child {
       @include breakpoint(tablet) {
-        margin-bottom: 30px;
+        padding-bottom: 26px!important;
       }
     }
   }

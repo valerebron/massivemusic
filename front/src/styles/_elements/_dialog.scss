@@ -31,9 +31,9 @@ dialog {
     z-index: $z-index-dialog;
     display: flex;
     flex-direction: column;
+    border-radius: $dialog-border-radius;
     @include breakpoint('tablet') {
       width: $dialog-width;
-      border-radius: $dialog-border-radius;
       box-shadow: 0 0 10px black;
     }
   }

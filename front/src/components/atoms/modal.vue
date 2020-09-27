@@ -26,10 +26,8 @@
     margin-bottom: 20px;
     width: calc(100% - 40px);
     text-align: center;
-    @include breakpoint('tablet') {
-      border-top-left-radius: $dialog-border-radius;
-      border-top-right-radius: $dialog-border-radius;
-    }
+    border-top-left-radius: $dialog-border-radius;
+    border-top-right-radius: $dialog-border-radius;
   }
   .actions {
     display: flex;

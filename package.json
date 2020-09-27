@@ -17,6 +17,5 @@
     "kill": "kill $(lsof -t -i:3330)"
   },
   "author": "valere",
-  "license": "MIT",
-  "dependencies": {}
+  "license": "MIT"
 }

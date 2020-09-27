@@ -164,6 +164,7 @@
     }
     &__search-input {
       width: 100%;
+      box-shadow: $app-bkg 0 0 30px;
       height: $explorer-search-height;
       border-bottom: 1px darken($youtube-red, 30%) solid;
       background-color: $app-bkg;
@@ -202,7 +203,7 @@
       }
       &__index,
       &__title {
-        color: white;
+        color: $app-color;
       }
       &__artist {
         font-weight: bold;
@@ -220,7 +221,7 @@
         }
         &__cap {
           position: absolute;
-          color: white;
+          color: $app-color;
           font-size: 12px;
           background-color: rgba(0, 0, 0, 0.74);
           border-radius: 14px;

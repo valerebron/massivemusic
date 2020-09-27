@@ -48,7 +48,7 @@ export default {
       text-transform: uppercase;
       transition: &ll 0.3s;
       .app--full & {
-        color: white!important;
+        color: $app-color!important;
       }
     }
     &__extension {

@@ -10,10 +10,10 @@
   cursor: default;
   &__pending {
     background-color: $pending-color;
-    color: white;
+    color: $app-color;
   }
   &__invalid {
     background-color: $invalidate-color;
-    color: white;
+    color: $app-color;
   }
 }

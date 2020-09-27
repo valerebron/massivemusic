@@ -3,6 +3,23 @@ const got = require('got')
 const crypto = require('crypto')
 const moment = require('moment')
 const usetube = require('usetube')
+const sharp = require('sharp')
+
+async function addAvatar(avatarB64, userId) {
+  const b64 = avatarB64.replace(/^data:image\/png;base64,/, '')
+  const imgPath = '../front/dist/avatars/'
+  const imgOriginal = imgPath+userId+'.png'
+  await require('fs').writeFile(imgOriginal, b64, 'base64', async function(err) {
+    if (err) {
+      console.log(err)
+    }
+    else {
+      await sharp(imgOriginal).resize(300, 300).toFile(imgPath+userId+'-300px.png')
+      await sharp(imgOriginal).resize(100, 100).toFile(imgPath+userId+'-100px.png')
+      await sharp(imgOriginal).resize(30, 30).toFile(imgPath+userId+'-30px.png')
+    }
+  })
+}
 
 export async function signup(parent, args, context, info) {
   if(args.name !== '' && args.email !== '' && args.hash !== '') {
@@ -16,10 +33,16 @@ export async function signup(parent, args, context, info) {
         token: token,
       },
     })
-  
-    console.log('\x1b[34m%s\x1b[0m', '●', 'new user: '+user.name)
-  
-    return {token, user}
+    // manage avatar
+    if(args.avatarB64) {
+      addAvatar(args.avatarB64, user.id)
+      console.log('\x1b[34m%s\x1b[0m', '●', 'new user: '+user.name)
+      return {token, user}
+    }
+    else {
+      console.log('\x1b[34m%s\x1b[0m', '●', 'new user: '+user.name)
+      return {token, user}
+    }
   }
   else {
     throw new Error('empty field')
@@ -91,6 +114,9 @@ export async function editUser(parent, args, context, info) {
   }
   if(args.token === user.token || args.token === admin.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', ' edit user '+args.id)
+    if(args.avatar_b64) {
+      await addAvatar(args.avatar_b64, user.id)
+    }
     return context.prisma.user.update({
       where: { id: args.id },
       data: {
@@ -363,3 +389,4 @@ export async function invalidatePost(parent, args, context, info) {
     },
   })
 }
+

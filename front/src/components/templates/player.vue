@@ -289,7 +289,7 @@
       margin-top: -20px;
       &__progress-time {
         font-size: 12px;
-        color: white;
+        color: $app-color;
         text-shadow: 1px 1px black;
         padding: 0 8px;
         cursor: default;

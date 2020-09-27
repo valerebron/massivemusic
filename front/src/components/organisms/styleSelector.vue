@@ -37,7 +37,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   .selected span {
-    color: white;
+    color: $app-color;
   }
 }
 </style>

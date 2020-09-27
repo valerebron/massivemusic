@@ -184,7 +184,6 @@ const actions = {
     }
   },
   filterFavorites(store) {
-    console.log('filter favorite')
     store.commit('RESET_FILTERS')
     let favorites = store.getters.favorites
     store.commit('SET_TRACKS', favorites)

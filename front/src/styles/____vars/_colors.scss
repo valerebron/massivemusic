@@ -26,8 +26,11 @@ $grey-5: #909090;
 $grey-6: #A0A0A0;
 
 $header-bkg: transparent;
-$app-bkg: black;
+$app-bkg: rgb(0, 0, 0);
+$header-bkg: rgb(20, 20, 20);
 $ui-bkg: rgba(0, 0, 0, 0.95);
+
+$app-color: rgb(231, 231, 231);
 
 $scrollbar-color: #2c2c2c;
 $scrollbar-background-color: #131313;

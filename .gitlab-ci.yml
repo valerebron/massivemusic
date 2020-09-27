@@ -16,10 +16,10 @@ deploy:
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
     - sed -i "s|NODE_ENV=development|NODE_ENV=production|g" .env
     - cd back
-    - yarn --frozen-lockfile --check-files
+    - yarn --check-files
     - npx prisma generate
     - cd ../front
-    - yarn --frozen-lockfile --check-files
+    - yarn --check-files
     - npx vue-cli-service build
     - cd ../
     - docker-compose build

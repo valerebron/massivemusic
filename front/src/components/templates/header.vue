@@ -1,7 +1,11 @@
 <template>
   <header class="header">
     <button class="nav-toggle" @click="toggleNav">
-      <icon-nav/>
+      <template v-if="this.$store.getters.isOnline">
+        <avatar :user="user" size="small"/>
+        <p>{{ user.name }}</p>
+      </template>
+      <icon-nav v-else/>
     </button>
     <logo />
     <search />
@@ -11,13 +15,21 @@
 <script>
   import logo from '@/components/atoms/logo.vue'
   import search from '@/components/molecules/search.vue'
+  import avatar from '@/components/atoms/avatar'
   export default {
     name: 'theheader',
     components: {
       search,
       logo,
+      avatar,
+    },
+    computed: {
+      user: function() { return this.$store.getters.session.user },
     },
     methods: {
+      err(error) {
+        console.log(error)
+      },
       toggleNav() {
         if(this.$store.getters.ui.nav) {
           this.$store.dispatch('ui', {type: 'nav', value: false})
@@ -33,7 +45,7 @@
 <style lang="scss">
   .header {
     @extend %appStyleBkgColor;
-    background-color: rgb(20, 20, 20);
+    background-color: $header-bkg;
     box-shadow: $app-bkg 0 0 30px;
     position: fixed;
     z-index: $z-index-header;
@@ -48,7 +60,7 @@
       z-index: $z-index-header-elt;
     }
     .nav-toggle, .logo__name, .search__button svg {
-      color: white;
+      color: $app-color;
       body[class*="route-style"] & {
         color: black;
       }
