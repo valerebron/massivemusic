@@ -172,7 +172,7 @@
         }
       },
       filterByArtist(artist) {
-        this.$store.dispatch('setFilter', {type: 'artist', value: artist})
+        this.$store.dispatch('filterTracks', {type: 'search', value: artist})
       },
       refreshPlayer() {
         let self = this

@@ -70,8 +70,8 @@ module.exports = {
     let orArray = []
 
     if(args.search) {
-      orArray.push({ title: { contains: args.search } })
-      orArray.push({ artist: { contains: args.search } })
+      orArray.push({ title: { contains: args.search.trim() } })
+      orArray.push({ artist: { contains: args.search.trim() } })
     }
 
     let where = {}
