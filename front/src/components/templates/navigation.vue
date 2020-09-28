@@ -11,6 +11,10 @@
       :key="style.id">
       {{ style.name }}
     </router-link>
+    <router-link to="/users" class="nav__link">
+      <icon-users />
+      users
+    </router-link>
     <template v-if="$store.getters.isOnline">
       <router-link to="/user/me/profile" class="nav__link nav__link--user">
         <avatar :user="$store.getters.session.user" size="small" />
@@ -23,10 +27,6 @@
       <router-link v-if="$store.getters.isAdmin" to="/bots" class="nav__link">
         <icon-youtube />
         channel
-      </router-link>
-      <router-link to="/users" class="nav__link">
-        <icon-users />
-        users
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/add-bots" class="nav__link">
         <icon-add-bot />
@@ -42,9 +42,6 @@
         test tracks
       </router-link>
     </template>
-    <router-link v-else to="/login" class="nav__link">
-      <icon-login />login
-    </router-link>
     <router-link to="/favorites" class="nav__link nav__link--favorite">
       <icon-star />
       favorites
@@ -69,6 +66,9 @@
       <icon-logout/>
       logout
     </div>
+    <router-link v-else to="/login" class="nav__link">
+      <icon-login />login
+    </router-link>
   </nav>
 </template>
 

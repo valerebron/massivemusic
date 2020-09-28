@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <button class="nav-toggle" @click="toggleNav">
+    <button class="nav-toggle" :class="{ 'nav-toggle--online' : this.$store.getters.isOnline }" @click="toggleNav">
       <template v-if="this.$store.getters.isOnline">
         <avatar :user="user" size="small"/>
         <p class="nav-toggle__name">
@@ -60,6 +60,11 @@
     align-content: center;
     .nav-toggle {
       z-index: $z-index-header-elt;
+      &--online {
+        @include breakpoint(tablet) {
+          width: $nav-width;
+        }
+      }
       &__name {
         display: none;
         @include breakpoint('tablet') {
