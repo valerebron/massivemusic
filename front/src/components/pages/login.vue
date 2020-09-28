@@ -81,7 +81,9 @@
     },
     methods: {
       clickOnUpload() {
-        document.querySelector('.upload__input').click()
+        if(document.querySelector('.upload__input')) {
+          document.querySelector('.upload__input').click()
+        }
       },
       onFileSelected: async function (url, b64) {
         this.avatar = url
@@ -205,7 +207,9 @@
 <style lang="scss">
   .login {
     .avatar {
-      cursor: pointer;
+      .route-signup & {
+        cursor: pointer;
+      }
     }
     &__form {
       align-items: center;
