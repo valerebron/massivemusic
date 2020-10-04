@@ -100,7 +100,7 @@ export async function signup(parent, args, context, info) {
     })
     const html = `
     <p>
-      🎉 Thanks to subscribe to 
+      🥳 Thanks to subscribe to 
       <a href="https://massivemusic.fr" target="_blank">
         MassiveMusic.fr !
       </a>

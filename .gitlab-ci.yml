@@ -16,11 +16,7 @@ deploy:
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
     - yarn global add @vue/cli
     - yarn install
-    - yarn generate
-    - cd ../front
-    - npx vue-cli-service build
-    - cd ../
-    - docker-compose build
+    - yarn build
     - docker-compose up -d
   cache:
     paths:
