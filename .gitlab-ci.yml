@@ -4,7 +4,7 @@ services:
   - docker:dind
 deploy:
   stage: deploy
-  image: node:10.21.0
+  image: node
   script:
     - export $(cat .env | xargs)
     - sed -i "s|127.0.0.1:$DB_PORT|db|g" .env
@@ -14,7 +14,7 @@ deploy:
     - sed -i "s|MAIL_PASS=test@massivemusic.fr|MAIL_PASS=$CI_MAIL_PASS|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
-    - yarn global add @vue/cli
+    - yarn global add @vue/cli @prisma/cli
     - yarn install
     - yarn build
     - docker-compose up -d
