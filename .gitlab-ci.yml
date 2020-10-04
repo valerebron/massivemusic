@@ -1,9 +1,8 @@
 stages:
+  - build
   - deploy
-services:
-  - docker:dind
-deploy:
-  stage: deploy
+build:
+  stage: build
   image: node
   script:
     - export $(cat .env | xargs)
@@ -17,10 +16,16 @@ deploy:
     - yarn global add @vue/cli @prisma/cli
     - yarn install
     - yarn build
-    - docker-compose up -d
   cache:
     paths:
       - node_modules/
+deploy:
+  stage: deploy
+  tags: [shell]
+  dependencies:
+    - build
+  script:
+    - docker-compose up -d
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://massivemusic.fr
