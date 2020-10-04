@@ -22,7 +22,7 @@ build:
       - back/node_modules
 deploy:
   stage: deploy
-  tags: [shell]
+  image: dind
   dependencies:
     - build
   cache:
