@@ -71,6 +71,9 @@ type Mutation {
     credential: String!
     hash: String!
   ): AuthPayload
+  sendPassword(
+    email: String
+  ): String
   logout(
     user_id: Int!
     token: String!
@@ -85,6 +88,11 @@ type Mutation {
     channel_description: String
     avatar_b64: String
   ): User
+  changePassword(
+    email: String!
+    token: String!
+    newPassword: String!
+  ): String
   dropUser(
     id: Int!
     token: String!

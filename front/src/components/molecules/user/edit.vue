@@ -19,7 +19,7 @@
       />
       <input type="text" v-model="user.email" disabled>
       <textarea name="description" placeholder="About you" @change="editUser" v-model="user.channel_description" id="" cols="30" rows="10"></textarea>
-      <template v-if="$store.getters.isAdmin">
+      <template v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
         <p>
           Enable Tracks ?
           <checkbox class="user__enable-tracks" @changeCheckbox="editUser" :state="user.channel_enable_tracks"></checkbox>

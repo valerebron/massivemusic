@@ -125,6 +125,7 @@
         }
       }
       &--container {
+        height: 100vh;
         width: $page-width-phablet;
         @include breakpoint(tablet) {
           width: $page-width-tablet;

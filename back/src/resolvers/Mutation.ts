@@ -1,9 +1,13 @@
-const env = require('dotenv').config({ path: '../.env' }).parsed
-const got = require('got')
 const crypto = require('crypto')
 const moment = require('moment')
 const usetube = require('usetube')
 const sharp = require('sharp')
+const mail = require('../mail')
+
+function isEmail(email) {
+  const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
 
 async function addAvatar(avatarB64, userId) {
   const b64 = avatarB64.replace(/^data:image\/png;base64,/, '')
@@ -21,6 +25,67 @@ async function addAvatar(avatarB64, userId) {
   })
 }
 
+export async function sendPassword(parent, args, context, info) {
+  const email = args.email
+  if(isEmail(email)) {
+    const token = crypto.randomBytes(64).toString('hex')
+    await context.prisma.user.update({
+      where: {
+        email: email,
+      },
+      data: {
+        token_email: token,
+      },
+    })
+    const html = `
+    <p>    
+      <a href="https://massivemusic.fr/passwd/${token}/${email}/" target="_blank">
+        Click on this link to change your password
+      </a>
+    </p>
+    `
+    mail.send(email, 'Change your password', html, function(err, info) {
+      console.log('\x1b[34m%s\x1b[0m', '●', 'send password recovery mail for: '+email)
+      return email
+    })
+  }
+  else {
+    return 'not an email'
+  }
+}
+
+export async function changePassword(parent, args, context, info) {
+  let user = await context.prisma.user.findMany({
+    where: {
+      email: args.email
+    },
+  })
+
+  user = user[0]
+
+  if(!user) {
+    console.log('\x1b[31m%s\x1b[0m', '●', 'user not found')
+    throw new Error('user not found')
+  }
+  if(args.token !== user.token_email) {
+    console.log('\x1b[31m%s\x1b[0m', '●', 'invalid token')
+    throw new Error('invalid token')
+  }
+
+  const token = crypto.randomBytes(64).toString('hex')
+  user = await context.prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      password: args.newPassword,
+      token_email: '',
+    },
+  })
+  console.log('\x1b[34m%s\x1b[0m', '●', '['+Date.now()+'] '+user.name+' changed password')
+  return args.token
+}
+
 export async function signup(parent, args, context, info) {
   if(args.name !== '' && args.email !== '' && args.hash !== '') {
     const token = crypto.randomBytes(64).toString('hex')
@@ -33,6 +98,16 @@ export async function signup(parent, args, context, info) {
         token: token,
       },
     })
+    const html = `
+    <p>
+      🎉 Thanks to subscribe to 
+      <a href="https://massivemusic.fr" target="_blank">
+        MassiveMusic.fr !
+      </a>
+      🎉
+    </p>
+    `
+    mail.send(args.email, 'Hi '+args.name, html, ()=> args.email)
     // manage avatar
     if(args.avatarB64) {
       addAvatar(args.avatarB64, user.id)
@@ -137,7 +212,8 @@ export async function editUser(parent, args, context, info) {
 
 export async function dropUser(parent, args, context, info) {
   const admin = await context.prisma.user.findOne({ where: { id: 1 } })
-  if(args.token === admin.token) {
+  const user = await context.prisma.user.findOne({ where: { id: args.id } })
+  if(args.token === admin.token || args.token === user.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', ' remove user '+args.id)
     return context.prisma.user.delete({ where: { id: args.id } })
   }

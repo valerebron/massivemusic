@@ -56,7 +56,7 @@ export default {
     setDefaultImage: function (e) {
       let src = ''
       switch(this.size) {
-        case 'samll': src = '/avatars/0-30px.png'
+        case 'small': src = '/avatars/0-30px.png'
         break
         case 'medium': src = '/avatars/0-100px.png'
         break

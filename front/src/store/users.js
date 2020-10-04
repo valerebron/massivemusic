@@ -67,7 +67,9 @@ const actions = {
     store.commit('PUSH_USER', res.data.addBot)
   },
   async dropUser(store, user) {
-    let res = await window.apollo.mutate({
+    store.commit('RESET_SESSION')
+    store.commit('DROP_USER', user)
+    await window.apollo.mutate({
       variables: {
         id: user.id,
         token: store.getters.session.token,
@@ -80,7 +82,6 @@ const actions = {
     }).catch((e) => {
       console.log('%c●', 'color: red', 'drop error: ', e)
     })
-    store.commit('DROP_USER', res.data.dropUser)
   },
 }
 

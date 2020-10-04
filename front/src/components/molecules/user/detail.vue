@@ -2,7 +2,7 @@
   <figure class="user" :class="{ loading : isLoading }">
     <div class="user__image-container">
       <avatar :user="user" size="big" />
-      <button @click="sync" v-if="user.role === 'ROBOT'" :class="'style-bkg-'+user.channel_style">
+      <button @click="sync" v-if="user.role === 'ROBOT' && $store.getters.isAdmin" :class="'style-bkg-'+user.channel_style">
         <span class="user__sync-button">
           <icon-sync />
           <loader :isLoading="isLoading"/>

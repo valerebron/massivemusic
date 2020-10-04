@@ -1,7 +1,7 @@
 <template>
   <main class="login">
     <modal @close="close()">
-      <form class="login__form">
+      <form class="login__form" v-if="!emailSent">
         <div v-if="error !== ''" class="error-dialog">
           {{ error }}
         </div>
@@ -18,12 +18,14 @@
           v-if="$route.name === 'signup'"
           @onFileSelected="onFileSelected"
           placeholder="avatar"
+          ref="upload"
         />
         <input
           class="login__credential"
           type="email" v-model="credential"
           :placeholder="$route.name === 'login' ? 'Email or Username' : 'Email'"
           required
+          ref="credential"
           @keydown.enter.prevent="submit()"
         >
         <input
@@ -34,6 +36,13 @@
           required
           @keydown.enter.prevent="submit()"
         >
+        <a
+          v-if="$route.name === 'login'"
+          @click="sendPassword"
+          class="login__forgot"
+        >
+          forgot password ?
+        </a>
         <input
           v-if="$route.name === 'signup'"
           class="login__name"
@@ -54,6 +63,12 @@
           <template v-if="$route.name === 'signup'">subscribe</template>
         </button>
       </form>
+      <div v-else class="login__sent">
+        {{ forgotText }}
+        <button @click="close" class="back-button">
+          back
+        </button>
+      </div>
     </modal>
   </main>
 </template>
@@ -77,17 +92,42 @@
         isOpen: true,
         avatar: '',
         avatarB64: '',
+        forgotText: '',
+        emailSent: false,
       }
     },
     methods: {
       clickOnUpload() {
-        if(document.querySelector('.upload__input')) {
-          document.querySelector('.upload__input').click()
-        }
+        document.querySelector('.upload__input').click()
       },
       onFileSelected: async function (url, b64) {
         this.avatar = url
         this.avatarB64 = b64
+      },
+      sendPassword() {
+        let credential = this.$refs.credential.value
+        if(credential === '') {
+          this.error = 'insert email to send password'
+        }
+        else {
+          this.error = ''
+          this.$apollo.mutate({
+            variables: {
+              email: credential,
+            },
+            mutation: gql`mutation($email: String!) {
+              sendPassword(email: $email)
+            }`,
+          }).then((res) => {
+            if(res.data) {
+              this.emailSent = true
+              this.forgotText = 'An email as been sent to '+credential+'.'
+            }
+          }).catch((error) => {
+            this.error = error
+            console.log('%c●', 'color: red', 'send password error: ', error)
+          })
+        }
       },
       submit: function() {
         if(this.$route.name === 'login' && this.credential !== '' && this.password !== '') {
@@ -211,7 +251,7 @@
         cursor: pointer;
       }
     }
-    &__form {
+    &__form, &__sent {
       align-items: center;
       display: flex;
       flex-direction: column;
@@ -242,6 +282,24 @@
         background-color: transparent;
         outline: none;
         border: none;
+      }
+    }
+    &__forgot {
+      cursor: pointer;
+      font-size: 12px;
+      text-decoration: underline;
+    }
+    &__sent {
+      color: white;
+      padding: 60px 30px;
+      line-height: 24px;
+      text-align: center;
+      a {
+        margin-top: 20px;
+        cursor: pointer;
+      }
+      .back-button {
+        margin-top: 20px;
       }
     }
   }

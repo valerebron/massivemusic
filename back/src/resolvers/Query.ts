@@ -1,5 +1,4 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
-const got = require('got')
 const usetube = require('usetube')
 
 module.exports = {

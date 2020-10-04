@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 const state = {
   token: '',
   user: {},
@@ -30,7 +32,18 @@ const actions = {
   },
   updateMe(store, user) {
     store.commit('UPDATE_USER_INFOS', user)
-  }
+  },
+  async changePassword(store, payload) {
+    let res = await window.apollo.mutate({
+      variables: { ...payload },
+      mutation: gql`mutation($email: String!, $token: String!, $newPassword: String!) {
+        changePassword(email: $email, token: $token, newPassword: $newPassword)
+      }`,
+    }).catch((e) => {
+      console.log('%c●', 'color: red', 'change pass error: ', e)
+    })
+    return res
+  },
 }
 
 const getters = {
