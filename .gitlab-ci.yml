@@ -25,6 +25,6 @@ deploy:
   cache:
     paths:
       - node_modules/
-environment:
-  name: review/$CI_COMMIT_REF_NAME
-  url: https://massivemusic.fr
+  environment:
+    name: review/$CI_COMMIT_REF_NAME
+    url: https://massivemusic.fr
