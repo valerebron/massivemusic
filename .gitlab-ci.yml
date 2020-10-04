@@ -1,11 +1,10 @@
 stages:
-  - deploy
-environment:
-  name: review/$CI_COMMIT_REF_NAME
-  url: https://massivemusic.fr
+  - settings
+  - vue
+  - docker
 
-deploy:
-  stage: deploy
+settings:
+  stage: settings
   tag: [shell]
   script:
     - export $(cat .env | xargs)
@@ -16,11 +15,28 @@ deploy:
     - sed -i "s|MAIL_PASS=test@massivemusic.fr|MAIL_PASS=$CI_MAIL_PASS|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
+
+vue:
+  stage: vue
+  image: node
+  cache:
+    paths:
+      - node_modules/
+  script:
     - yarn global add @vue/cli
     - cd back
     - npx prisma generate
     - cd ../front
     - npx vue-cli-service build
     - cd ../
+
+docker:
+  stage: docker
+  image: dind
+  script:
     - docker-compose build
     - docker-compose up -d
+
+environment:
+  name: review/$CI_COMMIT_REF_NAME
+  url: https://massivemusic.fr
