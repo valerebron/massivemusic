@@ -2,7 +2,7 @@ stages:
   - deploy
 deploy:
   stage: deploy
-  tags: [shell]
+  image: node
   before_script:
     - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
   script:
