@@ -1,6 +1,7 @@
 stages:
   - deploy
-
+services:
+  - docker:19.03.5-dind
 deploy:
   stage: settings
   tags: [shell]
