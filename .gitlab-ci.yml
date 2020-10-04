@@ -1,10 +1,14 @@
 stages:
-  - deploy
-deploy:
-  stage: deploy
-  image: node
-  before_script:
-    - export PATH="/home/valere/.nvm/versions/node/v10.19.0/bin:$PATH"
+  - settings
+  - vue
+  - docker
+environment:
+  name: review/$CI_COMMIT_REF_NAME
+  url: https://massivemusic.fr
+
+settings:
+  stage: settings
+  tag: [shell]
   script:
     - export $(cat .env | xargs)
     - sed -i "s|127.0.0.1:$DB_PORT|db|g" .env
@@ -14,16 +18,24 @@ deploy:
     - sed -i "s|MAIL_PASS=test@massivemusic.fr|MAIL_PASS=$CI_MAIL_PASS|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
+
+vue:
+  stage: vue
+  image: node
+  cache:
+    paths:
+      - node_modules/
+  script:
+    - yarn global add @vue/cli
     - cd back
     - npx prisma generate
     - cd ../front
     - npx vue-cli-service build
     - cd ../
+
+docker:
+  stage: docker
+  image: dind
+  script:
     - docker-compose build
     - docker-compose up -d
-  cache:
-    paths:
-      - node_modules/
-  environment:
-    name: review/$CI_COMMIT_REF_NAME
-    url: https://massivemusic.fr
