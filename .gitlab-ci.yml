@@ -22,7 +22,9 @@ build:
       - back/node_modules
 deploy:
   stage: deploy
-  image: dind
+  image: docker
+  services:
+    - docker:dind
   dependencies:
     - build
   cache:
