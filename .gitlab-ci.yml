@@ -22,7 +22,7 @@ build:
       - back/node_modules
 deploy:
   stage: deploy
-  image: docker
+  image: hmajid2301/dind-docker-compose
   services:
     - docker:dind
   dependencies:
