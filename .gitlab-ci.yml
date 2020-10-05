@@ -23,6 +23,9 @@ build:
 deploy:
   stage: deploy
   image: docker
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
   services:
     - docker:dind
   dependencies:
