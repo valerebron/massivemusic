@@ -33,7 +33,7 @@ deploy:
       - back/node_modules
     policy: pull
   before_script:
-    - pip install docker-compose
+    - apk add docker-compose
   script:
     - docker-compose up -d --build
   environment:
