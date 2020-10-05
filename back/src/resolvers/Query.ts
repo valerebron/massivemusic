@@ -97,7 +97,7 @@ module.exports = {
 
     const tracks = await context.prisma.track.findMany({
       skip: args.skip,
-      first: args.first,
+      take: args.first,
       where,
       orderBy: { createdAt: 'desc' },
     })

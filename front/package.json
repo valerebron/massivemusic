@@ -3,63 +3,59 @@
   "version": "0.5.0",
   "private": true,
   "author": "valere",
-  "main": "index.js",
   "dependencies": {
-    "@vue/cli": "^3.3.0",
-    "@vue/cli-service": "~4.3.1",
+    "core-js": "^3.6.5",
+    "register-service-worker": "^1.7.1",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.4.0",
+    "vue-apollo": "^3.0.2",
+    "vue-ionicons": "^3.0.4",
+    "vue-moment": "^4.1.0",
+    "vue-svg-loader": "^0.12.0",
+    "vuex-persist": "^2.2.0",
     "apollo-boost": "^0.4.8",
     "apollo-client": "^2.6.9",
     "apollo-link": "^1.2.13",
     "axios": "^0.19.2",
-    "class-transformer": "^0.2.3",
-    "class-validator": "^0.11.0",
-    "cookie-parser": "^1.4.4",
-    "core-js": "^3.6.4",
     "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "prisma-client-lib": "^1.34.10",
     "sha1": "^1.1.1",
-    "subscriptions-transport-ws": "^0.9.16",
-    "vue": "^2.5.17",
-    "vue-apollo": "^3.0.2",
-    "vue-ionicons": "^3.0.4",
-    "vue-moment": "^4.1.0",
-    "vue-router": "^3.0.2",
-    "vue-svg-loader": "^0.12.0",
-    "vuex": "^3.1.1",
-    "vuex-persist": "^2.2.0",
-    "webpack": "^4.43.0",
     "youtube-player": "^5.5.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.3.1",
-    "@vue/cli-plugin-eslint": "~4.3.1",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-pwa": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
-    "file-loader": "^2.0.0",
-    "node-sass": "^4.10",
-    "sass-loader": "^10.0.2",
-    "vue-template-compiler": "^2.5.17"
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,
     "env": {
-      "node": false
+      "node": true
     },
     "extends": [
       "plugin:vue/essential",
       "eslint:recommended"
     ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
     "rules": {
       "no-useless-escape": 0,
       "no-console": 0,
       "no-undef": 0,
       "no-control-regex": 0
-    },
-    "parserOptions": {
-      "parser": "babel-eslint"
     }
   },
   "postcss": {
@@ -67,10 +63,10 @@
       "autoprefixer": {}
     }
   },
+  "license": "GPL3",
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
-  ],
-  "license": "MIT"
+    "not dead"
+  ]
 }

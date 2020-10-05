@@ -100,7 +100,7 @@
             }`,
           }).then((res) => {
             if(this.token === '') {
-              this.tracks = (res.data.searchTrack.tracks[0]?.duration ? res.data.searchTrack.tracks : [])
+              this.tracks = (res.data.searchTrack.tracks[0].duration ? res.data.searchTrack.tracks : [])
             }
             else {
               this.tracks.concat(res.data.searchTrack.tracks)

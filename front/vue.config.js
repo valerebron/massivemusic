@@ -13,7 +13,7 @@ module.exports = {
     sourceMap: true,
     loaderOptions: {
       sass: {
-        data: `@import 'src/styles/preprocessed';`
+        prependData: `@import 'src/styles/preprocessed';`
       }
     }
   },

@@ -170,7 +170,7 @@ const actions = {
       if(filter.type === 'skip') {
         store.commit('PUSH_TRACKS', res.data.tracks.tracks)
       }
-      else {
+      else if(res) {
         window.scroll(0, 0)
         store.commit('SET_TRACKS', res.data.tracks.tracks)
         store.commit('SET_COUNT', res.data.tracks.count)
