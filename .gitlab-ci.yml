@@ -13,7 +13,7 @@ build:
     - sed -i "s|MAIL_PASS=test@massivemusic.fr|MAIL_PASS=$CI_MAIL_PASS|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
-    - yarn global add @vue/cli @prisma/cli
+    - yarn global add @vue/cli @vue/cli-service-global @prisma/cli
     - yarn install
     - yarn build:front
   cache:

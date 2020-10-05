@@ -5,16 +5,16 @@
   "scripts": {
     "install": "cd back && yarn && cd ../front && yarn",
     "generate": "cd back && npx prisma generate",
-    "build:front": "cd front && npx vue-cli-service build",
+    "build:front": "cd front/src && npx vue build",
     "build:back": "docker-compose build",
     "build": "yarn build:front && yarn build:back",
-    "migrate:save": "export $(egrep -v '^#' .env | xargs) && cd back && npx prisma migrate save --experimental",
-    "migrate:up": "export $(egrep -v '^#' .env | xargs) && cd back && npx prisma migrate up --experimental",
-    "dev:front": "cd front && npx vue-cli-service serve",
+    "migrate:save": "cd back && npx prisma migrate save --experimental",
+    "migrate:up": "cd back && npx prisma migrate up --experimental",
+    "dev:front": "cd front/src && npx vue serve",
     "dev:back": "cd back && npx prisma generate --watch && npx nodemon --ext ts,graphql --watch '*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts",
     "dev": "yarn dev:front & yarn dev:back & docker-compose up",
     "kill": "kill $(lsof -t -i:3330)"
   },
   "author": "valere",
-  "license": "MIT"
+  "license": "GPL3"
 }
