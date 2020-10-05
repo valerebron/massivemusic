@@ -22,7 +22,7 @@ build:
       - back/node_modules
 deploy:
   stage: deploy
-  image: hmajid2301/dind-docker-compose
+  image: docker
   services:
     - docker:dind
   dependencies:
@@ -32,6 +32,8 @@ deploy:
       - front/node_modules
       - back/node_modules
     policy: pull
+  before_script:
+    - pip install docker-compose
   script:
     - docker-compose up -d --build
   environment:
