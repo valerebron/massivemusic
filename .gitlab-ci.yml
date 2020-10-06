@@ -25,15 +25,10 @@ build:
       - back/node_modules
 deploy:
   stage: deploy
-  image: docker
-  services:
-    - docker:dind
-  variables:
-    DOCKER_TLS_CERTDIR: ""
+  tags: [shell]
   dependencies:
     - build
   script:
-    - apk add docker-compose
     - docker-compose build
     - docker-compose up -d
 
