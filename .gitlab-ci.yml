@@ -3,7 +3,7 @@ stages:
   - deploy
 build:
   stage: build
-  image: node
+  tags: [shell]
   script:
     - export $(cat .env | xargs)
     - sed -i "s|127.0.0.1:$DB_PORT|db|g" .env
@@ -16,31 +16,13 @@ build:
     - yarn global add @vue/cli @prisma/cli
     - yarn install
     - yarn build:front
-  cache:
-    key: massive-cache
-    paths:
-      - front/node_modules
-      - back/node_modules
-deploy:
-  stage: deploy
-  image: docker
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  services:
-    - docker:dind
-  dependencies:
-    - build
-  cache:
-    key: massive-cache
-    paths:
-      - front/node_modules
-      - back/node_modules
-    policy: pull
-  before_script:
-    - apk add docker-compose
-  script:
     - docker-compose up -d --build
+  cache:
+    key: massive-cache
+    paths:
+      - front/node_modules
+      - back/node_modules
+
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: https://massivemusic.fr
