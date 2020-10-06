@@ -34,7 +34,8 @@ deploy:
     - build
   script:
     - apk add docker-compose
-    - docker-compose up -d --build
+    - docker-compose build
+    - docker-compose up -d
 
   environment:
     name: review/$CI_COMMIT_REF_NAME
