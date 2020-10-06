@@ -10,4 +10,4 @@ COPY back ./back
 COPY .env .
 COPY package.json .
 
-CMD cd back && npx ts-node src/index.ts
+CMD yarn generate && cd back && npx ts-node src/index.ts
