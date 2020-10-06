@@ -3,7 +3,7 @@ stages:
   - deploy
 build:
   stage: build
-  tags: [shell]
+  image: node
   script:
     - export $(cat .env | xargs)
     - sed -i "s|127.0.0.1:$DB_PORT|db|g" .env
@@ -16,12 +16,22 @@ build:
     - yarn global add @vue/cli @prisma/cli
     - yarn install
     - yarn build:front
-    - docker-compose up -d --build
+  artifacts:
+    untracked: true
   cache:
     key: massive-cache
     paths:
       - front/node_modules
       - back/node_modules
+deploy:
+  stage: deploy
+  image: docker
+  services:
+    - docker:dind
+  dependencies:
+    - build
+  script:
+    - docker-compose up -d --build
 
   environment:
     name: review/$CI_COMMIT_REF_NAME
