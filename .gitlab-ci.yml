@@ -31,6 +31,7 @@ deploy:
   dependencies:
     - build
   script:
+    - apk add docker-compose
     - docker-compose up -d --build
 
   environment:
