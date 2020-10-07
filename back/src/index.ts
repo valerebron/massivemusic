@@ -1,4 +1,5 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
+const cors = require('cors')
 import * as express from 'express'
 import { ApolloServer } from 'apollo-server'
 import { importSchema } from 'graphql-import'
@@ -37,6 +38,7 @@ api.listen(options).then(() => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'api running on : http://localhost:'+env.API_PORT)
 })
 
+web.use(cors())
 web.use(history())
 web.use(express.static('../front/dist'))
 web.listen(parseInt(process.env.WEB_PORT), () => {

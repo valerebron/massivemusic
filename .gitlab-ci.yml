@@ -29,6 +29,7 @@ deploy:
     - sed -i "s|MAIL_PASS=test@massivemusic.fr|MAIL_PASS=$CI_MAIL_PASS|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
+    - sed -i "s|NODE_ENV=development|NODE_ENV=production|g" .env
     - docker-compose build
     - docker-compose up -d
 
