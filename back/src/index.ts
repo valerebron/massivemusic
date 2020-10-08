@@ -14,12 +14,6 @@ const User = require('./resolvers/User')
 const Track = require('./resolvers/Track')
 const Mutation = require('./resolvers/Mutation')
 const typeDefs = importSchema('./src/schema.graphql')
-
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true
-}
-
 const resolvers = {
   Query,
   User,
