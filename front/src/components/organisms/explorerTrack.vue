@@ -150,9 +150,6 @@
 
 <style lang="scss">
   .track-explorer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     width: 100%;
     margin-top: 0;
     padding-left: 0;

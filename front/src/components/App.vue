@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import TouchSweep from 'touchsweep'
   import theheader from '@/components/templates/header'
   import navigation from '@/components/templates/navigation'
   import player from '@/components/templates/player'
@@ -88,6 +89,19 @@
           this.$store.dispatch('ui', {type: 'nav', value: false})
         }
       },
+      swipeActions() {
+        new TouchSweep(document.querySelector('.app'), {value: 1}, 20)
+        area.addEventListener('swipeleft', event => {
+          alert('left')
+          console.log(event)
+          this.$store.dispatch('ui', {type: 'nav', value: true})
+        })
+        area.addEventListener('swiperight', event => {
+          alert('right')
+          console.log(event)
+          this.$store.dispatch('ui', {type: 'nav', value: false})
+        })
+      },
     },
     beforeCreate: function() {
       window.apollo = this.$apollo
@@ -98,6 +112,7 @@
       this.closeNavIfMobile()
       this.changeScopeOnScroll()
       this.keyboardAlias()
+      this.swipeActions()
     },
     watch: {
       $route() {
