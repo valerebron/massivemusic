@@ -5,7 +5,6 @@ import { importSchema } from 'graphql-import'
 import { PrismaClient } from '@prisma/client'
 
 const history = require('connect-history-api-fallback')
-const cors = require('cors')
 const prisma = new PrismaClient()
 const web = express()
 
@@ -41,7 +40,6 @@ api.listen(options).then(() => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'api running on : http://localhost:'+env.API_PORT)
 })
 
-web.options('*', cors())
 web.use(history())
 web.use(express.static('../front/dist'))
 web.listen(parseInt(process.env.WEB_PORT), () => {
