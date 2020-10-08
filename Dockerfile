@@ -1,5 +1,9 @@
 FROM node:stretch-slim
 
+ENV WEB_DIR /var/www/localhost
+RUN mkdir -p $WEB_DIR
+WORKDIR $WEB_DIR
+
 RUN apt update && \
     apt upgrade -y && \
     apt -qy install openssl && \
