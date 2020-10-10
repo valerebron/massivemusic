@@ -60,9 +60,13 @@
     align-content: center;
     .nav-toggle {
       z-index: $z-index-header-elt;
-      padding: 0;
+      @include breakpoint(tablet) {
+        padding: 0;
+      }
       .icon-nav {
-        padding: 0 20px;
+        @include breakpoint(tablet) {
+          padding: 0 20px;
+        }
       }
       &--online {
         @include breakpoint(tablet) {
