@@ -164,7 +164,6 @@ export default {
     flex-grow: 1;
     display: flex;
     color: $app-color;
-    justify-content: center;
     width: 100%;
     &:hover {
       text-decoration: none;
@@ -176,7 +175,10 @@ export default {
     align-items: center;
     cursor: pointer;
     padding: 14px 16px!important;
-    font-size: 16px;
+    font-size: 18px;
+    @include breakpoint(tablet) {
+      font-size: 16px;
+    }
     text-transform: capitalize;
     &--add-tracks.router-link-exact-active {
       .ion svg {

@@ -44,7 +44,7 @@ let routes = [
   { name: 'recover-password', path: '/passwd/:token/:email', component: pageRecover },
 ]
 // should use store.getters.styles (unfortunatly can't add route async)
-const styles = [{"id":11,"name":"Dubstep","slug":"dubstep"},{"id":12,"name":"Drum & Bass","slug":"drumandbass"},{"id":13,"name":"Dub","slug":"dub"},{"id":14,"name":"Break Beat","slug":"breakbeat"},{"id":15,"name":"Deep Bass","slug":"deepbass"},{"id":19,"name":"Electro","slug":"electro"}]
+const styles = [{"id":11,"name":"Dubstep","slug":"dubstep"},{"id":12,"name":"Drum & Bass","slug":"drumandbass"},{"id":13,"name":"Dub","slug":"dub"},{"id":19,"name":"Electro","slug":"electro"}]
 styles.map(style => {
   routes.push(
     { name: 'style-'+style.id, path: '/'+style.slug, component: pageStyle, props: { styleId: style.id } }
