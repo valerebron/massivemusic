@@ -1,9 +1,9 @@
 <template>
-  <ul class="channel-explorer">
-    <li class="channel-explorer__search">
-      <loader class="channel-explorer__loader" :isLoading="isLoading"/>
+  <ul class="explorer" :class="{ 'explorer--init' : channels.length === 0 }">
+    <li class="explorer__search">
+      <loader class="explorer__loader" :isLoading="isLoading"/>
       <input
-        class="channel-explorer__search-input"
+        class="explorer__search-input"
         v-model="query"
         type="search"
         placeholder="search channels on youtube"
@@ -19,7 +19,7 @@
         <div>
           <h3 class="channel__name">
             {{ channel.name }}
-            <icon-valid v-if="channel.official" class="channel-explorer__official" />
+            <icon-valid v-if="channel.official" class="channel__official" />
           </h3>
           <em class="channel__infos">
             {{ channel.nb_videos }} videos -
@@ -32,7 +32,7 @@
       </template>
     </li>
     <li>
-      <!-- <button class="channel-explorer__more" @click="more" v-if="query !== ''">more</button> -->
+      <!-- <button class="explorer__more" @click="more" v-if="query !== ''">more</button> -->
     </li>
   </ul>
 </template>
@@ -61,7 +61,7 @@
     },
     computed: {
       input: function() {
-        return document.getElementsByClassName('channel-explorer__search-input')[0]
+        return document.getElementsByClassName('explorer__search-input')[0]
       },
     },
     methods: {
@@ -136,26 +136,30 @@
 </script>
 
 <style lang="scss">
-  .channel-explorer {
-    width: 100%;
-    margin-top: 0;
-    padding-left: 0;
-    list-style-type: none;
-    &__search {
-      z-index: $z-index-header-elt;
-      position: sticky;
-      top: $header-height;
+  .channel {
+    cursor: pointer;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    overflow: hidden;
+    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
+    transition: all 0.2s;
+    padding: 4px 0;
+    background-color: $app-bkg;
+    &:hover {
+      background-color: $color-selection;
     }
-    &__search-input {
-      width: 100%;
-      box-shadow: $app-bkg 0 0 30px;
-      height: $explorer-search-height;
-      border-bottom: 1px darken($youtube-red, 30%) solid;
-      background-color: $app-bkg;
+    &__name {
+      flex-grow: 1;
       margin: 0;
-      text-align: center;
-      font-size: 26px;
-      font-weight: bold;
+      padding: 40px;
+    }
+    &__name, &__link {
+      display: flex;
+      align-items: center;
+    }
+    > * {
+      padding: 2px 6px;
     }
     &__official {
       background-color: $validate-color;
@@ -166,44 +170,6 @@
       width: 14px;
       svg {
         margin-top: -2px;
-      }
-    }
-    .loader {
-      position: absolute;
-      top: 0;
-      width: $search-height;
-      height: 100%;
-      stroke: $youtube-red;
-      z-index: $z-index-header-elt;
-    }
-    &__more {
-      width: 100%;
-      text-transform: uppercase;
-    }
-    .channel {
-      cursor: pointer;
-      display: flex;
-      align-items: stretch;
-      justify-content: space-between;
-      overflow: hidden;
-      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
-      transition: all 0.2s;
-      padding: 4px 0;
-      background-color: $app-bkg;
-      &:hover {
-        background-color: $color-selection;
-      }
-      &__name {
-        flex-grow: 1;
-        margin: 0;
-        padding: 40px;
-      }
-      &__name, &__link {
-        display: flex;
-        align-items: center;
-      }
-      > * {
-        padding: 2px 6px;
       }
     }
   }

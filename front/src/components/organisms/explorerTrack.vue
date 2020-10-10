@@ -1,9 +1,9 @@
 <template>
-  <ul class="track-explorer">
-    <li class="track-explorer__search">
-      <loader class="track-explorer__loader" :isLoading="isLoading"/>
+  <ul class="explorer" :class="{ 'explorer--init' : tracks.length === 0 }">
+    <li class="explorer__search">
+      <loader class="explorer__loader" :isLoading="isLoading"/>
       <input
-        class="track-explorer__search-input"
+        class="explorer__search-input"
         v-model="query"
         type="search"
         placeholder="search tracks on youtube"
@@ -37,7 +37,7 @@
       </template>
     </li>
     <!-- <li>
-      <button class="track-explorer__more" @click="more()" v-if="query !== ''">more</button>
+      <button class="explorer__more" @click="more()" v-if="query !== ''">more</button>
     </li> -->
   </ul>
 </template>
@@ -67,7 +67,7 @@
     },
     computed: {
       input: function() {
-        return document.getElementsByClassName('track-explorer__search-input')[0]
+        return document.getElementsByClassName('explorer__search-input')[0]
       },
     },
     methods: {
@@ -148,82 +148,48 @@
   }
 </script>
 
-<style lang="scss">
-  .track-explorer {
-    width: 100%;
-    margin-top: 0;
-    padding-left: 0;
-    list-style-type: none;
-    &__search {
-      z-index: $z-index-header-elt;
-      position: sticky;
-      top: $header-height;
+<style lang="scss" scoped>
+  .track {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
+    transition: all 0.2s;
+    height: 50px;
+    padding: 4px 0;
+    background-color: $app-bkg;
+    &:hover {
+      background-color: $color-selection;
     }
-    &__search-input {
-      width: 100%;
-      box-shadow: $app-bkg 0 0 30px;
-      height: $explorer-search-height;
-      border-bottom: 1px darken($youtube-red, 30%) solid;
-      background-color: $app-bkg;
-      margin: 0;
-      text-align: center;
-      font-size: 26px;
+    > * {
+      padding: 2px 6px;
+    }
+    &__index,
+    &__title {
+      color: $app-color;
+    }
+    &__artist {
       font-weight: bold;
-    }
-    .loader {
-      position: absolute;
-      top: 0;
-      width: $search-height;
-      height: 100%;
-      stroke: $youtube-red;
-      z-index: $z-index-header-elt;
-    }
-    &__more {
-      width: 100%;
-      text-transform: uppercase;
-    }
-    .track {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
-      transition: all 0.2s;
-      height: 50px;
-      padding: 4px 0;
-      background-color: $app-bkg;
       &:hover {
-        background-color: $color-selection;
+        text-decoration: none;
       }
-      > * {
-        padding: 2px 6px;
+    }
+    &__thumb {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &__pic {
+        width: 60px;
       }
-      &__index,
-      &__title {
+      &__cap {
+        position: absolute;
         color: $app-color;
-      }
-      &__artist {
-        font-weight: bold;
-        &:hover {
-          text-decoration: none;
-        }
-      }
-      &__thumb {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        &__pic {
-          width: 60px;
-        }
-        &__cap {
-          position: absolute;
-          color: $app-color;
-          font-size: 12px;
-          background-color: rgba(0, 0, 0, 0.74);
-          border-radius: 14px;
-          padding: 2px 6px;
-        }
+        font-size: 12px;
+        background-color: rgba(0, 0, 0, 0.74);
+        border-radius: 14px;
+        padding: 2px 6px;
       }
     }
   }

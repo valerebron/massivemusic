@@ -19,6 +19,14 @@ const mutations = {
 const actions = {
   ui(store, ui) {
     store.commit('SET_UI', ui)
+    if(ui.type === 'search') {
+      if(ui.value === true) {
+        document.getElementsByClassName('search__input')[0].focus()
+      }
+      if(ui.value === false) {
+        document.getElementsByClassName('search__input')[0].blur()
+      }
+    }
   },
   modal(store, isOpen) {
     document.body.dataset.dialog = isOpen

@@ -30,6 +30,7 @@ const actions = {
             updatedAt
             channel_avatar_medium
             channel_style
+            channel_id
             tracks {
               id
             }
@@ -67,8 +68,6 @@ const actions = {
     store.commit('PUSH_USER', res.data.addBot)
   },
   async dropUser(store, user) {
-    store.commit('RESET_SESSION')
-    store.commit('DROP_USER', user)
     await window.apollo.mutate({
       variables: {
         id: user.id,
@@ -82,6 +81,14 @@ const actions = {
     }).catch((e) => {
       console.log('%c●', 'color: red', 'drop error: ', e)
     })
+    store.commit('DROP_USER', user)
+    if(this.$route.params.user_id === 'me') {
+      store.commit('RESET_SESSION')
+      this.$router.push('/login')
+    }
+    else {
+      this.$router.push('/users')
+    }
   },
 }
 

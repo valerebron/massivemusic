@@ -22,10 +22,9 @@
     props: ['user'],
     methods: {
       drop: async function(user) {
-        await this.$store.dispatch('dropUser', user)
         this.close()
         window.scroll(0,0)
-        this.$router.push('/users')
+        await this.$store.dispatch('dropUser', user)
       },
       close: function() {
         this.$emit('closeDrop')

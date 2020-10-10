@@ -90,16 +90,26 @@
         }
       },
       swipeActions() {
-        new TouchSweep(document.querySelector('.app'), {value: 1}, 20)
-        area.addEventListener('swipeleft', event => {
-          alert('left')
-          console.log(event)
-          this.$store.dispatch('ui', {type: 'nav', value: true})
-        })
+        const area = document.querySelector('.app')
+        new TouchSweep(area, {value: 1}, 20)
         area.addEventListener('swiperight', event => {
-          alert('right')
           console.log(event)
-          this.$store.dispatch('ui', {type: 'nav', value: false})
+          if(this.$store.getters.ui.search) {
+            this.$store.dispatch('ui', {type: 'search', value: false})
+          }
+          else if(!this.$store.getters.ui.nav) {
+            this.$store.dispatch('ui', {type: 'nav', value: true})
+          }
+        })
+        area.addEventListener('swipeleft', event => {
+          console.log(event)
+          if(this.$store.getters.ui.nav) {
+            this.$store.dispatch('ui', {type: 'nav', value: false})
+          }
+          else if(!this.$store.getters.ui.search) {
+            this.$store.dispatch('ui', {type: 'search', value: true})
+            document.getElementsByClassName('search__input')[0].focus()
+          }
         })
       },
     },
@@ -133,6 +143,7 @@
       display: flex;
       transition: all 0.2s;
       & > *:first-child {
+        min-height: calc(100vh - 75px);
         margin-top: $header-height;
         margin-bottom: 0;
         .app--player {

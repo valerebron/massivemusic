@@ -1,0 +1,40 @@
+.explorer {
+  width: 100%;
+  margin-top: 0;
+  padding-left: 0;
+  list-style-type: none;
+  &--init {
+    display: flex;
+    align-items: center;
+  }
+  &__search {
+    z-index: $z-index-header-elt;
+    position: sticky;
+    top: $header-height;
+    width: 100%;
+  }
+  &__search-input {
+    width: 100%;
+    box-shadow: $app-bkg 0 0 30px;
+    height: $explorer-search-height;
+    border-bottom: 1px darken($youtube-red, 30%) solid;
+    background-color: $app-bkg;
+    margin: 0;
+    text-align: center;
+    font-size: 26px;
+    font-weight: bold;
+  }
+
+  .loader {
+    position: absolute;
+    top: 0;
+    width: $search-height;
+    height: 100%;
+    stroke: $youtube-red;
+    z-index: $z-index-header-elt;
+  }
+  &__more {
+    width: 100%;
+    text-transform: uppercase;
+  }
+}

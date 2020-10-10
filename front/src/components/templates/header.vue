@@ -7,7 +7,7 @@
           {{ user.name }}
         </p>
       </template>
-      <icon-nav v-else/>
+      <icon-nav v-else class="icon-nav" />
     </button>
     <logo />
     <search />
@@ -60,6 +60,10 @@
     align-content: center;
     .nav-toggle {
       z-index: $z-index-header-elt;
+      padding: 0;
+      .icon-nav {
+        padding: 0 20px;
+      }
       &--online {
         @include breakpoint(tablet) {
           width: $nav-width;

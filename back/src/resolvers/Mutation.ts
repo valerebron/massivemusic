@@ -249,23 +249,15 @@ export async function addBot(parent, args, context, info) {
 export async function syncBot(parent, args, context, info) {
   const admin = await context.prisma.user.findOne({ where: { id: 1 } })
   const bot = await context.prisma.user.findOne({ where: { id: args.id }})
-  const botDates = await context.prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
-  const lastTrackCreated = botDates[0].createdAt
+  const botTracks = await context.prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
   if(args.token === admin.token || args.token === bot.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', 'sync channel '+bot.name)
     var tracks = []
     // 1 FIRST SCAN
-    if(bot.channel_last_sync_date === null) {
-      if(bot.tracks.length !== 0) {
-        console.log('first Sync with tracks')
-        console.log('begin at '+lastTrackCreated)
-        tracks = await usetube.getChannelVideos(bot.channel_id, lastTrackCreated)
-      }
-      else {
-        console.log('first Sync')
-        console.log('get all tracks')
-        tracks = await usetube.getChannelVideos(bot.channel_id)
-      }
+    if(botTracks === []) {
+      console.log('first Sync')
+      console.log('get all tracks')
+      tracks = await usetube.getChannelVideos(bot.channel_id)
     }
     // 2 UPDATE SCAN
     else {
@@ -275,10 +267,13 @@ export async function syncBot(parent, args, context, info) {
     }
     console.log('total tracks: '+tracks.length)
 
+    console.log(tracks)
+
     // 4 SAVE TRACKS TO BDD
     if(tracks.length > 0) {
-      const createManyTracks = tracks.map((track) =>
-      context.prisma.track.create({
+      const createManyTracks = await tracks.map(async (track) => {
+      // save tracks
+      return await context.prisma.track.create({
           data: {
             yt_id: track.id,
             title: track.title,
@@ -294,23 +289,19 @@ export async function syncBot(parent, args, context, info) {
             invalid: false,
             createdAt: track.publishedAt,
           },
-        }),
-      )
-      return Promise.all(createManyTracks).then(async (res) => {
-        await context.prisma.user.update({
-          where: { id: bot.id },
-          data: {
-            channel_last_sync_date: moment().toDate(),
-          },
-        }).catch(error=>{
-          console.log(error)
         })
-        return res
+      })
+      // update last sync date
+      await context.prisma.user.update({
+        where: { id: bot.id },
+        data: {
+          channel_last_sync_date: moment().toDate(),
+        },
+      }).catch(error=>{
+        console.log(error)
       })
     }
-    else {
-      return tracks
-    }
+    return tracks
   }
 }
 
