@@ -54,3 +54,5 @@ import iconBack from 'vue-ionicons/dist/md-arrow-back.vue'
 Vue.component('icon-back', iconBack)
 import iconSync from 'vue-ionicons/dist/md-flash.vue'
 Vue.component('icon-sync', iconSync)
+import iconMail from 'vue-ionicons/dist/md-mail.vue'
+Vue.component('icon-mail', iconMail)

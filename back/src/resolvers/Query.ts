@@ -1,5 +1,6 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
 const usetube = require('usetube')
+const mail = require('../mail')
 
 module.exports = {
   styles: async (parent, args, context, info) => {
@@ -120,5 +121,27 @@ module.exports = {
   getChannelDesc: async (parent, args, context, info) => {
     console.log('youtube channel desc query')
     return await usetube.getChannelDesc(args.id)
+  },
+  sendMail: async (parent, args, context, info) => {
+    if(args.to === '') {
+      // const users = await context.prisma.user.findMany({
+      //   where: {
+      //     role: 'USER'
+      //   }
+      // })
+      const users = [ {name: 'perso', email: 'perso@valerebron.com'},{name: 'contact', email: 'contact@valerebron.com'},{name: 'dev', email: 'dev@valerebron.com'},{name: 'mass', email: 'contact@massivemuic.fr'}]
+      for(let i = 0; i < users.length; i++) {
+        await mail.send(users[i].email, args.subject, args.content, function(err, info) {
+          console.log('\x1b[34m%s\x1b[0m', '●', 'send mail for: '+users[i].email)
+        })
+      }
+      return 'sended'
+    }
+    else {
+      mail.send(args.to, args.subject, args.content, function(err, info) {
+        console.log('\x1b[34m%s\x1b[0m', '●', 'send mail for: '+args.to)
+        return 'sended'
+      })
+    }
   },
 }

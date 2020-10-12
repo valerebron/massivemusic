@@ -41,6 +41,10 @@
         <icon-radio />
         test tracks
       </router-link>
+      <router-link v-if="$store.getters.isAdmin" to="/mail" class="nav__link">
+        <icon-mail />
+        mail
+      </router-link>
     </template>
     <router-link to="/favorites" class="nav__link nav__link--favorite">
       <icon-star />

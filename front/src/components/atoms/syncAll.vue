@@ -1,9 +1,9 @@
 <template>
-  <button @click="syncAll">
+  <a @click="syncAll">
     <icon-sync />
     sync all
     <loader :isLoading="isLoading"/>
-  </button>
+  </a>
 </template>
 
 <script>
