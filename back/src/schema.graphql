@@ -16,7 +16,7 @@ type Query {
   searchTrack(search: String, token: String): tracksPayload
   searchChannel(search: String, token: String): channelsPayload
   getChannelDesc(id: String): String
-  sendMail(to: String, subject: String!, content: String!): String
+  sendMail(to: String, subject: String!, content: String!, token: String!): String
 }
 
 type Mutation {
