@@ -2,7 +2,7 @@ const crypto = require('crypto')
 const moment = require('moment')
 const usetube = require('usetube')
 const sharp = require('sharp')
-const mail = require('../mail')
+const mail = require('../mail/mail')
 
 function isEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -44,7 +44,7 @@ export async function sendPassword(parent, args, context, info) {
       </a>
     </p>
     `
-    mail.send(email, 'Change your password', html, function(err, info) {
+    mail.send(email, 'Change your password', html, '', function(err, info) {
       console.log('\x1b[34m%s\x1b[0m', '●', 'send password recovery mail for: '+email)
       return email
     })
@@ -107,7 +107,7 @@ export async function signup(parent, args, context, info) {
       🎉
     </p>
     `
-    mail.send(args.email, 'Hi '+args.name, html, ()=> args.email)
+    mail.send(args.email, 'Hi '+args.name, html, args.name, ()=> args.email)
     // manage avatar
     if(args.avatarB64) {
       addAvatar(args.avatarB64, user.id)

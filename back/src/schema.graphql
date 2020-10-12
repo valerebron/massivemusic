@@ -12,11 +12,12 @@ type Query {
   ): Tracks!
   styles: [Style!]!
   users(role: String): [User!]!
+  getContacts(token: String!): [Contact!]!
   user(user_id: Int): User!
   searchTrack(search: String, token: String): tracksPayload
   searchChannel(search: String, token: String): channelsPayload
   getChannelDesc(id: String): String
-  sendMail(to: String, subject: String!, content: String!, token: String!): String
+  sendMail(to: String, name: String, subject: String!, content: String!, token: String!): String
 }
 
 type Mutation {
@@ -194,6 +195,12 @@ type Video {
 type Tracks {
   tracks: [Track!]!
   count: Int!
+}
+
+type Contact {
+  id: Int!
+  name: String!
+  email: String!
 }
 
 scalar DateTime

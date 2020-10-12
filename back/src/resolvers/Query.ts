@@ -1,6 +1,6 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
 const usetube = require('usetube')
-const mail = require('../mail')
+const mail = require('../mail/mail')
 
 module.exports = {
   styles: async (parent, args, context, info) => {
@@ -122,25 +122,40 @@ module.exports = {
     console.log('youtube channel desc query')
     return await usetube.getChannelDesc(args.id)
   },
+  getContacts: async (parent, args, context, info) => {
+    const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
+    if(args.token === admin.token) {
+      return await context.prisma.user.findMany({
+        where: {
+          role: 'USER'
+        },
+      })
+    }
+  },
   sendMail: async (parent, args, context, info) => {
-    const admin = await context.prisma.user.findMany({ where: { role: 'ADMIN' } })
-    if(args.token === admin[0].token) {
-      if(args.to === '') {
-        // const users = await context.prisma.user.findMany({
-        //   where: {
-        //     role: 'USER'
-        //   }
-        // })
-        const users = [ {name: 'perso', email: 'perso@valerebron.com'},{name: 'contact', email: 'contact@valerebron.com'},{name: 'dev', email: 'dev@valerebron.com'},{name: 'mass', email: 'contact@massivemuic.fr'}]
+    const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
+    if(args.token === admin.token) {
+      console.log(args.to)
+      if(args.to === 'all@massivemusic.fr') {
+        const users = await context.prisma.user.findMany({
+          where: {
+            role: 'USER'
+          },
+          select: [
+            'id',
+            'name',
+            'email',
+          ],
+        })
         for(let i = 0; i < users.length; i++) {
-          await mail.send(users[i].email, args.subject, args.content, function(err, info) {
+          await mail.send(users[i].email, args.subject, args.content, users[i].name, function(err, info) {
             console.log('\x1b[34m%s\x1b[0m', '●', 'send mail for: '+users[i].email)
           })
         }
         return 'sended'
       }
       else {
-        mail.send(args.to, args.subject, args.content, function(err, info) {
+        mail.send(args.to, args.subject, args.content, args.name, function(err, info) {
           console.log('\x1b[34m%s\x1b[0m', '●', 'send mail for: '+args.to)
           return 'sended'
         })

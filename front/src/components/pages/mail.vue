@@ -9,11 +9,17 @@
           <header>
             <div>
               <label for="to">to</label>
-              <input id="to" v-model="to" name="to" type="email" placeholder="all users">
+              <input type="text" v-model="searchContact" @focus="contactsOpen = true">
+              <div class="mail__contacts" ref="contacts" :class="{ 'mail__contacts--open' : contactsOpen }" id="to" name="to" type="email" placeholder="all users" required>
+                <option @click="selectContact(contact, index)" class="mail__contact" v-for="(contact, index) in contacts.filter(contact => contact.name.toLowerCase().includes(this.searchContact.toLowerCase()))" :key="index">
+                  <avatar :user="{ ...contact, role: 'USER'}" size="small" />
+                  {{ contact.name }}
+                </option>
+              </div>
             </div>
             <div>
               <label for="subject">subject</label>
-              <input id="subject" v-model="subject" name="subject" type="text" required>
+              <input class="mail__subject" id="subject" v-model="subject" name="subject" type="text" required>
             </div>
           </header>
           <main>
@@ -73,8 +79,14 @@
                 </div>
                 <br />
                 <br />
-                {{ new Date().getFullYear() }} - 
-                <a href="https://massivemusic.fr/" target="_blank" style="text-decoration: none; border-bottom: 1px solid #d5d5d5; color: #727272;">MassiveMusic.fr</a>
+                <a href="https://massivemusic.fr/" target="_blank" style="text-decoration: none; border-bottom: 1px solid #d5d5d5; color: #727272;">
+                  {{ new Date().getFullYear() }} - 
+                  MassiveMusic.fr
+                </a>
+                 - 
+                <a href="mailto:contact@massivemusic.fr" target="_blank" style="text-decoration: none; border-bottom: 1px solid #d5d5d5; color: #727272;">
+                  contact@massivemusic.fr
+                </a>
                 <br />
                 <br />
               </td>
@@ -88,32 +100,73 @@
 
 <script>
   import gql from 'graphql-tag'
+  import avatar from '@/components/atoms/avatar'
   import loader from '@/components/atoms/loader.vue'
   export default {
     name: 'mail',
-    components: {loader},
+    components: {
+      loader,
+      avatar
+    },
     data: function() {
       return {
-        to: '',
+        to: { id: 0, name: 'All users', email: 'all@massivemusic.fr', role: 'USER' },
+        contacts: [],
+        contactsOpen: false,
         subject: '',
         mailContent: '',
         isLoading: false,
         res: '',
+        searchContact: '',
       }
     },
     methods: {
+      getContacts: function() {
+        this.$apollo.query({
+          variables: {
+            token: this.$store.getters.session.token,
+          },
+          query: gql`query($token: String!) {
+            getContacts(token: $token) {
+              id,
+              name,
+              email,
+            }
+          }`,
+        }).then((res) => {
+          // sort alphabetic order
+          this.contacts = res.data.getContacts.sort(function(a, b){
+              if(a.name < b.name) { return -1; }
+              if(a.name > b.name) { return 1; }
+              return 0;
+          })
+          this.contacts.unshift(this.to)
+          this.$refs.contacts.scrollTo(0, 0)
+        }).catch((error) => {
+          console.log(error)
+        })
+      },
+      selectContact: function(contact, index) {
+        if(this.contactsOpen) {
+          this.to = contact
+          const scrollHeight = document.querySelector('.mail__contact:first-child').scrollHeight
+          this.$refs.contacts.scrollTo(0, index * scrollHeight)
+        }
+        this.contactsOpen = !this.contactsOpen
+      },
       sendMail: function() {
         if(this.subject !== '' && this.mailContent !== '') {
           this.isLoading = true
           this.$apollo.query({
             variables: {
-              to: this.to,
+              to: this.to.email,
+              name: this.to.name,
               subject: this.subject,
               content: this.mailContent,
               token: this.$store.getters.session.token,
             },
-            query: gql`query($to: String, $subject: String!, $content: String!, $token: String!) {
-              sendMail(to: $to, subject: $subject, content: $content, token: $token)
+            query: gql`query($to: String, $name: String, $subject: String!, $content: String!, $token: String!) {
+              sendMail(to: $to, name: $name, subject: $subject, content: $content, token: $token)
             }`,
           }).then((res) => {
             this.isLoading = false
@@ -125,18 +178,52 @@
           })
         }
       }
-    }
+    },
+    mounted: function() {
+      this.getContacts()
+    },
   }
 </script>
 
 <style lang="scss">
   .mail {
     margin: 20px;
+    label {
+      margin-top: 10px;
+      padding: 10px 0;
+      display: inline-block;
+    }
     &__body {
       @include breakpoint(tablet) {
         display: flex;
         justify-content: space-around;
       }
+    }
+    &__contacts {
+      transition: height .3s;
+      height: 38px;
+      max-height: 240px;
+      overflow: hidden;
+      background-color: rgb(24, 24, 24);
+      &--open {
+        height: 40vh;
+        overflow-y: scroll;
+      }
+    }
+    &__contact {
+      padding: 4px; 
+      display: flex;
+      align-items: center;
+      &:hover {
+        background-color: white;
+        color: black;
+      }
+      .avatar {
+        margin: 0 12px;
+      }
+    }
+    &__subject {
+      text-align-last: left;
     }
     &__form {
       min-width: 350px;
@@ -145,7 +232,6 @@
       }
       .content {
         text-align: left;
-        padding: 16px;
       }
     }
     &__page {

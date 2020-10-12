@@ -91,7 +91,7 @@
       },
       swipeActions() {
         const area = document.querySelector('.app')
-        new TouchSweep(area, {value: 1}, 20)
+        new TouchSweep(area, {value: 1}, 40)
         area.addEventListener('swiperight', event => {
           console.log(event)
           if(this.$store.getters.ui.search) {
