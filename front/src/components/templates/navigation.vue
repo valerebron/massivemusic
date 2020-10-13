@@ -24,10 +24,6 @@
         <icon-admin />
         admin
       </router-link>
-      <router-link v-if="$store.getters.isAdmin" to="/bots" class="nav__link">
-        <icon-youtube />
-        channel
-      </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/add-bots" class="nav__link">
         <icon-add-bot />
         add channel
