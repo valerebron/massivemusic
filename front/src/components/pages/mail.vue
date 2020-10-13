@@ -9,9 +9,13 @@
           <header>
             <div>
               <label for="to">to</label>
-              <input type="text" v-model="searchContact" @focus="contactsOpen = true">
+              <div @click="toggleUserSelector" class="mail__contact">
+                <avatar :user="{...to, role: 'USER'}" size="small" />
+                {{ to.name }} ({{ to.email }})
+              </div>
               <div class="mail__contacts" ref="contacts" :class="{ 'mail__contacts--open' : contactsOpen }" id="to" name="to" type="email" placeholder="all users" required>
-                <option @click="selectContact(contact, index)" class="mail__contact" v-for="(contact, index) in contacts.filter(contact => contact.name.toLowerCase().includes(this.searchContact.toLowerCase()))" :key="index">
+                <input class="mail__search" ref="userSearch" type="text" placeholder="search" v-model="searchContact">
+                <option @click="selectContact(contact)" class="mail__contact" v-for="contact in contacts.filter(contact => contact.name.toLowerCase().includes(this.searchContact.toLowerCase()))" :key="contact.id">
                   <avatar :user="{ ...contact, role: 'USER'}" size="small" />
                   {{ contact.name }}
                 </option>
@@ -146,11 +150,14 @@
           console.log(error)
         })
       },
-      selectContact: function(contact, index) {
+      toggleUserSelector: function() {
+        this.contactsOpen = !this.contactsOpen
+        this.$refs.userSearch.focus()
+        this.$refs.contacts.scrollTo(0, 0)
+      },
+      selectContact: function(contact) {
         if(this.contactsOpen) {
           this.to = contact
-          const scrollHeight = document.querySelector('.mail__contact:first-child').scrollHeight
-          this.$refs.contacts.scrollTo(0, index * scrollHeight)
         }
         this.contactsOpen = !this.contactsOpen
       },
@@ -201,14 +208,19 @@
     }
     &__contacts {
       transition: height .3s;
-      height: 38px;
+      height: 0;
       max-height: 240px;
       overflow: hidden;
       background-color: rgb(24, 24, 24);
       &--open {
         height: 40vh;
-        overflow-y: scroll;
+        overflow: auto;
       }
+    }
+    &__search {
+      position: sticky;
+      top: 0;
+      background-color: rgb(40, 40, 40)!important;
     }
     &__contact {
       padding: 4px; 
