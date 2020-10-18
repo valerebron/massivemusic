@@ -114,7 +114,7 @@ module.exports = {
     console.log('search tracks '+args.search)
     let videos = await usetube.searchVideo(args.search, args.token)
     videos.tracks.forEach(function(video, index) {
-      if(video.duration > 420 || video.duration < 60) {
+      if(video.duration > 480 || video.duration < 60) {
         videos.tracks.splice(index, 1)
       }
       else {

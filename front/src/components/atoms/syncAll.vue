@@ -20,7 +20,6 @@ export default {
   methods: {
     syncAll: async function() {
       this.isLoading = true
-      console.log(this.isLoading)
       await this.$store.dispatch('syncAllUsers')
       this.isLoading = false
     },

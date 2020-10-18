@@ -10,7 +10,7 @@
       }, 'style-bkg-'+track.style.id]"
       :key="track.yt_id"
     >
-      <td :class="'track__index style-'+track.style.id" @click="play(track)">
+      <td :class="'track__index style-'+track.style.id" @click="forcePlay(track)">
         {{ index + 1 }}
       </td>
       <td :class="'track__dot style-'+track.style.id" @click="play(track)">
@@ -93,6 +93,9 @@
         if(!this.isEditable) {
           this.$store.dispatch('play', track)
         }
+      },
+      forcePlay(track) {
+        this.$store.dispatch('play', track)
       },
       async load() {
         if(this.filter.type === 'favorites') {

@@ -267,30 +267,30 @@ export async function syncBot(parent, args, context, info) {
       tracks = await usetube.getChannelVideos(bot.channel_id, bot.channel_last_sync_date)
     }
     console.log('total tracks: '+tracks.length)
-
-    console.log(tracks)
-
     // 4 SAVE TRACKS TO BDD
     if(tracks.length > 0) {
       const createManyTracks = await tracks.map(async (track) => {
-      // save tracks
-      return await context.prisma.track.create({
-          data: {
-            yt_id: track.id,
-            title: cleanTitle(track.title),
-            artist: track.artist,
-            duration: track.duration,
-            Style: {
-              connect: { id: bot.channel_style },
+        // delete BIG & SMALL tracks
+        if(track.duration > 480 || track.duration < 60) {
+          // save tracks
+          return await context.prisma.track.create({
+            data: {
+              yt_id: track.id,
+              title: cleanTitle(track.title),
+              artist: track.artist,
+              duration: track.duration,
+              Style: {
+                connect: { id: bot.channel_style },
+              },
+              User: {
+                connect: { id: bot.id },
+              },
+              pending: !bot.channel_enable_tracks,
+              invalid: false,
+              createdAt: track.publishedAt,
             },
-            User: {
-              connect: { id: bot.id },
-            },
-            pending: !bot.channel_enable_tracks,
-            invalid: false,
-            createdAt: track.publishedAt,
-          },
-        })
+          })
+        }
       })
       // update last sync date
       await context.prisma.user.update({
@@ -463,7 +463,7 @@ export async function deleteAll(parent, args, context, info) {
               duration: { lte: 60 }
             },
             {
-              duration: { gte: 420 }
+              duration: { gte: 480 }
             }
           ]
         }
