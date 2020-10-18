@@ -13,6 +13,18 @@ window.formatError = function(error) {
   let regex = /\x1b/g
   return error.replace(regex, '_rep_').replace(/_rep_\[[0-9][0-9]m/g, '').replace(/_rep_\[[0-9]m/g, '').replace('GraphQL error: ', '')
 }
+window.formatTime = function(time) {
+  time = Math.round(time)
+  let minutes = Math.floor(time / 60),
+  seconds = parseInt(time - minutes * 60)
+  seconds = seconds < 10 ? '0' + seconds : seconds
+  if(!isNaN(minutes) && !isNaN(seconds)) {
+    return minutes + ':' + seconds
+  }
+  else {
+    return '0:00'
+  }
+}
 
 Vue.use(VueApollo)
 const apolloClient = new ApolloClient({

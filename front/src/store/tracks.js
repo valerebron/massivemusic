@@ -5,8 +5,10 @@ let initial_filters = {
   style: 0,
   user: 0,
   skip: 0,
-  pending: 0,
-  invalid: 0,
+  pending: false,
+  invalid: false,
+  empty: false,
+  duration: false,
   reset: 0,
 }
 
@@ -16,8 +18,6 @@ const state = {
   order: 'createdAt_DESC',
   filters: initial_filters,
   count: 0,
-  count_pending: 0,
-  count_invalid: 0,
 }
 
 const mutations = {
@@ -44,12 +44,6 @@ const mutations = {
   SET_COUNT(state, count) {
     state.count = count
   },
-  SET_COUNT_PENDING(state, count) {
-    state.count_pending = count
-  },
-  SET_COUNT_INVALID(state, count) {
-    state.count_invalid = count
-  },
   SET_FILTER(state, filter) {
     state.filters[filter.type] = filter.value
   },
@@ -59,23 +53,28 @@ const mutations = {
       style: 0,
       user: 0,
       skip: 0,
-      pending: 0,
-      invalid: 0,
+      pending: false,
+      invalid: false,
+      empty: false,
+      duration: false,
     }
   },
-  UNPENDING_ALL_TRACKS(state) {
+  VALIDATE(state, the_track) {
     state.tracks.map(track => {
-      if(track.pending) {
+      if(track.id === the_track.id) {
         track.pending = false
       }
     })
   },
   VALIDATE_ALL_TRACKS(state) {
     state.tracks.map(track => {
-      if(track.invalid) {
-        track.invalid = false
+      if(track.pending) {
+        track.pending = false
       }
     })
+  },
+  DELETE_ALL_TRACKS(state) {
+    state.tracks = []
   },
 }
 
@@ -100,8 +99,10 @@ const actions = {
         default:
           store.commit('SET_FILTER', {type: 'user', value: 0})
           store.commit('SET_FILTER', {type: 'style', value: 0})
-          store.commit('SET_FILTER', {type: 'pending', value: 0})
-          store.commit('SET_FILTER', {type: 'invalid', value: 0})
+          store.commit('SET_FILTER', {type: 'pending', value: false})
+          store.commit('SET_FILTER', {type: 'invalid', value: false})
+          store.commit('SET_FILTER', {type: 'empty', value: false})
+          store.commit('SET_FILTER', {type: 'duration', value: false})
           store.commit('SET_FILTER', filter)
         break
       }
@@ -116,6 +117,8 @@ const actions = {
           orderDirection: 'desc',
           pending: store.state.filters.pending,
           invalid: store.state.filters.invalid,
+          empty: store.state.filters.empty,
+          duration: store.state.filters.duration,
         },
         query: gql`
           query(
@@ -126,8 +129,10 @@ const actions = {
               $first: Int!,
               $orderBy: TrackOrderByInput!,
               $orderDirection: TrackOrderDirectionInput!,
-              $pending: Int,
-              $invalid: Int,
+              $pending: Boolean,
+              $invalid: Boolean,
+              $empty: Boolean,
+              $duration: Boolean,
           ) {
             tracks(
               search: $search,
@@ -139,6 +144,8 @@ const actions = {
               orderDirection: $orderDirection,
               pending: $pending,
               invalid: $invalid,
+              empty: $empty,
+              duration: $duration,
             ) {
               count
               tracks {
@@ -174,12 +181,6 @@ const actions = {
         window.scroll(0, 0)
         store.commit('SET_TRACKS', res.data.tracks.tracks)
         store.commit('SET_COUNT', res.data.tracks.count)
-        if(filter.type === 'pending') {
-          store.commit('SET_COUNT_PENDING', res.data.tracks.count)
-        }
-        if(filter.type === 'invalid') {
-          store.commit('SET_COUNT_INVALID', res.data.tracks.count)
-        }
       }
     }
   },
@@ -281,29 +282,50 @@ const actions = {
       return track
     }
   },
-  async validateAllPending(store) {
-    await window.apollo.mutate({
+  async validate(store, track) {
+    await window.$apollo.mutate({
       variables: {
-        user_id: store.getters.session.user.id,
-        token: store.getters.session.token,
+        user_id: this.$store.getters.session.user.id,
+        token: this.$store.getters.session.token,
+        id: track.id,
       },
-      mutation: gql`mutation($user_id: Int!, $token: String!) {
-        validateAllPending(user_id: $user_id, token: $token)
+      mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!) {
+        validatePost(user_id: $user_id, token: $token, id: track.id) {
+          id
+        }
       }`,
-    }).catch((e)=>{console.log(e)})
-    store.commit('UNPENDING_ALL_TRACKS')
+    }).then(() => {
+      this.close()
+    }).catch((error) => {
+      this.error = error.message.replace('GraphQL error: ', '')
+      console.log('%c●', 'color: red', 'drop error: ', this.error)
+    })
+    store.commit('VALIDATE', track)
   },
-  async validateAllInvalid(store) {
+  async validateAll(store) {
     await window.apollo.mutate({
       variables: {
         user_id: store.getters.session.user.id,
         token: store.getters.session.token,
       },
       mutation: gql`mutation($user_id: Int!, $token: String!) {
-        validateAllInvalid(user_id: $user_id, token: $token)
+        validateAll(user_id: $user_id, token: $token)
       }`,
     }).catch((e)=>{console.log(e)})
     store.commit('VALIDATE_ALL_TRACKS')
+  },
+  async deleteAll(store, type) {
+    await window.apollo.mutate({
+      variables: {
+        user_id: store.getters.session.user.id,
+        token: store.getters.session.token,
+        type: type,
+      },
+      mutation: gql`mutation($user_id: Int!, $token: String!, $type: String!) {
+        deleteAll(user_id: $user_id, token: $token, type: $type)
+      }`,
+    }).catch((e)=>{console.log(e)})
+    store.commit('DELETE_ALL_TRACKS')
   },
   async dropTrack(store, track) {
     await window.apollo.mutate({
@@ -322,10 +344,6 @@ const actions = {
     })
     store.commit('DROP_TRACK', track)
   },
-  resetCounters(store) {
-    store.commit('SET_COUNT_PENDING', 0)
-    store.commit('SET_COUNT_INVALID', 0)
-  },
 }
 
 const getters = {
@@ -338,8 +356,6 @@ const getters = {
   style: state => state.style,
   user: state => state.user,
   count: state => state.count,
-  count_pending: state => state.count_pending,
-  count_invalid: state => state.count_invalid,
   tracksPerPage: state => state.tracksPerPage,
 }
 

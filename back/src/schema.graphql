@@ -7,8 +7,10 @@ type Query {
     first: Int
     orderBy: TrackOrderByInput
     orderDirection: TrackOrderDirectionInput
-    pending: Int
-    invalid: Int
+    pending: Boolean
+    invalid: Boolean
+    empty: Boolean
+    duration: Boolean
   ): Tracks!
   styles: [Style!]!
   users(role: String): [User!]!
@@ -51,13 +53,14 @@ type Mutation {
     user_id: Int!
     token: String!
   ): Track!
-  validateAllPending(
+  validateAll(
     user_id: Int!
     token: String!
   ): Int
-  validateAllInvalid(
+  deleteAll(
     user_id: Int!
     token: String!
+    type: String!
   ): Int
   invalidatePost(
     id: Int!

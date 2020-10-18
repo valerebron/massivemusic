@@ -15,7 +15,6 @@
 </template>
 
 <script>
-  import gql from 'graphql-tag'
   import modal from '@/components/atoms/modal'
   export default {
     name: 'track-validate',
@@ -23,24 +22,7 @@
     props: ['track'],
     methods: {
       validate: function(track) {
-        this.$apollo.mutate({
-          variables: {
-            user_id: this.$store.getters.session.user.id,
-            token: this.$store.getters.session.token,
-            id: track.id,
-          },
-          mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!) {
-            validatePost(user_id: $user_id, token: $token, id: $id) {
-              id
-            }
-          }`,
-        }).then(() => {
-          document.getElementsByClassName(track.yt_id)[0].classList.remove('track--pending')
-          this.close()
-        }).catch((error) => {
-          this.error = error.message.replace('GraphQL error: ', '')
-          console.log('%c●', 'color: red', 'drop error: ', this.error)
-        })
+        this.$dispatch('validate', track)
       },
       close: function() {
         this.$emit('closeValidate')

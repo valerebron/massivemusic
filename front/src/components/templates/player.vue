@@ -105,16 +105,7 @@
     },
     methods: {
       formatTime(time) {
-        time = Math.round(time)
-        let minutes = Math.floor(time / 60),
-        seconds = parseInt(time - minutes * 60)
-        seconds = seconds < 10 ? '0' + seconds : seconds
-        if(!isNaN(minutes) && !isNaN(seconds)) {
-          return minutes + ':' + seconds
-        }
-        else {
-          return '0:00'
-        }
+        return window.formatTime(time)
       },
       seekPlayer(e) {
         let self = this

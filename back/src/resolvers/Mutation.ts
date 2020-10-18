@@ -414,32 +414,64 @@ export async function validatePost(parent, args, context, info) {
   }
 }
 
-export async function validateAllPending(parent, args, context, info) {
+export async function validateAll(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {
     console.log('\x1b[34m%s\x1b[0m', '●', 'validate All Pending tracks')
-    return context.prisma.track.updateMany({
+    const res = await context.prisma.track.updateMany({
       where: { pending: true },
       data: {
         pending: false,
       },
     })
+    return res.count
   }
   else {
     throw new Error('invalid token')
   }
 }
 
-export async function validateAllInvalid(parent, args, context, info) {
+export async function deleteAll(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {
-    console.log('\x1b[34m%s\x1b[0m', '●', 'validate All Invalid tracks')
-    return context.prisma.track.updateMany({
-      where: { invalid: true },
-      data: {
-        invalid: false,
-      },
+    console.log('\x1b[34m%s\x1b[0m', '●', 'delete all '+args.type+' tracks')
+    let where = {}
+    switch(args.type) {
+      case 'pending':
+        where = { pending: true }
+      break;
+      case 'invalid':
+        where = { invalid: true }
+      break;
+      case 'empty':
+        where = {
+          OR: [
+            {
+              artist: ''
+            },
+            {
+              title: ''
+            }
+          ]
+        }
+      break;
+      case 'duration':
+        where = {
+          OR: [
+            {
+              duration: { lte: 60 }
+            },
+            {
+              duration: { gte: 420 }
+            }
+          ]
+        }
+      break;
+    }
+    const res = await context.prisma.track.deleteMany({
+      where: where,
     })
+    return res.count
   }
   else {
     throw new Error('invalid token')

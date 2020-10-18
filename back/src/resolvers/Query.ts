@@ -34,6 +34,8 @@ module.exports = {
     return user
   },
   tracks: async (parent, args, context, info) => {
+
+    // AND
     let andArray = []
 
     if(args.style) {
@@ -43,35 +45,32 @@ module.exports = {
       andArray.push({ user: args.user })
     }
     if(args.pending) {
-      const user = await context.prisma.user.findOne({
-        where: { id: args.pending }
-      })
-      if(user.role !== 'ADMIN') {
-        andArray.push({ user: args.pending })
-      }
       andArray.push({ pending: true })
     }
     else {
       andArray.push({ pending: false })
     }
     if(args.invalid) {
-      const user = await context.prisma.user.findOne({
-        where: { id: args.invalid }
-      })
-      if(user.role !== 'ADMIN') {
-        andArray.push({ user: args.invalid })
-      }
       andArray.push({ invalid: true })
     }
     else {
       andArray.push({ invalid: false })
     }
 
+    // OR
     let orArray = []
 
     if(args.search) {
       orArray.push({ title: { contains: args.search.trim() } })
       orArray.push({ artist: { contains: args.search.trim() } })
+    }
+    if(args.empty) {
+      orArray.push({ artist: '' })
+      orArray.push({ title: '' })
+    }
+    if(args.duration) {
+      orArray.push({ duration: { lte: 60 } })
+      orArray.push({ duration: { gte: 420 } })
     }
 
     let where = {}

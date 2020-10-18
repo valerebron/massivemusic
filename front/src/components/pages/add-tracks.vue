@@ -1,5 +1,5 @@
 <template>
-  <main class="add-tracks page--container">
+  <main class="add-tracks">
     <explorerTrack @clickOnTrack="open" />
     <modal @close="close()">
       <iframe class="add-tracks__iframe" type="text/html" :src="'https://www.youtube-nocookie.com/embed/'+track.id" frameborder="0"></iframe>

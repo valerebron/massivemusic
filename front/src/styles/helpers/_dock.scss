@@ -1,0 +1,29 @@
+.dock {
+  position: fixed;
+  z-index: $z-index-pages-ui;
+  top: $header-height;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $header-bkg;
+  padding: 2px 16px;
+  margin-left: 20px;
+  border-radius: 0 0 20px 20px;
+  button {
+    cursor: normal;
+    opacity: 0.2;
+    transition: opacity 1s;
+    &.enable {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+  .app--nav & {
+    width: calc(100% - $nav-width)!important;
+  }
+  button {
+    .checkbox {
+      margin: 0 8px;
+    }
+  }
+}

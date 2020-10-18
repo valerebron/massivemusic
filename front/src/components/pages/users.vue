@@ -1,20 +1,15 @@
 <template>
-  <section>
-    <div class="user-list">
-      <aside class="user-list__filters">
-        <input class="user-list__search-filter" v-model="filterSearch" type="search" placeholder="search">
-        <div class="user-list__bot-filter">
-          <checkbox @changeCheckbox="filterBots" :state="filterBotsState"></checkbox>
-          <label @click="filterBots">
-            youtube channels 
-          </label>
-        </div>
-      </aside>
-      <main class="user-list__list">
-        <card v-for="user in users.filter(user => user.name.toLowerCase().includes(this.filterSearch.toLowerCase()))" :user="user" :key="user.id" />
-      </main>
-    </div>
-  </section>
+  <main class="users">
+    <section class="user-list">
+      <card v-for="user in users.filter(user => user.name.toLowerCase().includes(this.filterSearch.toLowerCase()))" :user="user" :key="user.id" />
+    </section>
+    <aside class="dock">
+      <input class="search-filter" v-model="filterSearch" type="search" placeholder="search">
+      <checkbox @changeCheckbox="filterBots" :state="filterBotsState" @click="filterBots">
+        youtube channels
+      </checkbox>
+    </aside>
+  </main>
 </template>
 
 <script>
@@ -52,36 +47,17 @@
 </script>
 
 <style lang="scss">
+.users {
+  justify-content: center;
   .user-list {
+    padding-top: $header-height;
     border-radius: 26px;
     width: 100%;
-    &__filters {
-      width: 100%;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      background-color: $grey-0;
-      padding: 0 20px;
-    }
-    &__search-filter {
-      width: 60%;
-    }
-    &__bot-filter {
-      display: flex;
-      align-items: center;
-      margin-left: 40px;
-      label {
-        margin-left: 8px;
-      }
-    }
-    &__list {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-top: 60px;
-      margin: 10px;
-    }
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 60px;
+    margin: 10px;
     .card {
       flex: 1 1 auto;
       display: flex;
@@ -91,4 +67,5 @@
       text-align: center;
     }
   }
+}
 </style>

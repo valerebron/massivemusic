@@ -2,6 +2,8 @@ input[type=checkbox] {
   opacity: 0;
   width: 0;
   height: 0;
+  // z-index: 999;
+  // position: relative;
   &:checked + .slider {
     background-color: $validate-color;
   }

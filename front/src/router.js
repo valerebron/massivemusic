@@ -12,8 +12,6 @@ import pageUserTracks from './components/pages/user-tracks.vue'
 import pageAddTracks from './components/pages/add-tracks.vue'
 import pageAddBots from './components/pages/add-bots.vue'
 import pageMyTracks from './components/pages/my-tracks.vue'
-import pagePendingTracks from './components/pages/pending-tracks.vue'
-import pageInvalidTracks from './components/pages/invalid-tracks.vue'
 import pageFavorites from './components/pages/favorites.vue'
 import pageStyle from './components/pages/style.vue'
 import pageTest from './components/pages/test.vue'
@@ -37,8 +35,6 @@ let routes = [
     { path: 'edit', component: pageEditProfile },
     { path: 'tracks', component: pageUserTracks },
   ] },
-  { name: 'pending-tracks', path: '/pending-tracks', component: pagePendingTracks },
-  { name: 'invalid-tracks', path: '/invalid-tracks', component: pageInvalidTracks },
   { name: 'test', path: '/test', component: pageTest },
   { name: 'recover-password', path: '/passwd/:token/:email', component: pageRecover },
   { name: 'mail', path: '/mail', component: pageMail },

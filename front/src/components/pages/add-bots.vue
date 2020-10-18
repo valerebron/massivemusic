@@ -1,5 +1,5 @@
 <template>
-  <main class="add-bots page--container">
+  <main class="add-bots">
     <explorerChannel @clickOnChannel="open"/>
     <modal @close="close()">
       <form class="add-bots__form">

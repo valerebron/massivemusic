@@ -18,7 +18,7 @@
     <template v-if="$store.getters.isOnline">
       <router-link to="/user/me/profile" class="nav__link nav__link--user">
         <avatar :user="$store.getters.session.user" size="small" />
-        my Account
+        my Profile
       </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/admin" class="nav__link">
         <icon-admin />
@@ -32,11 +32,6 @@
         <icon-add />
         add tracks
       </router-link>
-      <syncAll v-if="$store.getters.isAdmin" class="nav__link" style="width: 100%"/>
-      <router-link v-if="$store.getters.isAdmin" to="/test" class="nav__link">
-        <icon-radio />
-        test tracks
-      </router-link>
       <router-link v-if="$store.getters.isAdmin" to="/mail" class="nav__link">
         <icon-mail />
         mail
@@ -46,22 +41,6 @@
       <icon-star />
       favorites
     </router-link>
-    <template v-if="$store.getters.isOnline">
-      <router-link to="/pending-tracks" class="nav__link">
-        <icon-pending />
-        pending
-        <i v-if="$store.getters.count_pending !== 0" class="counter counter__pending">
-          {{ $store.getters.count_pending }}
-        </i>
-      </router-link>
-      <router-link to="/invalid-tracks" class="nav__link">
-        <icon-invalid />
-        invalid
-        <i v-if="$store.getters.count_invalid !== 0" class="counter counter__invalid">
-          {{ $store.getters.count_invalid }}
-        </i>
-      </router-link>
-    </template>
     <div v-if="$store.getters.isOnline" @click="logout" class="nav__link">
       <icon-logout/>
       logout
@@ -75,12 +54,10 @@
 <script>
 import gql from 'graphql-tag'
 import avatar from '@/components/atoms/avatar'
-import syncAll from '@/components/atoms/syncAll'
 export default {
   name: 'navigation',
   components: {
     avatar,
-    syncAll,
   },
   methods: {
     loadStyles() {
@@ -149,7 +126,8 @@ export default {
   overflow-x: hidden;
   scrollbar-width: thin;
   flex-direction: column;
-  background-color: $app-bkg;
+  // background-color: $app-bkg;
+  background-color: $header-bkg;
   transition-duration: 0.2s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
@@ -180,6 +158,9 @@ export default {
       font-size: 16px;
     }
     text-transform: capitalize;
+    &--user {
+      border-top: 1px rgba(255, 255, 255, 0.1) solid;
+    }
     &--add-tracks.router-link-exact-active {
       .ion svg {
         fill: $validate-color;
@@ -213,7 +194,7 @@ export default {
     }
     &:hover,
     &.router-link-exact-active {
-      background-color: $color-selection;
+      background-color: $app-bkg;
       cursor: default;
     }
     &:first-child {

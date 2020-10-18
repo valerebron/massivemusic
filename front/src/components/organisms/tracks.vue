@@ -18,6 +18,9 @@
       </td>
       <td :class="'track__title style-'+track.style.id" @click="play(track)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
+        <time class="track__duration">
+          {{ formatTime(track.duration) }}
+        </time>
       </td>
       <td class="track__artist" @click="search(track.artist)" :contenteditable="isEditable" @blur="update($event, track, 'artist')">
         {{ track.artist }}
@@ -52,7 +55,7 @@
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
-  <section v-else class="no-track">
+  <section v-else class="no-track tracks">
     No track :(
   </section>
 </template>
@@ -138,6 +141,9 @@
           this.$store.dispatch('filterTracks', {type: 'search', value: terms})
         }
       },
+      formatTime(time) {
+        return window.formatTime(time)
+      },
     },
     async mounted() {
       this.$store.commit('RESET_FILTERS')
@@ -154,6 +160,9 @@
     z-index: $z-index-tracks;
     width: 100%;
     border-collapse: collapse;
+    &.show-duration .track__duration {
+      display: inline;
+    }
     .track {
       cursor: default;
       border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
@@ -204,6 +213,13 @@
       }
       &__title {
         padding-left: 8px;
+      }
+      &__duration {
+        display: none;
+        background-color: white;
+        margin-left: 4px;
+        padding: 4px;
+        border-radius: 8px;
       }
       &__artist {
         @extend %artistStyle;

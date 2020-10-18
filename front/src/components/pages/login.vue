@@ -174,7 +174,6 @@
           this.avatar = res.data.login.user
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.login)
-          this.$store.dispatch('resetCounters')
           this.$router.push('/user/me/profile')
         }).catch((error) => {
           this.error = window.formatError(error.message)
