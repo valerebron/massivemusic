@@ -1,7 +1,7 @@
 <template>
   <ul class="explorer" :class="{ 'explorer--init' : channels.length === 0 }">
     <li class="explorer__search">
-      <loader class="explorer__loader" :isLoading="isLoading"/>
+      <loader class="explorer__loader"  v-if="isLoading"/>
       <input
         class="explorer__search-input"
         v-model="query"
