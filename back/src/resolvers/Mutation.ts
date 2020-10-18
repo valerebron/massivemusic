@@ -193,18 +193,31 @@ export async function editUser(parent, args, context, info) {
     if(args.avatar_b64) {
       await addAvatar(args.avatar_b64, user.id)
     }
-    return context.prisma.user.update({
-      where: { id: args.id },
-      data: {
-        Style: {
-          connect: { id: args.channel_style },
+    if(args.style === 0) {
+      return context.prisma.user.update({
+        where: { id: args.id },
+        data: {
+          channel_enable_tracks: args.channel_enable_tracks,
+          channel_description: args.channel_description,
         },
-        channel_enable_tracks: args.channel_enable_tracks,
-        channel_description: args.channel_description,
-      },
-    }).catch(error=>{
-      console.log(error)
-    })
+      }).catch(error=>{
+        console.log(error)
+      })
+    }
+    else {
+      return context.prisma.user.update({
+        where: { id: args.id },
+        data: {
+          Style: {
+            connect: { id: args.channel_style },
+          },
+          channel_enable_tracks: args.channel_enable_tracks,
+          channel_description: args.channel_description,
+        },
+      }).catch(error=>{
+        console.log(error)
+      })
+    }
   }
   else {
     throw new Error('invalid token')

@@ -1,6 +1,6 @@
 <template>
   <figure class="user user--edit" v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
-    <avatar :user="userImage" size="big" @click="clickOnAvatar" />
+    <avatar :user="user" size="big" @click="clickOnAvatar" ref="userEditAvatar" />
     <figcaption class="user__captions">
       <h2 class="user__name">
         {{ user.name }}
@@ -60,7 +60,6 @@
       return {
         isDropOpen: false,
         avatarB64: '',
-        userImage: '',
       }
     },
     methods: {
@@ -105,8 +104,8 @@
         })
       },
       async onFileSelected (url, b64) {
-        this.userImage = url
         this.avatarB64 = b64
+        this.$refs.userEditAvatar.$el.src = url
         this.editUser()
       },
       openDrop() {
@@ -116,15 +115,6 @@
       closeDrop() {
         this.$store.dispatch('modal', false)
         this.isDropOpen = false
-      },
-      mounted() {
-        if(this.user.role === 'ROBOT') {
-          this.userImage = this.user.channel_avatar_medium
-        }
-        else {
-          this.userImage = '/avatars/'+this.user.id+'-300px.png'
-          console.log(this.userImage)
-        }
       },
     },
   }
