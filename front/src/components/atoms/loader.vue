@@ -50,15 +50,7 @@
     display: none;
     width: 100%;
     height: 100%;
-    display: none;
-    &.loading {
-      display: flex;
-    }
-    .tracks & {
-      position: fixed;
-      top: calc(50vh - 22px);
-      left: calc(50vw - 22px);
-    }
+    display: flex;
     .control-bar & {
       position: absolute;
       top: 0;

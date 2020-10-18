@@ -11,7 +11,7 @@
       class="upload__input"
     >
     <button class="upload__button" @click.prevent="uploadButton">
-      Upload avatar
+      Change profile picture
     </button>
   </div>
 </template>

@@ -125,6 +125,7 @@
     watch: {
       $route() {
         this.closeNavIfMobile()
+        window.scrollTo(0, 0)
       },
     },
   }

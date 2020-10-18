@@ -1,6 +1,7 @@
 <template>
   <main class="users">
     <section class="user-list">
+      <loader v-if="isLoading" />
       <card v-for="user in users.filter(user => user.name.toLowerCase().includes(this.filterSearch.toLowerCase()))" :user="user" :key="user.id" />
     </section>
     <aside class="dock">
@@ -15,17 +16,20 @@
 <script>
   import checkbox from '@/components/atoms/checkbox'
   import card from '@/components/molecules/user/card'
+  import loader from '@/components/atoms/loader.vue'
   export default {
     name: 'users',
     components: {
       card,
       checkbox,
+      loader,
     },
     data: function() {
       return {
         users: [],
         filterBotsState: false,
         filterSearch: '',
+        isLoading: false,
       }
     },
     methods: {
@@ -40,8 +44,10 @@
       },
     },
     created: async function() {
+      this.isLoading = true
       await this.$store.dispatch('initUsers')
       this.users = this.$store.getters.users
+      this.isLoading = false
     },
   }
 </script>
@@ -49,6 +55,10 @@
 <style lang="scss">
 .users {
   justify-content: center;
+  .loader {
+    width: 50px;
+    height: 50px;
+  }
   .user-list {
     padding-top: $header-height;
     border-radius: 26px;

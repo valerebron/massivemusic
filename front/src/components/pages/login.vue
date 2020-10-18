@@ -58,6 +58,7 @@
         <router-link v-if="$route.name === 'signup'" class="login__sign" to="login" tag="button">
           already got an account ?
         </router-link>
+        <loader v-if="isLoading" />
         <button class="login__button" @click.prevent="submit()">
           <template v-if="$route.name === 'login'">login</template>
           <template v-if="$route.name === 'signup'">subscribe</template>
@@ -79,10 +80,11 @@
   import modal from '@/components/atoms/modal'
   import upload from '@/components/atoms/upload'
   import avatar from '@/components/atoms/avatar'
+  import loader from '@/components/atoms/loader.vue'
 
   export default {
     name: 'login',
-    components: { modal, upload, avatar },
+    components: { modal, upload, avatar, loader },
     data: function() {
       return {
         error: '',
@@ -94,6 +96,7 @@
         avatarB64: '',
         forgotText: '',
         emailSent: false,
+        isLoading: false,
       }
     },
     methods: {
@@ -130,11 +133,15 @@
         }
       },
       submit: function() {
+        this.isLoading = true
         if(this.$route.name === 'login' && this.credential !== '' && this.password !== '') {
           this.login()
         }
-        if(this.$route.name === 'signup' && this.credential !== '' && this.password !== '' && this.name !== '') {
+        else if(this.$route.name === 'signup' && this.credential !== '' && this.password !== '' && this.name !== '') {
           this.signup()
+        }
+        else {
+          this.isLoading = false
         }
       },
       login: async function() {
@@ -171,11 +178,13 @@
             }
           }`,
         }).then((res) => {
+          this.isLoading = false
           this.avatar = res.data.login.user
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.login)
           this.$router.push('/user/me/profile')
         }).catch((error) => {
+          this.isLoading = false
           this.error = window.formatError(error.message)
           console.log('%c●', 'color: red', 'login error')
         })
@@ -216,10 +225,12 @@
             }
           }`,
         }).then((res) => {
+          this.isLoading = false
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.signup)
           this.$router.push('/user/me/profile')
         }).catch((error) => {
+          this.isLoading = false
           this.error = window.formatError(error.message)
           console.log('%c●', 'color: red', 'signup error', this.error)
         })
@@ -255,6 +266,10 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+    .loader {
+      width: 50px;
+      height: 50px;
     }
     .actions {
       display: flex;

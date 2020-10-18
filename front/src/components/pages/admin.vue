@@ -53,10 +53,10 @@
         this.selectedFilter = type
         // show duration for type duration
         if(type === 'duration' && checked) {
-          document.querySelector('.tracks').classList.add('show-duration')
+          document.querySelector('.tracks').classList.add('tracks--show-duration')
         }
         else {
-          document.querySelector('.tracks').classList.remove('show-duration')
+          document.querySelector('.tracks').classList.remove('tracks--show-duration')
         }
         // manage buttons enable
         this.isDeletable = checked

@@ -1,5 +1,5 @@
 <template>
-  <table v-if="tracks.length!==0" class="tracks" :key="filter.type+filter.value">
+  <table v-if="tracks.length!==0" class="tracks" :class="{'tracks--loading' : $store.getters.isLoading}" :key="filter.type+filter.value">
     <tr
       v-for="(track, index) in tracks"
       class="track"
@@ -55,6 +55,9 @@
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
+  <section v-else-if="isLoading" class="tracks">
+    <loader />
+  </section>
   <section v-else class="no-track tracks">
     No track :(
   </section>
@@ -65,9 +68,10 @@
   import trackEdit from '@/components/molecules/track/edit'
   import trackValidate from '@/components/molecules/track/validate'
   import trackDrop from '@/components/molecules/track/drop'
+  import loader from '@/components/atoms/loader.vue'
   export default {
     name: 'tracks',
-    components: { trackEdit, trackValidate, trackDrop, avatar },
+    components: { trackEdit, trackValidate, trackDrop, avatar, loader },
     props: ['filter'],
     computed:{
       tracks: {
@@ -85,6 +89,7 @@
         isEditOpen: false,
         isDropOpen: false,
         isValidateOpen: false,
+        isLoading: true,
         trackToEdit: {},
       }
     },
@@ -100,9 +105,11 @@
       async load() {
         if(this.filter.type === 'favorites') {
           this.$store.dispatch('filterFavorites')
+          this.isLoading = false
         }
         else {
           await this.$store.dispatch('filterTracks', this.filter)
+          this.isLoading = false
         }
       },
       async update(event, track, type) {
@@ -149,8 +156,13 @@
       },
     },
     async mounted() {
+      this.isLoading = true
       this.$store.commit('RESET_FILTERS')
       await this.load()
+      this.isLoading = false
+    },
+    beforeUpdate() {
+      this.isLoading = true
     },
     updated() {
       this.load()
@@ -163,8 +175,16 @@
     z-index: $z-index-tracks;
     width: 100%;
     border-collapse: collapse;
-    &.show-duration .track__duration {
+    &--show-duration.tracks .track__duration {
       display: inline;
+    }
+    .loader {
+      display: flex;
+      width: 22px;
+      height: 22px;
+      position: fixed;
+      top: calc(50vh - 22px);
+      left: calc(50vw - 22px);
     }
     .track {
       cursor: default;
