@@ -14,10 +14,10 @@
       <checkbox @changeCheckbox="filter($event, 'duration')" class="duration">
         big / small tracks
       </checkbox>
-      <router-link class="enable" tag="button" to="/test">
+      <router-link class="enable" tag="button" to="/test" title="test all tracks">
         <icon-radio />
       </router-link>
-      <syncAll class="enable" />
+      <syncAll class="enable" title="sync all channels" />
       <button class="pending-tracks__unpending-all validate" @click="validateAll" :class="{'enable' : isValidatable }">
         <icon-valid/>
       </button>

@@ -3,6 +3,7 @@ const moment = require('moment')
 const usetube = require('usetube')
 const sharp = require('sharp')
 const mail = require('../mail/mail')
+const cleanTitle = require('../cleantitle')
 
 function isEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -276,7 +277,7 @@ export async function syncBot(parent, args, context, info) {
       return await context.prisma.track.create({
           data: {
             yt_id: track.id,
-            title: track.title,
+            title: cleanTitle(track.title),
             artist: track.artist,
             duration: track.duration,
             Style: {

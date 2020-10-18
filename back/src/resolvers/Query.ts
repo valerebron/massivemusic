@@ -1,6 +1,7 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
 const usetube = require('usetube')
 const mail = require('../mail/mail')
+const cleanTitle = require('../cleantitle')
 
 module.exports = {
   styles: async (parent, args, context, info) => {
@@ -111,7 +112,16 @@ module.exports = {
   },
   searchTrack: async (parent, args, context, info) => {
     console.log('search tracks '+args.search)
-    return await usetube.searchVideo(args.search, args.token)
+    let videos = await usetube.searchVideo(args.search, args.token)
+    videos.tracks.forEach(function(video, index) {
+      if(video.duration > 420 || video.duration < 60) {
+        videos.tracks.splice(index, 1)
+      }
+      else {
+        video.title = cleanTitle(video.title)
+      }
+    })
+    return videos
   },
   searchChannel: async (parent, args, context, info) => {
     console.log('search channels '+args.search)

@@ -217,7 +217,8 @@
       &__duration {
         display: none;
         background-color: white;
-        margin-left: 4px;
+        margin-right: 20px;
+        float: right;
         padding: 4px;
         border-radius: 8px;
       }
