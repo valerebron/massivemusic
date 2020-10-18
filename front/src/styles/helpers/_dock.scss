@@ -19,7 +19,7 @@
     }
   }
   .app--nav & {
-    width: calc(100% - $nav-width)!important;
+    width: calc(100% - 200px)!important;
   }
   button {
     .checkbox {
