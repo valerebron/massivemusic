@@ -25,7 +25,7 @@
         </button>
         <button class="player-play" @click="play(track)">
           <icon-play-pause/>
-          <loader />
+          <loader v-if="$store.getters.playerState === 'buffering'" />
         </button>
         <button  class="player-next" @click="playNext">
           <icon-next/>
