@@ -59,7 +59,13 @@
     <loader />
   </section>
   <section v-else class="no-track tracks">
-    No track :(
+    <p class="no-track__txt">
+      No track found :(
+    </p>
+    <router-link tag="button" :to="'/add-tracks/'+this.$store.getters.search" class="tracks__add-tracks">
+      <icon-youtube />
+      add track from youtube
+    </router-link>
   </section>
 </template>
 
@@ -170,6 +176,19 @@
     border-collapse: collapse;
     &--show-duration.tracks .track__duration {
       display: inline;
+    }
+    .no-track__txt {
+      text-align: center;
+    }
+    &__add-tracks {
+      margin: 12px;
+      color: $youtube-red;
+      background-color: rgb(37, 37, 37);
+      // text-transform: uppercase;
+      font-weight: bold;
+      .ion {
+        padding-right: 16px;
+      }
     }
     .loader {
       display: flex;

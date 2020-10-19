@@ -31,7 +31,7 @@
             <textarea v-model="mailContent" name="content" class="content" id="content" cols="30" rows="10" required></textarea>
             <button class="style-bkg-11" @click="sendMail">
               send
-              <loader :isLoading="isLoading"/>
+              <loader v-if="isLoading"/>
             </button>
             <div class="mail__result">
               {{ res }}

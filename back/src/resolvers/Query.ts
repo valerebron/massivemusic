@@ -115,7 +115,6 @@ module.exports = {
     let videos = await usetube.searchVideo(args.search, args.token)
     videos.tracks = videos.tracks.filter(video => video.duration < parseInt(env.TRACK_MAX_DURATION) || video.duration > parseInt(env.TRACK_MIN_DURATION))
     videos.tracks.forEach((video) => { video.title = cleanTitle(video.title) } )
-    console.log(videos)
     return videos
   },
   searchChannel: async (parent, args, context, info) => {
@@ -139,7 +138,6 @@ module.exports = {
   sendMail: async (parent, args, context, info) => {
     const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
     if(args.token === admin.token) {
-      console.log(args.to)
       if(args.to === 'all@massivemusic.fr') {
         const users = await context.prisma.user.findMany({
           where: {
