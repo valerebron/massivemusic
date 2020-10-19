@@ -105,11 +105,11 @@
       async load() {
         if(this.filter.type === 'favorites') {
           this.$store.dispatch('filterFavorites')
-          this.isLoading = false
+          // this.isLoading = false
         }
         else {
           await this.$store.dispatch('filterTracks', this.filter)
-          this.isLoading = false
+          // this.isLoading = false
         }
       },
       async update(event, track, type) {

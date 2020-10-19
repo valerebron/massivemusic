@@ -1,7 +1,7 @@
 <template>
   <button @click="syncAll">
     <icon-sync />
-    <loader :isLoading="isLoading"/>
+    <loader v-if="isLoading"/>
   </button>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
-    <body class="app" :class="bodyClass">
-      <theheader/>
-      <navigation/>
-      <router-view class="page"></router-view>
-      <player/>
-    </body>
+  <body class="app" :class="bodyClass">
+    <theheader/>
+    <navigation/>
+    <router-view class="page"></router-view>
+    <player/>
+  </body>
 </template>
 
 <script>
@@ -91,7 +91,7 @@
       },
       swipeActions() {
         const area = document.querySelector('.app')
-        new TouchSweep(area, {value: 1}, 40)
+        new TouchSweep(area, {value: 1}, 80)
         area.addEventListener('swiperight', () => {
           if(this.$store.getters.ui.search) {
             this.$store.dispatch('ui', {type: 'search', value: false})
