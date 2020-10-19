@@ -1,11 +1,11 @@
 <template>
-  <figure class="user" :class="{ loading : isLoading }">
+  <figure v-if="user.createdAt" class="user" :class="{ loading : isSyncing }">
     <div class="user__image-container">
       <avatar :user="user" size="big" />
       <button @click="sync" v-if="user.role === 'ROBOT' && $store.getters.isAdmin" :class="'style-bkg-'+user.channel_style">
         <span class="user__sync-button">
           <icon-sync />
-          <loader v-if="isLoading"/>
+          <loader v-if="isSyncing"/>
         </span>
         <span class="typo-one-line sync-text">
           sync channel
@@ -41,6 +41,7 @@
       </router-link>
     </figcaption>
   </figure>
+  <loader class="user" v-else/>
 </template>
 
 <script>
@@ -55,19 +56,26 @@
     data: function() {
       return {
         isLoading: false,
+        isSyncing: false,
         nb_tracks: '',
       }
     },
     props: ['user'],
     methods: {
       sync: async function() {
-        this.isLoading = true
+        this.isSyncing = true
         let newTracks = await this.$store.dispatch('syncTracks', this.$props.user)
         if(newTracks) {
           this.$props.user.tracks.push(...newTracks)
         }
-        this.isLoading = false
+        this.isSyncing = false
       },
+    },
+    created: function() {
+      this.isLoading = true
+    },
+    mounted: function() {
+      this.isLoading = false
     },
   }
 </script>
@@ -81,6 +89,10 @@
     @include breakpoint(desktop) {
       flex-direction: row;
       padding-top: 10vh;
+    }
+    &.loader {
+      width: 50px;
+      height: 50px;
     }
     .nb-tracks {
       text-decoration: none;
