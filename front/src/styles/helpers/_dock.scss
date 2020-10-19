@@ -2,7 +2,9 @@
   position: fixed;
   z-index: $z-index-pages-ui;
   top: $header-height;
-  display: flex;
+  @include breakpoint(tablet) {
+    display: flex;
+  }
   align-items: center;
   justify-content: space-between;
   background-color: $header-bkg;
