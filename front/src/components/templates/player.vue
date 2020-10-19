@@ -329,6 +329,7 @@
       line-height: 140%;
       flex-grow: 2;
       top: 12px;
+      height: 12px;
       @include breakpoint(tablet) {
         height: 100%;
         justify-content: center;

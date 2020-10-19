@@ -1,7 +1,7 @@
 <template>
   <div class="search">
-    <input v-model="terms" class="search__input" type="search" placeholder="Search"/>
-    <i class="search__count counter">
+    <input v-model="terms" class="search__input" type="search" placeholder="Search" ref="searchInput" />
+    <i class="search__count counter" @click="resetSearch">
       {{ $store.getters.count }}
     </i>
     <button class="search__button" @click="toggle">
@@ -33,6 +33,11 @@
     methods: {
       search(terms) {
         this.$store.dispatch('filterTracks', {type: 'search', value: terms})
+      },
+      resetSearch() {
+        this.$refs.searchInput.value = ''
+        this.$refs.searchInput.focus()
+        this.$store.dispatch('filterTracks', {type: 'search', value: ''})
       },
       open() {
         this.$store.dispatch('ui', {type: 'nav', value: false})
