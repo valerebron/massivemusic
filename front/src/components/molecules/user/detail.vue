@@ -23,8 +23,8 @@
         see channel on youtube
       </a>
       <h3>
-        <router-link :to="'/user/'+$route.params.user_id+'/tracks'" class="link">
-          <b>{{ this.user.tracks.length }}</b> track
+        <router-link class="nb-tracks" :to="'/user/'+$route.params.user_id+'/tracks'" tag="button">
+          <b class="count">{{ this.user.tracks.length }}</b> track(s)
         </router-link>
       </h3>
       <h4>subscribed: {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
@@ -81,6 +81,12 @@
     @include breakpoint(desktop) {
       flex-direction: row;
       padding-top: 10vh;
+    }
+    .nb-tracks {
+      text-decoration: none;
+      .count {
+        margin-right: 10px;
+      }
     }
     &__name {
       display: flex;
