@@ -18,9 +18,16 @@ const state = {
   order: 'createdAt_DESC',
   filters: initial_filters,
   count: 0,
+  isLoading: false,
 }
 
 const mutations = {
+  SET_TRACK_LOADING(state) {
+    state.isLoading = true
+  },
+  SET_TRACK_NOT_LOADING(state) {
+    state.isLoading = false
+  },
   SET_TRACKS(state, tracks) {
     state.tracks = tracks
   },
@@ -106,6 +113,7 @@ const actions = {
           store.commit('SET_FILTER', filter)
         break
       }
+      store.commit('SET_TRACK_LOADING')
       let res = await window.apollo.query({
         variables: {
           search: store.state.filters.search,
@@ -172,15 +180,18 @@ const actions = {
           }
         `,
       }).catch((e) => {
+        store.commit('SET_TRACK_NOT_LOADING')
         console.log('%c●', 'color: red', 'filter error', e)
       })
       if(filter.type === 'skip') {
         store.commit('PUSH_TRACKS', res.data.tracks.tracks)
+        store.commit('SET_TRACK_NOT_LOADING')
       }
       else if(res) {
         window.scroll(0, 0)
         store.commit('SET_TRACKS', res.data.tracks.tracks)
         store.commit('SET_COUNT', res.data.tracks.count)
+        store.commit('SET_TRACK_NOT_LOADING')
       }
     }
   },
@@ -357,6 +368,7 @@ const getters = {
   user: state => state.user,
   count: state => state.count,
   tracksPerPage: state => state.tracksPerPage,
+  trackIsLoading: state => state.isLoading,
 }
 
 export default {

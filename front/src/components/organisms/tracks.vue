@@ -55,7 +55,7 @@
     <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
     <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
   </table>
-  <section v-else-if="isLoading" class="tracks">
+  <section v-else-if="$store.getters.trackIsLoading" class="tracks">
     <loader />
   </section>
   <section v-else class="no-track tracks">
@@ -105,11 +105,9 @@
       async load() {
         if(this.filter.type === 'favorites') {
           this.$store.dispatch('filterFavorites')
-          // this.isLoading = false
         }
         else {
           await this.$store.dispatch('filterTracks', this.filter)
-          // this.isLoading = false
         }
       },
       async update(event, track, type) {
@@ -156,13 +154,8 @@
       },
     },
     async mounted() {
-      this.isLoading = true
       this.$store.commit('RESET_FILTERS')
       await this.load()
-      this.isLoading = false
-    },
-    beforeUpdate() {
-      this.isLoading = true
     },
     updated() {
       this.load()
@@ -180,11 +173,11 @@
     }
     .loader {
       display: flex;
-      width: 22px;
-      height: 22px;
+      width: 60px;
+      height: 60px;
       position: fixed;
-      top: calc(50vh - 22px);
-      left: calc(50vw - 22px);
+      top: calc(50vh - 60px);
+      left: calc(50vw - 60px);
     }
     .track {
       cursor: default;
