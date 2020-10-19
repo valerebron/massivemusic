@@ -5,9 +5,9 @@
       <button @click="sync" v-if="user.role === 'ROBOT' && $store.getters.isAdmin" :class="'style-bkg-'+user.channel_style">
         <span class="user__sync-button">
           <icon-sync />
-          <loader :isLoading="isLoading"/>
+          <loader v-if="isLoading"/>
         </span>
-        <span class="typo-one-line">
+        <span class="typo-one-line sync-text">
           sync channel
         </span>
       </button>
@@ -102,6 +102,9 @@
         padding-left: 40px;
       }
     }
+      .sync-text {
+        margin-left: 12px;
+      }
     &__sync-button {
       .ion {
         .loading & {
