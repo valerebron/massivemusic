@@ -2,10 +2,15 @@
   <main class="users">
     <section class="user-list">
       <loader v-if="isLoading" />
-      <card v-for="user in users.filter(user => user.name.toLowerCase().includes(this.filterSearch.toLowerCase()))" :user="user" :key="user.id" />
+      <card v-for="user in usersFiltered" :user="user" :key="user.id" />
     </section>
     <aside class="dock">
-      <input class="search-filter" v-model="filterSearch" type="search" placeholder="search">
+      <label class="search-filter__label">
+        <input class="search-filter" v-model="filterSearch" type="search" placeholder="search">
+        <i class="counter">
+          {{ usersFiltered.length }}
+        </i>
+      </label>
       <checkbox @changeCheckbox="filterBots" :state="filterBotsState" @click="filterBots">
         youtube channels
       </checkbox>
@@ -30,6 +35,11 @@
         filterBotsState: false,
         filterSearch: '',
         isLoading: false,
+      }
+    },
+    computed: {
+      usersFiltered: function() {
+        return this.users.filter(user => user.name.toLowerCase().includes(this.filterSearch.toLowerCase()))
       }
     },
     methods: {
@@ -58,6 +68,17 @@
   .loader {
     width: 50px;
     height: 50px;
+  }
+  .search-filter {
+    border-radius: 20px;
+    &__label {
+      margin-right: 20px;
+      position: relative;
+    }
+    .counter {
+      background-color: white;
+      top: 18px;
+    }
   }
   .user-list {
     padding-top: $header-height;
