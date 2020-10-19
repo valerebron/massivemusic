@@ -192,5 +192,9 @@
         padding: 2px 6px;
       }
     }
+    &__createdAt {
+      flex-grow: 1;
+      text-align: right;
+    }
   }
 </style>

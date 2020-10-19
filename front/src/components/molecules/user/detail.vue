@@ -64,10 +64,12 @@
     methods: {
       sync: async function() {
         this.isSyncing = true
+        console.log('wait for new tracks')
         let newTracks = await this.$store.dispatch('syncTracks', this.$props.user)
         if(newTracks) {
           this.$props.user.tracks.push(...newTracks)
         }
+        console.log('done')
         this.isSyncing = false
       },
     },

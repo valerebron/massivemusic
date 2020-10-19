@@ -8,6 +8,8 @@ const history = require('connect-history-api-fallback')
 const prisma = new PrismaClient()
 const web = express()
 
+const syncBot = require('./syncBot')
+
 const Query = require('./resolvers/Query')
 const User = require('./resolvers/User')
 const Track = require('./resolvers/Track')
@@ -36,6 +38,15 @@ let options = {
   endpoint: '/'
 }
 
+// CRON
+setInterval(async () => { 
+  console.log('cron')
+  const bots = await prisma.user.findMany({where: {role: 'ROBOT'}})
+  await bots.map(async (bot) => {
+    await syncBot(bot, prisma)
+  })
+}, 40*60*1000)
+
 api.listen(options).then(() => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'api running on : http://localhost:'+env.API_PORT)
 })
@@ -45,4 +56,3 @@ web.use(express.static('../front/dist'))
 web.listen(parseInt(process.env.WEB_PORT), () => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'web running on http://localhost:'+env.WEB_PORT)
 })
-

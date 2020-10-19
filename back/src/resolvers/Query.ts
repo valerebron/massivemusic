@@ -70,8 +70,8 @@ module.exports = {
       orArray.push({ title: '' })
     }
     if(args.duration) {
-      orArray.push({ duration: { lte: 60 } })
-      orArray.push({ duration: { gte: 420 } })
+      orArray.push({ duration: { lte: parseInt(env.TRACK_MIN_DURATION) } })
+      orArray.push({ duration: { gte: parseInt(env.TRACK_MAX_DURATION) } })
     }
 
     let where = {}
@@ -113,14 +113,9 @@ module.exports = {
   searchTrack: async (parent, args, context, info) => {
     console.log('search tracks '+args.search)
     let videos = await usetube.searchVideo(args.search, args.token)
-    videos.tracks.forEach(function(video, index) {
-      if(video.duration > 480 || video.duration < 60) {
-        videos.tracks.splice(index, 1)
-      }
-      else {
-        video.title = cleanTitle(video.title)
-      }
-    })
+    videos.tracks = videos.tracks.filter(video => video.duration < parseInt(env.TRACK_MAX_DURATION) || video.duration > parseInt(env.TRACK_MIN_DURATION))
+    videos.tracks.forEach((video) => { video.title = cleanTitle(video.title) } )
+    console.log(videos)
     return videos
   },
   searchChannel: async (parent, args, context, info) => {

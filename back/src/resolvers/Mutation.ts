@@ -1,9 +1,8 @@
+const env = require('dotenv').config({ path: '../.env' }).parsed
 const crypto = require('crypto')
-const moment = require('moment')
-const usetube = require('usetube')
 const sharp = require('sharp')
 const mail = require('../mail/mail')
-const cleanTitle = require('../cleantitle')
+const syncBot = require('../syncBot')
 
 function isEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -260,62 +259,14 @@ export async function addBot(parent, args, context, info) {
   }
 }
 
-export async function syncBot(parent, args, context, info) {
+export async function syncFrontBot(parent, args, context, info) {
   const admin = await context.prisma.user.findOne({ where: { id: 1 } })
   const bot = await context.prisma.user.findOne({ where: { id: args.id }})
-  const botTracks = await context.prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
   if(args.token === admin.token || args.token === bot.token) {
-    console.log('\x1b[34m%s\x1b[0m', '●', 'sync channel '+bot.name)
-    var tracks = []
-    // 1 FIRST SCAN
-    if(botTracks === []) {
-      console.log('first Sync')
-      console.log('get all tracks')
-      tracks = await usetube.getChannelVideos(bot.channel_id)
-    }
-    // 2 UPDATE SCAN
-    else {
-      console.log('update Sync')
-      console.log('begin at '+bot.channel_last_sync_date)
-      tracks = await usetube.getChannelVideos(bot.channel_id, bot.channel_last_sync_date)
-    }
-    console.log('total tracks: '+tracks.length)
-    // 4 SAVE TRACKS TO BDD
-    if(tracks.length > 0) {
-      const createManyTracks = await tracks.map(async (track) => {
-        // delete BIG & SMALL tracks
-        if(track.duration > 480 || track.duration < 60) {
-          // save tracks
-          return await context.prisma.track.create({
-            data: {
-              yt_id: track.id,
-              title: cleanTitle(track.title),
-              artist: track.artist,
-              duration: track.duration,
-              Style: {
-                connect: { id: bot.channel_style },
-              },
-              User: {
-                connect: { id: bot.id },
-              },
-              pending: !bot.channel_enable_tracks,
-              invalid: false,
-              createdAt: track.publishedAt,
-            },
-          })
-        }
-      })
-      // update last sync date
-      await context.prisma.user.update({
-        where: { id: bot.id },
-        data: {
-          channel_last_sync_date: moment().toDate(),
-        },
-      }).catch(error=>{
-        console.log(error)
-      })
-    }
-    return tracks
+    syncBot(bot, context.prisma)
+  }
+  else {
+    console.log('bad token for sync')
   }
 }
 
@@ -473,10 +424,10 @@ export async function deleteAll(parent, args, context, info) {
         where = {
           OR: [
             {
-              duration: { lte: 60 }
+              duration: { lte: parseInt(env.TRACK_MIN_DURATION) }
             },
             {
-              duration: { gte: 480 }
+              duration: { gte: parseInt(env.TRACK_MAX_DURATION) }
             }
           ]
         }

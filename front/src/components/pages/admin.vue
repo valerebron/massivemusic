@@ -17,7 +17,6 @@
       <router-link class="enable" tag="button" to="/test" title="test all tracks">
         <icon-radio />
       </router-link>
-      <syncAll class="enable" title="sync all channels" />
       <button class="pending-tracks__unpending-all validate" @click="validateAll" :class="{'enable' : isValidatable }">
         <icon-valid/>
       </button>
@@ -31,13 +30,11 @@
 <script>
   import tracks from '@/components/organisms/tracks.vue'
   import checkbox from '@/components/atoms/checkbox'
-  import syncAll from '@/components/atoms/syncAll'
   export default {
     name: 'admin',
     components: {
       tracks,
       checkbox,
-      syncAll,
     },
     data: function() {
       return {

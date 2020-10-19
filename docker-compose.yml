@@ -16,7 +16,7 @@ services:
       - ./back/massivemusic.sql:/docker-entrypoint-initdb.d/init.sql
     restart: always
   app:
-    container_name: massivemusic_app
+    container_name: massivemusic
     depends_on:
       - db
     build: .

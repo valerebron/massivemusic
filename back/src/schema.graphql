@@ -113,7 +113,7 @@ type Mutation {
     channel_avatar_medium: String
     channel_avatar_high: String
   ): User
-  syncBot(
+  syncFrontBot(
     id: Int!
     token: String!
   ): [Track]

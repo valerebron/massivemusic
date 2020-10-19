@@ -208,7 +208,7 @@ const actions = {
         id: user.id,
       },
       mutation: gql`mutation($token: String!, $id: Int!) {
-        syncBot(token: $token, id: $id) {
+        syncFrontBot(token: $token, id: $id) {
           id
           yt_id
           title
@@ -232,15 +232,7 @@ const actions = {
     }).catch((e) => {
       console.log('%c●', 'color: red', 'sync error: ', e)
     })
-    return res ? res.data.syncBot : ''
-  },
-  async syncAllUsers(store) {
-    console.log('sync all users')
-    store.getters.users.map(async (user) => {
-      if(user.role === 'ROBOT') {
-        await store.dispatch('syncTracks', user)
-      }
-    })
+    return res ? res.data.syncFrontBot : ''
   },
   async addTrack(store, track) {
     window.apollo.mutate({
