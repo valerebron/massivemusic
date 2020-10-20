@@ -5,6 +5,9 @@
       <div v-if="error !== ''" class="error-dialog">
         {{ error }}
       </div>
+      <a v-if="$store.getters.isAdmin" :href="'https://www.youtube.com/watch?v='+newTrack.yt_id" target="_blank" class="edit-track__link">
+        check on youtube
+      </a>
       <input v-model="newTrack.yt_id" pattern="[a-zA-Z0-9_\-]{11}" type="text" class="item" placeholder="id">
       <styleSelector class="add-bots__style" :preSelected="newTrack.style"/>
       <input v-model="newTrack.artist" type="text" class="item" placeholder="artist" required @keydown.enter.prevent="edit()">
@@ -73,3 +76,14 @@
     },
   }
 </script>
+
+<style lang="scss">
+  .edit-track {
+    &__link {
+      padding: 8px;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+</style>

@@ -5,6 +5,9 @@
   @include breakpoint(tablet) {
     display: flex;
   }
+  .app[data-dialog='true'] & {
+    z-index: $z-index-zero;
+  }
   align-items: center;
   justify-content: space-between;
   background-color: $header-bkg;
