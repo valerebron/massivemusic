@@ -14,7 +14,7 @@ type Query {
   ): Tracks!
   styles: [Style!]!
   users(role: String): [User!]!
-  getContacts(token: String!): [Contact!]!
+  getMails(token: String!): mailsPayload!
   user(user_id: Int): User!
   searchTrack(search: String, token: String): tracksPayload
   searchChannel(search: String, token: String): channelsPayload
@@ -204,6 +204,19 @@ type Contact {
   id: Int!
   name: String!
   email: String!
+}
+
+type Mail {
+  id:        Int!
+  createdAt: DateTime!
+  subject:   String!
+  content:   String!
+  to:        String!
+}
+
+type mailsPayload {
+  mails: [Mail]
+  contacts: [Contact!]!
 }
 
 scalar DateTime

@@ -4,7 +4,7 @@
       <section class="mail__body">
         <div class="mail__form">
           <h2>
-            Massive Mail
+            Editor
           </h2>
           <header>
             <div>
@@ -29,7 +29,7 @@
           <main>
             <label for="content">content</label>
             <textarea v-model="mailContent" name="content" class="content" id="content" cols="30" rows="10" required></textarea>
-            <button class="style-bkg-11" @click="sendMail">
+            <button class="style-bkg-1" @click="sendMail">
               send
               <loader v-if="isLoading"/>
             </button>
@@ -71,13 +71,13 @@
                 <br />
                 <br />
                 <div class="styles">
-                  <a href="https://massivemusic.fr/dubstep" class="style__link style-bkg-11">
+                  <a href="https://massivemusic.fr/dubstep" class="style__link style-bkg-1">
                     DUBSTEP
                   </a>
-                  <a href="https://massivemusic.fr/drumandbass" class="style__link style-bkg-12">
+                  <a href="https://massivemusic.fr/drumandbass" class="style__link style-bkg-2">
                     DRUM & BASS
                   </a>
-                  <a href="https://massivemusic.fr/dub" class="style__link style-bkg-13">
+                  <a href="https://massivemusic.fr/dub" class="style__link style-bkg-3">
                     DUB
                   </a>
                 </div>
@@ -98,6 +98,37 @@
           </table>
         </aside>
       </section>
+      <section class="mail__archives">
+        <h2>
+          Archives
+        </h2>
+        <table>
+          <thead>
+            <th>
+              date
+            </th>
+            <th>
+              subject
+            </th>
+            <th>
+              to
+            </th>
+          </thead>
+          <tbody>
+            <tr v-for="mail in mails" :key="mail.id" @click="selectMail(mail)">
+              <td>
+                {{ Date.parse(mail.createdAt) | moment('from', 'now') }}
+              </td>
+              <td>
+                {{ mail.subject }}
+              </td>
+              <td>
+                {{ mail.to }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   </main>
 </template>
@@ -116,6 +147,7 @@
       return {
         to: { id: 0, name: 'All users', email: 'all@massivemusic.fr', role: 'USER' },
         contacts: [],
+        mails: [],
         contactsOpen: false,
         subject: '',
         mailContent: '',
@@ -125,26 +157,36 @@
       }
     },
     methods: {
-      getContacts: function() {
+      getMails: function() {
         this.$apollo.query({
           variables: {
             token: this.$store.getters.session.token,
           },
           query: gql`query($token: String!) {
-            getContacts(token: $token) {
-              id,
-              name,
-              email,
+            getMails(token: $token) {
+              mails {
+                id,
+                createdAt,
+                subject,
+                content,
+                to,
+              },
+              contacts {
+                id,
+                name,
+                email,
+              },
             }
           }`,
         }).then((res) => {
           // sort alphabetic order
-          this.contacts = res.data.getContacts.sort(function(a, b){
+          this.contacts = res.data.getMails.contacts.sort(function(a, b){
               if(a.name < b.name) { return -1; }
               if(a.name > b.name) { return 1; }
               return 0;
           })
           this.contacts.unshift(this.to)
+          this.mails = res.data.getMails.mails
           this.$refs.contacts.scrollTo(0, 0)
         }).catch((error) => {
           console.log(error)
@@ -184,10 +226,14 @@
             console.log('%c●', 'color: red', 'sendMail error: ', this.error)
           })
         }
-      }
+      },
+      selectMail: function(mail) {
+        this.subject = mail.subject
+        this.mailContent = mail.content
+      },
     },
     mounted: function() {
-      this.getContacts()
+      this.getMails()
     },
   }
 </script>
@@ -269,6 +315,18 @@
         padding: 4px 10px;
         margin-right: 14px;
         color: white;
+      }
+    }
+    &__archives {
+      td {
+        padding: 20px;
+        cursor: pointer;
+      }
+      tr {
+        &:hover {
+          color: black;
+          background-color: $primary-color;
+        }
       }
     }
     button {

@@ -41,7 +41,7 @@ let routes = [
   { name: 'mail', path: '/mail', component: pageMail },
 ]
 // should use store.getters.styles (unfortunatly can't add route async)
-const styles = [{"id":11,"name":"Dubstep","slug":"dubstep"},{"id":12,"name":"Drum & Bass","slug":"drumandbass"},{"id":13,"name":"Dub","slug":"dub"}]
+const styles = [{"id":1,"name":"Dubstep","slug":"dubstep"},{"id":2,"name":"Drum & Bass","slug":"drumandbass"},{"id":3,"name":"Dub","slug":"dub"}]
 styles.map(style => {
   routes.push(
     { name: 'style-'+style.id, path: '/'+style.slug, component: pageStyle, props: { styleId: style.id } }

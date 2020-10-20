@@ -87,37 +87,37 @@ input[type=range] {
     margin-top: -2px;
   }
   // thumb
-  .current-style-11 & {
+  .current-style-1 & {
     &::-moz-range-thumb {
-      background-color: $color-11;
+      background-color: $color-1;
     }
     &::-webkit-slider-thumb {
-      background-color: $color-11;
+      background-color: $color-1;
     }
     &::-ms-thumb {
-      background-color: $color-11;
+      background-color: $color-1;
     }
   }
-  .current-style-12 & {
+  .current-style-2 & {
     &::-moz-range-thumb {
-      background-color: $color-12;
+      background-color: $color-2;
     }
     &::-webkit-slider-thumb {
-      background-color: $color-12;
+      background-color: $color-2;
     }
     &::-ms-thumb {
-      background-color: $color-12;
+      background-color: $color-2;
     }
   }
-  .current-style-13 & {
+  .current-style-3 & {
     &::-moz-range-thumb {
-      background-color: $color-13;
+      background-color: $color-3;
     }
     &::-webkit-slider-thumb {
-      background-color: $color-13;
+      background-color: $color-3;
     }
     &::-ms-thumb {
-      background-color: $color-13;
+      background-color: $color-3;
     }
   }
   .current-style-14 & {

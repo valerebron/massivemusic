@@ -1,11 +1,11 @@
-.style-11 {
-  color: $color-11;
+.style-1 {
+  color: $color-1;
 }
-.style-12 {
-  color: $color-12;
+.style-2 {
+  color: $color-2;
 }
-.style-13 {
-  color: $color-13;
+.style-3 {
+  color: $color-3;
 }
 .style-14 {
   color: $color-14;
@@ -17,14 +17,14 @@
   color: $color-19;
 }
 
-.style-bkg-11, .style-bkg-11:focus, .style-bkg-11.track--playing {
-  background-color: darken($color-11, 8%);
+.style-bkg-1, .style-bkg-1:focus, .style-bkg-1.track--playing {
+  background-color: darken($color-1, 8%);
 }
-.style-bkg-12, .style-bkg-12:focus, .style-bkg-12.track--playing {
-  background-color: darken($color-12, 8%);
+.style-bkg-2, .style-bkg-2:focus, .style-bkg-2.track--playing {
+  background-color: darken($color-2, 8%);
 }
-.style-bkg-13, .style-bkg-13:focus, .style-bkg-13.track--playing {
-  background-color: darken($color-13, 8%);
+.style-bkg-3, .style-bkg-3:focus, .style-bkg-3.track--playing {
+  background-color: darken($color-3, 8%);
 }
 .style-bkg-14, .style-bkg-14:focus, .style-bkg-14.track--playing {
   background-color: darken($color-14, 8%);
@@ -36,19 +36,19 @@
   background-color: darken($color-19, 8%);
 }
 
-.style-hover-11 {
+.style-hover-1 {
   &.router-link-active, &:hover {
-    color: $color-11;
+    color: $color-1;
   }
 }
-.style-hover-12 {
+.style-hover-2 {
   &.router-link-active, &:hover {
-    color: $color-12;
+    color: $color-2;
   }
 }
-.style-hover-13 {
+.style-hover-3 {
   &.router-link-active, &:hover {
-    color: $color-13;
+    color: $color-3;
   }
 }
 .style-hover-14 {
@@ -67,19 +67,19 @@
   }
 }
 
-.style-hover-bkg-11 {
+.style-hover-bkg-1 {
   &.router-link-active, &::before, &:hover {
-    background-color: $color-11;
+    background-color: $color-1;
   }
 }
-.style-hover-bkg-12 {
+.style-hover-bkg-2 {
   &.router-link-active, &::before, &:hover {
-    background-color: $color-12;
+    background-color: $color-2;
   }
 }
-.style-hover-bkg-13 {
+.style-hover-bkg-3 {
   &.router-link-active, &::before, &:hover {
-    background-color: $color-13;
+    background-color: $color-3;
   }
 }
 .style-hover-bkg-14 {
@@ -102,17 +102,17 @@
   transition: all 0.3s;
   color: $primary-color;
   fill: $primary-color;
-  .route-style-11 & {
-    color: $color-11;
-    fill: $color-11;
+  .route-style-1 & {
+    color: $color-1;
+    fill: $color-1;
   }
-  .route-style-12 & {
-    color: $color-12;
-    fill: $color-12;
+  .route-style-2 & {
+    color: $color-2;
+    fill: $color-2;
   }
-  .route-style-13 & {
-    color: $color-13;
-    fill: $color-13;
+  .route-style-3 & {
+    color: $color-3;
+    fill: $color-3;
   }
   .route-style-14 & {
     color: $color-14;
@@ -132,17 +132,17 @@
   transition: all 0.3s;
   color: $primary-color;
   fill: $primary-color;
-  .current-style-11 & {
-    color: $color-11;
-    fill: $color-11;
+  .current-style-1 & {
+    color: $color-1;
+    fill: $color-1;
   }
-  .current-style-12 & {
-    color: $color-12;
-    fill: $color-12;
+  .current-style-2 & {
+    color: $color-2;
+    fill: $color-2;
   }
-  .current-style-13 & {
-    color: $color-13;
-    fill: $color-13;
+  .current-style-3 & {
+    color: $color-3;
+    fill: $color-3;
   }
   .current-style-14 & {
     color: $color-14;
@@ -161,14 +161,14 @@
 %appStyleBkgColor {
   transition: background-color 0.3s;
   background-color: $primary-color;
-  .route-style-11 & {
-    background-color: $color-11;
+  .route-style-1 & {
+    background-color: $color-1;
   }
-  .route-style-12 & {
-    background-color: $color-12;
+  .route-style-2 & {
+    background-color: $color-2;
   }
-  .route-style-13 & {
-    background-color: $color-13;
+  .route-style-3 & {
+    background-color: $color-3;
   }
   .route-style-14 & {
     background-color: $color-14;
@@ -184,14 +184,14 @@
 %currentStyleBkgColor {
   transition: background-color 0.3s;
   background-color: $primary-color;
-  .current-style-11 & {
-    background-color: $color-11;
+  .current-style-1 & {
+    background-color: $color-1;
   }
-  .current-style-12 & {
-    background-color: $color-12;
+  .current-style-2 & {
+    background-color: $color-2;
   }
-  .current-style-13 & {
-    background-color: $color-13;
+  .current-style-3 & {
+    background-color: $color-3;
   }
   .current-style-14 & {
     background-color: $color-14;
@@ -207,14 +207,14 @@
 %appStyleStroke {
   transition: stroke 0.3s;
   stroke: $primary-color;
-  .route-style-11 & {
-    stroke: $color-11;
+  .route-style-1 & {
+    stroke: $color-1;
   }
-  .route-style-12 & {
-    stroke: $color-12;
+  .route-style-2 & {
+    stroke: $color-2;
   }
-  .route-style-13 & {
-    stroke: $color-13;
+  .route-style-3 & {
+    stroke: $color-3;
   }
   .route-style-14 & {
     stroke: $color-14;
@@ -230,14 +230,14 @@
 %currentStyleStroke {
   transition: stroke 0.3s;
   stroke: $primary-color;
-  .current-style-11 & {
-    stroke: $color-11;
+  .current-style-1 & {
+    stroke: $color-1;
   }
-  .current-style-12 & {
-    stroke: $color-12;
+  .current-style-2 & {
+    stroke: $color-2;
   }
-  .current-style-13 & {
-    stroke: $color-13;
+  .current-style-3 & {
+    stroke: $color-3;
   }
   .current-style-14 & {
     stroke: $color-14;

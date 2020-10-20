@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Style {
-  id    Int    @id @default(autoincrement())
+  id    Int     @unique
   name  String
   slug  String
   Track Track[]
@@ -56,4 +56,13 @@ model User {
 
   Style     Style?    @relation(fields: [channel_style], references: [id])
   @@index([channel_style], name: "style")
+}
+
+model Mail {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  subject   String
+  content   String
+  to        String
 }

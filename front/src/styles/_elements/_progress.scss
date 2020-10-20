@@ -25,28 +25,28 @@ progress {
   // &::-webkit-progress-value {
   //   @extend %currentStyleBkgColor;
   // }
-  .current-style-11 & {
+  .current-style-1 & {
     &::-moz-progress-bar {
-      background-color: $color-11;
+      background-color: $color-1;
     }
     &::-webkit-progress-value {
-      background-color: $color-11;
+      background-color: $color-1;
     }
   }
-  .current-style-12 & {
+  .current-style-2 & {
     &::-moz-progress-bar {
-      background-color: $color-12;
+      background-color: $color-2;
     }
     &::-webkit-progress-value {
-      background-color: $color-12;
+      background-color: $color-2;
     }
   }
-  .current-style-13 & {
+  .current-style-3 & {
     &::-moz-progress-bar {
-      background-color: $color-13;
+      background-color: $color-3;
     }
     &::-webkit-progress-value {
-      background-color: $color-13;
+      background-color: $color-3;
     }
   }
   .current-style-14 & {

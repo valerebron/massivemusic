@@ -125,19 +125,29 @@ module.exports = {
     console.log('youtube channel desc query')
     return await usetube.getChannelDesc(args.id)
   },
-  getContacts: async (parent, args, context, info) => {
+  getMails: async (parent, args, context, info) => {
     const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
     if(args.token === admin.token) {
-      return await context.prisma.user.findMany({
+      const mails = await context.prisma.mail.findMany()
+      const contacts = await context.prisma.user.findMany({
         where: {
           role: 'USER'
         },
       })
+      return { mails, contacts }
     }
+    else { console.log('bad token for getmails') }
   },
   sendMail: async (parent, args, context, info) => {
     const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
     if(args.token === admin.token) {
+      await context.prisma.mail.create({
+        data: {
+          subject: args.subject,
+          content: args.content,
+          to: args.to,
+        },
+      })
       if(args.to === 'all@massivemusic.fr') {
         const users = await context.prisma.user.findMany({
           where: {
