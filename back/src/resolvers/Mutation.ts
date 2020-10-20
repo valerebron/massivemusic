@@ -379,6 +379,17 @@ export async function validatePost(parent, args, context, info) {
   }
 }
 
+export async function incrementPlayCount(parent, args, context, info) {
+  const track = await context.prisma.track.findOne({ where: { id: args.id } })
+  let playcount = track.playcount + 1
+  await context.prisma.track.update({ where: { id: args.id },
+    data: {
+      playcount: playcount
+    },
+  })
+  return playcount
+}
+
 export async function validateAll(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {

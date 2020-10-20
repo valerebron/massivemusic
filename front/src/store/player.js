@@ -92,7 +92,6 @@ const actions = {
     if(currentIndex > limit) {
       store.dispatch('filterTracks', { type: 'skip', value: '' })
     }
-
     if(track) {
       if(track.yt_id != playerTrack.yt_id) {
         store.dispatch('ui', {type: 'player', value: true})
@@ -103,6 +102,7 @@ const actions = {
           player.stopVideo()
           player.seekTo(0)
           player.loadVideoById(track.yt_id)
+          store.dispatch('incrementPlayCount', track)
         }, 333)
       }
       else {
@@ -119,7 +119,20 @@ const actions = {
     let firstTrack = store.getters.first
     store.commit('SET_TRACK', firstTrack)
     window.PLAYER.loadVideoById(firstTrack.yt_id)
-  }
+  },
+  incrementPlayCount(store, track) {
+    window.apollo.mutate({
+      variables: {
+        id: track.id,
+      },
+      mutation: gql`mutation($id: Int!) {
+        incrementPlayCount(id: $id)
+      }`,
+    })
+    .catch((error) => {
+      console.log('%c●', 'color: red', 'increment play count error: ', error)
+    })
+  },
 }
 
 const getters = {

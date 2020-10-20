@@ -117,6 +117,7 @@ type Mutation {
     id: Int!
     token: String!
   ): [Track]
+  incrementPlayCount(id: Int!): Int
 }
 
 type AuthPayload {

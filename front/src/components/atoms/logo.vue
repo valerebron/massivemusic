@@ -46,7 +46,6 @@ export default {
       padding-left: 8px;
       font-size: 14px;
       text-transform: uppercase;
-      transition: &ll 0.3s;
       .app--full & {
         color: $app-color!important;
       }
