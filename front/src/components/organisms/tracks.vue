@@ -29,26 +29,29 @@
         {{ Date.parse(track.createdAt) | moment('from', 'now') }}
       </td>
       <td class="track__actions">
-        <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
-          <icon-star-inline v-if="$store.getters.isFavorite(track)" />
-          <icon-star-outline v-else style="opacity: 0.5" />
+        <button class="track__actions__toggle-menu" @click.prevent="toggleActions">
+          ...
         </button>
-        <template v-if="isEditable">
-          <button class="edit" @click="openEdit(track)">
-            <icon-edit/>
+        <aside class="track__actions__menu">
+          <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
+            <icon-star-inline v-if="$store.getters.isFavorite(track)" />
+            <icon-star-outline v-else style="opacity: 0.5" />
           </button>
-          <button class="validate" @click="openValidate(track)">
-            <icon-valid/>
-          </button>
-          <button class="drop" @click="openDrop(track)">
-            <icon-trash/>
-          </button>
-        </template>
-      </td>
-      <td class="track__user">
-        <router-link :to="'/user/'+track.user.id+'/profile'" class="track__user__link" :title="track.user.name">
-          <avatar :user="track.user" size="small" />
-        </router-link>
+          <template v-if="isEditable">
+            <button class="edit" @click="openEdit(track)">
+              <icon-edit/>
+            </button>
+            <button class="validate" @click="openValidate(track)">
+              <icon-valid/>
+            </button>
+            <button class="drop" @click="openDrop(track)">
+              <icon-trash/>
+            </button>
+          </template>
+          <router-link tag="button" :to="'/user/'+track.user.id+'/profile'" class="track__user__link" :title="track.user.name">
+            <avatar :user="track.user" size="small" />
+          </router-link>
+        </aside>
       </td>
     </tr>
     <trackEdit v-if="isEditable && isEditOpen" :trackToEdit="trackToEdit" @closeEdit="closeEdit()" />
@@ -157,6 +160,17 @@
       },
       formatTime(time) {
         return window.formatTime(time)
+      },
+      toggleActions(event) {
+        let menu = event.target.nextSibling
+        let isOpen = menu.classList.contains('open')
+        document.querySelectorAll('.track__actions__menu').forEach(menu => menu.classList.remove('open'))
+        if(isOpen) {
+          menu.classList.remove('open')
+        }
+        else {
+          menu.classList.add('open')
+        }
       },
     },
     async mounted() {
@@ -277,15 +291,36 @@
           display: flex;
           border-radius: 40px;
           overflow: hidden;
-          width: 30px;
-          height: 30px;
         }
       }
       &__actions {
-        display: none;
         text-align: right;
-        @include breakpoint(tablet) {
-          display: table-cell;
+        position: relative;
+        &__toggle-menu {
+          @include breakpoint(tablet) {
+            display: none;
+          }
+        }
+        &__menu {
+          display: none;
+          position: fixed;
+          padding: 0;
+          right: 50px;
+          top: 0;
+          height: 56px;
+          background-color: black;
+          z-index: 200;
+          &.open {
+            display: inline-flex;
+            align-items: center;
+            button {
+              height: 100%;
+            }
+          }
+          @include breakpoint(tablet) {
+            display: inline-flex;
+            position: relative;
+          }
         }
         .toggle_favorite {
           cursor: pointer;
