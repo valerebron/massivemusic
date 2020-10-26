@@ -321,6 +321,7 @@
             display: inline-flex;
             position: relative;
             background-color: transparent;
+            right: 0;
           }
         }
         .toggle_favorite {
