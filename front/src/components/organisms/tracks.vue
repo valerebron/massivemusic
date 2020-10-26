@@ -320,6 +320,7 @@
           @include breakpoint(tablet) {
             display: inline-flex;
             position: relative;
+            background-color: transparent;
           }
         }
         .toggle_favorite {
