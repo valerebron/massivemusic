@@ -1,25 +1,10 @@
 stages:
-  - build
   - deploy
-build:
-  stage: build
-  image: node
-  script:
-    - sh dist.sh
-    - yarn global add @vue/cli @prisma/cli
-    - yarn install
-    - yarn build:front
-  artifacts:
-    untracked: true
-  cache:
-    key: massive-cache
-    paths:
-      - front/node_modules
 deploy:
   stage: deploy
-  tags: [shell]
-  dependencies:
-    - build
+  image: docker/compose
+  services:
+    - docker:dind
   before_script:
     - apk add openssh npm yarn
     - eval $(ssh-agent -s)
@@ -42,8 +27,14 @@ deploy:
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - export $(cat .env | xargs)
+    - yarn global add @vue/cli @prisma/cli
+    - yarn install
+    - yarn build:front
     - docker-compose build
     - docker-compose up -d
+  cache:
+    paths:
+      - node_modules/
   environment:
     name: review/$CI_COMMIT_REF_NAME
     url: $CI_ENDPOINT
