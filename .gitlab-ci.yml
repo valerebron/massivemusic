@@ -29,7 +29,7 @@ deploy:
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - export $(cat .env | xargs)
     - yarn install
-    - ls
+    - ls front/node_modules/.bin
     - pwd
     - front/node_modules/.bin/vue-cli-service build
     - docker-compose build
