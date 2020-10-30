@@ -7,7 +7,7 @@ deploy:
     - docker:dind
   before_script:
     - apk add openssh npm yarn
-    - yarn global add @vue/cli-service @prisma/cli
+    - yarn global add @vue/cli @prisma/cli
     - eval $(ssh-agent -s)
     - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
