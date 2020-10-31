@@ -17,10 +17,11 @@ services:
       MYSQL_DATABASE: ${DB_NAME}
     volumes:
       - /var/lib/${DB_NAME}/data:/var/lib/mysql
-      - ./back/massivemusic.sql:/docker-entrypoint-initdb.d/
+      - ${PWD}/back/massivemusic.sql:/docker-entrypoint-initdb.d/massivemusic.sql
     restart: always
   app:
     container_name: massivemusic
+    image: massivemusic
     depends_on:
       - db
     build: .
