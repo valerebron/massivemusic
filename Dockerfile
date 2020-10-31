@@ -6,7 +6,7 @@ WORKDIR $WEB_DIR
 
 COPY . .
 
-RUN yarn --cwd front
+RUN yarn deps
 RUN yarn build:front
 
 RUN yarn global add typescript
