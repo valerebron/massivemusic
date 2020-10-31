@@ -5,6 +5,9 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
+CREATE DATABASE `massivemusic` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `massivemusic`;
+
 SET NAMES utf8mb4;
 
 DROP TABLE IF EXISTS `Mail`;
@@ -8770,4 +8773,4 @@ CREATE TABLE `_Migration` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
--- 2020-10-20 13:12:51
+-- 2020-10-31 13:55:56
