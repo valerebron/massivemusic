@@ -6,7 +6,10 @@ WORKDIR $WEB_DIR
 
 COPY . .
 
+RUN export $(cat .env | xargs)
 RUN yarn deps
+RUN sed -i "s|NODE_ENV=development|NODE_ENV=production|g" .env
+RUN export $(cat .env | xargs)
 RUN yarn build:front
 
 RUN yarn global add typescript
