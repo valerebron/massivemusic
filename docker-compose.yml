@@ -1,6 +1,10 @@
 version: '3'
 
 services:
+  adminer:
+    image: adminer
+    ports:
+    - 8888:8080
   db:
     container_name: massivemusic_db
     image: mysql:5.7
