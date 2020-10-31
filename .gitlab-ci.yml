@@ -28,6 +28,7 @@ deploy:
     - export $(cat .env | xargs)
     - cd front && yarn
     - NODE_ENV=production
+    - pwd
     - yarn build:front
     - docker-compose build
     - docker-compose up -d
