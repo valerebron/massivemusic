@@ -28,7 +28,7 @@ deploy:
     - export $(cat .env | xargs)
     - yarn install:front
     - NODE_ENV=production
-    - yarn build:front
+    - cd front && yarn
     - docker-compose build
     - docker-compose up -d
   cache:
