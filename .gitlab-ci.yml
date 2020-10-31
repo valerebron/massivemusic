@@ -22,13 +22,12 @@ deploy:
     - sed -i "s|$ENDPOINT|$CI_ENDPOINT|g" .env
     - sed -i "s|MAIL_USER=test@massivemusic.fr|MAIL_USER=contact@massivemusic.fr|g" .env
     - sed -i "s|MAIL_PASS=test@massivemusic.fr|MAIL_PASS=$CI_MAIL_PASS|g" .env
-    - sed -i "s|NODE_ENV=development|NODE_ENV=production|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - export $(cat .env | xargs)
-    - yarn add global @vue/cli @vue/cli-service @vue/cli-plugin-babel @vue/cli-plugin-eslint @prisma/cli @vue/cli-plugin-pwa
     - yarn install
+    - NODE_ENV=production
     - yarn build:front
     - docker-compose build
     - docker-compose up -d
