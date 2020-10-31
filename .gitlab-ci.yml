@@ -7,7 +7,7 @@ deploy:
     - docker:dind
   before_script:
     - apk add openssh npm yarn
-    - yarn add global @vue/cli @prisma/cli
+    - yarn add global @vue/cli @vue/cli-service @prisma/cli
     - eval $(ssh-agent -s)
     - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -29,9 +29,7 @@ deploy:
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - export $(cat .env | xargs)
     - yarn install
-    - cd front && yarn add @vue/cli-service && ./node_modules/.bin/vue-cli-service build
-    - ls front/node_modules/.bin
-    - pwd
+    - ./node_modules/.bin/vue-cli-service build
     - docker-compose build
     - docker-compose up -d
   cache:
