@@ -6,7 +6,7 @@ deploy:
   services:
     - docker:dind
   before_script:
-    - apk add openssh npm yarn
+    - apk add openssh
     - eval $(ssh-agent -s)
     - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
@@ -25,10 +25,7 @@ deploy:
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
-    - export $(cat .env | xargs)
-    - yarn install
-    - NODE_ENV=production
-    - yarn build
+    - docker-compose build
     - docker-compose up -d
   cache:
     paths:

@@ -1,17 +1,15 @@
-FROM node:stretch-slim
+FROM node:alpine
 
 ENV WEB_DIR /var/www/localhost
 RUN mkdir -p $WEB_DIR
 WORKDIR $WEB_DIR
 
-RUN apt update && \
-    apt upgrade -y && \
-    apt -qy install openssl && \
-    yarn global add typescript
+COPY . .
 
-COPY front/dist ./front/dist
-COPY back ./back
-COPY .env .
-COPY package.json .
+RUN yarn --cwd front
+RUN yarn build:front
 
-CMD yarn generate && cd back && npx ts-node src/index.ts
+RUN yarn global add typescript
+RUN yarn generate
+
+CMD cd back && npx ts-node src/index.ts
