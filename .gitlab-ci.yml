@@ -26,8 +26,8 @@ deploy:
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - export $(cat .env | xargs)
-    - yarn install
-    # - NODE_ENV=production
+    - yarn install:front
+    - NODE_ENV=production
     - yarn build:front
     - docker-compose build
     - docker-compose up -d
