@@ -27,7 +27,7 @@ deploy:
     - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - export $(cat .env | xargs)
     - yarn install
-    - NODE_ENV=production
+    # - NODE_ENV=production
     - yarn build:front
     - docker-compose build
     - docker-compose up -d
