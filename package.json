@@ -3,7 +3,7 @@
   "version": "4.0.0",
   "private": true,
   "scripts": {
-    "install": "cd back && yarn && cd ../front && yarn",
+    "install": "yarn --cwd front && yarn --cwd back",
     "generate": "cd back && npx prisma generate",
     "build:front": "cd front && npx vue-cli-service build",
     "build:back": "yarn generate && docker-compose build",
