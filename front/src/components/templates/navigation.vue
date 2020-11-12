@@ -138,7 +138,6 @@ export default {
     width: $nav-width;
   }
   &__link {
-    text-shadow: 0 0 1px black;
     flex-grow: 1;
     display: flex;
     color: $app-color;
@@ -194,6 +193,7 @@ export default {
     }
     &:hover,
     &.router-link-exact-active {
+      color: black;
       background-color: $app-bkg;
       cursor: default;
     }
