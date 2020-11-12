@@ -230,14 +230,14 @@
       }
       background-color: transparent;
       .play {
-        display: block;
+        display: flex;
       }
       .pause {
         display: none;
       }
       &--playing {
         &.track {
-          .track__title, .track__index, .track__play .ion, .track__artist, .track__actions__toggle-menu {
+          .track__title, .track__index, .track__play .ion, .track__artist, .track__createdat, .track__actions__toggle-menu {
            color: black;
           }
           .player-playing & {
@@ -245,7 +245,7 @@
               display: none;
             }
             .pause {
-              display: block;
+              display: flex;
             }
           }
         }
@@ -267,6 +267,9 @@
       }
       &__play {
         padding: 6px;
+        .play {
+          display: flex;
+        }
       }
       &__index {
         text-align: center;
