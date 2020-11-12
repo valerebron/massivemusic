@@ -1,7 +1,7 @@
 <template>
   <main class="admin">
     <tracks :filter="{ type: 'style', value: 0 }"/>
-    <aside class="dock">
+    <aside class="dock" :class="{ 'dock--mobile-open' : isDockMobileOpen }">
       <checkbox @changeCheckbox="filter($event, 'pending')" class="pending" ref="pending">
         pending
       </checkbox>
@@ -24,6 +24,9 @@
         <icon-trash/>
       </button>
     </aside>
+    <button class="dock-toggle enable" @click="toggleDock()">
+      <icon-settings/>
+    </button>
   </main>
 </template>
 
@@ -40,6 +43,7 @@
       return {
         isValidatable: false,
         isDeletable: false,
+        isDockMobileOpen: false,
         selectedFilter: '',
       }
     },
@@ -68,6 +72,9 @@
         if(event.target.classList.contains('enable')) {
           this.$store.dispatch('deleteAll', this.selectedFilter)
         }
+      },
+      toggleDock() {
+        this.isDockMobileOpen = !this.isDockMobileOpen
       },
     },
     mounted() {

@@ -56,3 +56,5 @@ import iconSync from 'vue-ionicons/dist/md-flash.vue'
 Vue.component('icon-sync', iconSync)
 import iconMail from 'vue-ionicons/dist/md-mail.vue'
 Vue.component('icon-mail', iconMail)
+import iconSettings from 'vue-ionicons/dist/md-settings.vue'
+Vue.component('icon-settings', iconSettings)

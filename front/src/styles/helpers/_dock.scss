@@ -2,8 +2,12 @@
   position: fixed;
   z-index: $z-index-pages-ui;
   top: $header-height;
+  display: none;
   @include breakpoint(tablet) {
     display: flex;
+  }
+  &--mobile-open {
+    display: block;
   }
   .app[data-dialog='true'] & {
     z-index: $z-index-zero;
@@ -27,5 +31,16 @@
     .checkbox {
       margin: 0 8px;
     }
+  }
+}
+
+.dock-toggle {
+  position: fixed;
+  display: block;
+  right: 0;
+  z-index: $z-index-pages-ui;
+  top: $header-height;
+  @include breakpoint(tablet) {
+    display: none;
   }
 }
