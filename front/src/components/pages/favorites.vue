@@ -1,6 +1,6 @@
 <template>
   <main class="favorites">
-    <tracks :filter="{ type: 'favorites', value: Date.now() }"/>
+    <tracks v-if="!$store.getters.isFavoritesNull" :filter="{ type: 'favorites', value: Date.now() }"/>
   </main>
 </template>
 

@@ -30,6 +30,9 @@ const getters = {
   favorites(state) {
     return state.tracks
   },
+  isFavoritesNull(state) {
+    return state.tracks.length === 0
+  },
   isFavorite(state) {
     return function(track) {
       return state.tracks.some(favorite => favorite.yt_id === track.yt_id)
