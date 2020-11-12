@@ -58,3 +58,7 @@ import iconMail from 'vue-ionicons/dist/md-mail.vue'
 Vue.component('icon-mail', iconMail)
 import iconSettings from 'vue-ionicons/dist/md-settings.vue'
 Vue.component('icon-settings', iconSettings)
+import iconPlay from 'vue-ionicons/dist/md-play.vue'
+Vue.component('icon-play', iconPlay)
+import iconPause from 'vue-ionicons/dist/md-pause.vue'
+Vue.component('icon-pause', iconPause)

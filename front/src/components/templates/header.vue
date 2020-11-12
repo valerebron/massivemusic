@@ -78,6 +78,9 @@
         @include breakpoint('tablet') {
           display: flex;
         }
+        .app[class*='route-style-'] & {
+          color: black;
+        }
       }
     }
     .nav-toggle, .logo__name, .search__button svg {

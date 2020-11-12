@@ -10,11 +10,12 @@
       }, 'style-bkg-'+track.style.id]"
       :key="track.yt_id"
     >
+      <td :class="'track__play style-'+track.style.id" @click="forcePlay(track)">
+        <icon-play class="play" />
+        <icon-pause class="pause" />
+      </td>
       <td :class="'track__index style-'+track.style.id" @click="forcePlay(track)">
         {{ index + 1 }}
-      </td>
-      <td :class="'track__dot style-'+track.style.id" @click="play(track)">
-        ‧
       </td>
       <td :class="'track__title style-'+track.style.id" @click="play(track)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
@@ -217,9 +218,9 @@
       border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
       height: 50px;
       filter: grayscale(0);
-      transition: all 0.2s;
+      // transition: all 0.2s;
       &:hover {
-        background-color: $color-selection;
+        filter: brightness(1.3);
       }
       &:active {
         opacity: 0.5;
@@ -228,10 +229,24 @@
         background-color: $color-selection;
       }
       background-color: transparent;
+      .play {
+        display: block;
+      }
+      .pause {
+        display: none;
+      }
       &--playing {
-        .track {
-          &__title, &__dot, &__index {
-           color: white;
+        &.track {
+          .track__title, .track__index, .ion, .track__artist {
+           color: black;
+          }
+          .player-playing & {
+            .play {
+              display: none;
+            }
+            .pause {
+              display: block;
+            }
           }
         }
       }
@@ -249,6 +264,9 @@
         opacity: 0.5;
         height: 0;
         display: none;
+      }
+      &__play {
+        padding: 6px;
       }
       &__index {
         text-align: center;

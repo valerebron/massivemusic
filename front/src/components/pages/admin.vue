@@ -62,6 +62,7 @@
         // manage buttons enable
         this.isDeletable = checked
         this.isValidatable = (checked && type === 'pending') ? true : false
+        this.isDockMobileOpen = false
       },
       validateAll(event) {
         if(event.target.classList.contains('enable')) {
