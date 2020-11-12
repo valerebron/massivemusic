@@ -97,7 +97,9 @@
     padding: 0 12px;
   }
   .tracks {
-    margin-top: $header-height+55!important;
+    @include breakpoint(tablet) {
+      margin-top: $header-height+55!important;
+    }
   }
 }
 </style>
