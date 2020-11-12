@@ -237,7 +237,7 @@
       }
       &--playing {
         &.track {
-          .track__title, .track__index, .ion, .track__artist {
+          .track__title, .track__index, .track__play .ion, .track__artist {
            color: black;
           }
           .player-playing & {
