@@ -4,7 +4,7 @@
       <loader v-if="isLoading" />
       <card v-for="user in usersFiltered" :user="user" :key="user.id" />
     </section>
-    <aside class="dock">
+    <aside class="dock" :class="{ 'dock--mobile-open' : isDockMobileOpen }">
       <label class="search-filter__label">
         <input class="search-filter" v-model="filterSearch" type="search" placeholder="search">
         <i class="counter">
@@ -15,6 +15,9 @@
         youtube channels
       </checkbox>
     </aside>
+    <button class="dock-toggle enable" @click="isDockMobileOpen = !isDockMobileOpen">
+      <icon-settings/>
+    </button>
   </main>
 </template>
 
@@ -34,6 +37,7 @@
         users: [],
         filterBotsState: false,
         filterSearch: '',
+        isDockMobileOpen: false,
         isLoading: false,
       }
     },
@@ -70,6 +74,7 @@
     height: 50px;
   }
   .search-filter {
+    color: black;
     border-radius: 20px;
     &__label {
       margin-right: 20px;

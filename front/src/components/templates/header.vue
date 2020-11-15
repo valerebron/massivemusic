@@ -47,7 +47,8 @@
 <style lang="scss">
   .header {
     @extend %appStyleBkgColor;
-    background-color: $header-bkg;
+    background-color: $app-bkg;
+    // background-color: $header-bkg;
     box-shadow: $app-bkg 0 0 30px;
     position: fixed;
     z-index: $z-index-header;

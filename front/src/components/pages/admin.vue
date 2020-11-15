@@ -14,17 +14,19 @@
       <checkbox @changeCheckbox="filter($event, 'duration')" class="duration">
         big / small tracks
       </checkbox>
-      <router-link class="enable" tag="button" to="/test" title="test all tracks">
-        <icon-radio />
-      </router-link>
-      <button class="pending-tracks__unpending-all validate" @click="validateAll" :class="{'enable' : isValidatable }">
-        <icon-valid/>
-      </button>
-      <button class="pending-tracks__unpending-all drop" @click="deleteAll" :class="{'enable' : isDeletable }">
-        <icon-trash/>
-      </button>
+      <div>
+        <router-link class="enable" tag="button" to="/test" title="test all tracks">
+          <icon-radio />
+        </router-link>
+        <button class="pending-tracks__unpending-all validate" @click="validateAll" :class="{'enable' : isValidatable }">
+          <icon-valid/>
+        </button>
+        <button class="pending-tracks__unpending-all drop" @click="deleteAll" :class="{'enable' : isDeletable }">
+          <icon-trash/>
+        </button>
+      </div>
     </aside>
-    <button class="dock-toggle enable" @click="toggleDock()">
+    <button class="dock-toggle enable" @click="isDockMobileOpen = !isDockMobileOpen">
       <icon-settings/>
     </button>
   </main>
@@ -74,9 +76,6 @@
           this.$store.dispatch('deleteAll', this.selectedFilter)
         }
       },
-      toggleDock() {
-        this.isDockMobileOpen = !this.isDockMobileOpen
-      },
     },
     mounted() {
       if(!this.$store.getters.isAdmin) {
@@ -100,6 +99,15 @@
   .tracks {
     @include breakpoint(tablet) {
       margin-top: $header-height+55!important;
+    }
+  }
+  .dock--mobile-open {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 0;
+    @include breakpoint(tablet) {
+      display: block;
     }
   }
 }

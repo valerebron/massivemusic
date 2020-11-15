@@ -7,16 +7,16 @@
     display: flex;
   }
   &--mobile-open {
-    display: block;
+    display: flex;
   }
   .app[data-dialog='true'] & {
     z-index: $z-index-zero;
   }
   align-items: center;
   justify-content: space-between;
-  background-color: $header-bkg;
+  background-color: $app-bkg;
+  box-shadow: $app-bkg 0 0 30px;
   padding: 2px 16px;
-  margin-left: 20px;
   border-radius: 0 0 20px 20px;
   button {
     cursor: normal;

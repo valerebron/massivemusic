@@ -279,8 +279,6 @@
       text-transform: uppercase;
       margin-top: 8px;
       width: 100%;
-      color: black;
-      @extend %appStyleBkgColor;
       border-radius: 0 0 10px 10px;
       &:hover {
         color: $app-color;

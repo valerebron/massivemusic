@@ -23,7 +23,7 @@
         see channel on youtube
       </a>
       <h3>
-        <router-link class="nb-tracks" :to="'/user/'+$route.params.user_id+'/tracks'" tag="button">
+        <router-link class="nb-tracks" :class="'style-bkg-'+user.channel_style" :to="'/user/'+$route.params.user_id+'/tracks'" tag="button">
           <b class="count">{{ this.user.tracks.length }}</b> track(s)
         </router-link>
       </h3>
