@@ -46,7 +46,7 @@
 
 <style lang="scss">
   .header {
-    @extend %appStyleBkgColor;
+    // @extend %appStyleBkgColor;
     background-color: $app-bkg;
     // background-color: $header-bkg;
     box-shadow: $app-bkg 0 0 30px;
@@ -87,7 +87,7 @@
     .nav-toggle, .logo__name, .search__button svg {
       color: $app-color;
       body[class*="route-style"] & {
-        color: black;
+        // color: black;
       }
     }
     .nav-toggle, .search__button {

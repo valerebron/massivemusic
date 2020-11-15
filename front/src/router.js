@@ -26,7 +26,7 @@ let routes = [
   { name: 'favorites', path: '/favorites', component: pageFavorites },
   { name: 'login', path: '/login', component: pageLogin },
   { name: 'add-tracks', path: '/add-tracks', component: pageAddTracks },
-  { name: 'add-tracks', path: '/add-tracks/:init_query', component: pageAddTracks },
+  { name: 'add-tracks-query', path: '/add-tracks/:init_query', component: pageAddTracks },
   { name: 'add-bots', path: '/add-bots', component: pageAddBots },
   { name: 'my-tracks', path: '/my-tracks', component: pageMyTracks },
   { name: 'signup', path: '/signup', component: pageLogin },
