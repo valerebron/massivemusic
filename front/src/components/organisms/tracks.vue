@@ -14,6 +14,9 @@
         <icon-play class="play" />
         <icon-pause class="pause" />
       </td>
+      <!-- <td class="track__img">
+        <img :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title">
+      </td> -->
       <td :class="'track__index style-'+track.style.id" @click="forcePlay(track)">
         {{ index + 1 }}
       </td>
@@ -237,6 +240,7 @@
         &.track {
           .track__title, .track__index, .track__play .ion, .track__artist, .track__createdat, .track__actions__toggle-menu {
            color: black;
+           font-weight: bold;
           }
           .player-playing & {
             .play {
@@ -267,6 +271,14 @@
         padding: 6px;
         .play {
           display: flex;
+        }
+      }
+      &__img {
+        height: 30px;
+        width: 30px;
+        img {
+          height: 30px;
+          width: 30px;
         }
       }
       &__index {
