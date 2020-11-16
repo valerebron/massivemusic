@@ -81,9 +81,6 @@
       if(!this.$store.getters.isAdmin) {
         this.$router.push('home')
       }
-      else {
-        document.querySelector('.pending.checkbox input').click()
-      }
     },
   }
 </script>
