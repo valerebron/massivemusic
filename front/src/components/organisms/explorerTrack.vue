@@ -10,6 +10,9 @@
         @keydown.enter="search()"
       />
     </li>
+    <li class="typo-center" v-if="didyoumean !== '' && didyoumean" @click="didyoumeanSearch">
+      Did you mean : <b> {{ didyoumean }}</b> ?
+    </li>
     <li
       v-for="(track, index) in tracks"
       class="track"
@@ -17,24 +20,19 @@
       @click="send(track)"
       :key="index"
     >
-      <div class="typo-center" v-if="track.id === 'didyoumean'">
-        Did you mean : <b> {{ track.title }}</b> ?
-      </div>
-      <template v-else>
-        <span class="track__index">{{ index + 1 }}</span>
-        <figure class="track__thumb">
-          <img
-            class="track__thumb__pic"
-            :src="'https://i.ytimg.com/vi/'+track.id+'/mqdefault.jpg'"
-          />
-          <figcaption class="track__thumb__cap">
-            {{ formatSeconds(track.duration) }}
-          </figcaption>
-        </figure>
-        <span class="track__artist typo-one-line">{{ track.artist }}</span>
-        <span class="track__title typo-one-line">{{ track.title }}</span>
-        <span class="track__createdAt typo-one-line">{{ track.publishedAt }}</span>
-      </template>
+      <span class="track__index">{{ index + 1 }}</span>
+      <figure class="track__thumb">
+        <img
+          class="track__thumb__pic"
+          :src="'https://i.ytimg.com/vi/'+track.id+'/mqdefault.jpg'"
+        />
+        <figcaption class="track__thumb__cap">
+          {{ formatSeconds(track.duration) }}
+        </figcaption>
+      </figure>
+      <span class="track__artist typo-one-line">{{ track.artist }}</span>
+      <span class="track__title typo-one-line">{{ track.title }}</span>
+      <span class="track__createdAt typo-one-line">{{ track.publishedAt }}</span>
     </li>
     <!-- <li>
       <button class="explorer__more" @click="more()" v-if="query !== ''">more</button>
@@ -63,6 +61,7 @@
         token: '',
         isNewQuery: false,
         isLoading: false,
+        didyoumean: '',
       }
     },
     computed: {
@@ -100,7 +99,9 @@
             }`,
           }).then((res) => {
             if(this.token === '') {
+              console.log(res.data)
               this.tracks = (res.data.searchTrack.tracks[0].duration ? res.data.searchTrack.tracks : [])
+              this.didyoumean = (res.data.searchTrack ? res.data.searchTrack.didyoumean : '')
             }
             else {
               this.tracks.concat(res.data.searchTrack.tracks)
@@ -128,15 +129,13 @@
       },
       send(track) {
         if(track) {
-          if(track.id === 'didyoumean') {
-            this.query = track.title
-            this.search()
-          }
-          else {
-            this.$emit('clickOnTrack', track)
-          }
+          this.$emit('clickOnTrack', track)
         }
-      }
+      },
+      didyoumeanSearch() {
+        this.query = this.didyoumean
+        this.search()
+      },
     },
     mounted: function() {
       this.input.focus()

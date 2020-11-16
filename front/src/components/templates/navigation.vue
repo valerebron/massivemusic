@@ -197,16 +197,6 @@ export default {
       background-color: white;
       cursor: default;
     }
-    &:first-child {
-      @include breakpoint(tablet) {
-        padding-top: 20px!important;
-      }
-    }
-    &:last-child {
-      @include breakpoint(tablet) {
-        padding-bottom: 26px!important;
-      }
-    }
   }
 }
 </style>

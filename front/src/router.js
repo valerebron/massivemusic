@@ -32,9 +32,9 @@ let routes = [
   { name: 'signup', path: '/signup', component: pageLogin },
   { name: 'users', path: '/users', component: pageUsers },
   { name: 'user', path: '/user/:user_id', component: pageUser, children: [
-    { path: 'profile', component: pageProfile },
-    { path: 'edit', component: pageEditProfile },
-    { path: 'tracks', component: pageUserTracks },
+    { name: 'user-profile', path: 'profile', component: pageProfile },
+    { name: 'user-edit', path: 'edit', component: pageEditProfile },
+    { name: 'user-tracks', path: 'tracks', component: pageUserTracks },
   ] },
   { name: 'test', path: '/test', component: pageTest },
   { name: 'recover-password', path: '/passwd/:token/:email', component: pageRecover },

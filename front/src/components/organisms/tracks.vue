@@ -38,7 +38,7 @@
             <icon-star-inline v-if="$store.getters.isFavorite(track)" />
             <icon-star-outline v-else style="opacity: 0.5" />
           </button>
-          <template v-if="isEditable">
+          <template v-if="isEditable || isMyPage">
             <button class="edit" @click="openEdit(track)">
               <icon-edit/>
             </button>
@@ -55,9 +55,9 @@
         </aside>
       </td>
     </tr>
-    <trackEdit v-if="isEditable && isEditOpen" :trackToEdit="trackToEdit" @closeEdit="closeEdit()" />
-    <trackValidate v-if="isEditable && isValidateOpen" :track="trackToValidate" @closeValidate="closeValidate()" />
-    <trackDrop v-if="isEditable && isDropOpen" :track="trackToDrop" @closeDrop="closeDrop()" />
+    <trackEdit v-if="(isEditable || isMyPage) && isEditOpen" :trackToEdit="trackToEdit" @closeEdit="close()" />
+    <trackValidate v-if="(isEditable || isMyPage) && isValidateOpen" :track="trackToValidate" @closeValidate="close()" />
+    <trackDrop v-if="(isEditable || isMyPage) && isDropOpen" :track="trackToDrop" @closeDrop="close()" />
   </table>
   <section v-else-if="$store.getters.trackIsLoading" class="tracks">
     <loader />
@@ -88,10 +88,13 @@
         get(){ return this.$store.getters.tracks },
       },
       isEditable: {
-        get(){ return this.$route.params.user_id === 'me' || this.$route.name === 'admin' || this.$route.name === 'invalid-tracks' || this.$route.name === 'pending-tracks' },
+        get(){ return this.$route.name === 'admin' || this.$route.name === 'invalid-tracks' || this.$route.name === 'pending-tracks' },
       },
       isFavoritable: {
         get(){ return this.$route.name !== 'invalid-tracks' && this.$route.name !== 'pending-tracks' },
+      },
+      isMyPage: {
+        get(){ return this.$route.params.user_id === 'me' }
       },
     },
     data: function() {
@@ -128,31 +131,26 @@
         await this.$store.dispatch('editTrack', this.trackToEdit)
       },
       openEdit(track) {
+        this.close()
         Object.assign(this.trackToEdit, track)
         this.isEditOpen = true
         this.$store.dispatch('modal', true)
       },
-      closeEdit() {
-        this.$store.dispatch('modal', false)
-        this.isEditOpen = false
-      },
       openDrop(track) {
+        this.close()
         this.trackToDrop = track
         this.isDropOpen = true
         this.$store.dispatch('modal', true)
       },
-      closeDrop() {
-        this.$store.dispatch('modal', false)
-        this.isDropOpen = false
-      },
       openValidate(track) {
+        this.close()
         this.trackToValidate = track
         this.isValidateOpen = true
         this.$store.dispatch('modal', true)
       },
-      closeValidate() {
+      close() {
         this.$store.dispatch('modal', false)
-        this.isValidateOpen = false
+        this.isEditOpen = this.isDropOpen = this.isValidateOpen =  false
       },
       search(terms) {
         if(!this.isEditable) {

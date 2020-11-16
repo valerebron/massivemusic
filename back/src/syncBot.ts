@@ -19,7 +19,7 @@ async function syncBot(bot, prisma) {
   else {
     console.log('update Sync')
     console.log('begin at '+bot.channel_last_sync_date)
-    tracks = await usetube.getChannelVideos(bot.channel_id, bot.channel_last_sync_date)
+    tracks = await usetube.getChannelVideos(bot.channel_id, new Date(bot.channel_last_sync_date))
   }
   // 3 DELETE BIG & SMALL TRACKS
   tracks = tracks.filter(track => track.duration < parseInt(env.TRACK_MAX_DURATION) || track.duration > parseInt(env.TRACK_MIN_DURATION))

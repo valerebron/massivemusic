@@ -7,8 +7,6 @@ dialog {
   top: 0;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 200ms;
-  transition: all .2s;
   position: fixed;
   z-index: $z-index-dialog;
   justify-content: center;
@@ -17,7 +15,7 @@ dialog {
   padding: 0;
   margin: 0!important;
   border: none;
-  transition: all .3s;
+  transition: all .3s!important;
   background-color: transparent;
   &:target, .app[data-dialog='true'] & {
     pointer-events: all;

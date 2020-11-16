@@ -126,13 +126,15 @@ type AuthPayload {
 }
 
 type tracksPayload {
-  token: String
   tracks: [Video]
+  didyoumean: String
+  token: String
 }
 
 type channelsPayload {
-  token: String
   channels: [Channel]
+  didyoumean: String
+  token: String
 }
 
 type AuthPayload {

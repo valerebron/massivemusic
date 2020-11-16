@@ -10,26 +10,24 @@
         @keydown.enter="search"
       />
     </li>
+    <li class="typo-center" v-if="didyoumean !== ''">
+      Did you mean : <b> {{ didyoumean }}</b> ?
+    </li>
     <li v-for="(channel, index) in channels" class="channel" :key="index" @click="send(channel)">
-      <div class="typo-center" v-if="channel.channel_id === 'didyoumean'">
-        Did you mean : <b> {{ channel.name }}</b> ?
+      <img @error="'/avatars/0-100px.png'" class="avatar avatar--medium" :src="channel.channel_avatar_medium" />
+      <div>
+        <h3 class="channel__name">
+          {{ channel.name }}
+          <icon-valid v-if="channel.official" class="channel__official" />
+        </h3>
+        <em class="channel__infos">
+          {{ channel.nb_videos }} videos -
+          {{ channel.nb_subscriber }} abonnées
+        </em>
       </div>
-      <template v-else>
-        <img @error="'/avatars/0-100px.png'" class="avatar avatar--medium" :src="channel.channel_avatar_medium" />
-        <div>
-          <h3 class="channel__name">
-            {{ channel.name }}
-            <icon-valid v-if="channel.official" class="channel__official" />
-          </h3>
-          <em class="channel__infos">
-            {{ channel.nb_videos }} videos -
-            {{ channel.nb_subscriber }} abonnées
-          </em>
-        </div>
-        <a class="channel__link" :href="'https://youtube.com/channel/'+channel.channel_id+'/videos'" target="_blank">
-          see channel page
-        </a>
-      </template>
+      <a class="channel__link" :href="'https://youtube.com/channel/'+channel.channel_id+'/videos'" target="_blank">
+        see channel page
+      </a>
     </li>
     <li>
       <!-- <button class="explorer__more" @click="more" v-if="query !== ''">more</button> -->
@@ -57,6 +55,7 @@
         query: '',
         isNewQuery: false,
         isLoading: false,
+        didyoumean: '',
       }
     },
     computed: {
@@ -88,6 +87,7 @@
             }`,
           }).then((res) => {
             this.channels = (res.data.searchChannel ? res.data.searchChannel.channels : [])
+            this.didyoumean = (res.data.searchChannel ? res.data.searchChannel.didyoumean : '')
             window.scroll(0,0)
             this.isLoading = false
           }).catch((error) => {

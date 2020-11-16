@@ -276,7 +276,6 @@ const actions = {
       }`,
     }).catch((error) => {
       this.error = error.message.replace('GraphQL error: ', '')
-      console.log(store.getters.session.token)
       console.log('%c●', 'color: red', 'edit error: ', this.error)
     })
     if(res) {
@@ -301,7 +300,7 @@ const actions = {
       this.close()
     }).catch((error) => {
       this.error = error.message.replace('GraphQL error: ', '')
-      console.log('%c●', 'color: red', 'drop error: ', this.error)
+      console.log('%c●', 'color: red', 'validate error: ', this.error)
     })
     store.commit('VALIDATE', track)
   },

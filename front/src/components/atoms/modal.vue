@@ -19,6 +19,7 @@
     height: 100vh;
     cursor: normal;
     background-color: #000000d7;
+    transition: all .2s;
   }
   .error-dialog {
     background-color: rgba(255, 0, 0, 0.445);

@@ -9,7 +9,7 @@
         check on youtube
       </a>
       <input v-model="newTrack.yt_id" pattern="[a-zA-Z0-9_\-]{11}" type="text" class="item" placeholder="id">
-      <styleSelector class="add-bots__style" :preSelected="newTrack.style"/>
+      <styleSelector class="add-bots__style" :preSelected="newTrack.style.id"/>
       <input v-model="newTrack.artist" type="text" class="item" placeholder="artist" required @keydown.enter.prevent="edit()">
       <input v-model="newTrack.title" type="text" :class="'item style-'+newTrack.style" placeholder="title" required @keydown.enter.prevent="edit()">
       <div class="actions">
