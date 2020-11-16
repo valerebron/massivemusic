@@ -22,7 +22,7 @@
     props: ['track'],
     methods: {
       validate: function(track) {
-        this.$dispatch('validate', track)
+        this.$store.dispatch('validate', track)
       },
       close: function() {
         this.$emit('closeValidate')
