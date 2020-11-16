@@ -285,7 +285,7 @@ const actions = {
     }
   },
   async validate(store, track) {
-    await window.$apollo.mutate({
+    await window.apollo.mutate({
       variables: {
         user_id: this.$store.getters.session.user.id,
         token: this.$store.getters.session.token,
