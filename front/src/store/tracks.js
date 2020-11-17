@@ -66,7 +66,7 @@ const mutations = {
       duration: false,
     }
   },
-  VALIDATE(state, the_track) {
+  VALIDATE_TRACK(state, the_track) {
     state.tracks.map(track => {
       if(track.id === the_track.id) {
         track.pending = false
@@ -284,25 +284,23 @@ const actions = {
       return track
     }
   },
-  async validate(store, track) {
+  async validateTrack(store, track) {
     await window.apollo.mutate({
       variables: {
-        user_id: this.$store.getters.session.user.id,
-        token: this.$store.getters.session.token,
+        user_id: store.getters.session.user.id,
+        token: store.getters.session.token,
         id: track.id,
       },
       mutation: gql`mutation($user_id: Int!, $token: String!, $id: Int!) {
-        validatePost(user_id: $user_id, token: $token, id: track.id) {
+        validatePost(user_id: $user_id, token: $token, id: $id) {
           id
         }
       }`,
-    }).then(() => {
-      this.close()
     }).catch((error) => {
       this.error = error.message.replace('GraphQL error: ', '')
       console.log('%c●', 'color: red', 'validate error: ', this.error)
     })
-    store.commit('VALIDATE', track)
+    store.commit('VALIDATE_TRACK', track)
   },
   async validateAll(store) {
     await window.apollo.mutate({

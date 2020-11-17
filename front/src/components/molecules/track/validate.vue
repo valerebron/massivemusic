@@ -1,6 +1,6 @@
 <template>
   <modal :key="track.yt_id" @close="close()">
-    <form class="drop-track">
+    <form class="validate-track">
       <p>Validate track : <br><br>{{ track.title }} from {{ track.artist }} ?</p>
       <div class="actions">
         <button @click.prevent="close()">
@@ -21,8 +21,9 @@
     components: { modal },
     props: ['track'],
     methods: {
-      validate: function(track) {
-        this.$store.dispatch('validate', track)
+      validate: async function(track) {
+        await this.$store.dispatch('validateTrack', track)
+        this.close()
       },
       close: function() {
         this.$emit('closeValidate')
