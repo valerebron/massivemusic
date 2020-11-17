@@ -328,6 +328,7 @@
         text-align: right;
         position: relative;
         &__toggle-menu {
+          font-weight: bold;
           @include breakpoint(tablet) {
             display: none;
           }
