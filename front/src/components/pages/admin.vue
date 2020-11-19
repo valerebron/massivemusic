@@ -14,14 +14,14 @@
       <checkbox @changeCheckbox="filter($event, 'duration')" class="duration">
         big / small tracks
       </checkbox>
-      <div>
+      <div class="docker-actions">
         <router-link class="enable" tag="button" to="/test" title="test all tracks">
           <icon-radio />
         </router-link>
-        <button class="pending-tracks__unpending-all validate" @click="validateAll" :class="{'enable' : isValidatable }">
+        <button class="pending-tracks__unpending-all validate" @click="validateAll" :class="{'enable' : isProcessable }">
           <icon-valid/>
         </button>
-        <button class="pending-tracks__unpending-all drop" @click="deleteAll" :class="{'enable' : isDeletable }">
+        <button class="pending-tracks__unpending-all drop" @click="deleteAll" :class="{'enable' : isProcessable }">
           <icon-trash/>
         </button>
       </div>
@@ -43,8 +43,7 @@
     },
     data: function() {
       return {
-        isValidatable: false,
-        isDeletable: false,
+        isProcessable: false,
         isDockMobileOpen: false,
         selectedFilter: '',
       }
@@ -62,17 +61,16 @@
           document.querySelector('.tracks').classList.remove('tracks--show-duration')
         }
         // manage buttons enable
-        this.isDeletable = checked
-        this.isValidatable = (checked && type === 'pending') ? true : false
+        this.isProcessable = checked
         this.isDockMobileOpen = false
       },
-      validateAll(event) {
-        if(event.target.classList.contains('enable')) {
-          this.$store.dispatch('validateAll')
+      validateAll() {
+        if(this.isProcessable) {
+          this.$store.dispatch('validateAll', this.selectedFilter)
         }
       },
-      deleteAll(event) {
-        if(event.target.classList.contains('enable')) {
+      deleteAll() {
+        if(this.isProcessable) {
           this.$store.dispatch('deleteAll', this.selectedFilter)
         }
       },

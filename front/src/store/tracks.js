@@ -73,10 +73,13 @@ const mutations = {
       }
     })
   },
-  VALIDATE_ALL_TRACKS(state) {
+  VALIDATE_ALL_TRACKS(state, type) {
     state.tracks.map(track => {
-      if(track.pending) {
+      if(track.pending && type === 'pending') {
         track.pending = false
+      }
+      else if(track.invalid && type === 'invalid') {
+        track.invalid = false
       }
     })
   },
@@ -302,17 +305,18 @@ const actions = {
     })
     store.commit('VALIDATE_TRACK', track)
   },
-  async validateAll(store) {
+  async validateAll(store, type) {
     await window.apollo.mutate({
       variables: {
         user_id: store.getters.session.user.id,
         token: store.getters.session.token,
+        type: type,
       },
-      mutation: gql`mutation($user_id: Int!, $token: String!) {
-        validateAll(user_id: $user_id, token: $token)
+      mutation: gql`mutation($user_id: Int!, $token: String!, $type: String!) {
+        validateAll(user_id: $user_id, token: $token, type: $type)
       }`,
     }).catch((e)=>{console.log(e)})
-    store.commit('VALIDATE_ALL_TRACKS')
+    store.commit('VALIDATE_ALL_TRACKS', type)
   },
   async deleteAll(store, type) {
     await window.apollo.mutate({

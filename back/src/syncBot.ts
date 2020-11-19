@@ -6,13 +6,11 @@ const cleanTitle = require('./cleantitle')
 export = syncBot
 
 async function syncBot(bot, prisma) {
-  console.log('\x1b[34m%s\x1b[0m', '●', 'sync channel '+bot.name)
   const botTracks = await prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
   var tracks = []
   // 1 FIRST SCAN
   if(botTracks.length === 0) {
-    console.log('first Sync')
-    console.log('get all tracks')
+    // console.log('first Sync')
     tracks = await usetube.getChannelVideos(bot.channel_id)
   }
   // 2 UPDATE SCAN
@@ -24,7 +22,7 @@ async function syncBot(bot, prisma) {
   if(tracks.length > 0) {
     // 3 DELETE BIG & SMALL TRACKS
     tracks = tracks.filter(track => track.duration < parseInt(env.TRACK_MAX_DURATION) || track.duration > parseInt(env.TRACK_MIN_DURATION))
-    console.log('total tracks: '+tracks.length)
+    console.log('\x1b[34m%s\x1b[0m', '●', 'sync '+bot.name+': '+tracks.length+' track(s)')
     // 4 SAVE TRACKS TO BDD
     const createManyTracks = await tracks.map(async (track) => {
       // save tracks

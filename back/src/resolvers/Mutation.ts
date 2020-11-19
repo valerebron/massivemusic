@@ -25,6 +25,37 @@ async function addAvatar(avatarB64, userId) {
   })
 }
 
+function switchActionType(type) {
+  switch(type) {
+    case 'pending':
+    return { pending: true }
+    case 'invalid':
+    return { invalid: true }
+    case 'empty':
+    return {
+      OR: [
+        {
+          artist: ''
+        },
+        {
+          title: ''
+        }
+      ]
+    }
+    case 'duration':
+    return {
+      OR: [
+        {
+          duration: { lte: parseInt(env.TRACK_MIN_DURATION) }
+        },
+        {
+          duration: { gte: parseInt(env.TRACK_MAX_DURATION) }
+        }
+      ]
+    }
+  }
+}
+
 export async function sendPassword(parent, args, context, info) {
   const email = args.email
   if(isEmail(email)) {
@@ -393,11 +424,13 @@ export async function incrementPlayCount(parent, args, context, info) {
 export async function validateAll(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {
-    console.log('\x1b[34m%s\x1b[0m', '●', 'validate All Pending tracks')
+    console.log('\x1b[34m%s\x1b[0m', '●', 'validate All '+args.type+' tracks')
+    let where = switchActionType(args.type)
     const res = await context.prisma.track.updateMany({
-      where: { pending: true },
+      where: where,
       data: {
         pending: false,
+        invalid: false,
       },
     })
     return res.count
@@ -411,39 +444,7 @@ export async function deleteAll(parent, args, context, info) {
   const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {
     console.log('\x1b[34m%s\x1b[0m', '●', 'delete all '+args.type+' tracks')
-    let where = {}
-    switch(args.type) {
-      case 'pending':
-        where = { pending: true }
-      break;
-      case 'invalid':
-        where = { invalid: true }
-      break;
-      case 'empty':
-        where = {
-          OR: [
-            {
-              artist: ''
-            },
-            {
-              title: ''
-            }
-          ]
-        }
-      break;
-      case 'duration':
-        where = {
-          OR: [
-            {
-              duration: { lte: parseInt(env.TRACK_MIN_DURATION) }
-            },
-            {
-              duration: { gte: parseInt(env.TRACK_MAX_DURATION) }
-            }
-          ]
-        }
-      break;
-    }
+    let where = switchActionType(args.type)
     const res = await context.prisma.track.deleteMany({
       where: where,
     })
