@@ -56,8 +56,10 @@
             if(document.getElementsByClassName('tracks')[0]) {
               let scrollHeight = document.getElementsByClassName('tracks')[0].scrollHeight
               let frameHeight = window.innerHeight - (document.getElementsByClassName('player')[0].clientHeight + document.getElementsByClassName('header')[0].clientHeight)
-              let offset = 300
+              let offset = 600
+              console.log(document.scrollingElement.scrollTop,frameHeight,offset,scrollHeight)
               if(document.scrollingElement.scrollTop + frameHeight + offset > scrollHeight) {
+                console.log('skip')
                 that.$store.dispatch('filterTracks', { type: 'skip', value: '' })
               }
             }

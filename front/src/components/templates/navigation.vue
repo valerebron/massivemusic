@@ -188,6 +188,9 @@ export default {
       height: 16px;
       border-radius: 16px;
     }
+    &:last-child {
+      margin-bottom: 20px;  // fix player over nav
+    }
     &:active {
       opacity: 0.5;
     }
