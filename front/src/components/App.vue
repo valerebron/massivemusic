@@ -50,7 +50,9 @@
       changeScopeOnScroll() {
         let that = this
         let isfinishScrolling
+        console.log('scope on scroll')
         window.onscroll = function() {
+          console.log(onscroll)
           clearTimeout(isfinishScrolling)
           isfinishScrolling = setTimeout(function() {
             if(document.getElementsByClassName('tracks')[0]) {
