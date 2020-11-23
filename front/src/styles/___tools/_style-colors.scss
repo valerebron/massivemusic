@@ -7,33 +7,15 @@
 .style-3 {
   color: $color-3;
 }
-.style-14 {
-  color: $color-14;
-}
-.style-15 {
-  color: $color-15;
-}
-.style-19 {
-  color: $color-19;
-}
 
-.style-bkg-1, .style-bkg-1:focus, .style-bkg-1.track--playing {
+.style-bkg-1, .style-bkg-1:focus, .style-bkg-1.track--playing, .style-bkg-1.track--playing .track__actions__menu {
   background-color: darken($color-1, 8%);
 }
-.style-bkg-2, .style-bkg-2:focus, .style-bkg-2.track--playing {
+.style-bkg-2, .style-bkg-2:focus, .style-bkg-2.track--playing, .style-bkg-2.track--playing .track__actions__menu {
   background-color: darken($color-2, 8%);
 }
-.style-bkg-3, .style-bkg-3:focus, .style-bkg-3.track--playing {
+.style-bkg-3, .style-bkg-3:focus, .style-bkg-3.track--playing, .style-bkg-3.track--playing .track__actions__menu {
   background-color: darken($color-3, 8%);
-}
-.style-bkg-14, .style-bkg-14:focus, .style-bkg-14.track--playing {
-  background-color: darken($color-14, 8%);
-}
-.style-bkg-15, .style-bkg-15:focus, .style-bkg-15.track--playing {
-  background-color: darken($color-15, 8%);
-}
-.style-bkg-19, .style-bkg-19:focus, .style-bkg-19.track--playing {
-  background-color: darken($color-19, 8%);
 }
 
 .style-hover-1 {
@@ -51,21 +33,6 @@
     color: $color-3;
   }
 }
-.style-hover-14 {
-  &.router-link-active, &:hover {
-    color: $color-14;
-  }
-}
-.style-hover-15 {
-  &.router-link-active, &:hover {
-    color: $color-15;
-  }
-}
-.style-hover-19 {
-  &.router-link-active, &:hover {
-    color: $color-19;
-  }
-}
 
 .style-hover-bkg-1 {
   &.router-link-active, &::before, &:hover {
@@ -80,21 +47,6 @@
 .style-hover-bkg-3 {
   &.router-link-active, &::before, &:hover {
     background-color: $color-3;
-  }
-}
-.style-hover-bkg-14 {
-  &.router-link-active, &::before, &:hover {
-    background-color: $color-14;
-  }
-}
-.style-hover-bkg-15 {
-  &.router-link-active, &::before, &:hover {
-    background-color: $color-15;
-  }
-}
-.style-hover-bkg-19 {
-  &.router-link-active, &::before, &:hover {
-    background-color: $color-19;
   }
 }
 
@@ -114,18 +66,6 @@
     color: $color-3;
     fill: $color-3;
   }
-  .route-style-14 & {
-    color: $color-14;
-    fill: $color-14;
-  }
-  .route-style-15 & {
-    color: $color-15;
-    fill: $color-15;
-  }
-  .route-style-19 & {
-    color: $color-19;
-    fill: $color-19;
-  }
 }
 
 %currentStyleColor {
@@ -144,18 +84,6 @@
     color: $color-3;
     fill: $color-3;
   }
-  .current-style-14 & {
-    color: $color-14;
-    fill: $color-14;
-  }
-  .current-style-15 & {
-    color: $color-15;
-    fill: $color-15;
-  }
-  .current-style-19 & {
-    color: $color-19;
-    fill: $color-19;
-  }
 }
 
 %appStyleBkgColor {
@@ -169,15 +97,6 @@
   }
   .route-style-3 & {
     background-color: $color-3;
-  }
-  .route-style-14 & {
-    background-color: $color-14;
-  }
-  .route-style-15 & {
-    background-color: $color-15;
-  }
-  .route-style-19 & {
-    background-color: $color-19;
   }
 }
 
@@ -193,15 +112,6 @@
   .current-style-3 & {
     background-color: $color-3;
   }
-  .current-style-14 & {
-    background-color: $color-14;
-  }
-  .current-style-15 & {
-    background-color: $color-15;
-  }
-  .current-style-19 & {
-    background-color: $color-19;
-  }
 }
 
 %appStyleStroke {
@@ -216,15 +126,6 @@
   .route-style-3 & {
     stroke: $color-3;
   }
-  .route-style-14 & {
-    stroke: $color-14;
-  }
-  .route-style-15 & {
-    stroke: $color-15;
-  }
-  .route-style-19 & {
-    stroke: $color-19;
-  }
 }
 
 %currentStyleStroke {
@@ -238,15 +139,6 @@
   }
   .current-style-3 & {
     stroke: $color-3;
-  }
-  .current-style-14 & {
-    stroke: $color-14;
-  }
-  .current-style-15 & {
-    stroke: $color-15;
-  }
-  .current-style-19 & {
-    stroke: $color-19;
   }
 }
 
