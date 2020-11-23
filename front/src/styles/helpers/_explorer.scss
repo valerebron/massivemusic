@@ -5,7 +5,7 @@
   list-style-type: none;
   &--init {
     display: flex;
-    align-items: center;
+    // align-items: center;
   }
   &__search {
     z-index: $z-index-header-elt;

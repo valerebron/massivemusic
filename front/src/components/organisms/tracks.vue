@@ -29,14 +29,14 @@
       <td class="track__artist" @click="search(track.artist)" :contenteditable="isEditable" @blur="update($event, track, 'artist')">
         {{ track.artist }}
       </td>
-      <td class="track__createdat">
-        {{ Date.parse(track.createdAt) | moment('from', 'now') }}
-      </td>
       <td class="track__actions">
         <button class="track__actions__toggle-menu" @click.prevent="toggleActions">
           ...
         </button>
         <aside class="track__actions__menu">
+          <td class="track__createdat">
+            {{ Date.parse(track.createdAt) | moment('from', 'now') }}
+          </td>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
             <icon-star-inline v-if="$store.getters.isFavorite(track)" />
             <icon-star-outline v-else style="opacity: 0.5" />
@@ -306,10 +306,12 @@
         @extend %artistStyle;
       }
       &__createdat {
+        display: flex;
+        align-items: center;
         font-size: 12px;
-        display: none;
+        padding: 0 8px;
         @include breakpoint(desktop) {
-          display: table-cell;
+          // display: table-cell;
         }
       }
       &__user {
