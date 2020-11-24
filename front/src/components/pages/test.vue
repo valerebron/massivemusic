@@ -50,7 +50,7 @@
     },
     mounted: function() {
       this.$store.dispatch('filterTracks', {type: 'reset', value: Date.now()})
-      if(!this.$store.getters.isOnline) {
+      if(!this.$store.getters.isAdmin) {
         this.$router.push('/login')
       }
     },

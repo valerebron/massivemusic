@@ -51,7 +51,7 @@
           </table>
           <table class="container" border="0" cellpadding="0" cellspacing="0">
             <tr>
-              <td v-html="mailContent" class="hero-subheader__content" style="font-size: 16px; line-height: 27px; color: #969696; padding: 0 60px 90px 0;" align="left">
+              <td v-html="mailContent" class="hero-subheader__content" style="font-size: 16px; line-height: 27px; color: #969696; padding: 90px 60px;" align="left">
               </td>
             </tr>
           </table>
@@ -306,8 +306,13 @@
           text-decoration: underline;
         }
       }
+      .container {
+        width: 100%;
+        text-align: center;
+      }
       .center {
         text-align: center;
+        width: 100%;
       }
       .style__link {
         padding: 4px 10px;
