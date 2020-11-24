@@ -155,12 +155,7 @@ module.exports = {
         const users = await context.prisma.user.findMany({
           where: {
             role: 'USER'
-          },
-          select: [
-            'id',
-            'name',
-            'email',
-          ],
+          }
         })
         for(let i = 0; i < users.length; i++) {
           await mail.send(users[i].email, args.subject, args.content, users[i].name, function(err, info) {
