@@ -15,7 +15,7 @@
               </div>
               <div class="mail__contacts" ref="contacts" :class="{ 'mail__contacts--open' : contactsOpen }" id="to" name="to" type="email" placeholder="all users" required>
                 <input class="mail__search" ref="userSearch" type="text" placeholder="search" v-model="searchContact">
-                <option @click="selectContact(contact)" class="mail__contact" v-for="contact in contacts.filter(contact => contact.name.toLowerCase().includes(this.searchContact.toLowerCase()))" :key="contact.id">
+                <option @click="selectContact(contact)" class="mail__contact" :class="{'defaultContact' : (contact.id === 10)}" v-for="contact in contacts.filter(contact => contact.name.toLowerCase().includes(this.searchContact.toLowerCase()))" :key="contact.id">
                   <avatar :user="{ ...contact, role: 'USER'}" size="small" />
                   {{ contact.name }}
                 </option>
@@ -177,6 +177,8 @@
           this.contacts = res.data.getMails.contacts
           this.mails = res.data.getMails.mails
           this.$refs.contacts.scrollTo(0, 0)
+          this.contactsOpen = true
+          this.selectContact(this.contacts.filter(contact => contact.id === 10)[0])
         }).catch((error) => {
           console.log(error)
         })
@@ -303,6 +305,9 @@
           color: #23d18b;
           text-decoration: underline;
         }
+      }
+      .center {
+        text-align: center;
       }
       .style__link {
         padding: 4px 10px;
