@@ -179,13 +179,7 @@
             }
           }`,
         }).then((res) => {
-          // sort alphabetic order
-          this.contacts = res.data.getMails.contacts.sort(function(a, b){
-              if(a.name < b.name) { return -1; }
-              if(a.name > b.name) { return 1; }
-              return 0;
-          })
-          this.contacts.unshift(this.to)
+          this.contacts = res.data.getMails.contacts
           this.mails = res.data.getMails.mails
           this.$refs.contacts.scrollTo(0, 0)
         }).catch((error) => {

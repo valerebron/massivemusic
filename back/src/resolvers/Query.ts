@@ -128,11 +128,14 @@ module.exports = {
   getMails: async (parent, args, context, info) => {
     const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
     if(args.token === admin.token) {
-      const mails = await context.prisma.mail.findMany()
+      const mails = await context.prisma.mail.findMany({ orderBy: [{ createdAt: 'desc' }] })
       const contacts = await context.prisma.user.findMany({
         where: {
           role: 'USER'
         },
+        orderBy: [{
+          name: 'asc',
+        }],
       })
       return { mails, contacts }
     }
