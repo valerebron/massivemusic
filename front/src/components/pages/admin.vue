@@ -77,7 +77,7 @@
     },
     mounted() {
       if(!this.$store.getters.isAdmin) {
-        this.$router.push('home')
+        this.$router.push('/login')
       }
       else {
         document.querySelector('.pending.checkbox input').click()

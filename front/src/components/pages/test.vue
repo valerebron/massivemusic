@@ -12,7 +12,7 @@
           {{ ETA }}
         </template>
       </p>
-      <tracks :filter="{ type: '', value: '' }"/>
+      <tracks :filter="{ type: '', value: '', order: 'asc' }"/>
     </div>
   </main>
 </template>

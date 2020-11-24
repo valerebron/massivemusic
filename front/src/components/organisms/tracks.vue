@@ -176,11 +176,12 @@
       },
     },
     async mounted() {
-      this.$store.commit('RESET_FILTERS')
       await this.load()
     },
-    updated() {
-      this.load()
+    watch: {
+      async filter() {
+        await this.load()
+      },
     },
   }
 </script>

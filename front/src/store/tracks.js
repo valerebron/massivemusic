@@ -93,8 +93,7 @@ const actions = {
     if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
       let newSkip = store.state.filters.skip + store.state.tracksPerPage
       switch(filter.type) {
-        case 'reset':
-          store.commit('RESET_FILTERS')
+        case 'search':
           store.commit('SET_FILTER', filter)
         break
         case 'skip':
@@ -116,6 +115,7 @@ const actions = {
           store.commit('SET_FILTER', filter)
         break
       }
+      const order = (filter.order === 'asc') ? 'asc' : 'desc'
       store.commit('SET_TRACK_LOADING')
       let res = await window.apollo.query({
         variables: {
@@ -125,7 +125,7 @@ const actions = {
           skip: store.state.filters.skip,
           first: store.state.tracksPerPage,
           orderBy: 'createdAt',
-          orderDirection: 'desc',
+          orderDirection: order,
           pending: store.state.filters.pending,
           invalid: store.state.filters.invalid,
           empty: store.state.filters.empty,

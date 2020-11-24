@@ -100,7 +100,7 @@ module.exports = {
       skip: args.skip,
       take: args.first,
       where,
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: args.orderDirection },
     })
 
     const count = await context.prisma.track.count({where})

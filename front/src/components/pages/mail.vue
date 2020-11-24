@@ -225,6 +225,9 @@
       },
     },
     mounted: function() {
+      if(!this.$store.getters.isAdmin) {
+        this.$router.push('/login')
+      }
       this.getMails()
     },
   }
