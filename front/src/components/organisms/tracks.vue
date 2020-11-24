@@ -34,7 +34,7 @@
           ...
         </button>
         <aside class="track__actions__menu">
-          <td class="track__createdat">
+          <td class="track__createdat" :title="track.createdAt">
             {{ Date.parse(track.createdAt) | moment('from', 'now') }}
           </td>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">

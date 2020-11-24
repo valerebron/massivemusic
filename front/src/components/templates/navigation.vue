@@ -197,7 +197,7 @@ export default {
     &:hover,
     &.router-link-exact-active {
       color: black;
-      background-color: white;
+      background-color: #e7e7e7;
       cursor: default;
     }
   }

@@ -48,11 +48,6 @@
                 </a>
               </td>
             </tr>
-            <tr>
-              <td class="hero-subheader__title" style="font-size: 18px; font-weight: bold; color: black; padding: 80px 0 15px 0;" align="left">
-                {{ subject }}
-              </td>
-            </tr>
           </table>
           <table class="container" border="0" cellpadding="0" cellspacing="0">
             <tr>
@@ -116,7 +111,7 @@
           </thead>
           <tbody>
             <tr v-for="mail in mails" :key="mail.id" @click="selectMail(mail)">
-              <td>
+              <td :title="mail.createdAt">
                 {{ Date.parse(mail.createdAt) | moment('from', 'now') }}
               </td>
               <td>
@@ -214,6 +209,7 @@
           }).then((res) => {
             this.isLoading = false
             this.res = res.data.sendMail
+            this.subject = this.mailContent = ''
           }).catch((error) => {
             this.isLoading = false
             this.error = error.message.replace('GraphQL error: ', '')
@@ -295,13 +291,16 @@
       border: rgb(218, 218, 218) 20px solid;
       padding: 20px;
       width: 100%;
+      h1, h2, h3, h4, h5, h6 {
+        color: #464646;
+      }
       .hero-subheader__content {
         color: grey;
         p {
           color: grey;
         }
         a {
-          color: grey;
+          color: #23d18b;
           text-decoration: underline;
         }
       }
