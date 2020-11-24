@@ -140,7 +140,7 @@
     },
     data: function() {
       return {
-        to: { id: 0, name: 'All users', email: 'all@massivemusic.fr', role: 'USER' },
+        to: {},
         contacts: [],
         mails: [],
         contactsOpen: false,
@@ -175,6 +175,7 @@
           }`,
         }).then((res) => {
           this.contacts = res.data.getMails.contacts
+          this.contacts.unshift({ id: 0, name: 'All users', email: 'all@massivemusic.fr', role: 'USER' })
           this.mails = res.data.getMails.mails
           this.$refs.contacts.scrollTo(0, 0)
           this.contactsOpen = true
