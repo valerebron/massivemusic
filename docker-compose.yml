@@ -24,4 +24,5 @@ services:
     ports:
       - ${WEB_PORT_DOCKER}:${WEB_PORT}
       - ${API_PORT_DOCKER}:${API_PORT}
+      - 5555:5555 # prisma studio
     restart: always
