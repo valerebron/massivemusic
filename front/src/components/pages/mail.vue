@@ -54,6 +54,11 @@
               <td v-html="mailContent" class="hero-subheader__content" style="font-size: 16px; line-height: 27px; color: #969696; padding: 90px 60px;" align="left">
               </td>
             </tr>
+            <tr>
+              <td class="hero-subheader__content" style="font-size: 16px; line-height: 27px; color: #808080!important; padding: 90px 60px;" align="left">
+                cheers 🍻
+              </td>
+            </tr>
           </table>
           <table class="container" border="0" cellpadding="0" cellspacing="0" align="center" style="border-top: 1px solid #eeeeee;">
             <tr>
