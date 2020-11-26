@@ -199,10 +199,15 @@
     }
     &__add-tracks {
       margin: 12px;
-      color: $youtube-red;
-      background-color: rgb(37, 37, 37);
+      color: rgb(37, 37, 37);
+      background-color: $youtube-red;
       // text-transform: uppercase;
       font-weight: bold;
+      transition: all .3s;
+      &:hover {
+        color: $youtube-red;
+        border-radius: 8px;
+      }
       .ion {
         padding-right: 16px;
       }
