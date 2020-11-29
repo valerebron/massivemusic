@@ -199,6 +199,7 @@ export default {
       color: black;
       background-color: #e7e7e7;
       cursor: default;
+      font-weight: bold;
     }
   }
 }
