@@ -88,7 +88,6 @@
 
 %appStyleBkgColor {
   transition: background-color 0.3s;
-  background-color: $primary-color;
   .route-style-1 & {
     background-color: $color-1;
   }
