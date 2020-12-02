@@ -39,6 +39,7 @@ export default {
     height: 75px;
     transition: all 0.3s;
     &__name {
+      display: none;
       overflow: hidden;
       transition: all .3s;
       opacity: 1;
@@ -58,11 +59,10 @@ export default {
       position: relative;
       z-index: $z-index-logo;
       width: 50px;
-      height: 34px;
+      height: 50px;
       transition: fill .3s;
       fill: black;
       box-shadow: black 0 0 6px;
-      @extend %appStyleBkgColor;
       padding: 8px 0;
       border-radius: 100px;
     }

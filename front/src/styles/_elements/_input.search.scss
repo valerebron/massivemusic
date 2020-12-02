@@ -1,5 +1,7 @@
 input[type=search] {
   -webkit-appearance:textfield;
+  font-weight: bold;
+  font-size: 18px;
 }
 input::-webkit-search-decoration,
 input::-webkit-search-cancel-button {

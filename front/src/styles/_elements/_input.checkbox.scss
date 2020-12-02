@@ -5,11 +5,11 @@ input[type=checkbox] {
   // z-index: 999;
   // position: relative;
   &:checked + .slider {
-    background-color: $validate-color;
+    background-color: rgb(45, 45, 45);
   }
   
   &:focus + .slider {
-    box-shadow: 0 0 1px $validate-color;
+    box-shadow: 0 0 1px rgb(45, 45, 45);
   }
   
   &:checked + .slider:before {

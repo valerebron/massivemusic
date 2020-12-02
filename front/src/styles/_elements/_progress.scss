@@ -49,30 +49,6 @@ progress {
       background-color: $color-3;
     }
   }
-  .current-style-14 & {
-    &::-moz-progress-bar {
-      background-color: $color-14;
-    }
-    &::-webkit-progress-value {
-      background-color: $color-14;
-    }
-  }
-  .current-style-15 & {
-    &::-moz-progress-bar {
-      background-color: $color-15;
-    }
-    &::-webkit-progress-value {
-      background-color: $color-15;
-    }
-  }
-  .current-style-19 & {
-    &::-moz-progress-bar {
-      background-color: $color-19;
-    }
-    &::-webkit-progress-value {
-      background-color: $color-19;
-    }
-  }
 }
 
 .progress-bar {

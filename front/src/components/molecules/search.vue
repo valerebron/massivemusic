@@ -72,9 +72,6 @@
     }
     &__input {
       background-color: rgb(49, 49, 49);
-      font-size: 16px;
-      font-weight: bold;
-      text-transform: uppercase;
       border-radius: 20px;
       transition: all 0.3s;
       display: inline-flex;

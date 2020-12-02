@@ -80,7 +80,6 @@
       margin-right: 20px;
       position: relative;
       .counter {
-        background-color: white;
         top: 18px;
       }
     }

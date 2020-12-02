@@ -4,7 +4,12 @@
     <modal @close="close()">
       <iframe class="add-tracks__iframe" type="text/html" :src="'https://www.youtube-nocookie.com/embed/'+track.id" frameborder="0"></iframe>
       <form class="add-tracks__form">
-        <p class="add-tracks__original-title">{{ track.title}}</p>
+        <p class="add-tracks__original-title">
+          <b>
+            {{ track.artist}}
+          </b>
+           - {{ track.title}}
+        </p>
         <styleSelector class="add-bots__style" @changeStyle="changeStyle($event)" preSelected="0"/>
         <input v-model="track.artist"  type="text" class="item" placeholder="artist" @keydown.enter.prevent="add()">
         <input v-model="track.title" type="text" class="item" placeholder="title" @keydown.enter.prevent="add()">
@@ -74,7 +79,7 @@
 <style lang="scss">
   .add-tracks {
     &__form {
-      background-color: #202020;
+      // background-color: #202020;
       @include breakpoint('tablet') {
         border-radius: 0;
         border-bottom-left-radius: $dialog-border-radius;

@@ -79,7 +79,7 @@
 <style lang="scss">
   .add-bots {
     &__form {
-      background-color: #202020;
+      // background-color: #202020;
       @include breakpoint('tablet') {
         border-radius: 0;
         border-bottom-left-radius: $dialog-border-radius;
