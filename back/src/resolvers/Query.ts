@@ -20,7 +20,7 @@ module.exports = {
     let users = await context.prisma.user.findMany({
       where: where,
       orderBy: {
-        createdAt: 'desc',
+        updatedAt: 'desc',
       },
     })
     return users
