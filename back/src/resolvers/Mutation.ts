@@ -11,7 +11,7 @@ function isEmail(email) {
 
 async function addAvatar(avatarB64, userId) {
   const b64 = avatarB64.replace(/^data:image\/png;base64,/, '')
-  const imgPath = '../front/public/avatars/'
+  const imgPath = '../front/dist/avatars/'  // ⚠️ for local dev :'../front/public/avatars/'
   const imgOriginal = imgPath+userId+'.png'
   await require('fs').writeFile(imgOriginal, b64, 'base64', async function(err) {
     if (err) {
