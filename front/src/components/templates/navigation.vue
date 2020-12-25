@@ -82,7 +82,8 @@ export default {
     },
     logout: function() {
       if (!this.$store.getters.isOnline) {
-        this.$router.push('/login')
+        this.$store.dispatch('ui', {type: 'nav', value: false})
+        this.$router.push('/')
       } else {
         let session = this.$store.getters.session;
         this.$apollo
@@ -101,7 +102,8 @@ export default {
           })
           .then(() => {
             this.$store.dispatch('logout')
-            this.$router.push('/login')
+            this.$store.dispatch('ui', {type: 'nav', value: false})
+            this.$router.push('/')
           })
           .catch(error => {
             console.log('%c●', 'color: red', 'logout: ', error)
