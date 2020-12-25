@@ -34,9 +34,9 @@
           ...
         </button>
         <aside class="track__actions__menu">
-          <td class="track__createdat" :title="track.createdAt">
+          <p class="track__createdat" :title="track.createdAt">
             {{ Date.parse(track.createdAt) | moment('from', 'now') }}
-          </td>
+          </p>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
             <icon-star-inline v-if="$store.getters.isFavorite(track)" />
             <icon-star-outline v-else style="opacity: 0.5" />
@@ -164,13 +164,10 @@
         return window.formatTime(time)
       },
       toggleActions(event) {
-        let menu = event.target.nextSibling
+        let menu = event.target.parentElement.parentElement
         let isOpen = menu.classList.contains('open')
-        document.querySelectorAll('.track__actions__menu').forEach(menu => menu.classList.remove('open'))
-        if(isOpen) {
-          menu.classList.remove('open')
-        }
-        else {
+        document.querySelectorAll('.track').forEach(menu => menu.classList.remove('open'))
+        if(!isOpen) {
           menu.classList.add('open')
         }
       },
@@ -332,6 +329,32 @@
           overflow: hidden;
         }
       }
+      &.open {
+        position: relative;
+        z-index: $z-index-tracks;
+        .track__actions__menu {
+          display: block;
+          align-items: center;
+          box-shadow: black 0 0 30px;
+          @include breakpoint(tablet) {
+            box-shadow: none;
+          }
+          border: 1px rgba(255, 255, 255, 0.1) solid;
+          border-top: 0;
+          button {
+            display: inline;
+            height: 100%;
+          }
+        }
+      }
+      &.track--playing {
+        .track__actions__menu {
+          box-shadow: black 0 30px 30px;
+          @include breakpoint(tablet) {
+            box-shadow: none;
+          }
+        }
+      }
       &__actions {
         text-align: right;
         position: relative;
@@ -345,23 +368,19 @@
           display: none;
           position: fixed;
           padding: 0;
-          right: 50px;
-          top: 0;
-          height: 56px;
+          top: 58px;
+          right: 0;
+          height: auto;
+          padding: 10px;
           background-color: black;
           z-index: 200;
-          &.open {
-            display: inline-flex;
-            align-items: center;
-            button {
-              height: 100%;
-            }
-          }
           @include breakpoint(tablet) {
             display: inline-flex;
             position: relative;
             background-color: transparent;
             right: 0;
+            top: 0;
+            box-shadow: 0;
           }
         }
         .toggle_favorite {
