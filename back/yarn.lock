@@ -4225,10 +4225,10 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-usetube@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/usetube/-/usetube-1.1.5.tgz#14cc82bea7f9834dcf61b8fc97a75907db003d3f"
-  integrity sha512-pgq4wRF6vnWZkzfo6/W/nEeY3izFQi5aKshT27wph1nIJ8/oHOJeq0/JLJ7r5L5VVGHqA8El+AOExVoujxQWkg==
+usetube@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-1.2.0.tgz#2ee49714e13e393f6cde1df250e209404fac10fe"
+  integrity sha512-2wcgPSN+HkU5oG+/lMeOld0stbH73WM0sb+PxEXTKUC9FouOnGhOol8ekEFD0C/yA2tDMrtZ5n4nCsB7lSKbvw==
   dependencies:
     axios "^0.21.0"
     moment "^2.28.0"

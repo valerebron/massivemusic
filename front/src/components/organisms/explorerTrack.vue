@@ -99,7 +99,6 @@
             }`,
           }).then((res) => {
             if(this.token === '') {
-              console.log(res.data)
               this.tracks = (res.data.searchTrack.tracks[0].duration ? res.data.searchTrack.tracks : [])
               this.didyoumean = (res.data.searchTrack ? res.data.searchTrack.didyoumean : '')
             }

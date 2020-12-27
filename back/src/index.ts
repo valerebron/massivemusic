@@ -45,7 +45,7 @@ setInterval(async () => {
   await bots.map(async (bot) => {
     await syncBot(bot, prisma)
   })
-}, env.CRON_MIN_INTERVAL*60*1000)
+}, env.CRON_MIN_INTERVAL*24*60*1000)
 
 api.listen(options).then(() => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'api running on : http://localhost:'+env.API_PORT)
