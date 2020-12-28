@@ -14,7 +14,7 @@
       <checkbox @changeCheckbox="filter($event, 'duration')" class="duration">
         big / small tracks
       </checkbox>
-      <div class="docker-actions">
+      <div class="dock-actions">
         <router-link class="enable" tag="button" to="/test" title="test all tracks">
           <icon-radio />
         </router-link>

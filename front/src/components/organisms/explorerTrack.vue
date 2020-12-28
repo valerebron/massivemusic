@@ -142,7 +142,7 @@
         this.query = this.initQuery
         this.search()
       }
-    }
+    },
   }
 </script>
 

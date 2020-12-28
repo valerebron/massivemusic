@@ -381,6 +381,7 @@
             right: 0;
             top: 0;
             box-shadow: 0;
+            padding: 0;
           }
         }
         .toggle_favorite {
