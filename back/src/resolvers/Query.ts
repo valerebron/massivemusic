@@ -110,6 +110,33 @@ module.exports = {
       count,
     }
   },
+  shuffle: async (parent, args, context, info) => {
+    let andArray = []
+    if(args.style) {
+      andArray.push({ style: args.style })
+    }
+    if(args.user) {
+      andArray.push({ user: args.user })
+    }
+    andArray.push({ invalid: false })
+    andArray.push({ pending: false })
+    let ids = await context.prisma.track.findMany({
+      where: {
+        AND: andArray,
+      },
+      select: {
+        id: true,
+      }
+    })
+    let randId = Math.floor(Math.random() * ids.length)
+    let randTrackId = ids[randId].id
+    console.log(Date())
+    return await context.prisma.track.findUnique({
+      where: {
+        id: randTrackId,
+      }
+    })
+  },
   searchTrack: async (parent, args, context, info) => {
     console.log('search tracks '+args.search)
     let videos = await usetube.searchVideo(args.search, args.token)

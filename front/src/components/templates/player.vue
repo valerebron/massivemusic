@@ -151,15 +151,20 @@
         }
       },
       playNext() {
-        let yt_id = this.track.yt_id
-        let tracks = this.$store.state.tracks.tracks
-        let index = tracks.findIndex(function(e) { return e.yt_id === yt_id })
-        let nextTrack = tracks[index + 1]
-        if(nextTrack) {
-          this.play(nextTrack)
+        if(this.$store.getters.isShuffle) {
+          this.$store.dispatch('shuffle')
         }
         else {
-          this.$store.dispatch('filterTracks', { type: 'skip', value: '' })
+          let yt_id = this.track.yt_id
+          let tracks = this.$store.state.tracks.tracks
+          let index = tracks.findIndex(function(e) { return e.yt_id === yt_id })
+          let nextTrack = tracks[index + 1]
+          if(nextTrack) {
+            this.play(nextTrack)
+          }
+          else {
+            this.$store.dispatch('filterTracks', { type: 'skip', value: '' })
+          }
         }
       },
       filterByArtist(artist) {

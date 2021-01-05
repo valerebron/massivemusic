@@ -11,6 +11,10 @@
       :key="style.id">
       {{ style.name }}
     </router-link>
+    <checkbox class="nav__link" @changeCheckbox="shuffle" :state="$store.getters.isShuffle">
+      <icon-shuffle/>
+      shuffle
+    </checkbox>
     <router-link to="/users" class="nav__link">
       <icon-users />
       users
@@ -54,10 +58,12 @@
 <script>
 import gql from 'graphql-tag'
 import avatar from '@/components/atoms/avatar'
+import checkbox from '@/components/atoms/checkbox'
 export default {
   name: 'navigation',
   components: {
     avatar,
+    checkbox,
   },
   methods: {
     loadStyles() {
@@ -79,6 +85,10 @@ export default {
         .catch(error => {
           console.log('%c●', 'color: red', 'loadStyle: ', error)
         });
+    },
+    shuffle: function() {
+      this.$store.commit('SET_SHUFFLE', !this.$store.getters.isShuffle)
+      this.$store.dispatch('shuffle')
     },
     logout: function() {
       if (!this.$store.getters.isOnline) {

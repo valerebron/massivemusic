@@ -7,6 +7,7 @@ const state = {
   id: -1, // UNSTARTED -1 ENDED 0 PLAYING 1 PAUSED 2 BUFFERING 3 CUED 5
   track: {},
   volume: 66,
+  isShuffle: false,
 }
 
 const mutations = {
@@ -18,7 +19,10 @@ const mutations = {
   },
   SET_VOLUME(state, volume) {
     state.volume = volume
-  }
+  },
+  SET_SHUFFLE(state, shuffle) {
+    state.isShuffle = shuffle
+  },
 }
 
 const actions = {
@@ -70,7 +74,9 @@ const actions = {
             }
           }`,
         }).then(() => {
-          document.getElementsByClassName(store.getters.playerTrack.yt_id)[0].classList.add('track--invalid')
+          if(document.getElementsByClassName(store.getters.playerTrack.yt_id)[0]) {
+            document.getElementsByClassName(store.getters.playerTrack.yt_id)[0].classList.add('track--invalid')
+          }
         }).catch((error) => {
           console.log('%c●', 'color: red', 'invalidate error: ', error.message.replace('GraphQL error: ', ''))
         })
@@ -113,6 +119,45 @@ const actions = {
           player.playVideo()
         }
       }
+    }
+  },
+  shuffle(store) {
+    if(store.state.isShuffle) {
+      window.apollo.query({
+        variables: {
+          user:  store.getters.filters.user,
+          style: store.getters.filters.style,
+          skip:  '',
+        },
+        fetchPolicy: 'no-cache',
+        query: gql`
+          query(
+              $user: Int,
+              $style: Int,
+          ) {
+            shuffle(
+              user:  $user,
+              style: $style,
+            ) {
+              id
+              yt_id
+              title
+              artist
+              duration
+              pending
+              invalid
+              createdAt
+              style {
+                id
+              }
+            }
+          }
+        `,
+      }).then((res) => {
+        store.dispatch('play', res.data.shuffle)
+      }).catch((e) => {
+        console.log('%c●', 'color: red', 'shuffle error', e)
+      })
     }
   },
   loadFirstTrack(store) {
@@ -162,6 +207,9 @@ const getters = {
   },
   volume(state) {
     return state.volume
+  },
+  isShuffle(state) {
+    return state.isShuffle
   },
 }
 

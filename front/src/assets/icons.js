@@ -62,3 +62,5 @@ import iconPlay from 'vue-ionicons/dist/md-play.vue'
 Vue.component('icon-play', iconPlay)
 import iconPause from 'vue-ionicons/dist/md-pause.vue'
 Vue.component('icon-pause', iconPause)
+import iconShuffle from 'vue-ionicons/dist/md-shuffle.vue'
+Vue.component('icon-shuffle', iconShuffle)

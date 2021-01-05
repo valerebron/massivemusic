@@ -20,6 +20,10 @@ type Query {
   searchChannel(search: String, token: String): channelsPayload
   getChannelDesc(id: String): String
   sendMail(to: String, name: String, subject: String!, content: String!, token: String!): String
+  shuffle(
+    style: Int
+    user: Int
+  ): Track
 }
 
 type Mutation {
