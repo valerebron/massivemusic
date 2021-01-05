@@ -1,10 +1,10 @@
 <template>
   <label class="checkbox">
+    <slot></slot>
     <div class="checkbox__button">
       <input type="checkbox" @change="$emit('changeCheckbox', $event.target.checked)" :checked="state">
       <span class="slider round"></span>
     </div>
-    <slot></slot>
   </label>
 </template>
 
@@ -22,9 +22,9 @@ export default {
   &__button {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 34px;
-    margin-right: 10px;
+    width: 50px;
+    height: 24px;
+    margin-left: 10px;
     .slider {
       position: absolute;
       cursor: pointer;
@@ -39,8 +39,8 @@ export default {
       &:before {
         position: absolute;
         content: "";
-        height: 26px;
-        width: 26px;
+        height: 16px;
+        width: 16px;
         left: 4px;
         bottom: 4px;
         background-color: white;

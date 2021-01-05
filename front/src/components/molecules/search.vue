@@ -87,6 +87,7 @@
       }
     }
     &__count {
+      cursor: pointer;
       @extend %appStyleBkgColor;
       display: none;
       @include breakpoint('tablet') {

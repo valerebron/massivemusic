@@ -30,14 +30,6 @@
         <button  class="player-next" @click="playNext">
           <icon-next/>
         </button>
-        <p class="player-infos">
-          <span class="player-title">
-            {{ track.title }}
-          </span>
-          <span class="player-artist" @click.prevent="filterByArtist(track.artist)">
-            {{ track.artist }}
-          </span>
-        </p>
         <div class="player-volume">
           <button @click="toggleVolume">
             <div class="player-volume__icon-container">
@@ -51,6 +43,14 @@
             <progress class="volume-bar__progress" :value="volume" max="100"></progress>
           </div>
         </div>
+        <p class="player-infos">
+          <span class="player-title">
+            {{ track.title }}
+          </span>
+          <span class="player-artist" @click.prevent="filterByArtist(track.artist)">
+            {{ track.artist }}
+          </span>
+        </p>
         <button  class="player-star" @click="$store.dispatch('toggleFavorite', track)">
           <icon-star-inline v-if="$store.getters.isFavorite(track)" />
           <icon-star-outline v-else />
