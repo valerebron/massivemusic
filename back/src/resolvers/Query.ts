@@ -130,7 +130,6 @@ module.exports = {
     })
     let randId = Math.floor(Math.random() * ids.length)
     let randTrackId = ids[randId].id
-    console.log(Date())
     return await context.prisma.track.findUnique({
       where: {
         id: randTrackId,

@@ -226,7 +226,7 @@
         background-color: #00000075;
       }
       .header {
-        z-index: $z-index-logo;
+        z-index: $z-index-logo + 20;
         .nav-toggle, .search {
           display: none;
         }

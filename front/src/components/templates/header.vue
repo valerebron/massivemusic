@@ -86,9 +86,9 @@
     }
     .nav-toggle, .logo__name, .search__button svg {
       color: $app-color;
-      body[class*="route-style"] & {
-        // color: black;
-      }
+      // body[class*="route-style"] & {
+      //   color: black;
+      // }
     }
     .nav-toggle, .search__button {
       font-size: 24px;

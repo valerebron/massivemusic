@@ -154,6 +154,7 @@ export default {
     display: flex;
     color: $app-color;
     width: 100%;
+    cursor: pointer;
     &:hover {
       text-decoration: none;
     }
@@ -162,7 +163,6 @@ export default {
       justify-content: flex-start;
     }
     align-items: center;
-    cursor: pointer;
     padding: 14px 16px!important;
     font-size: 18px;
     @include breakpoint(tablet) {
@@ -210,7 +210,6 @@ export default {
     &.router-link-exact-active {
       color: black;
       background-color: #e7e7e7;
-      cursor: default;
       font-weight: bold;
     }
   }

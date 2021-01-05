@@ -63,7 +63,6 @@ export default {
       transition: fill .3s;
       fill: black;
       box-shadow: black 0 0 6px;
-      padding: 8px 0;
       border-radius: 100px;
     }
   }

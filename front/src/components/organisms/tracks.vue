@@ -235,6 +235,7 @@
       background-color: transparent;
       .play {
         display: flex;
+        cursor: pointer;
       }
       .pause {
         display: none;
@@ -286,6 +287,7 @@
       }
       &__index {
         text-align: center;
+        cursor: pointer;
       }
       td {
         vertical-align: middle;
@@ -296,6 +298,7 @@
       }
       &__title {
         padding-left: 8px;
+        cursor: pointer;
       }
       &__duration {
         display: none;
