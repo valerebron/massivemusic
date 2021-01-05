@@ -191,7 +191,7 @@ export async function login(parent, args, context, info) {
 
 export async function logout(parent, args, context, info) {
 
-  let user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  let user = await context.prisma.user.findUnique({ where: { id: args.user_id } })
   const name = user.name
   if(args.token === user.token) {
     user = context.prisma.user.update({
@@ -213,8 +213,8 @@ export async function logout(parent, args, context, info) {
 }
 
 export async function editUser(parent, args, context, info) {
-  const user = await context.prisma.user.findOne({ where: { id: args.id } })
-  const admin = await context.prisma.user.findOne({ where: { id: 1 } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.id } })
+  const admin = await context.prisma.user.findUnique({ where: { id: 1 } })
   if(args.token !== admin.token && args.channel_enable_tracks === true && user.channel_enable_tracks === false) {  // protect enable track to be activate by non-admin
     throw new Error('forbiden')
   }
@@ -255,8 +255,8 @@ export async function editUser(parent, args, context, info) {
 }
 
 export async function dropUser(parent, args, context, info) {
-  const admin = await context.prisma.user.findOne({ where: { id: 1 } })
-  const user = await context.prisma.user.findOne({ where: { id: args.id } })
+  const admin = await context.prisma.user.findUnique({ where: { id: 1 } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.id } })
   if(args.token === admin.token || args.token === user.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', ' remove user '+args.id)
     return context.prisma.user.delete({ where: { id: args.id } })
@@ -267,7 +267,7 @@ export async function dropUser(parent, args, context, info) {
 }
 
 export async function addBot(parent, args, context, info) {
-  const admin = await context.prisma.user.findOne({ where: { id: 1 } })
+  const admin = await context.prisma.user.findUnique({ where: { id: 1 } })
   if(args.token === admin.token) {
     let channel_style = args.channel_style
     delete args.channel_style
@@ -291,8 +291,8 @@ export async function addBot(parent, args, context, info) {
 }
 
 export async function syncFrontBot(parent, args, context, info) {
-  const admin = await context.prisma.user.findOne({ where: { id: 1 } })
-  const bot = await context.prisma.user.findOne({ where: { id: args.id }})
+  const admin = await context.prisma.user.findUnique({ where: { id: 1 } })
+  const bot = await context.prisma.user.findUnique({ where: { id: args.id }})
   if(args.token === admin.token || args.token === bot.token) {
     syncBot(bot, context.prisma)
   }
@@ -302,7 +302,7 @@ export async function syncFrontBot(parent, args, context, info) {
 }
 
 export async function post(parent, args, context, info) {
-  const user = await context.prisma.user.findOne( { where: { id: args.user_id } })
+  const user = await context.prisma.user.findUnique( { where: { id: args.user_id } })
   if(args.token === user.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', user.name+' add a new track:  '+args.title+' - '+args.artist)
     return context.prisma.track.create({
@@ -328,10 +328,10 @@ export async function post(parent, args, context, info) {
 }
 
 export async function editPost(parent, args, context, info) {
-  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
-  const admin = await context.prisma.user.findOne({ where: { id: 1 } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.user_id } })
+  const admin = await context.prisma.user.findUnique({ where: { id: 1 } })
   if(args.token === user.token || args.token === admin.token) {
-    const track_user = await context.prisma.track.findOne({ where: { id: args.id } }).User()
+    const track_user = await context.prisma.track.findUnique({ where: { id: args.id } }).User()
     if(track_user || user.role === 'ADMIN') {
       if(track_user.id === user.id || user.role === 'ADMIN') {
         console.log('\x1b[34m%s\x1b[0m', '●', track_user.name+' edit ['+args.title+']')
@@ -361,9 +361,9 @@ export async function editPost(parent, args, context, info) {
 }
 
 export async function dropPost(parent, args, context, info) {
-  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.user_id } })
   if(args.token === user.token) {
-    const track_user = await context.prisma.track.findOne({ where: { id: args.id } }).User()
+    const track_user = await context.prisma.track.findUnique({ where: { id: args.id } }).User()
     if(track_user || user.role === 'ADMIN') {
       if(track_user.id === user.id || user.role === 'ADMIN') {
         console.log('\x1b[34m%s\x1b[0m', '●', track_user.name+' remove ['+args.title+']')
@@ -383,9 +383,9 @@ export async function dropPost(parent, args, context, info) {
 }
 
 export async function validatePost(parent, args, context, info) {
-  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.user_id } })
   if(args.token === user.token) {
-    const track_user = await context.prisma.track.findOne({ where: { id: args.id } }).User()
+    const track_user = await context.prisma.track.findUnique({ where: { id: args.id } }).User()
     if(track_user || user.role === 'ADMIN') {
       if(track_user.id === user.id || user.role === 'ADMIN') {
         console.log('\x1b[34m%s\x1b[0m', '●', track_user.name+' validate ['+args.title+']')
@@ -411,7 +411,7 @@ export async function validatePost(parent, args, context, info) {
 }
 
 export async function incrementPlayCount(parent, args, context, info) {
-  const track = await context.prisma.track.findOne({ where: { id: args.id } })
+  const track = await context.prisma.track.findUnique({ where: { id: args.id } })
   let playcount = track.playcount + 1
   await context.prisma.track.update({ where: { id: args.id },
     data: {
@@ -422,7 +422,7 @@ export async function incrementPlayCount(parent, args, context, info) {
 }
 
 export async function validateAll(parent, args, context, info) {
-  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {
     console.log('\x1b[34m%s\x1b[0m', '●', 'validate All '+args.type+' tracks')
     let where = switchActionType(args.type)
@@ -441,7 +441,7 @@ export async function validateAll(parent, args, context, info) {
 }
 
 export async function deleteAll(parent, args, context, info) {
-  const user = await context.prisma.user.findOne({ where: { id: args.user_id } })
+  const user = await context.prisma.user.findUnique({ where: { id: args.user_id } })
   if(args.token === user.token && user.role === 'ADMIN') {
     console.log('\x1b[34m%s\x1b[0m', '●', 'delete all '+args.type+' tracks')
     let where = switchActionType(args.type)
