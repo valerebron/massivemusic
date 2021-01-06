@@ -38,6 +38,9 @@ export default {
     align-items: center;
     height: 75px;
     transition: all 0.3s;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     &__name {
       display: none;
       overflow: hidden;
