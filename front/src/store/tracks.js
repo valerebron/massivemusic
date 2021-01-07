@@ -131,6 +131,7 @@ const actions = {
           empty: store.state.filters.empty,
           duration: store.state.filters.duration,
         },
+        fetchPolicy: 'no-cache',
         query: gql`
           query(
               $search: String,
