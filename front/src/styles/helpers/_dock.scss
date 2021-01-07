@@ -18,6 +18,16 @@
   box-shadow: $app-bkg 0 0 30px;
   padding: 2px 16px;
   border-radius: 0 0 20px 20px;
+  .checkbox {
+    padding: 8px;
+    margin-right: 4px;
+    transition: .3s all;
+    cursor: pointer;
+    &:hover {
+      background-color: #91919163;
+      border-radius: 10px;
+    }
+  }
   button {
     cursor: normal;
     opacity: 0.2;

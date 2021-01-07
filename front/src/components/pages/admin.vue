@@ -91,9 +91,6 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  .checkbox {
-    padding: 0 12px;
-  }
   .tracks {
     @include breakpoint(tablet) {
       margin-top: $header-height+55!important;
