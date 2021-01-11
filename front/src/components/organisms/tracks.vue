@@ -13,10 +13,8 @@
       <td :class="'track__play style-'+track.style.id" @click="forcePlay(track)">
         <icon-play class="play" />
         <icon-pause class="pause" />
+        <img class="track__img" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title">
       </td>
-      <!-- <td class="track__img">
-        <img :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title">
-      </td> -->
       <td :class="'track__index style-'+track.style.id" @click="forcePlay(track)">
         {{ index + 1 }}
       </td>
@@ -272,18 +270,22 @@
         display: none;
       }
       &__play {
-        padding: 6px;
         .play {
           display: flex;
+          position: relative;
+          z-index: $z-index-tracks-play;
+          margin: 4px;
         }
       }
       &__img {
-        height: 30px;
-        width: 30px;
-        img {
-          height: 30px;
-          width: 30px;
-        }
+        height: 22px;
+        width: 22px;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        border-radius: 20px;
+        z-index: $z-index-tracks;
+        object-fit: none;
       }
       &__index {
         text-align: center;
