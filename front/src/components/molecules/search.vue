@@ -32,7 +32,9 @@
     },
     methods: {
       search(terms) {
-        this.$store.dispatch('filterTracks', {type: 'search', value: terms})
+        if(terms !== '') {
+          this.$store.dispatch('filterTracks', {type: 'search', value: terms})
+        }
       },
       resetSearch() {
         this.$refs.searchInput.value = ''

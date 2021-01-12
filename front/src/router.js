@@ -39,6 +39,7 @@ let routes = [
   { name: 'test', path: '/test', component: pageTest },
   { name: 'recover-password', path: '/passwd/:token/:email', component: pageRecover },
   { name: 'mail', path: '/mail', component: pageMail },
+  { name: 'search', path: '/s/:keywords', component: pageHome },
 ]
 // should use store.getters.styles (unfortunatly can't add route async)
 const styles = [{"id":1,"name":"Dubstep","slug":"dubstep"},{"id":2,"name":"Drum & Bass","slug":"drumandbass"},{"id":3,"name":"Dub","slug":"dub"}]

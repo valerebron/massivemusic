@@ -155,7 +155,7 @@
       },
       search(terms) {
         if(!this.isEditable) {
-          this.$store.dispatch('filterTracks', {type: 'search', value: terms})
+          this.$router.push('/s/'+terms)
         }
       },
       formatTime(time) {
