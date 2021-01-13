@@ -14,8 +14,8 @@ import player from './store/player'
 Vue.use(Vuex)
 
 const vuexLocalStorage = new VuexPersist({
-  storage: window.localStorage, // or window.sessionStorage or localForage instance.
-  reducer: (state) => ({ session: state.session, favorites: state.favorites, player: state.player }),
+  storage: window.localStorage, // or window.sessionStorage or localStorage instance.
+  reducer: (state) => ({ session: state.session, favorites: state.favorites, styles: state.styles }),
 })
 
 export default new Vuex.Store({

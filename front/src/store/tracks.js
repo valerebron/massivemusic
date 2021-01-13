@@ -105,6 +105,9 @@ const actions = {
             store.commit('SET_FILTER', filter)
           }
         break
+        case 'reset':
+          store.commit('RESET_FILTERS')
+        break
         default:
           store.commit('SET_FILTER', {type: 'user', value: 0})
           store.commit('SET_FILTER', {type: 'style', value: 0})

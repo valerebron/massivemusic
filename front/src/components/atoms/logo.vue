@@ -25,7 +25,7 @@ export default {
         this.$router.push('/')
       }
       else {
-        this.$store.dispatch('filterTracks', {type: 'search', value: ''})
+        this.$store.dispatch('filterTracks', {type: 'reset'})
       }
     },
   },
