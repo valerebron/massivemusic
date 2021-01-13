@@ -5,13 +5,10 @@
       <div v-if="error !== ''" class="error-dialog">
         {{ error }}
       </div>
-      <!-- <a v-if="$store.getters.isAdmin" :href="'https://www.youtube.com/watch?v='+newTrack.yt_id" target="_blank" class="edit-track__link">
-        check on youtube
-      </a> -->
-      <explorerTrack @clickOnTrack="updateId" :initQuery="trackToEdit.title+' '+trackToEdit.artist" />
-      <styleSelector class="add-bots__style" :preSelected="newTrack.style.id"/>
+      <styleSelector class="edit-track__style" :preSelected="newTrack.style.id"/>
       <input v-model="newTrack.artist" type="text" class="item" placeholder="artist" required @keydown.enter.prevent="edit()">
       <input v-model="newTrack.title" type="text" :class="'item style-'+newTrack.style" placeholder="title" required @keydown.enter.prevent="edit()">
+      <explorerTrack @clickOnTrack="updateId" :initQuery="trackToEdit.title+' '+trackToEdit.artist" />
       <div class="actions">
         <button @click.prevent="close()">
           Cancel
@@ -93,6 +90,9 @@
       &:hover {
         text-decoration: underline;
       }
+    }
+    &__style {
+      margin-top: 10px;
     }
     .explorer {
       min-height: auto;

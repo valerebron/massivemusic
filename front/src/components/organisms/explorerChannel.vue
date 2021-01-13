@@ -2,6 +2,7 @@
   <ul class="explorer" :class="{ 'explorer--init' : channels.length === 0 }">
     <li class="explorer__search">
       <loader class="explorer__loader"  v-if="isLoading"/>
+      <icon-youtube class="explorer__ytlogo" />
       <input
         class="explorer__search-input"
         v-model="query"

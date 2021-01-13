@@ -23,9 +23,15 @@
     text-align: center;
     font-size: 26px;
     font-weight: bold;
+    padding: 10px 40px;
   }
-
-  .loader {
+  &__ytlogo {
+    position: absolute;
+    top: 17px;
+    left: 10px;
+    color: $youtube-red;
+  }
+  &__loader {
     position: absolute;
     top: 0;
     left: 50%;

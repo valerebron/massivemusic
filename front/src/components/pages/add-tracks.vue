@@ -1,6 +1,6 @@
 <template>
   <main class="add-tracks">
-    <explorerTrack @clickOnTrack="open" :initQuery="$route.params.init_query" />
+    <explorerTrack @clickOnTrack="open" :initQuery="$route.params.init_query" focusOnMounted />
     <modal @close="close()">
       <iframe class="add-tracks__iframe" type="text/html" :src="'https://www.youtube-nocookie.com/embed/'+track.id" frameborder="0"></iframe>
       <form class="add-tracks__form">

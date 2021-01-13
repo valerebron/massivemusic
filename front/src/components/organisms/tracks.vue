@@ -110,7 +110,7 @@
     methods: {
       play(track, e) {
         let targetClass = e.target.className.split(' ')[0]
-        document.querySelectorAll('.track').forEach(track => track.classList.remove('open'))
+        this.closeActions()
         if(!this.isEditable || targetClass === 'track__play' || targetClass === 'track__index') {
           this.$store.dispatch('play', track)
         }
@@ -151,6 +151,7 @@
       close() {
         this.$store.dispatch('modal', false)
         this.isEditOpen = this.isDropOpen = this.isValidateOpen =  false
+        this.closeActions()
       },
       search(terms) {
         if(!this.isEditable) {
@@ -163,10 +164,13 @@
       toggleActions(event) {
         let track = event.target.parentElement.parentElement
         let isOpen = track.classList.contains('open')
-        document.querySelectorAll('.track').forEach(track => track.classList.remove('open'))
+        this.closeActions()
         if(!isOpen) {
           track.classList.add('open')
         }
+      },
+      closeActions() {
+        document.querySelectorAll('.track').forEach(track => track.classList.remove('open'))
       },
     },
     async mounted() {

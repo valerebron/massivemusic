@@ -2,6 +2,7 @@
   <ul class="explorer" :class="{ 'explorer--init' : tracks.length === 0 }">
     <li class="explorer__search">
       <loader class="explorer__loader" v-if="isLoading"/>
+      <icon-youtube class="explorer__ytlogo" />
       <input
         class="explorer__search-input"
         v-model="query"
@@ -52,7 +53,11 @@
       initQuery: {
         type: String,
         default: '',
-      }
+      },
+      focusOnMounted: {
+        type: Boolean,
+        default: false
+      },
     },
     data: function() {
       return {
@@ -137,7 +142,9 @@
       },
     },
     mounted: function() {
-      this.input.focus()
+      if(this.focusOnMounted) {
+        this.input.focus()
+      }
       if(this.initQuery !== '') {
         this.query = this.initQuery
         this.search()
