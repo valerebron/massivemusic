@@ -92,16 +92,14 @@
   flex-direction: row;
   justify-content: center;
   .tracks {
-    @include breakpoint(tablet) {
-      margin-top: $header-height+55!important;
-    }
+    margin-top: $header-height+55!important;
   }
   .dock--mobile-open {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin: 0;
-    @include breakpoint(tablet) {
+    @include breakpoint('tablet') {
       display: block;
     }
   }

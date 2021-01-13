@@ -33,7 +33,7 @@
         </button>
         <aside class="track__actions__menu">
           <p class="track__createdat" :title="track.createdAt">
-            {{ Date.parse(track.createdAt) | moment('from', 'now') }}
+            {{ track.createdAt | moment('from', true) }}
           </p>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
             <icon-star-inline v-if="$store.getters.isFavorite(track)" />
@@ -65,7 +65,7 @@
   </section>
   <section v-else class="no-track tracks">
     <p class="no-track__txt">
-      No track found :(
+      No track found
     </p>
     <router-link tag="button" :to="'/add-tracks/'+this.$store.getters.search" class="tracks__add-tracks">
       <icon-youtube />
@@ -270,8 +270,8 @@
         display: none;
       }
       &__play {
-        .play {
-          display: flex;
+        cursor: pointer;
+        .play, .pause {
           position: relative;
           z-index: $z-index-tracks-play;
           margin: 4px;
