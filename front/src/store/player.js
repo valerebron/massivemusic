@@ -108,11 +108,13 @@ const actions = {
           player.stopVideo()
           player.seekTo(0)
           player.loadVideoById(track.yt_id)
+          console.log(router)
+          document.title = track.title+' - '+track.artist+' | MassiveMusic'
           store.dispatch('incrementPlayCount', track)
         }, 333)
       }
       else {
-        if(playerState == 'playing') {
+        if(playerState === 'playing') {
           player.pauseVideo()
         }
         else {
