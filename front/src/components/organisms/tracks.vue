@@ -110,6 +110,7 @@
     methods: {
       play(track, e) {
         let targetClass = e.target.className.split(' ')[0]
+        document.querySelectorAll('.track').forEach(track => track.classList.remove('open'))
         if(!this.isEditable || targetClass === 'track__play' || targetClass === 'track__index') {
           this.$store.dispatch('play', track)
         }
@@ -160,11 +161,11 @@
         return window.formatTime(time)
       },
       toggleActions(event) {
-        let menu = event.target.parentElement.parentElement
-        let isOpen = menu.classList.contains('open')
-        document.querySelectorAll('.track').forEach(menu => menu.classList.remove('open'))
+        let track = event.target.parentElement.parentElement
+        let isOpen = track.classList.contains('open')
+        document.querySelectorAll('.track').forEach(track => track.classList.remove('open'))
         if(!isOpen) {
-          menu.classList.add('open')
+          track.classList.add('open')
         }
       },
     },
