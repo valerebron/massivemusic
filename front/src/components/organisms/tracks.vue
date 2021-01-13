@@ -36,22 +36,44 @@
             {{ track.createdAt | moment('from', true) }}
           </p>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
-            <icon-star-inline v-if="$store.getters.isFavorite(track)" />
-            <icon-star-outline v-else style="opacity: 0.5" />
+            <template v-if="$store.getters.isFavorite(track)">
+              <icon-star-inline />
+              <span class="text-label">
+                Remove Favorite
+              </span>
+            </template>
+            <template v-else>
+              <icon-star-outline style="opacity: 0.5" />
+              <span class="text-label">
+                Add Favorite
+              </span>
+            </template>
           </button>
           <template v-if="isEditable || isMyPage">
             <button class="edit" @click="openEdit(track)">
               <icon-edit/>
+              <span class="text-label">
+                Edit
+              </span>
             </button>
             <button class="validate" @click="openValidate(track)">
               <icon-valid/>
+              <span class="text-label">
+                Validate
+              </span>
             </button>
             <button class="drop" @click="openDrop(track)">
               <icon-trash/>
+              <span class="text-label">
+                Delete
+              </span>
             </button>
           </template>
           <router-link tag="button" :to="'/user/'+track.user.id+'/profile'" class="track__user__link" :title="track.user.name">
             <avatar :user="track.user" size="small" />
+            <span class="text-label">
+              Upload by {{ track.user.name }}
+            </span>
           </router-link>
         </aside>
       </td>
@@ -346,14 +368,32 @@
         position: relative;
         z-index: $z-index-tracks;
         .track__actions__menu {
-          display: block;
-          align-items: center;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
           box-shadow: black 0 0 30px;
+          .track__createdat {
+            padding-left: 20px;
+            width: 100%;
+          }
+          .track__user__link {
+            display: inline-flex;
+          }
+          button {
+            width: 100%;
+            text-align: left;
+            .text-label {
+              padding-left: 10px;
+            }
+          }
           @include breakpoint(tablet) {
             box-shadow: none;
             border: none;
             .track__createdat {
               display: inline;
+            }
+            .track__user__link {
+              // display: inline;
             }
           }
           border: 1px rgba(255, 255, 255, 0.1) solid;
@@ -392,7 +432,11 @@
           background-color: #242424;
           z-index: 200;
           @include breakpoint(tablet) {
-            display: inline-flex;
+            display: inline-flex!important;
+            flex-direction: row!important;
+            .text-label {
+              display: none;
+            }
             position: relative;
             background-color: transparent;
             right: 0;
