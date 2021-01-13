@@ -10,15 +10,15 @@
       }, 'style-bkg-'+track.style.id]"
       :key="track.yt_id"
     >
-      <td :class="'track__play style-'+track.style.id" @click="forcePlay(track)">
+      <td :class="'track__play style-'+track.style.id" @click="play(track, $event)">
         <icon-play class="play" />
         <icon-pause class="pause" />
         <img class="track__img" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title">
       </td>
-      <td :class="'track__index style-'+track.style.id" @click="forcePlay(track)">
+      <td :class="'track__index style-'+track.style.id" @click="play(track, $event)">
         {{ index + 1 }}
       </td>
-      <td :class="'track__title style-'+track.style.id" @click="play(track)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
+      <td :class="'track__title style-'+track.style.id" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
         <time class="track__duration">
           {{ formatTime(track.duration) }}
@@ -108,13 +108,11 @@
       }
     },
     methods: {
-      play(track) {
-        if(!this.isEditable) {
+      play(track, e) {
+        let targetClass = e.target.className.split(' ')[0]
+        if(!this.isEditable || targetClass === 'track__play' || targetClass === 'track__index') {
           this.$store.dispatch('play', track)
         }
-      },
-      forcePlay(track) {
-        this.$store.dispatch('play', track)
       },
       async load() {
         if(this.filter.type === 'favorites') {
@@ -270,11 +268,15 @@
         display: none;
       }
       &__play {
+        > * {
+          pointer-events: none;
+        }
         cursor: pointer;
         .play, .pause {
           position: relative;
           z-index: $z-index-tracks-play;
           margin: 4px;
+          margin-left: 8px;
         }
       }
       &__img {
@@ -282,6 +284,7 @@
         width: 22px;
         position: absolute;
         top: 50%;
+        left: 6px;
         transform: translateY(-50%);
         border-radius: 20px;
         z-index: $z-index-tracks;
@@ -343,6 +346,10 @@
           box-shadow: black 0 0 30px;
           @include breakpoint(tablet) {
             box-shadow: none;
+            border: none;
+            .track__createdat {
+              display: inline;
+            }
           }
           border: 1px rgba(255, 255, 255, 0.1) solid;
           border-top: 0;
@@ -377,7 +384,7 @@
           right: 0;
           height: auto;
           padding: 10px;
-          background-color: black;
+          background-color: #242424;
           z-index: 200;
           @include breakpoint(tablet) {
             display: inline-flex;

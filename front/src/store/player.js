@@ -1,6 +1,5 @@
 import YouTubePlayer from 'youtube-player'
 import gql from 'graphql-tag'
-import router from '../router'
 
 let playTimeout = ''
 
@@ -109,7 +108,6 @@ const actions = {
           player.stopVideo()
           player.seekTo(0)
           player.loadVideoById(track.yt_id)
-          console.log(router)
           document.title = track.title+' - '+track.artist+' | MassiveMusic'
           store.dispatch('incrementPlayCount', track)
         }, 333)
