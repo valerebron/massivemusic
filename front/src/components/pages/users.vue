@@ -84,6 +84,12 @@
       }
     }
   }
+  .dock--mobile-open {
+    display: grid;
+    @include breakpoint(tablet) {
+      display: flex;
+    }
+  }
   .user-list {
     padding-top: $header-height;
     border-radius: 26px;

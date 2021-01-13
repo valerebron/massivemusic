@@ -45,7 +45,9 @@ let routes = [
 const styles = [{"id":1,"name":"Dubstep","slug":"dubstep"},{"id":2,"name":"Drum & Bass","slug":"drumandbass"},{"id":3,"name":"Dub","slug":"dub"}]
 styles.map(style => {
   routes.push(
-    { name: 'style-'+style.id, path: '/'+style.slug, component: pageStyle, props: { styleId: style.id } }
+    { name: 'style-'+style.id, path: '/'+style.slug, component: pageStyle, props: { styleId: style.id }, children: [
+      { name: 'style-'+style.id+'-search', path: '/'+style.slug+'/s/:keywords', component: pageStyle },
+    ] },
   )
 })
 

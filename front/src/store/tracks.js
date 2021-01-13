@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import router from '../router'
 
 let initial_filters = {
   search: '',
@@ -90,10 +91,32 @@ const mutations = {
 
 const actions = {
   async filterTracks(store, filter) {
-    if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip') {
+    // console.log(filter.type,filter.value)
+    if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip' || Array.isArray(filter) ) {
       let newSkip = store.state.filters.skip + store.state.tracksPerPage
       switch(filter.type) {
         case 'search':
+          if(store.state.filters.style !== 0) {
+            let styles = store.getters.styles
+            let filteredStyle = store.state.filters.style
+            let slug = styles.find(e => e.id === filteredStyle).slug
+            if(filter.value !== '' && filter.value !== store.state.filters.search) {
+              router.push('/'+slug+'/s/'+filter.value)
+            }
+            else {
+              router.push('/'+slug)
+            }
+          }
+          else {
+            if(filter.value !== '' && filter.value !== store.state.filters.search) {
+              if(router.history.current.path !== '/s/'+filter.value) {
+                router.push('/s/'+filter.value)
+              }
+            }
+            else {
+              router.push('/')
+            }
+          }
           store.commit('SET_FILTER', filter)
         break
         case 'skip':
@@ -117,6 +140,11 @@ const actions = {
           store.commit('SET_FILTER', {type: 'duration', value: false})
           store.commit('SET_FILTER', filter)
         break
+      }
+      // if filter style + filter search
+      if(Array.isArray(filter)) { // (transtype)
+        store.commit('SET_FILTER', filter[0])
+        store.commit('SET_FILTER', filter[1])
       }
       const order = (filter.order === 'asc') ? 'asc' : 'desc'
       store.commit('SET_TRACK_LOADING')
@@ -357,12 +385,12 @@ const actions = {
 const getters = {
   tracks: state => state.tracks,
   filters: state => state.filters,
-  first: state => state.first,
-  skip: state => state.skip,
+  first: state => state.tracks[0],
+  skip: state => state.filters.skip,
   order: state => state.order,
   search: state => state.filters.search,
-  style: state => state.style,
-  user: state => state.user,
+  style: state => state.filters.style,
+  user: state => state.filters.user,
   count: state => state.count,
   tracksPerPage: state => state.tracksPerPage,
   trackIsLoading: state => state.isLoading,

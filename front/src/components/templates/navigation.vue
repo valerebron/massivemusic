@@ -1,13 +1,13 @@
 <template>
   <nav class="nav">
-    <router-link to="/" class="nav__link">
+    <router-link :to="'/'+searchSlug" class="nav__link">
       <icon-home />all styles
     </router-link>
     <router-link
       class="nav__link nav__link--style"
       :class="'style-hover-bkg-'+style.id"
       v-for="style in $store.getters.styles"
-      :to="'/'+style.slug"
+      :to="'/'+style.slug+'/'+searchSlug"
       :key="style.id">
       {{ style.name }}
     </router-link>
@@ -64,6 +64,16 @@ export default {
   components: {
     avatar,
     checkbox,
+  },
+  computed: {
+    searchSlug: function() {
+      if(this.$store.getters.search !== '') {
+        return 's/'+this.$store.getters.search.trim()
+      }
+      else {
+        return ''
+      }
+    },
   },
   methods: {
     loadStyles() {

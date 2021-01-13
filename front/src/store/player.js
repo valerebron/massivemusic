@@ -1,5 +1,6 @@
 import YouTubePlayer from 'youtube-player'
 import gql from 'graphql-tag'
+import router from '../router'
 
 let playTimeout = ''
 
@@ -99,7 +100,7 @@ const actions = {
       store.dispatch('filterTracks', { type: 'skip', value: '' })
     }
     if(track) {
-      if(track.yt_id != playerTrack.yt_id) {
+      if(track.yt_id !== playerTrack.yt_id) {
         store.dispatch('ui', {type: 'player', value: true})
         store.commit('SET_TRACK', track)
         // prevent fast clicking prev/next buttons

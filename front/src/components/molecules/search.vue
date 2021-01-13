@@ -32,9 +32,7 @@
     },
     methods: {
       search(terms) {
-        if(terms !== '') {
-          this.$store.dispatch('filterTracks', {type: 'search', value: terms})
-        }
+        this.$store.dispatch('filterTracks', {type: 'search', value: terms})
       },
       resetSearch() {
         this.$refs.searchInput.value = ''
@@ -57,9 +55,6 @@
           this.close()
         }
       },
-    },
-    mounted() {
-      this.terms = this.$store.getters.filters.search
     },
   }
 </script>
