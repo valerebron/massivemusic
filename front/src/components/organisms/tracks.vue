@@ -387,17 +387,14 @@
             }
           }
           @include breakpoint(tablet) {
+            border-top: 0;
             box-shadow: none;
             border: none;
             .track__createdat {
               display: inline;
             }
-            .track__user__link {
-              // display: inline;
-            }
           }
           border: 1px rgba(255, 255, 255, 0.1) solid;
-          border-top: 0;
           button {
             display: inline;
             height: 100%;
@@ -425,8 +422,9 @@
           display: none;
           position: fixed;
           padding: 0;
-          top: 58px;
-          right: 0;
+          top: 50%;
+          right: 50px;
+          transform: translateY(-50%);
           height: auto;
           padding: 10px;
           background-color: #242424;
@@ -440,7 +438,6 @@
             position: relative;
             background-color: transparent;
             right: 0;
-            top: 0;
             box-shadow: 0;
             padding: 0;
           }
@@ -448,6 +445,24 @@
         .toggle_favorite {
           cursor: pointer;
           color: $favorite-color;
+        }
+      }
+      &:first-child, &:nth-child(2), &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(6) {
+        .track__actions__menu {
+          top: 0!important;
+          transform: translateY(0%)!important;
+        }
+      }
+      &:last-child, &:nth-last-child(2), &:nth-last-child(3) {
+        .track__actions__menu {
+          top: 100%;
+          transform: translateY(-100%);
+        }
+      }
+      @include breakpoint(tablet) {
+        .track__actions__menu {
+          top: 0;
+          transform: translateY(0);
         }
       }
     }
