@@ -91,7 +91,6 @@ const mutations = {
 
 const actions = {
   async filterTracks(store, filter) {
-    // console.log(filter.type,filter.value)
     if(filter.value !== store.state.filters[filter.type] || filter.type === 'skip' || Array.isArray(filter) ) {
       let newSkip = store.state.filters.skip + store.state.tracksPerPage
       switch(filter.type) {

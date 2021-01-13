@@ -1,6 +1,6 @@
 <template>
   <main class="admin">
-    <tracks :filter="{ type: 'style', value: 0 }"/>
+    <tracks :filter="{ type: 'admin', value: 0 }"/>
     <aside class="dock" :class="{ 'dock--mobile-open' : isDockMobileOpen }">
       <checkbox @changeCheckbox="filter($event, 'pending')" class="pending" ref="pending">
         pending
