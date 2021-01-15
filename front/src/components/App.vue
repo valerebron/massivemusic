@@ -138,11 +138,11 @@
     .page {
       z-index: $z-index-tracks;
       width: 100%;
-      min-height: calc(100vh - #{$header-height} - #{$player-height});
+      // min-height: calc(100vh - #{$header-height} - #{$player-height});
       display: flex;
       transition: all 0.2s;
       & > *:first-child {
-        min-height: calc(100vh - 75px);
+        // min-height: calc(100vh - 75px);
         margin-top: $header-height;
         margin-bottom: 0;
         .app--player {
