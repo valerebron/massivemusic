@@ -1,6 +1,6 @@
 <template>
   <section class="player">
-    <div class="player__top">
+    <div class="player__top" @click="$store.dispatch('play', track)">
       <!-- <img class="player__top cover-image" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/hqdefault.jpg'" @click="play(track)"/> -->
       <div id="player"></div>
     </div>
@@ -170,7 +170,8 @@
     &__top {
       z-index: $z-index-player;
       height: 0vh;
-      // object-fit: contain;
+      cursor: pointer;
+      object-fit: cover;
       // background: black;
       position: fixed;
       width: 100%;
