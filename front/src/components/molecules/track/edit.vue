@@ -1,14 +1,18 @@
 <template>
   <modal :key="trackToEdit.yt_id" @close="close()">
     <iframe class="edit-tracks__iframe" type="text/html" :src="iframeSrc" :key="newTrack.yt_id" frameborder="0"></iframe>
-    <form class="edit-track">
+    <form class="edit-track" :class="{ 'edit-track--explorer-open' : isExplorerOpen }">
       <div v-if="error !== ''" class="error-dialog">
         {{ error }}
       </div>
       <styleSelector class="edit-track__style" :preSelected="newTrack.style.id"/>
       <input v-model="newTrack.artist" type="text" class="item" placeholder="artist" required @keydown.enter.prevent="edit()">
       <input v-model="newTrack.title" type="text" :class="'item style-'+newTrack.style" placeholder="title" required @keydown.enter.prevent="edit()">
-      <explorerTrack @clickOnTrack="updateId" :initQuery="trackToEdit.title+' '+trackToEdit.artist" />
+      <button class="cta youtube" v-if="!isExplorerOpen" @click="isExplorerOpen = true">
+        <icon-youtube />
+        replace by another youtube video
+      </button>
+      <explorerTrack v-else @clickOnTrack="updateId" :initQuery="trackToEdit.title+' '+trackToEdit.artist" />
       <div class="actions">
         <button @click.prevent="close()">
           Cancel
@@ -43,6 +47,7 @@
           },
         },
         iframeSrc: '',
+        isExplorerOpen: false,
       }
     },
     methods: {
@@ -83,8 +88,10 @@
 
 <style lang="scss">
   .edit-track {
-    height: 50vh;
-    overflow-y: scroll;
+    &--explorer-open {
+      height: 50vh;
+      overflow-y: scroll;
+    }
     &__link {
       padding: 8px;
       &:hover {

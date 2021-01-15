@@ -19,22 +19,22 @@ button {
     background-color: rgba(255, 255, 255, 0.068);
   }
   &.edit {
-    background-color: rgba($edit-color, 0.2);
     &:hover, &:active {
       background-color: $edit-color;
     }
   }
   &.validate {
-    background-color: rgba($validate-color, 0.2);
     &:hover, &:active {
       background-color: $validate-color;
     }
   }
   &.drop {
-    background-color: rgba($invalidate-color, 0.2);
     &:hover, &:active {
       background-color: $invalidate-color;
     }
+  }
+  &.youtube {
+    background-color: $youtube-red!important;
   }
   &.cta {
     background-color: $app-color;
@@ -44,5 +44,8 @@ button {
       background-color:$grey-0;
       color: $app-color;
     }
+  }
+  .ion {
+    padding-right: 10px;
   }
 }
