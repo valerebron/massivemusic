@@ -32,10 +32,11 @@ const actions = {
       player.setVolume(store.getters.volume)
     })
     player.on('stateChange', function (event) {
+      console.log('state change', event.target.getPlayerState())
       let newState = event.target.getPlayerState()
       store.commit('SET_PLAYER_STATE', newState)
       if(newState === 0) { // ended track
-        document.getElementsByClassName('player-next')[0].click()
+        store.dispatch('playNext', store.getters.playerTrack)
       }
       if(newState === 1) {                      // if playing
         if(store.getters.playerTrack.invalid) { // invalid track
@@ -120,6 +121,32 @@ const actions = {
           player.playVideo()
         }
       }
+    }
+  },
+  playNext(store, track) {
+    if(store.getters.isShuffle) {
+      store.dispatch('shuffle')
+    }
+    else {
+      let yt_id = track.yt_id
+      let tracks = store.getters.tracks
+      let index = tracks.findIndex(function(e) { return e.yt_id === yt_id })
+      let nextTrack = tracks[index + 1]
+      if(nextTrack) {
+        store.dispatch('play', nextTrack)
+      }
+      else {
+        store.dispatch('filterTracks', { type: 'skip', value: '' })
+      }
+    }
+  },
+  playPrev(store, track) {
+    let yt_id = track.yt_id
+    let tracks = store.getters.tracks
+    let index = tracks.findIndex((e) => { return e.yt_id === yt_id })
+    let nextTrack = tracks[index - 1]
+    if(nextTrack) {
+      store.dispatch('play', nextTrack)
     }
   },
   shuffle(store) {

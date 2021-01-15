@@ -20,14 +20,14 @@
         </div>
       </div>
       <div class="control-bar">
-        <button  class="player-prev" @click="playPrev">
+        <button  class="player-prev" @click="$store.dispatch('playPrev', track)">
           <icon-prev/>
         </button>
-        <button class="player-play" @click="play(track)">
+        <button class="player-play" @click="$store.dispatch('play', track)">
           <icon-play-pause/>
           <loader v-if="$store.getters.playerState === 'buffering'" />
         </button>
-        <button  class="player-next" @click="playNext">
+        <button  class="player-next" @click="$store.dispatch('playNext', track)">
           <icon-next/>
         </button>
         <div class="player-volume">
@@ -138,44 +138,15 @@
           this.$store.dispatch('ui', {type: 'full', value: true})
         }
       },
-      play(track) {
-        this.$store.dispatch('play', track)
-      },
-      playPrev() {
-        let yt_id = this.track.yt_id
-        let tracks = this.$store.state.tracks.tracks
-        let index = tracks.findIndex((e) => { return e.yt_id === yt_id })
-        let nextTrack = tracks[index - 1]
-        if(nextTrack) {
-          this.play(nextTrack)
-        }
-      },
-      playNext() {
-        if(this.$store.getters.isShuffle) {
-          this.$store.dispatch('shuffle')
-        }
-        else {
-          let yt_id = this.track.yt_id
-          let tracks = this.$store.state.tracks.tracks
-          let index = tracks.findIndex(function(e) { return e.yt_id === yt_id })
-          let nextTrack = tracks[index + 1]
-          if(nextTrack) {
-            this.play(nextTrack)
-          }
-          else {
-            this.$store.dispatch('filterTracks', { type: 'skip', value: '' })
-          }
-        }
-      },
       filterByArtist(artist) {
         this.$store.dispatch('filterTracks', {type: 'search', value: artist})
       },
       refreshPlayer() {
         let self = this
-        setInterval(function() {
-          self.player.getDuration().then((duration) => {self.duration = duration})
-          self.player.getCurrentTime().then((currentTime) => {self.currentTime = currentTime})
-          self.player.getVideoLoadedFraction().then((loaded) => {self.loaded = loaded})
+        setInterval(async function() {
+          self.duration = await self.player.getDuration()
+          self.currentTime = await self.player.getCurrentTime()
+          self.loaded = await self.player.getVideoLoadedFraction()
         }, 500)
       },
     },
