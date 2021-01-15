@@ -27,4 +27,13 @@ button {
       background-color: $invalidate-color;
     }
   }
+  &.cta {
+    background-color: $app-color;
+    color: black;
+    font-weight: bold;
+    &:hover, &:active {
+      background-color:$grey-0;
+      color: $app-color;
+    }
+  }
 }

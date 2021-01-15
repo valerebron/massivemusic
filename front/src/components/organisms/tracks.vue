@@ -20,6 +20,7 @@
       </td>
       <td :class="'track__title style-'+track.style.id" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
+        <icon-star-inline class="track__star" v-if="$store.getters.isFavorite(track)" />
         <time class="track__duration">
           {{ formatTime(track.duration) }}
         </time>
@@ -332,6 +333,13 @@
         padding-left: 8px;
         cursor: pointer;
       }
+      &__star {
+        color: $favorite-color;
+        font-size: 14px;
+        @include breakpoint(tablet) {
+          display: none;
+        }
+      }
       &__duration {
         display: none;
         background-color: white;
@@ -449,14 +457,18 @@
       }
       &:first-child, &:nth-child(2), &:nth-child(3), &:nth-child(4), &:nth-child(5), &:nth-child(6) {
         .track__actions__menu {
-          top: 0!important;
-          transform: translateY(0%)!important;
+          @include breakpoint(phone) {
+            top: 0!important;
+            transform: translateY(0%)!important;
+          }
         }
       }
       &:last-child, &:nth-last-child(2), &:nth-last-child(3) {
         .track__actions__menu {
-          top: 100%;
-          transform: translateY(-100%);
+          @include breakpoint(phone) {
+            top: 100%;
+            transform: translateY(-100%);
+          }
         }
       }
       @include breakpoint(tablet) {

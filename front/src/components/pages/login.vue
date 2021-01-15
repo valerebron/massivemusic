@@ -21,12 +21,21 @@
           ref="upload"
         />
         <input
+          v-if="$route.name === 'signup'"
+          class="login__name"
+          type="text"
+          v-model="name"
+          placeholder="Username"
+          required
+          @keydown.enter.prevent="submit($event)"
+        >
+        <input
           class="login__credential"
           type="email" v-model="credential"
           :placeholder="$route.name === 'login' ? 'Email or Username' : 'Email'"
           required
           ref="credential"
-          @keydown.enter.prevent="submit()"
+          @keydown.enter.prevent="submit($event)"
         >
         <input
           class="login__password"
@@ -34,7 +43,7 @@
           v-model="password"
           placeholder="Password"
           required
-          @keydown.enter.prevent="submit()"
+          @keydown.enter.prevent="submit($event)"
         >
         <a
           v-if="$route.name === 'login'"
@@ -43,15 +52,6 @@
         >
           forgot password ?
         </a>
-        <input
-          v-if="$route.name === 'signup'"
-          class="login__name"
-          type="text"
-          v-model="name"
-          placeholder="Username"
-          required
-          @keydown.enter.prevent="submit()"
-        >
         <router-link v-if="$route.name === 'login'" class="login__sign" to="signup" tag="button">
           no account yet ?
         </router-link>
@@ -59,7 +59,7 @@
           already got an account ?
         </router-link>
         <loader v-if="isLoading" />
-        <button class="login__button" @click.prevent="submit()">
+        <button class="login__button cta" @click.prevent="submit($event)">
           <template v-if="$route.name === 'login'">login</template>
           <template v-if="$route.name === 'signup'">subscribe</template>
         </button>
@@ -132,12 +132,14 @@
           })
         }
       },
-      submit: function() {
+      submit: function(e) {
         this.isLoading = true
         if(this.$route.name === 'login' && this.credential !== '' && this.password !== '') {
+          e.target.blur()
           this.login()
         }
         else if(this.$route.name === 'signup' && this.credential !== '' && this.password !== '' && this.name !== '') {
+          e.target.blur()
           this.signup()
         }
         else {

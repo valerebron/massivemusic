@@ -8,7 +8,7 @@
         v-model="query"
         type="search"
         placeholder="search channels on youtube"
-        @keydown.enter="search"
+        @keydown.enter="search(); $event.target.blur()"
       />
     </li>
     <li class="typo-center" v-if="didyoumean !== ''">

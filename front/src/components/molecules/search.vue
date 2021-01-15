@@ -1,6 +1,6 @@
 <template>
   <div class="search">
-    <input v-model="terms" class="search__input" type="search" placeholder="Search" ref="searchInput" />
+    <input v-model="terms" class="search__input" @keydown.enter="blur($event)" type="search" placeholder="Search" ref="searchInput" />
     <i class="search__count counter" @click="resetSearch">
       {{ $store.getters.count }}
     </i>
@@ -53,6 +53,12 @@
         }
         else {
           this.close()
+        }
+      },
+      blur(e) {
+        e.target.blur()
+        if(e.target.value === '') {
+          this.$store.dispatch('ui', {type: 'search', value: false})
         }
       },
     },
