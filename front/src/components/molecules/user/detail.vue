@@ -2,6 +2,14 @@
   <figure v-if="user.createdAt" class="user" :class="{ loading : isSyncing }">
     <div class="user__image-container">
       <avatar :user="user" size="big" />
+    </div>
+    <figcaption class="user__captions">
+      <h1 class="user__name">
+        {{ user.name }}
+        <span :class="'style-'+user.channel_style">
+          .
+        </span>
+      </h1>
       <button @click="sync" v-if="user.role === 'ROBOT' && $store.getters.isAdmin" :class="'style-bkg-'+user.channel_style">
         <span class="user__sync-button">
           <icon-sync />
@@ -11,22 +19,16 @@
           sync channel
         </span>
       </button>
-    </div>
-    <figcaption class="user__captions">
-      <h1 class="user__name">
-        {{ user.name }}
-        <span :class="'style-'+user.channel_style">
-          .
-        </span>
-      </h1>
-      <a v-if="user.role === 'ROBOT'" class="link" target="_blank" :href="'https://youtube.com/channel/'+user.channel_id+''" :title="user.name">
-        see channel on youtube
-      </a>
       <h3>
         <router-link class="nb-tracks" :class="'style-bkg-'+user.channel_style" :to="'/user/'+$route.params.user_id+'/tracks'" tag="button">
-          <b class="count">{{ this.user.tracks.length }}</b> track(s)
+          <icon-play class="play" />
+          <b class="count"> {{ this.user.tracks.length }}</b> track(s)
         </router-link>
       </h3>
+      <a v-if="user.role === 'ROBOT'" class="user__link" target="_blank" :href="'https://youtube.com/channel/'+user.channel_id+''" :title="user.name">
+        see channel on youtube
+        <icon-exit />
+      </a>
       <h4>subscribed: {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
       <h5>last activity: {{ Date.parse(user.updatedAt) | moment('from', 'now') }}</h5>
       <h4 v-if="user.role ==! 'ROBOT'">
@@ -35,7 +37,7 @@
       <p v-if="user.channel_description !== ''">
         {{ user.channel_description }}
       </p>
-      <router-link v-if="$route.params.user_id === 'me' || $store.getters.isAdmin" :to="'/user/'+$route.params.user_id+'/edit'" tag="button">
+      <router-link v-if="$route.params.user_id === 'me' || $store.getters.isAdmin" :to="'/user/'+$route.params.user_id+'/edit'" tag="button" class="cta">
         <icon-edit/>
         Edit profile
       </router-link>
@@ -98,6 +100,9 @@
     }
     .nb-tracks {
       text-decoration: none;
+      .play {
+        padding-right: 10px;
+      }
       .count {
         margin-right: 10px;
       }
@@ -105,7 +110,7 @@
     &__name {
       display: flex;
       flex-direction: row;
-      align-items: center;
+      justify-content: center;
     }
     &__image-container {
       display: flex;
@@ -118,19 +123,33 @@
     }
     &__captions {
       padding: 10px;
+      text-align: center;
       @include breakpoint(desktop) {
         padding-left: 40px;
       }
-    }
-      .sync-text {
-        margin-left: 12px;
+      p {
+        text-align: left;
+        font-size: 18px;
+        line-height: 200%;
       }
+    }
+    &__go-back {
+      display: block;
+    }
+    .sync-text {
+      margin-left: 12px;
+    }
     &__sync-button {
       .ion {
         .loading & {
           display: none;
         }
       }
+    }
+    &__link {
+      display: block;
+      padding: 20px;
+      text-decoration: underline;
     }
     .loader {
       margin-left: 0!important;

@@ -25,13 +25,13 @@
             Enable Tracks ?
           </checkbox>
         </p>
-        <button class="user__drop" @click="openDrop(user)">
+        <button class="user__drop drop cta" @click="openDrop(user)">
           <icon-trash/>
           DELETE
         </button>
         <drop @closeDrop="closeDrop" :user="user"/>
       </template>
-      <router-link :to="'/user/'+$route.params.user_id+'/profile'" tag="button">
+      <router-link :to="'/user/'+$route.params.user_id+'/profile'" tag="button" class="cta">
         <icon-back/>
         go back to profile
       </router-link>

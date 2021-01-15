@@ -21,7 +21,7 @@
       <td :class="'track__title style-'+track.style.id" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
         <icon-star-inline class="track__star" v-if="$store.getters.isFavorite(track)" />
-        <time class="track__duration">
+        <time class="track__duration" @click="play(track, $event)">
           {{ formatTime(track.duration) }}
         </time>
       </td>
@@ -33,7 +33,7 @@
           ...
         </button>
         <aside class="track__actions__menu">
-          <p class="track__createdat" :title="track.createdAt">
+          <p class="track__createdat" :title="track.createdAt" @click="play(track, $event)">
             {{ track.createdAt | moment('from', true) }}
           </p>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
@@ -341,6 +341,7 @@
         }
       }
       &__duration {
+        cursor: pointer;
         display: none;
         background-color: white;
         margin-right: 20px;
@@ -356,6 +357,7 @@
         align-items: center;
         font-size: 12px;
         padding: 0 8px;
+        cursor: pointer;
         @include breakpoint(desktop) {
           // display: table-cell;
         }

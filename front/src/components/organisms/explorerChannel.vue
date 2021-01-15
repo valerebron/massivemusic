@@ -28,6 +28,7 @@
       </div>
       <a class="channel__link" :href="'https://youtube.com/channel/'+channel.channel_id+'/videos'" target="_blank">
         see channel page
+        <icon-exit />
       </a>
     </li>
     <li>
@@ -158,6 +159,9 @@
     &__name, &__link {
       display: flex;
       align-items: center;
+    }
+    &__link {
+      text-decoration: underline;
     }
     > * {
       padding: 2px 6px;

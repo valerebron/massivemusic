@@ -1,5 +1,9 @@
 @mixin breakpoint($breakpoint, $only: "") {
  
+  @if $breakpoint == phone {
+    @media (max-width: 768px) { @content; }
+  }
+
   @if $breakpoint == phablet {
     @if $only == only {
       @media (min-width: 390px) and (max-width: 768px) { @content; }

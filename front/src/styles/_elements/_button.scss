@@ -15,15 +15,24 @@ button {
   &:focus {
     background: #ffffff14;
   }
-  &:hover {
+  &:hover, &:active {
     background-color: rgba(255, 255, 255, 0.068);
-    &.edit {
+  }
+  &.edit {
+    background-color: rgba($edit-color, 0.2);
+    &:hover, &:active {
       background-color: $edit-color;
     }
-    &.validate {
+  }
+  &.validate {
+    background-color: rgba($validate-color, 0.2);
+    &:hover, &:active {
       background-color: $validate-color;
     }
-    &.drop {
+  }
+  &.drop {
+    background-color: rgba($invalidate-color, 0.2);
+    &:hover, &:active {
       background-color: $invalidate-color;
     }
   }
