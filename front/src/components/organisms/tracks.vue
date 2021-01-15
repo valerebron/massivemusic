@@ -20,13 +20,17 @@
       </td>
       <td :class="'track__title style-'+track.style.id" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
         {{ track.title }}
-        <icon-star-inline class="track__star" v-if="$store.getters.isFavorite(track)" />
         <time class="track__duration" @click="play(track, $event)">
           {{ formatTime(track.duration) }}
         </time>
       </td>
       <td class="track__artist" @click="search(track.artist)" :contenteditable="isEditable" @blur="update($event, track, 'artist')">
-        {{ track.artist }}
+        <span class="track__artist--txt">
+          {{ track.artist }}
+        </span>
+      </td>
+      <td>
+        <icon-star-inline class="track__star" v-if="$store.getters.isFavorite(track)" />
       </td>
       <td class="track__actions">
         <button class="track__actions__toggle-menu" @click.prevent="toggleActions">
@@ -351,6 +355,14 @@
       }
       &__artist {
         @extend %artistStyle;
+        &:active, &:focus {
+          .track__artist--txt {
+            padding: 8px;
+            border-radius: 20px;
+            background-color: #91919163;
+            color: white;
+          }
+        }
       }
       &__createdat {
         display: flex;
