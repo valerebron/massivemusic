@@ -20,7 +20,7 @@
         </span>
       </button>
       <h3>
-        <router-link class="nb-tracks" :class="'style-bkg-'+user.channel_style" :to="'/user/'+$route.params.user_id+'/tracks'" tag="button">
+        <router-link class="nb-tracks" :class="'style-bkg-'+user.channel_style+' button'" :to="'/user/'+$route.params.user_id+'/tracks'">
           <icon-play class="play" />
           <b class="count"> {{ this.user.tracks.length }}</b> track(s)
         </router-link>
@@ -29,8 +29,8 @@
         see channel on youtube
         <icon-exit />
       </a>
-      <h4>subscribed: {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
-      <h5>last activity: {{ Date.parse(user.updatedAt) | moment('from', 'now') }}</h5>
+      <h4 :title="user.createdAt">subscribed: {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
+      <h5 :title="user.updatedAt">last activity: {{ Date.parse(user.updatedAt) | moment('from', 'now') }}</h5>
       <h4 v-if="user.role ==! 'ROBOT'">
         {{ user.email }}
       </h4>

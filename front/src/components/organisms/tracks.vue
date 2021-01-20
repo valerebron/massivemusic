@@ -24,8 +24,11 @@
           {{ formatTime(track.duration) }}
         </time>
       </td>
-      <td class="track__artist" @click="search(track.artist)" :contenteditable="isEditable" @blur="update($event, track, 'artist')">
-        <span class="track__artist--txt">
+      <td class="track__artist">
+        <router-link v-if="!isEditable" :to="stylePath+'/s/'+track.artist" class="track__artist--txt">
+          {{ track.artist }}
+        </router-link>
+        <span v-else class="track__artist--txt" contenteditable="true" @blur="update($event, track, 'artist')">
           {{ track.artist }}
         </span>
       </td>
@@ -74,7 +77,7 @@
               </span>
             </button>
           </template>
-          <router-link tag="button" :to="'/user/'+track.user.id+'/profile'" class="track__user__link" :title="track.user.name">
+          <router-link :to="'/user/'+track.user.id+'/profile'" class="track__user__link button" :title="track.user.name">
             <avatar :user="track.user" size="small" />
             <span class="text-label">
               Upload by {{ track.user.name }}
@@ -123,6 +126,9 @@
       },
       isMyPage: {
         get(){ return this.$route.params.user_id === 'me' }
+      },
+      stylePath: {
+        get(){ return (this.$route.name.startsWith('style-')) ? this.$route.matched[0].path : ''  }
       },
     },
     data: function() {
@@ -179,11 +185,6 @@
         this.$store.dispatch('modal', false)
         this.isEditOpen = this.isDropOpen = this.isValidateOpen =  false
         this.closeActions()
-      },
-      search(terms) {
-        if(!this.isEditable) {
-          this.$store.dispatch('filterTracks', { type: 'search', value: terms })
-        }
       },
       formatTime(time) {
         return window.formatTime(time)
@@ -355,12 +356,14 @@
       }
       &__artist {
         @extend %artistStyle;
+        &--txt {
+          padding: 8px 12px;
+          border-radius: 20px;
+        }
         &:active, &:focus {
           .track__artist--txt {
-            padding: 8px;
-            border-radius: 20px;
-            background-color: #91919163;
-            color: white;
+            background-color: white;
+            color: black;
           }
         }
       }

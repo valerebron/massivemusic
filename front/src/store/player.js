@@ -80,11 +80,11 @@ const actions = {
         }).catch((error) => {
           console.log('%c●', 'color: red', 'invalidate error: ', error.message.replace('GraphQL error: ', ''))
         })
-        document.getElementsByClassName('player-next')[0].click()
+        store.dispatch('playNext', store.getters.playerTrack)
       }
       else if(event.data == 5) {
         console.log('%c●', 'color: red', 'id: '+id+' html5 player error')
-        document.getElementsByClassName('player-next')[0].click()
+        store.dispatch('playNext', store.getters.playerTrack)
       }
     })
   },

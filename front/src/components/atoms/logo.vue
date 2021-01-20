@@ -1,6 +1,6 @@
 <template>
-  <button class="logo" @click="goHome">
-    <svgLogo class="logo__icon"/>
+  <router-link class="logo" to="/">
+    <svgLogo class="logo__icon" @click="$store.dispatch('ui', {type: 'full', value: false})"/>
     <h1 class="logo__name">
       massive<br>
       music
@@ -8,7 +8,7 @@
         .fr
       </span>
     </h1>
-  </button>
+  </router-link>
 </template>
 
 <script>
@@ -17,17 +17,6 @@ export default {
   name: 'logo',
   components: {
     svgLogo,
-  },
-  methods: {
-    goHome: function() {
-      this.$store.dispatch('ui', {type: 'full', value: false})
-      if(this.$route.name !== 'home') {
-        this.$router.push('/')
-      }
-      else {
-        this.$store.dispatch('filterTracks', {type: 'reset'})
-      }
-    },
   },
 }
 </script>
@@ -65,7 +54,7 @@ export default {
       height: 50px;
       transition: fill .3s;
       fill: black;
-      box-shadow: black 0 0 6px;
+      filter: drop-shadow(0 0 6px black);
       border-radius: 100px;
     }
   }

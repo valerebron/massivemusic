@@ -27,7 +27,7 @@ module.exports = {
   },
   user: async (parent, args, context, info) => {
     console.log('user query')
-    let user = await context.prisma.user.findOne({
+    let user = await context.prisma.user.findUnique({
       where: {
         id: args.user_id
       }
