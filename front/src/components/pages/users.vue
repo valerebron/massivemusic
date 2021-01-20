@@ -6,7 +6,7 @@
     </section>
     <aside class="dock" :class="{ 'dock--mobile-open' : isDockMobileOpen }">
       <label class="search-filter__label">
-        <input class="search-filter" v-model="filterSearch" type="search" placeholder="search">
+        <input class="search-filter" ref="searchUser" v-model="filterSearch" type="search" placeholder="search">
         <i class="counter">
           {{ usersFiltered.length }}
         </i>
@@ -62,6 +62,7 @@
       await this.$store.dispatch('initUsers')
       this.users = this.$store.getters.users
       this.isLoading = false
+      this.$refs.searchUser.focus()
     },
   }
 </script>

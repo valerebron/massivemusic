@@ -60,6 +60,7 @@
       updateId: function(track) {
         this.newTrack.yt_id = track.id
         this.iframeSrc = 'https://www.youtube-nocookie.com/embed/'+this.newTrack.yt_id
+        this.isExplorerOpen = false
       },
       edit: async function() {
         let track = {

@@ -32,7 +32,6 @@ const actions = {
       player.setVolume(store.getters.volume)
     })
     player.on('stateChange', function (event) {
-      console.log('state change', event.target.getPlayerState())
       let newState = event.target.getPlayerState()
       store.commit('SET_PLAYER_STATE', newState)
       if(newState === 0) { // ended track
