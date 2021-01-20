@@ -161,6 +161,7 @@
           width: $page-width-bigscreen;
         }
         margin: 0 auto;
+        min-height: 100vh;
       }
     }
     &--intro {

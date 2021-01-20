@@ -52,6 +52,9 @@
     <router-link v-else to="/login" class="nav__link">
       <icon-login />login
     </router-link>
+    <router-link to="/about" class="nav__link">
+      <icon-about />about
+    </router-link>
   </nav>
 </template>
 
