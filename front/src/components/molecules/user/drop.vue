@@ -28,6 +28,7 @@
       },
       close: function() {
         this.$emit('closeDrop')
+        this.$router.push('/')
       },
     },
   }

@@ -71,7 +71,6 @@
         if(newTracks) {
           this.$props.user.tracks.push(...newTracks)
         }
-        console.log('done')
         this.isSyncing = false
       },
     },

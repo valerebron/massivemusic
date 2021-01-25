@@ -4132,11 +4132,6 @@ typescript@^3.8.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
   integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
-typescript@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.0.3.tgz#153bbd468ef07725c1df9c77e8b453f8d36abba5"
-  integrity sha512-tEu6DGxGgRJPb/mVPIZ48e69xCn2yRmCgYmDugAVwmJ6o+0u1RI18eO7E7WBTLYLaEVVOhwQmcdhQHweux/WPg==
-
 undefsafe@^2.0.2:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-2.0.3.tgz#6b166e7094ad46313b2202da7ecc2cd7cc6e7aae"
@@ -4201,14 +4196,13 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-usetube@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/usetube/-/usetube-1.2.0.tgz#2ee49714e13e393f6cde1df250e209404fac10fe"
-  integrity sha512-2wcgPSN+HkU5oG+/lMeOld0stbH73WM0sb+PxEXTKUC9FouOnGhOol8ekEFD0C/yA2tDMrtZ5n4nCsB7lSKbvw==
+usetube@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-1.4.3.tgz#b9a8e7f78e96d9a01e191eb614bfaac3306630d7"
+  integrity sha512-ZnICsTornRPJ2GBwYE934tAuEWfDbrlJAdH+vziQTj9E7z+nyL6RUo7/MhEuEQHEo1nDyW9B7W4dsS+xggdeWA==
   dependencies:
     axios "^0.21.0"
     moment "^2.28.0"
-    typescript "^4.0.3"
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"

@@ -7,7 +7,6 @@ import { PrismaClient } from '@prisma/client'
 const history = require('connect-history-api-fallback')
 const prisma = new PrismaClient()
 const web = express()
-
 const syncBot = require('./syncBot')
 
 const Query = require('./resolvers/Query')
