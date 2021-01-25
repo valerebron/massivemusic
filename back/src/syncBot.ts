@@ -28,11 +28,9 @@ async function syncBot(bot, prisma) {
     let trackInTracks = []
     for(let i = 0; i < tracks.length; i++) {
       let newTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
-      console.log('trackInTracks length: '+trackInTracks.length)
       if(newTracksFromDesc.length === 0) {
         console.log('https://youtube.com/watch?v='+tracks[i].id+' do not contain playlist in desc')
         trackInTracks.push(tracks[i])
-        console.log('trackInTracks length: '+trackInTracks.length)
       }
       else {
         console.log('https://youtube.com/watch?v='+tracks[i].id+' got playlist in desc')

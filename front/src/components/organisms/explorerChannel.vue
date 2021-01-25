@@ -11,8 +11,10 @@
         @keydown.enter="search(); $event.target.blur()"
       />
     </li>
-    <li class="typo-center" v-if="didyoumean !== ''">
-      Did you mean : <b> {{ didyoumean }}</b> ?
+    <li class="typo-center" v-if="didyoumean !== '' && didyoumean" @click="didyoumeanSearch">
+      <button>
+        Did you mean : <b> {{ didyoumean }}</b> ?
+      </button>
     </li>
     <li v-for="(channel, index) in channels" class="channel" :key="index" @click="send(channel)">
       <img @error="'/avatars/0-100px.png'" class="avatar avatar--medium" :src="channel.channel_avatar_medium" />
@@ -76,6 +78,7 @@
             query: gql`query($search: String!) {
               searchChannel(search: $search){
                 token,
+                didyoumean,
                 channels {
                   name
                   channel_id
@@ -125,7 +128,11 @@
           this.$emit('clickOnChannel', channel)
           this.isLoading = false
         }
-      }
+      },
+      didyoumeanSearch() {
+        this.query = this.didyoumean
+        this.search()
+      },
     },
     mounted: function() {
       this.input.focus()

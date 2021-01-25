@@ -12,7 +12,9 @@
       />
     </li>
     <li class="typo-center" v-if="didyoumean !== '' && didyoumean" @click="didyoumeanSearch">
-      Did you mean : <b> {{ didyoumean }}</b> ?
+      <button>
+        Did you mean : <b> {{ didyoumean }}</b> ?
+      </button>
     </li>
     <li
       v-for="(track, index) in tracks"
@@ -100,6 +102,7 @@
                   publishedAt
                 }
                 token
+                didyoumean
               }
             }`,
           }).then((res) => {

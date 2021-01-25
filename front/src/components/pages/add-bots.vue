@@ -61,7 +61,7 @@
           await this.$store.dispatch('addBot', this.channel)
           this.$store.dispatch('modal', false)
           window.scroll(0,0)
-          this.$router.push('/bots')
+          this.$router.push('/users')
         }
         else {
           console.log('choose a style before')
