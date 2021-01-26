@@ -17,24 +17,26 @@ async function syncBot(bot, prisma) {
   // 2 UPDATE SCAN
   else {
     console.log('update Sync from '+bot.channel_last_sync_date)
-    // tracks = await usetube.getChannelVideos(bot.channel_id, new Date(bot.channel_last_sync_date))
-    var today = new Date();
-    var lastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7)
-    tracks = await usetube.getChannelVideos(bot.channel_id, lastWeek)
+    tracks = await usetube.getChannelVideos(bot.channel_id, new Date(bot.channel_last_sync_date))
+    // tracks = await usetube.getChannelVideos(bot.channel_id, new Date(Date.now() - 10*24*60*60*1000))
   }
   // 3 RADIO TRACKS
   if(botName === 'noisia radio' || botName === 'vision') {
     console.log(botName+' as '+tracks.length+' track(s), lets try to get desc')
     let trackInTracks = []
     for(let i = 0; i < tracks.length; i++) {
-      let newTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
-      if(newTracksFromDesc.length === 0) {
+      let foundTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
+      console.log(foundTracksFromDesc)
+      if(tracks[i].title.includes('Radio')) {
+        console.log(tracks[i].title)
+      }
+      if(foundTracksFromDesc.length === 0) {
         console.log('https://youtube.com/watch?v='+tracks[i].id+' do not contain playlist in desc')
-        trackInTracks.push(tracks[i])
       }
       else {
         console.log('https://youtube.com/watch?v='+tracks[i].id+' got playlist in desc')
-        trackInTracks = trackInTracks.concat(newTracksFromDesc)
+        trackInTracks = trackInTracks.concat(foundTracksFromDesc)
+        tracks.splice(i, 1)
       }
     }
     console.log('got '+trackInTracks.length+' track(s) extracted.')

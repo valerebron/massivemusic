@@ -11,7 +11,7 @@
         @keydown.enter="search(); $event.target.blur()"
       />
     </li>
-    <li class="typo-center" v-if="didyoumean !== '' && didyoumean" @click="didyoumeanSearch">
+    <li class="typo-center" v-if="didyoumean !== '' && didyoumean && input.value !== ''" @click="didyoumeanSearch">
       <button>
         Did you mean : <b> {{ didyoumean }}</b> ?
       </button>

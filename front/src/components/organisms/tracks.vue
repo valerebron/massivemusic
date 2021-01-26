@@ -6,7 +6,8 @@
       :class="[{
         'track--invalid': track.invalid,
         'track--pending': track.pending,
-        'track--playing' : (track.yt_id === $store.getters.playerTrack.yt_id)
+        'track--playing' : (track.yt_id === $store.getters.playerTrack.yt_id),
+        'track--editable': (isEditable || isMyPage),
       }, 'style-bkg-'+track.style.id]"
       :key="track.yt_id"
     >
@@ -299,6 +300,11 @@
         opacity: 0.5;
         height: 0;
         display: none;
+      }
+      &--editable {
+        .track__title, .track__artist {
+          cursor: text;
+        }
       }
       &__play {
         > * {
