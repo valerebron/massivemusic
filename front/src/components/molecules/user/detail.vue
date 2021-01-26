@@ -91,7 +91,6 @@
     justify-content: center;
     @include breakpoint(desktop) {
       flex-direction: row;
-      padding-top: 10vh;
     }
     &.loader {
       width: 50px;

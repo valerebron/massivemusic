@@ -224,6 +224,9 @@ export default {
       color: black;
       background-color: #e7e7e7;
       font-weight: bold;
+      &::before {
+        background-color: black;
+      }
     }
   }
 }
