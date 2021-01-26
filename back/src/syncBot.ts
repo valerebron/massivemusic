@@ -26,10 +26,6 @@ async function syncBot(bot, prisma) {
     let trackInTracks = []
     for(let i = 0; i < tracks.length; i++) {
       let foundTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
-      console.log(foundTracksFromDesc)
-      if(tracks[i].title.includes('Radio')) {
-        console.log(tracks[i].title)
-      }
       if(foundTracksFromDesc.length === 0) {
         console.log('https://youtube.com/watch?v='+tracks[i].id+' do not contain playlist in desc')
       }
