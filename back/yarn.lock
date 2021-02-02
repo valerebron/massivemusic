@@ -1032,13 +1032,6 @@ axios@^0.19.2:
   dependencies:
     follow-redirects "1.5.10"
 
-axios@^0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.0.tgz#26df088803a2350dff2c27f96fef99fe49442aca"
-  integrity sha512-fmkJBknJKoZwem3/IKSSLpkdNXZeBu5Q7GA/aRsr2btgrptmSCxi2oFjZHqGdK9DoTil9PIHlPIZw2EcRJXRvw==
-  dependencies:
-    follow-redirects "^1.10.0"
-
 backo2@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/backo2/-/backo2-1.0.2.tgz#31ab1ac8b129363463e35b3ebb69f4dfcfba7947"
@@ -2028,11 +2021,6 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
-follow-redirects@^1.10.0:
-  version "1.13.0"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.0.tgz#b42e8d93a2a7eea5ed88633676d6597bc8e384db"
-  integrity sha512-aq6gF1BEKje4a9i9+5jimNFIpq4Q1WiwBToeRK5NvZBd/TRsmW8BsJfOEGkr76TbOyPVD3OVDN910EcUNtRYEA==
-
 form-data@^2.3.1:
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
@@ -2890,7 +2878,7 @@ mkdirp@^0.5.1:
   dependencies:
     minimist "^1.2.5"
 
-moment@^2.27.0, moment@^2.28.0:
+moment@^2.27.0:
   version "2.29.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.0.tgz#fcbef955844d91deb55438613ddcec56e86a3425"
   integrity sha512-z6IJ5HXYiuxvFTI6eiQ9dm77uE0gyy1yXNApVHqTcnIKfY9tIwEjlzsZ6u1LQXvVgKeTnv9Xm7NDvJ7lso3MtA==
@@ -4196,13 +4184,10 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-usetube@^1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/usetube/-/usetube-1.4.3.tgz#b9a8e7f78e96d9a01e191eb614bfaac3306630d7"
-  integrity sha512-ZnICsTornRPJ2GBwYE934tAuEWfDbrlJAdH+vziQTj9E7z+nyL6RUo7/MhEuEQHEo1nDyW9B7W4dsS+xggdeWA==
-  dependencies:
-    axios "^0.21.0"
-    moment "^2.28.0"
+usetube@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.0.0.tgz#27c48fe6b2b0d5f40a979efdda5d4b1de88870da"
+  integrity sha512-FtMImpCugKi2SZm6ON6x6DdvyO5CGoKnPqa9WuPdM6cMm7vEf5KHQ/GaTWNmntWTr+3nV+KMjp6nKxZtHjRM2A==
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"

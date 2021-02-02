@@ -8688,6 +8688,11 @@ use@^3.1.0:
   resolved "https://registry.yarnpkg.com/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
+usetube@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.0.0.tgz#27c48fe6b2b0d5f40a979efdda5d4b1de88870da"
+  integrity sha512-FtMImpCugKi2SZm6ON6x6DdvyO5CGoKnPqa9WuPdM6cMm7vEf5KHQ/GaTWNmntWTr+3nV+KMjp6nKxZtHjRM2A==
+
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"

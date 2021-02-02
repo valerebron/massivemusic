@@ -81,7 +81,7 @@
           <router-link :to="'/user/'+track.user.id+'/profile'" class="track__user__link button" :title="track.user.name">
             <avatar :user="track.user" size="small" />
             <span class="text-label">
-              Upload by {{ track.user.name }}
+              by {{ track.user.name }}
             </span>
           </router-link>
         </aside>
@@ -393,6 +393,9 @@
           display: flex;
           border-radius: 40px;
           overflow: hidden;
+          .text-label {
+            padding-left: 8px;
+          }
         }
       }
       &.open {
@@ -403,6 +406,7 @@
           flex-direction: column;
           align-items: flex-start;
           box-shadow: black 0 0 30px;
+          border-radius: $dialog-border-radius;
           .track__createdat {
             padding-left: 20px;
             width: 100%;
@@ -420,12 +424,11 @@
           @include breakpoint(tablet) {
             border-top: 0;
             box-shadow: none;
-            border: none;
+            border-radius: none;
             .track__createdat {
               display: inline;
             }
           }
-          border: 1px rgba(255, 255, 255, 0.1) solid;
           button {
             display: inline;
             height: 100%;

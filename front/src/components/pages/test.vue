@@ -48,7 +48,9 @@
         }
       },
     },
-    mounted: function() {
+    mounted: async function() {
+      const usetube = require('usetube')
+      console.log(await usetube.searchVideo('efkj'))
       this.$store.dispatch('filterTracks', {type: 'reset', value: Date.now()})
       if(!this.$store.getters.isAdmin) {
         this.$router.push('/login')
