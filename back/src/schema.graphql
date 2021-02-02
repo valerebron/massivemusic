@@ -131,7 +131,7 @@ type AuthPayload {
 }
 
 type tracksPayload {
-  tracks: [Video]
+  videos: [Video]
   didyoumean: String
   token: String
 }

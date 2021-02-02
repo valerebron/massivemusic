@@ -94,7 +94,7 @@
             },
             query: gql`query($search: String!, $token: String) {
               searchTrack(search: $search, token: $token) {
-                tracks {
+                videos {
                   id
                   title
                   artist
@@ -107,11 +107,11 @@
             }`,
           }).then((res) => {
             if(this.token === '') {
-              this.tracks = (res.data.searchTrack.tracks[0].duration ? res.data.searchTrack.tracks : [])
+              this.tracks = (res.data.searchTrack.videos[0].duration ? res.data.searchTrack.videos : [])
               this.didyoumean = (res.data.searchTrack ? res.data.searchTrack.didyoumean : '')
             }
             else {
-              this.tracks.concat(res.data.searchTrack.tracks)
+              this.tracks.concat(res.data.searchTrack.videos)
             }
             this.token = (res.data.searchTrack.token ? res.data.searchTrack.token : [])
             window.scroll(0,0)
