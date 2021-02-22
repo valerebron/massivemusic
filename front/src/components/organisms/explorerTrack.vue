@@ -35,7 +35,9 @@
       </figure>
       <span class="track__artist typo-one-line">{{ track.artist }}</span>
       <span class="track__title typo-one-line">{{ track.title }}</span>
-      <span class="track__createdAt typo-one-line">{{ track.publishedAt }}</span>
+      <span class="track__createdAt typo-one-line">
+        {{ parseInt(track.publishedAt / 1000) | moment('from', true) }}
+      </span>
     </li>
     <!-- <li>
       <button class="explorer__more" @click="more()" v-if="query !== ''">more</button>

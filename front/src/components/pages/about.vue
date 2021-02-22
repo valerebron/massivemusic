@@ -30,7 +30,7 @@
       </p>
       <svgLogo/>
       <p>
-        All tracks are stored in youtube so if you want to <router-link to="/add-tracks">add one</router-link>, just <router-link to="/signup">create an account</router-link> and click on <router-link to="/add-tracks">add track</router-link> un the left menu.
+        All tracks are stored in youtube so if you want to <router-link to="/add-tracks">add one</router-link>, just <router-link to="/signup">create an account</router-link> and click on <router-link to="/add-tracks">add track</router-link> in the left menu.
       </p>
       <p>
         Tips: for android phones, use <a href="https://firefox.en.uptodown.com/android/download/2954186">firefox daylight 83.1.0</a>,
