@@ -18,29 +18,31 @@ async function syncBot(bot, prisma) {
   else {
     console.log('update Sync from '+bot.channel_last_sync_date)
     tracks = await usetube.getChannelVideos(bot.channel_id, new Date(bot.channel_last_sync_date))
-    // tracks = await usetube.getChannelVideos(bot.channel_id, new Date(Date.now() - 10*24*60*60*1000))
   }
   // 3 RADIO TRACKS
   if(botName === 'noisia radio' || botName === 'vision') {
     console.log(botName+' as '+tracks.length+' track(s), lets try to get desc')
     let trackInTracks = []
     for(let i = 0; i < tracks.length; i++) {
-      let foundTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
-      if(foundTracksFromDesc.length === 0) {
-        console.log('https://youtube.com/watch?v='+tracks[i].id+' do not contain playlist in desc')
-      }
-      else {
-        console.log('https://youtube.com/watch?v='+tracks[i].id+' got playlist in desc')
-        trackInTracks = trackInTracks.concat(foundTracksFromDesc)
-        tracks.splice(i, 1)
+      if(tracks && tracks[i] && tracks[i].id) {
+        let foundTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
+        if(foundTracksFromDesc.length === 0 || !foundTracksFromDesc) {
+          console.log('https://youtube.com/watch?v='+tracks[i].id+' do not contain playlist in desc')
+        }
+        else {
+          console.log('https://youtube.com/watch?v='+tracks[i].id+' got playlist in desc')
+          foundTracksFromDesc.forEach(track => track.publishedAt = new Date(Date.now()))
+          trackInTracks = trackInTracks.concat(foundTracksFromDesc)
+          tracks.splice(i, 1)
+        }
       }
     }
     console.log('got '+trackInTracks.length+' track(s) extracted.')
-    tracks = tracks.concat(trackInTracks)
+    tracks = tracks.filter( Number ).concat(trackInTracks)
   }
   if(tracks.length > 0) {
     // 4 DELETE BIG & SMALL TRACKS
-    tracks = tracks.filter(track => track.duration < parseInt(env.TRACK_MAX_DURATION) || track.duration > parseInt(env.TRACK_MIN_DURATION))
+    tracks = tracks.filter(track => track.duration < parseInt(env.TRACK_MAX_DURATION) && track.duration > parseInt(env.TRACK_MIN_DURATION))
     console.log('\x1b[34m%s\x1b[0m', '●', 'sync '+bot.name+': '+tracks.length+' track(s)')
     // 5 SAVE TRACKS TO BDD
     const createManyTracks = await tracks.map(async (track) => {
@@ -71,7 +73,7 @@ async function syncBot(bot, prisma) {
     await prisma.user.update({
       where: { id: bot.id },
       data: {
-        channel_last_sync_date: moment().toDate(),
+        channel_last_sync_date: new Date(Date.now()),
       },
     }).catch(error=>{
       console.log(error)

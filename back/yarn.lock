@@ -4184,10 +4184,10 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-usetube@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.0.0.tgz#27c48fe6b2b0d5f40a979efdda5d4b1de88870da"
-  integrity sha512-FtMImpCugKi2SZm6ON6x6DdvyO5CGoKnPqa9WuPdM6cMm7vEf5KHQ/GaTWNmntWTr+3nV+KMjp6nKxZtHjRM2A==
+usetube@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.0.1.tgz#96cd7a67f3ad76d7408ef57d9e89e477b3303429"
+  integrity sha512-tQpycwF8TV1E/zmb+lyanlJqbnv+vqmyq9yQziLSZjWbSsxgQMfLdyTmwKSTQGrIyD9AbuxcOdmR2f46mfwGKQ==
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
