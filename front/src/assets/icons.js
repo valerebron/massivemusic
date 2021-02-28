@@ -68,3 +68,7 @@ import iconExit from 'vue-ionicons/dist/md-exit.vue'
 Vue.component('icon-exit', iconExit)
 import about from 'vue-ionicons/dist/md-information-circle.vue'
 Vue.component('icon-about', about)
+import dropdown from 'vue-ionicons/dist/md-arrow-dropdown.vue'
+Vue.component('icon-dropdown', dropdown)
+import dropup from 'vue-ionicons/dist/md-arrow-dropup.vue'
+Vue.component('icon-dropup', dropup)

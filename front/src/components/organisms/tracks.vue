@@ -120,10 +120,10 @@
         get(){ return this.$store.getters.tracks },
       },
       isEditable: {
-        get(){ return this.$route.name === 'admin' || this.$route.name === 'invalid-tracks' || this.$route.name === 'pending-tracks' },
+        get(){ return this.$route.name === 'admin' || this.$route.name === 'invalid' || this.$route.name === 'pending' },
       },
       isFavoritable: {
-        get(){ return this.$route.name !== 'invalid-tracks' && this.$route.name !== 'pending-tracks' },
+        get(){ return this.$route.name !== 'invalid' && this.$route.name !== 'pending' },
       },
       isMyPage: {
         get(){ return this.$route.params.user_id === 'me' }

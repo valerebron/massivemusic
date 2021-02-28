@@ -23,7 +23,13 @@ Vue.use(VueRouter)
 
 let routes = [
   { name: 'home', path: '/', component: pageHome },
-  { name: 'admin', path: '/admin', component: pageAdmin },
+  { name: 'admin', path: '/admin', component: pageAdmin, children: [
+    { name: 'all', path: 'all', component: pageAdmin },
+    { name: 'pending', path: 'pending', component: pageAdmin },
+    { name: 'invalid', path: 'invalid', component: pageAdmin },
+    { name: 'empty', path: 'empty', component: pageAdmin },
+    { name: 'duration', path: 'duration', component: pageAdmin },
+  ]},
   { name: 'favorites', path: '/favorites', component: pageFavorites },
   { name: 'login', path: '/login', component: pageLogin },
   { name: 'add-tracks', path: '/add-tracks', component: pageAddTracks },

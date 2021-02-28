@@ -26,12 +26,12 @@ async function syncBot(bot, prisma) {
     for(let i = 0; i < tracks.length; i++) {
       if(tracks && tracks[i] && tracks[i].id) {
         let foundTracksFromDesc = await usetube.getVideosFromDesc(tracks[i].id)
-        if(foundTracksFromDesc.length === 0 || !foundTracksFromDesc) {
+        if(!foundTracksFromDesc || foundTracksFromDesc.length === 0) {
           console.log('https://youtube.com/watch?v='+tracks[i].id+' do not contain playlist in desc')
         }
         else {
           console.log('https://youtube.com/watch?v='+tracks[i].id+' got playlist in desc')
-          foundTracksFromDesc.forEach(track => track.publishedAt = new Date(Date.now()))
+          foundTracksFromDesc.forEach(track => track.publishedAt = tracks[i].publishedAt)
           trackInTracks = trackInTracks.concat(foundTracksFromDesc)
           tracks.splice(i, 1)
         }

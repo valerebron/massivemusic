@@ -24,10 +24,31 @@
         <avatar :user="$store.getters.session.user" size="small" />
         my Profile
       </router-link>
-      <router-link v-if="$store.getters.isAdmin" to="/admin" class="nav__link">
+      <a href="#" @click="toggleAdmin" class="nav__link nav__link--multi">
         <icon-admin />
-        admin
-      </router-link>
+        <span class="nav__link__txt">
+          Admin
+        </span>
+        <icon-dropup v-if="isAdminOpen" class="sub-icon" />
+        <icon-dropdown v-else class="sub-icon" />
+      </a>
+      <div class="subnav subnav--admin" v-if="isAdminOpen">
+        <router-link v-if="$store.getters.isAdmin" to="/admin/all" class="nav__link nav__link--sub">
+          All
+        </router-link>
+        <router-link v-if="$store.getters.isAdmin" to="/admin/pending" class="nav__link nav__link--sub">
+          Pending
+        </router-link>
+        <router-link v-if="$store.getters.isAdmin" to="/admin/invalid" class="nav__link nav__link--sub">
+          Invalid
+        </router-link>
+        <router-link v-if="$store.getters.isAdmin" to="/admin/empty" class="nav__link nav__link--sub">
+          Empty
+        </router-link>
+        <router-link v-if="$store.getters.isAdmin" to="/admin/duration" class="nav__link nav__link--sub">
+          Big/Small
+        </router-link>
+      </div>
       <router-link v-if="$store.getters.isAdmin" to="/add-bots" class="nav__link">
         <icon-add-bot />
         add channel
@@ -67,6 +88,11 @@ export default {
   components: {
     avatar,
     checkbox,
+  },
+  data: function() {
+    return {
+      isAdminOpen: false,
+    }
   },
   computed: {
     searchSlug: function() {
@@ -132,6 +158,9 @@ export default {
             console.log('%c●', 'color: red', 'logout: ', error)
           });
       }
+    },
+    toggleAdmin: function() {
+      this.isAdminOpen = !this.isAdminOpen
     }
   },
   mounted: function() {
@@ -168,6 +197,9 @@ export default {
     color: $app-color;
     width: 100%;
     cursor: pointer;
+    &__txt {
+      flex-grow: 0.9;
+    }
     &:hover {
       text-decoration: none;
     }
@@ -204,6 +236,12 @@ export default {
         margin: 0 6px;
         margin-right: 16px;
       }
+    }
+    &--sub {
+      padding-left: 40px!important;
+    }
+    .sub-icon {
+      float: right;
     }
     .ion, .avatar {
       margin-right: 10px;
