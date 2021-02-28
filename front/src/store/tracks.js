@@ -133,6 +133,7 @@ const actions = {
         default:
           store.commit('SET_FILTER', {type: 'user', value: 0})
           store.commit('SET_FILTER', {type: 'style', value: 0})
+          store.commit('SET_FILTER', {type: 'all', value: false})
           store.commit('SET_FILTER', {type: 'pending', value: false})
           store.commit('SET_FILTER', {type: 'invalid', value: false})
           store.commit('SET_FILTER', {type: 'empty', value: false})

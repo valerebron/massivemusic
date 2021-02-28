@@ -120,7 +120,7 @@
         get(){ return this.$store.getters.tracks },
       },
       isEditable: {
-        get(){ return this.$route.name === 'admin' || this.$route.name === 'invalid' || this.$route.name === 'pending' },
+        get(){ return this.$route.matched[0].name === 'admin' },
       },
       isFavoritable: {
         get(){ return this.$route.name !== 'invalid' && this.$route.name !== 'pending' },
