@@ -64,6 +64,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background-color: $grey-0;
   .tracks {
     margin-top: $header-height+55!important;
   }
