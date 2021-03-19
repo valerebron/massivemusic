@@ -19,6 +19,23 @@
       navigation,
       player,
     },
+    metaInfo: {
+      title: 'Massivemusic',
+      meta: [
+        { name: 'charset', content: 'utf8' },
+        { name: 'desciption', content: 'massivemusic stream bassmusic. You can dig for drum & bass, dubstep and dub music.' },
+        { name: 'keywords', content: 'massivemusic stream bassmusic drum & bass dnb dubstep dub bass music ukbass' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'twitter:card', content: '' },
+        { name: 'og:title', content: '' },
+        { name: 'og:type', content: '' },
+        { name: 'og:url', content: '' },
+        { name: 'og:image', content: '' },
+        { name: 'og:description', content: 'massivemusic stream bassmusic. You can dig for drum & bass, dubstep and dub music.' },
+        { name: 'og:site_name', content: 'massivemusic.fr' },
+        { name: '', content: '' },
+      ],
+    },
     computed: {
       route: function() {
         return this.$route.name

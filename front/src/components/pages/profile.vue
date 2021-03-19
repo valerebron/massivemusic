@@ -83,7 +83,7 @@
 <style lang="scss">
   .user-profile {
     &__container {
-      display: flex;
+      display: flex!important;
       justify-content: center;
       width: 100%;
       @include breakpoint(tablet) {

@@ -167,6 +167,9 @@ module.exports = {
     }
     else { console.log('bad token for getmails') }
   },
+  getTrackDetails: async (parent, args, context, info) => {
+    return await context.prisma.track.findUnique({ where: { id: parseInt(args.id) }})
+  },
   sendMail: async (parent, args, context, info) => {
     const admin = await context.prisma.user.findFirst({ where: { role: 'ADMIN' } })
     if(args.token === admin.token) {

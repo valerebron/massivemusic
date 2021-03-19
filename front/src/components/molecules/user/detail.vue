@@ -1,5 +1,5 @@
 <template>
-  <figure v-if="user.createdAt" class="user" :class="{ loading : isSyncing }">
+  <figure v-if="user.createdAt" class="user card" :class="{ loading : isSyncing }">
     <div class="user__image-container">
       <avatar :user="user" size="big" />
     </div>

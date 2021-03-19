@@ -24,6 +24,7 @@ type Query {
     style: Int
     user: Int
   ): Track
+  getTrackDetails(id: String): Track
 }
 
 type Mutation {

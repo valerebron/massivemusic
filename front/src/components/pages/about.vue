@@ -1,6 +1,6 @@
 <template>
   <main class="page--container about">
-    <section>
+    <section class="card">
       <p>
         MassiveMusic is a <strong>bass music streaming</strong> site.
         The purpose is to <strong>explore</strong> and <strong>discover music</strong>.
@@ -47,6 +47,9 @@
     components: {
       svgLogo,
     },
+    metaInfo: {
+      title: 'About Massivemusic'
+    }
   }
 </script>
 
@@ -70,6 +73,13 @@
       height: 20vw;
       padding: 20px;
       padding-bottom: 40px;
+    }
+    .card {
+      margin-top: 120px;
+      margin-bottom: 120px;
+      @include breakpoint(desktop) {
+        margin: 120px;
+      }
     }
   }
 </style>

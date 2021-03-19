@@ -20,6 +20,7 @@
     "vue": "^2.6.11",
     "vue-apollo": "^3.0.2",
     "vue-ionicons": "^3.0.5",
+    "vue-meta": "^2.4.0",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.2.0",
     "vue-svg-loader": "^0.12.0",

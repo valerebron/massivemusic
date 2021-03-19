@@ -19,11 +19,13 @@
       <td :class="'track__index style-'+track.style.id" @click="play(track, $event)">
         {{ index + 1 }}
       </td>
-      <td :class="'track__title style-'+track.style.id" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
-        {{ track.title }}
-        <time class="track__duration" @click="play(track, $event)">
-          {{ formatTime(track.duration) }}
-        </time>
+      <td class="track__title" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
+        <router-link v-if="!isEditable" class="track__title-txt" :class="'style-'+track.style.id" :to="'/track/'+track.title+'/'+track.id">
+          {{ track.title }}
+          <time class="track__duration" @click="play(track, $event)">
+            {{ track.duration | formatTime }}
+          </time>
+        </router-link>
       </td>
       <td class="track__artist">
         <router-link v-if="!isEditable" :to="stylePath+'/s/'+track.artist" class="track__artist--txt">
@@ -187,9 +189,6 @@
         this.isEditOpen = this.isDropOpen = this.isValidateOpen =  false
         this.closeActions()
       },
-      formatTime(time) {
-        return window.formatTime(time)
-      },
       toggleActions(event) {
         let track = event.target.parentElement.parentElement
         let isOpen = track.classList.contains('open')
@@ -272,7 +271,7 @@
       }
       &--playing {
         &.track {
-          .track__title, .track__index, .track__play .ion, .track__artist, .track__createdat, .track__actions__toggle-menu {
+          .track__title a, .track__index, .track__play .ion, .track__artist, .track__createdat, .track__actions__toggle-menu {
            color: black;
            font-weight: bold;
           }
@@ -343,6 +342,11 @@
       &__title {
         padding-left: 8px;
         cursor: pointer;
+      }
+      &__title-txt {
+        &:hover {
+          text-decoration: underline;
+        }
       }
       &__star {
         color: $favorite-color;

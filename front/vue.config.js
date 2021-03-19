@@ -12,8 +12,8 @@ module.exports = {
   css: {
     sourceMap: true,
     loaderOptions: {
-      sass: {
-        prependData: `@import 'src/styles/preprocessed';`
+      scss: {
+        prependData: `@import '~@/styles/preprocessed';`
       }
     }
   },

@@ -7,7 +7,7 @@
     <div class="player__bottom">
       <div class="playback-bar">
         <div class="playback-bar__progress-time">
-          {{ formatTime(currentTime) }}
+          {{ currentTime | formatTime }}
         </div>
         <div class="progress-bar">
           <progress class="progress-bar__buffer" :value="buffer" max="100"></progress>
@@ -16,7 +16,7 @@
           <progress class="progress-bar__progress" :value="progress" max="100"></progress>
         </div>
         <div class="playback-bar__progress-time">
-          {{ formatTime(duration) }}
+          {{ duration | formatTime }}
         </div>
       </div>
       <div class="control-bar">
@@ -104,9 +104,6 @@
       },
     },
     methods: {
-      formatTime(time) {
-        return window.formatTime(time)
-      },
       seekPlayer(e) {
         let self = this
         let percent = e.target.value

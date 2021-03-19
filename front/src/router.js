@@ -18,6 +18,7 @@ import pageTest from './components/pages/test.vue'
 import pageRecover from './components/pages/recover-password.vue'
 import pageMail from './components/pages/mail.vue'
 import about from './components/pages/about.vue'
+import track from './components/pages/trackDetails.vue'
 
 Vue.use(VueRouter)
 
@@ -48,6 +49,7 @@ let routes = [
   { name: 'mail', path: '/mail', component: pageMail },
   { name: 'search', path: '/s/:keywords', component: pageHome },
   { name: 'about', path: '/about', component: about },
+  { name: 'track', path: '/track/:title/:id', component: track },
 ]
 // should use store.getters.styles (unfortunatly can't add route async)
 const styles = [{"id":1,"name":"Dubstep","slug":"dubstep"},{"id":2,"name":"Drum & Bass","slug":"drumandbass"},{"id":3,"name":"Dub","slug":"dub"}]

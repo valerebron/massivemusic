@@ -1,5 +1,5 @@
 <template>
-  <figure class="user user--edit" v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
+  <figure class="user user--edit card" v-if="$route.params.user_id === 'me' || $store.getters.isAdmin">
     <avatar :user="user" size="big" @click="clickOnAvatar" ref="userEditAvatar" />
     <figcaption class="user__captions">
       <h2 class="user__name">

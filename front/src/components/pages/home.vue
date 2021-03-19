@@ -12,6 +12,9 @@
     components: {
       tracks
     },
+    metaInfo: {
+      title: 'Home Massivemusic'
+    },
     computed: {
       keywords: function() {
         return this.$route.params.keywords

@@ -10,6 +10,7 @@ import users from './store/users'
 import session from './store/session'
 import favorites from './store/favorites'
 import player from './store/player'
+import trackDetails from './store/trackDetails'
 
 Vue.use(Vuex)
 
@@ -28,6 +29,7 @@ export default new Vuex.Store({
     favorites,
     player,
     users,
+    trackDetails,
   },
   plugins: [vuexLocalStorage.plugin],
 })

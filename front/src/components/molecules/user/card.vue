@@ -24,6 +24,7 @@
 
 <style lang="scss">
   .card {
+    display: table;
     border-radius: 26px;
     margin: 10px;
     &__link {
