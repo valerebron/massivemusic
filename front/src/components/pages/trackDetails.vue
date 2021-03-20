@@ -1,37 +1,36 @@
 <template>
-  <main class="page--container track">
+  <main class="page--container track-details track-details--init" ref="trackDetailsPage" v-if="track">
     <section class="card">
-        <picture class="track__picture">
-          <button class="track__play" @click="$store.dispatch('play', track)">
-            <icon-play-pause/>
-            <loader v-if="$store.getters.playerState === 'buffering'" />
-          </button>
-          <img class="track__img" @click="$store.dispatch('play', track)" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/0.jpg'" :alt="track.title">
-        </picture>
-        <h1 class="track__title" :class="'style-'+track.style.id" @click="$store.dispatch('play', track)">
-          {{ track.title }}
-        </h1>
-        <h2>
-          <router-link :to="'/s/'+track.artist" class="track__artist--txt">
-            {{ track.artist }}
-          </router-link>
-        </h2>
-      <router-link :to="'/user/'+track.user.id+'/profile'" class="track__user__link button" :title="track.user.name">
+      <picture class="track-details__picture">
+        <button class="track-details__play" @click="playTrackDetails">
+          <icon-play-pause :class="'style-'+track.style.id"/>
+          <loader v-if="$store.getters.playerState === 'buffering'" />
+        </button>
+        <img class="track-details__img" @click="playTrackDetails" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/0.jpg'" :alt="track.title">
+      </picture>
+      <h1 class="track-details__title" :class="'style-'+track.style.id" @click="playTrackDetails">
+        {{ track.title }}
+      </h1>
+      <h2>
+        <router-link :to="'/s/'+track.artist" class="track-details__artist--txt">
+          {{ track.artist }}
+        </router-link>
+      </h2>
+      <h5>
+        {{ track.createdAt | moment('d/M/Y HH:m') }}
+        ({{ track.createdAt | moment('from', true) }} ago)
+      </h5>
+      <router-link :to="'/user/'+track.user.id+'/profile'" class="track-details__user__link button" :title="track.user.name">
         <avatar :user="track.user" size="small" />
         <span class="text-label">
           {{ track.user.name }}
         </span>
       </router-link>
       <h4>
-        track played {{ track.playcount }} time(s)
+        playcount: {{ track.playcount }}
       </h4>
       <h5>
-        added the 
-        {{ track.createdAt | moment('d/M/Y HH:m') }}
-        ({{ track.createdAt | moment('from', true) }} ago)
-      </h5>
-      <h5>
-        <time class="track__duration" @click="play(track, $event)">
+        <time class="track-details__duration">
           duration: 
           {{ track.duration | formatTime }}
         </time>
@@ -53,15 +52,56 @@
     computed: {
       track: function() { return this.$store.getters.getTrackDetails },
     },
+    methods: {
+      initTrackDetails: function() {
+        this.$refs.trackDetailsPage.classList.remove('track-details--init')
+      },
+      playTrackDetails: function() {
+        this.initTrackDetails()
+        this.$store.dispatch('play', this.track)
+      },
+    },
     created: function() {
-      this.$store.dispatch('getTrackDetails', this.$route.params.id)
+      const routeId = this.$route.params.id
+      const currentId = this.$store.getters.playerTrack.id
+      this.$store.dispatch('getTrackDetails', routeId)
+      if(routeId == currentId) {
+        this.initTrackDetails()
+      }
     },
   }
 </script>
 
 <style lang="scss">
-  .track {
+  .track-details {
     justify-content: center;
+    &--init {
+      .track-details__play .play-button {
+        &__left {
+          clip-path: polygon(0 0, 50% 25%, 50% 75%, 0% 100%);
+        }
+        &__right {
+          clip-path: polygon(50% 25%, 100% 50%, 100% 50%, 50% 75%);
+        } 
+      }
+    }
+    .play-button {
+      &.style-1 {
+        .play-button__right, .play-button__left {
+          background-color: $color-1;
+        }
+      }
+      &.style-2 {
+        .play-button__right, .play-button__left {
+          background-color: $color-2;
+        }
+      }
+      &.style-3 {
+        .play-button__right, .play-button__left {
+          background-color: $color-3;
+        }
+      }
+    }
     &__title, &__img {
       cursor: pointer;
     }
@@ -89,6 +129,9 @@
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
+    }
+    .loader {
+      position: absolute;
     }
   }
 </style>

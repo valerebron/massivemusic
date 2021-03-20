@@ -19,10 +19,10 @@
       <td :class="'track__index style-'+track.style.id" @click="play(track, $event)">
         {{ index + 1 }}
       </td>
-      <td class="track__title" @click="play(track, $event)" :contenteditable="isEditable" @blur="update($event, track, 'title')">
+      <td class="track__title" :contenteditable="isEditable" @click="play(track, $event)" @blur="update($event, track, 'title')">
         <router-link v-if="!isEditable" class="track__title-txt" :class="'style-'+track.style.id" :to="'/track/'+track.title+'/'+track.id">
           {{ track.title }}
-          <time class="track__duration" @click="play(track, $event)">
+          <time class="track__duration">
             {{ track.duration | formatTime }}
           </time>
         </router-link>
@@ -145,10 +145,12 @@
     },
     methods: {
       play(track, e) {
-        let targetClass = e.target.className.split(' ')[0]
-        this.closeActions()
-        if(!this.isEditable || targetClass === 'track__play' || targetClass === 'track__index') {
-          this.$store.dispatch('play', track)
+        if(!e.target.classList.contains('track__title-txt')) {
+          let targetClass = e.target.className.split(' ')[0]
+          this.closeActions()
+          if(!this.isEditable || targetClass === 'track__play' || targetClass === 'track__index') {
+            this.$store.dispatch('play', track)
+          }
         }
       },
       async load() {
