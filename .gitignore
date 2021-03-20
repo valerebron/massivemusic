@@ -27,3 +27,6 @@ api/var/cache
 
 # Uploaded assets
 /src/assets/screenshots
+
+# yarn
+front/yarn.lock
