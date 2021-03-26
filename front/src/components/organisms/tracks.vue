@@ -249,6 +249,11 @@
       left: calc(50vw - 60px);
     }
     .track {
+      .app--nav & {
+        @include breakpoint(phone, only) {
+          display: none;
+        }
+      }
       cursor: default;
       border-bottom: 1px rgba(255, 255, 255, 0.1) solid;
       height: 50px;
