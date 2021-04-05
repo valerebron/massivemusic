@@ -138,14 +138,14 @@ module.exports = {
   },
   searchTrack: async (parent, args, context, info) => {
     console.log('search tracks '+args.search)
-    let videos = await usetube.searchVideo(args.search, args.token)
+    let videos = await usetube.searchVideo(args.search, args.token, args.apikey)
     videos.videos = videos.videos.filter(video => video.duration < parseInt(env.TRACK_MAX_DURATION) || video.duration > parseInt(env.TRACK_MIN_DURATION))
     videos.videos.forEach((video) => { video.title = cleanTitle(video.title) } )
     return videos
   },
   searchChannel: async (parent, args, context, info) => {
     console.log('search channels '+args.search)
-    return await usetube.searchChannel(args.search)
+    return await usetube.searchChannel(args.search, args.token, args.apikey)
   },
   getChannelDesc: async (parent, args, context, info) => {
     console.log('youtube channel desc query')

@@ -11,7 +11,7 @@
         @keydown.enter="search(); $event.target.blur()"
       />
     </li>
-    <li class="typo-center" v-if="didyoumean !== '' && didyoumean && input.value !== ''" @click="didyoumeanSearch">
+    <li class="typo-center" v-if="didyoumean !== '' && didyoumean && input.value !== '' && !isLoading" @click="didyoumeanSearch">
       <button>
         Did you mean : <b> {{ didyoumean }}</b> ?
       </button>
@@ -39,9 +39,9 @@
         {{ parseInt(track.publishedAt / 1000) | moment('from', true) }}
       </span>
     </li>
-    <!-- <li>
-      <button class="explorer__more" @click="more()" v-if="query !== ''">more</button>
-    </li> -->
+    <li>
+      <button class="explorer__more" @click="getTracks()" v-if="tracks.length > 0">more</button>
+    </li>
   </ul>
 </template>
 
@@ -68,6 +68,7 @@
         tracks: [],
         query: '',
         token: '',
+        apikey: '',
         isNewQuery: false,
         isLoading: false,
         didyoumean: '',
@@ -93,9 +94,10 @@
             variables: {
               search: this.query,
               token: this.token,
+              apikey: this.apikey,
             },
-            query: gql`query($search: String!, $token: String) {
-              searchTrack(search: $search, token: $token) {
+            query: gql`query($search: String!, $token: String, $apikey: String) {
+              searchTrack(search: $search, token: $token, apikey: $apikey) {
                 videos {
                   id
                   title
@@ -104,6 +106,7 @@
                   publishedAt
                 }
                 token
+                apikey
                 didyoumean
               }
             }`,
@@ -113,10 +116,10 @@
               this.didyoumean = (res.data.searchTrack ? res.data.searchTrack.didyoumean : '')
             }
             else {
-              this.tracks.concat(res.data.searchTrack.videos)
+              this.tracks = this.tracks.concat(res.data.searchTrack.videos)
             }
-            this.token = (res.data.searchTrack.token ? res.data.searchTrack.token : [])
-            window.scroll(0,0)
+            this.token = (res.data.searchTrack.token ? res.data.searchTrack.token : '')
+            this.apikey = (res.data.searchTrack.apikey ? res.data.searchTrack.apikey : '')
             this.isLoading = false
           }).catch((error) => {
             console.log('%c●', 'color: red', 'youtube search track error: ', error)
@@ -124,16 +127,12 @@
         }
         else {
           this.tracks = []
-          window.scroll(0,0)
           this.isLoading = false
         }
       },
       search: function() {
         this.tracks = []
         this.token = ''
-        this.getTracks()
-      },
-      more: function() {
         this.getTracks()
       },
       send(track) {

@@ -16,8 +16,8 @@ type Query {
   users(role: String): [User!]!
   getMails(token: String!): mailsPayload!
   user(user_id: Int): User!
-  searchTrack(search: String, token: String): tracksPayload
-  searchChannel(search: String, token: String): channelsPayload
+  searchTrack(search: String, token: String, apikey: String): tracksPayload
+  searchChannel(search: String, token: String, apikey: String): channelsPayload
   getChannelDesc(id: String): String
   sendMail(to: String, name: String, subject: String!, content: String!, token: String!): String
   shuffle(
@@ -135,12 +135,14 @@ type tracksPayload {
   videos: [Video]
   didyoumean: String
   token: String
+  apikey: String
 }
 
 type channelsPayload {
   channels: [Channel]
   didyoumean: String
   token: String
+  apikey: String
 }
 
 type AuthPayload {

@@ -1032,6 +1032,13 @@ axios@^0.19.2:
   dependencies:
     follow-redirects "1.5.10"
 
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
+
 backo2@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/backo2/-/backo2-1.0.2.tgz#31ab1ac8b129363463e35b3ebb69f4dfcfba7947"
@@ -2020,6 +2027,11 @@ follow-redirects@1.5.10:
   integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
   dependencies:
     debug "=3.1.0"
+
+follow-redirects@^1.10.0:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
+  integrity sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==
 
 form-data@^2.3.1:
   version "2.5.1"
@@ -4184,10 +4196,12 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-usetube@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.0.2.tgz#eadaffafc37d51bd3a249e4ea2c8b89ffd50ef56"
-  integrity sha512-TtOG7+gMafq7qKRIf0tmUCuFFCHoc6HIvoTezdqUTnG9OeejE5mlucidpfLh48793V7jAapsRNo2IUlXyCfnFA==
+usetube@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.0.5.tgz#7491e0d059cf0ad3def47d5cfbae23321e4c5146"
+  integrity sha512-Gouc2cNO7687vtLGFeO9fac1PnryOpRAWjuE8cNlUl7zjacWYK3nEH2ohBGZ2G6C5adhzyVx4ranQgJh2T7bfg==
+  dependencies:
+    axios "^0.21.1"
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"

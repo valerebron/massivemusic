@@ -34,7 +34,7 @@
       </a>
     </li>
     <li>
-      <!-- <button class="explorer__more" @click="more" v-if="query !== ''">more</button> -->
+      <button class="explorer__more" @click="getChannels()" v-if="channels.length > 0">more</button>
     </li>
   </ul>
 </template>
@@ -60,6 +60,8 @@
         isNewQuery: false,
         isLoading: false,
         didyoumean: '',
+        token: '',
+        apikey: '',
       }
     },
     computed: {
@@ -68,16 +70,19 @@
       },
     },
     methods: {
-      search: function() {
+      getChannels: function() {
         this.isLoading = true
         if(this.query !== '') {
           this.$apollo.query({
             variables: {
               search: this.query,
+              token: this.token,
+              apikey: this.apikey,
             },
-            query: gql`query($search: String!) {
-              searchChannel(search: $search){
+            query: gql`query($search: String!, $token: String, $apikey: String) {
+              searchChannel(search: $search, token: $token, apikey: $apikey) {
                 token,
+                apikey,
                 didyoumean,
                 channels {
                   name
@@ -91,9 +96,15 @@
               }
             }`,
           }).then((res) => {
-            this.channels = (res.data.searchChannel ? res.data.searchChannel.channels : [])
-            this.didyoumean = (res.data.searchChannel ? res.data.searchChannel.didyoumean : '')
-            window.scroll(0,0)
+            if(this.token === '') {
+              this.channels = (res.data.searchChannel ? res.data.searchChannel.channels : [])
+              this.didyoumean = (res.data.searchChannel ? res.data.searchChannel.didyoumean : '')
+            }
+            else {
+              this.channels = this.channels.concat(res.data.searchChannel.channels)
+            }
+            this.token = (res.data.searchChannel.token ? res.data.searchChannel.token : '')
+            this.apikey = (res.data.searchChannel.apikey ? res.data.searchChannel.apikey : '')
             this.isLoading = false
           }).catch((error) => {
             console.log('%c●', 'color: red', 'youtube channel error: ', error)
@@ -101,7 +112,6 @@
         }
         else {
           this.channels = []
-          window.scroll(0,0)
           this.isLoading = false
         }
       },
@@ -128,6 +138,11 @@
           this.$emit('clickOnChannel', channel)
           this.isLoading = false
         }
+      },
+      search: function() {
+        this.channels = []
+        this.token = ''
+        this.getChannels()
       },
       didyoumeanSearch() {
         this.query = this.didyoumean
