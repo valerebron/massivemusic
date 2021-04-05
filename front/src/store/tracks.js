@@ -15,7 +15,7 @@ let initial_filters = {
 
 const state = {
   tracks: [],
-  tracksPerPage: 50,
+  tracksPerPage: 20,
   order: 'createdAt_DESC',
   filters: initial_filters,
   count: 0,
