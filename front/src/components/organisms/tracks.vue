@@ -26,6 +26,12 @@
             {{ track.duration | formatTime }}
           </time>
         </router-link>
+        <span v-else class="track__title-txt" :class="'style-'+track.style.id">
+          {{ track.title }}
+          <time class="track__duration">
+            {{ track.duration | formatTime }}
+          </time>
+        </span>
       </td>
       <td class="track__artist">
         <router-link v-if="!isEditable" :to="stylePath+'/s/'+track.artist" class="track__artist--txt">
