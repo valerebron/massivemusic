@@ -64,6 +64,20 @@
       this.isLoading = false
       this.$refs.searchUser.focus()
     },
+    metaInfo() {
+      return {
+        title: 'Users of massivemusic.fr',
+        description: 'All massivemusic bassheadz are listed here',
+        meta: [
+          { name: 'desciption', content: 'All massivemusic bassheadz are listed here' },
+          { name: 'keywords', content: 'Massivemusic bassheadz' },
+          { name: 'twitter:card', content: 'All massivemusic bassheadz are listed here' },
+          { name: 'og:title', content: 'All massivemusic bassheadz are listed here' },
+          { name: 'og:image', content: 'https://massivemusic.fr/icons/logo.png' },
+          { name: 'og:description', content: 'All massivemusic bassheadz are listed here' },
+        ],
+      }
+    },
   }
 </script>
 

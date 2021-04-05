@@ -19,6 +19,6 @@
     transition: transform .3s ease, background-color .2s ease;
     cursor: pointer;
     clip-path: polygon(0 90%, 50% 0, 100% 90%, 90% 100%, 50% 40%, 10% 100%);
-    transform: rotateX(180deg);
+    transform: rotateX(0deg);
   }
 </style>

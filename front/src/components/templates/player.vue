@@ -20,18 +20,19 @@
         </div>
       </div>
       <div class="control-bar">
-        <button  class="player-prev" @click="$store.dispatch('playPrev', track)">
+        <img class="track__img" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title+' cover'">
+        <button  class="player-prev" @click="$store.dispatch('playPrev', track)" aria-label="play previous track">
           <icon-prev/>
         </button>
-        <button class="player-play" @click="$store.dispatch('play', track)">
+        <button class="player-play" @click="$store.dispatch('play', track)" aria-label="play">
           <icon-play-pause/>
           <loader v-if="$store.getters.playerState === 'buffering'" />
         </button>
-        <button  class="player-next" @click="$store.dispatch('playNext', track)">
+        <button  class="player-next" @click="$store.dispatch('playNext', track)" aria-label="play next track">
           <icon-next/>
         </button>
         <div class="player-volume">
-          <button @click="toggleVolume">
+          <button @click="toggleVolume" aria-label="toggle volume">
             <div class="player-volume__icon-container">
               <icon-volume-high class="player-volume__icon"/>
               <i class="player-volume__crossed" :class="{ 'player-volume__crossed--muted': volume == 0 }"></i>
@@ -51,11 +52,11 @@
             {{ track.artist }}
           </span>
         </p>
-        <button  class="player-star" @click="$store.dispatch('toggleFavorite', track)">
+        <button  class="player-star" @click="$store.dispatch('toggleFavorite', track)" aria-label="add current track to favorite">
           <icon-star-inline v-if="$store.getters.isFavorite(track)" />
           <icon-star-outline v-else />
         </button>
-        <button  class="player-up" @click="toggleFull">
+        <button  class="player-up" @click="toggleFull()" aria-label="toggle fullscreen player">
           <icon-up-down/>
         </button>
       </div>

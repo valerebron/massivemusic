@@ -19,22 +19,16 @@
       navigation,
       player,
     },
-    metaInfo: {
-      title: 'Massivemusic',
-      meta: [
-        { name: 'charset', content: 'utf8' },
-        { name: 'desciption', content: 'massivemusic stream bassmusic. You can dig for drum & bass, dubstep and dub music.' },
-        { name: 'keywords', content: 'massivemusic stream bassmusic drum & bass dnb dubstep dub bass music ukbass' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'twitter:card', content: '' },
-        { name: 'og:title', content: '' },
-        { name: 'og:type', content: '' },
-        { name: 'og:url', content: '' },
-        { name: 'og:image', content: '' },
-        { name: 'og:description', content: 'massivemusic stream bassmusic. You can dig for drum & bass, dubstep and dub music.' },
-        { name: 'og:site_name', content: 'massivemusic.fr' },
-        { name: '', content: '' },
-      ],
+    metaInfo() {
+      return {
+        link: [
+          {rel: 'canonical', href: window.location.href }
+        ],
+        meta: [
+          { name: 'og:url', content: window.location.href },
+          { name: 'og:site_name', content: 'Massivemusic' },
+        ],
+      }
     },
     computed: {
       route: function() {
@@ -49,7 +43,6 @@
       bodyClass: function() {
         return [
           {
-            'app--intro' : this.$store.getters.ui.intro,
             'app--nav' : this.$store.getters.ui.nav,
             'app--player' : this.$store.getters.ui.player,
             'app--search' : this.$store.getters.ui.search,
@@ -130,10 +123,8 @@
     },
     beforeCreate: function() {
       window.apollo = this.$apollo
-      this.$store.dispatch('ui', {type: 'intro', value: true})
     },
     mounted: function() {
-      this.$store.dispatch('ui', {type: 'intro', value: false})
       this.closeNavIfMobile()
       this.changeScopeOnScroll()
       this.keyboardAlias()
@@ -179,19 +170,6 @@
         }
         margin: 0 auto;
         min-height: 100vh;
-      }
-    }
-    &--intro {
-      .header, .logo {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        width: 100vw;
-        background-color: transparent;
-      }
-      .nav, .nav-toggle, .search, .tracks, .player {
-        opacity: 0;
       }
     }
     &--nav {
@@ -283,7 +261,7 @@
         }
       }
       .up-down-icon {
-        transform: rotateX(0deg);
+        transform: rotateX(180deg);
       }
     }
     &[data-dialog='true'] {

@@ -1,7 +1,6 @@
 <template>
   <main class="home">
-    <tracks v-if="keywords" :filter="{ type: 'search', value: keywords }"/>
-    <tracks v-else          :filter="{ type: 'reset', value: Date.now() }"/>
+    <tracks :filter="{ type: 'reset', value: Date.now() }"/>
   </main>
 </template>
 

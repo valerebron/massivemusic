@@ -1,13 +1,13 @@
 <template>
   <address class="card">
     <figure class="card__figure">
-      <router-link class="card__link" :to="'/user/'+user.id+'/profile'">
+      <router-link class="card__link" :to="'/user/'+user.name+'/'+user.id+'/profile'">
         <avatar class="card__avatar" :user="user" size="medium" />
-        <router-link :to="'/user/'+user.id+'/tracks'" class="card__nb-track" :class="'style-bkg-'+user.channel_style" v-if="user.tracks && user.tracks.length !== 0">
+        <router-link :to="'/user/'+user.name+'/'+user.id+'/tracks'" class="card__nb-track" :class="'style-bkg-'+user.channel_style" v-if="user.tracks && user.tracks.length !== 0">
           {{ user.tracks.length }}
           <icon-youtube v-if="user.role === 'ROBOT'" />
         </router-link>
-        <h4 class="card__name">{{ user.name }}</h4>
+        <h2 class="card__name">{{ user.name }}</h2>
       </router-link>
     </figure>
   </address>

@@ -19,25 +19,25 @@
           sync channel
         </span>
       </button>
-      <h3>
-        <router-link class="nb-tracks" :class="'style-bkg-'+user.channel_style+' button'" :to="'/user/'+$route.params.user_id+'/tracks'">
+      <h2>
+        <router-link class="nb-tracks" :class="'style-bkg-'+user.channel_style+' button'" :to="'/user/'+$route.params.user_name+'/'+$route.params.user_id+'/tracks'">
           <icon-play class="play" />
           <b class="count"> {{ this.user.tracks.length }}</b> track(s)
         </router-link>
-      </h3>
+      </h2>
       <a v-if="user.role === 'ROBOT'" class="user__link" target="_blank" :href="'https://youtube.com/channel/'+user.channel_id+''" :title="user.name">
         see channel on youtube
         <icon-exit />
       </a>
-      <h4 :title="user.createdAt">subscribed: {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h4>
-      <h5 :title="user.updatedAt">last activity: {{ Date.parse(user.updatedAt) | moment('from', 'now') }}</h5>
-      <h4 v-if="user.role ==! 'ROBOT'">
+      <h3 :title="user.createdAt">subscribed: {{ Date.parse(user.createdAt) | moment('from', 'now') }}</h3>
+      <h4 :title="user.updatedAt">last activity: {{ Date.parse(user.updatedAt) | moment('from', 'now') }}</h4>
+      <h5 v-if="user.role ==! 'ROBOT'">
         {{ user.email }}
-      </h4>
+      </h5>
       <p v-if="user.channel_description !== ''">
         {{ user.channel_description }}
       </p>
-      <router-link v-if="$route.params.user_id === 'me' || $store.getters.isAdmin" :to="'/user/'+$route.params.user_id+'/edit'" tag="button" class="cta">
+      <router-link v-if="$route.params.user_id === 'me' || $store.getters.isAdmin" :to="'/user/'+$route.params.user_name+'/'+$route.params.user_id+'/edit'" tag="button" class="cta">
         <icon-edit/>
         Edit profile
       </router-link>
@@ -80,6 +80,15 @@
     mounted: function() {
       this.isLoading = false
     },
+    metaInfo() {
+      return {
+        title: `${this.user.name} profile page | massivemusic.fr`,
+        meta: [
+          { name: 'og:title', content: `${this.user.name} profile page | massivemusic.fr` },
+          { name: 'og:image', content: `${window.location.host}/avatars/${this.user.id}-300px.png` },
+        ],
+      }
+    },
   }
 </script>
 
@@ -97,6 +106,7 @@
       height: 50px;
     }
     .nb-tracks {
+      font-size: 22px;
       text-decoration: none;
       .play {
         padding-right: 10px;
@@ -136,6 +146,8 @@
     }
     .sync-text {
       margin-left: 12px;
+      font-size: 18px;
+      font-weight: bold;
     }
     &__sync-button {
       .ion {

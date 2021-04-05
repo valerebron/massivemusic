@@ -47,9 +47,20 @@
     components: {
       svgLogo,
     },
-    metaInfo: {
-      title: 'About Massivemusic'
-    }
+    metaInfo() {
+      return {
+        title: 'About | massivemusic.fr',
+        description: 'MassiveMusic is a bass music streaming site. The purpose is to explore and discover music.',
+        meta: [
+          { name: 'desciption', content: 'MassiveMusic is a bass music streaming site. The purpose is to explore and discover music.' },
+          { name: 'keywords', content: 'MassiveMusic about' },
+          { name: 'twitter:card', content: 'MassiveMusic is a bass music streaming site. The purpose is to explore and discover music.' },
+          { name: 'og:title', content: 'MassiveMusic is a bass music streaming site. The purpose is to explore and discover music.' },
+          { name: 'og:image', content: 'https://massivemusic.fr/icons/logo.png' },
+          { name: 'og:description', content: 'MassiveMusic is a bass music streaming site. The purpose is to explore and discover music.' },
+        ],
+      }
+    },
   }
 </script>
 

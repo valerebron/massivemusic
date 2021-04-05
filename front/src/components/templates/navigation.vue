@@ -6,7 +6,7 @@
     <router-link
       class="nav__link nav__link--style"
       :class="'style-hover-bkg-'+style.id"
-      v-for="style in $store.getters.styles"
+      v-for="style in styles"
       :to="'/'+style.slug+'/'+searchSlug"
       :key="style.id">
       {{ style.name }}
@@ -20,7 +20,7 @@
       users
     </router-link>
     <template v-if="$store.getters.isOnline">
-      <router-link to="/user/me/profile" class="nav__link nav__link--user">
+      <router-link :to="'/user/'+$store.getters.session.user.name+'/me/profile'" class="nav__link nav__link--user">
         <avatar :user="$store.getters.session.user" size="small" />
         my Profile
       </router-link>
@@ -91,6 +91,7 @@ export default {
   },
   data: function() {
     return {
+      styles: [{ id: 1, name: 'Dubstep', slug: 'dubstep' }, { id: 2, name: 'Drum & Bass', slug: 'drumandbass' }, { id: 3, name: 'Dub', slug: 'dub' }],
       isAdminOpen: false,
     }
   },

@@ -2,7 +2,7 @@
   <main class="page--container track-details track-details--init" ref="trackDetailsPage" v-if="track">
     <section class="card">
       <picture class="track-details__picture">
-        <button class="track-details__play" @click="playTrackDetails">
+        <button class="track-details__play" @click="playTrackDetails" aria-label="play the track">
           <icon-play-pause :class="'style-'+track.style.id"/>
           <loader v-if="$store.getters.playerState === 'buffering'" />
         </button>
@@ -16,25 +16,25 @@
           {{ track.artist }}
         </router-link>
       </h2>
-      <h5>
-        {{ track.createdAt | moment('d/M/Y HH:m') }}
-        ({{ track.createdAt | moment('from', true) }} ago)
-      </h5>
-      <router-link :to="'/user/'+track.user.id+'/profile'" class="track-details__user__link button" :title="track.user.name">
+      <router-link :to="'/user/'+track.user.name+'/'+track.user.id+'/profile'" class="track-details__user__link button" :title="track.user.name">
         <avatar :user="track.user" size="small" />
         <span class="text-label">
           {{ track.user.name }}
         </span>
       </router-link>
-      <h4>
+      <p>
+        {{ track.createdAt | moment('d/M/Y HH:m') }}
+        ({{ track.createdAt | moment('from', true) }} ago)
+      </p>
+      <p>
         playcount: {{ track.playcount }}
-      </h4>
-      <h5>
+      </p>
+      <p>
         <time class="track-details__duration">
           duration: 
           {{ track.duration | formatTime }}
         </time>
-      </h5>
+      </p>
     </section>
   </main>
 </template>
@@ -46,9 +46,6 @@
   export default {
     name: 'trackDetails',
     components: { avatar, iconPlayPause, loader },
-    metaInfo: {
-      title: 'on track Massivemusic'
-    },
     computed: {
       track: function() { return this.$store.getters.getTrackDetails },
     },
@@ -67,6 +64,21 @@
       this.$store.dispatch('getTrackDetails', routeId)
       if(routeId == currentId) {
         this.initTrackDetails()
+      }
+    },
+    metaInfo() {
+      return {
+        title: `${this.track.title} - ${this.track.artist} | massivemusic.fr`,
+        description: this.track.title + ' by ' + this.track.artist,
+        meta: [
+          { name: 'desciption', content: this.track.title + ' by ' + this.track.artist },
+          { name: 'keywords', content: this.track.title + ' ' + this.track.artist },
+          { name: 'twitter:card', content: this.track.title + ' by ' + this.track.artist },
+          { name: 'og:title', content: this.track.title + ' by ' + this.track.artist },
+          { name: 'og:type', content: 'music:song' },
+          { name: 'og:image', content: `https://i.ytimg.com/vi/${this.track.yt_id}/0.jpg` },
+          { name: 'og:description', content: this.track.title + ' by ' + this.track.artist },
+        ],
       }
     },
   }
@@ -132,6 +144,11 @@
     }
     .loader {
       position: absolute;
+    }
+    p {
+      font-size: 16px;
+      font-weight: bold;
+      display: block;
     }
   }
 </style>

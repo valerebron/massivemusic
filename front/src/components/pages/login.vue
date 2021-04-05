@@ -184,7 +184,7 @@
           this.avatar = res.data.login.user
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.login)
-          this.$router.push('/user/me/profile')
+          this.$router.push('/user/'+res.data.login.user.name+'/me/profile')
         }).catch((error) => {
           this.isLoading = false
           this.error = window.formatError(error.message)
@@ -230,7 +230,7 @@
           this.isLoading = false
           this.$store.dispatch('modal', false)
           this.$store.dispatch('login', res.data.signup)
-          this.$router.push('/user/me/profile')
+          this.$router.push('/user/'+res.data.signup.user.name+'/me/profile')
         }).catch((error) => {
           this.isLoading = false
           this.error = window.formatError(error.message)
@@ -244,7 +244,7 @@
     },
     mounted: function() {
       if(this.$store.getters.isOnline) {
-        this.$router.push('/user/me/profile')
+        this.$router.push('/user/'+this.$store.getters.session.user.name+'/me/profile')
       }
       else {
         this.$store.dispatch('modal', true)

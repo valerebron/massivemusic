@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <button class="nav-toggle" :class="{ 'nav-toggle--online' : this.$store.getters.isOnline }" @click="toggleNav">
+    <button class="nav-toggle" :class="{ 'nav-toggle--online' : this.$store.getters.isOnline }" @click="toggleNav" aria-label="toggle navigation sidebar">
       <template v-if="this.$store.getters.isOnline">
         <avatar :user="user" size="small"/>
         <p class="nav-toggle__name">

@@ -1,5 +1,4 @@
 const state = {
-  intro: false,
   nav: true,
   player: false,
   search: false,

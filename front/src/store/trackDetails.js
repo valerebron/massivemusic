@@ -1,7 +1,27 @@
 import gql from 'graphql-tag'
 
 const state = {
-  track_details: null
+  track_details: {
+    id: '',
+    yt_id: '',
+    title: '',
+    artist: '',
+    duration: '',
+    pending: '',
+    invalid: '',
+    createdAt: '',
+    style: {
+      id: '',
+    },
+    user: {
+      id: '',
+      name: '',
+      email: '',
+      role: '',
+      channel_avatar_small: '',
+    },
+    playcount: '',
+  }
 }
 
 const mutations = {

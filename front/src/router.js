@@ -5,6 +5,7 @@ import pageHome from './components/pages/home.vue'
 import pageAdmin from './components/pages/admin.vue'
 import pageLogin from './components/pages/login.vue'
 import pageUser from './components/pages/user.vue'
+import pageSearch from './components/pages/search.vue'
 import pageUsers from './components/pages/users.vue'
 import pageProfile from './components/pages/profile.vue'
 import pageEditProfile from './components/pages/profile-edit.vue'
@@ -39,7 +40,7 @@ let routes = [
   { name: 'my-tracks', path: '/my-tracks', component: pageMyTracks },
   { name: 'signup', path: '/signup', component: pageLogin },
   { name: 'users', path: '/users', component: pageUsers },
-  { name: 'user', path: '/user/:user_id', component: pageUser, children: [
+  { name: 'user', path: '/user/:user_name/:user_id', component: pageUser, children: [
     { name: 'user-profile', path: 'profile', component: pageProfile },
     { name: 'user-edit', path: 'edit', component: pageEditProfile },
     { name: 'user-tracks', path: 'tracks', component: pageUserTracks },
@@ -47,7 +48,7 @@ let routes = [
   { name: 'test', path: '/test', component: pageTest },
   { name: 'recover-password', path: '/passwd/:token/:email', component: pageRecover },
   { name: 'mail', path: '/mail', component: pageMail },
-  { name: 'search', path: '/s/:keywords', component: pageHome },
+  { name: 'search', path: '/s/:keywords', component: pageSearch },
   { name: 'about', path: '/about', component: about },
   { name: 'track', path: '/track/:title/:id', component: track },
 ]

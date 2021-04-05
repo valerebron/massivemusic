@@ -20,7 +20,7 @@
         {{ index + 1 }}
       </td>
       <td class="track__title" :contenteditable="isEditable" @click="play(track, $event)" @blur="update($event, track, 'title')">
-        <router-link v-if="!isEditable" class="track__title-txt" :class="'style-'+track.style.id" :to="'/track/'+track.title+'/'+track.id">
+        <router-link v-if="!isEditable" class="track__title-txt" :class="'style-'+track.style.id" :to="'/track/'+track.title+'-'+track.artist+'/'+track.id">
           {{ track.title }}
           <time class="track__duration">
             {{ track.duration | formatTime }}
@@ -46,7 +46,7 @@
           <p class="track__createdat" :title="track.createdAt" @click="play(track, $event)">
             {{ track.createdAt | moment('from', true) }}
           </p>
-          <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)">
+          <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)" aria-label="toggle favorite">
             <template v-if="$store.getters.isFavorite(track)">
               <icon-star-inline />
               <span class="text-label">
@@ -80,7 +80,7 @@
               </span>
             </button>
           </template>
-          <router-link :to="'/user/'+track.user.id+'/profile'" class="track__user__link button" :title="track.user.name">
+          <router-link :to="'/user/'+track.user.name+'/'+track.user.id+'/profile'" class="track__user__link button" :title="track.user.name">
             <avatar :user="track.user" size="small" />
             <span class="text-label">
               by {{ track.user.name }}

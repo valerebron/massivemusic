@@ -1,12 +1,8 @@
 <template>
   <router-link class="logo" to="/">
-    <svgLogo class="logo__icon" @click="$store.dispatch('ui', {type: 'full', value: false})"/>
+    <svgLogo class="logo__icon" @click="$store.dispatch('ui', {type: 'full', value: false})" alt="Massivemusic, streaming bassmusic"/>
     <h1 class="logo__name">
-      massive<br>
-      music
-      <span class="logo__extension">
-        .fr
-      </span>
+      Massivemusic, streaming bassmusic
     </h1>
   </router-link>
 </template>
@@ -30,8 +26,9 @@ export default {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    text-indent: -999999999px;
     &__name {
-      display: none;
+      text-indent: -999999999px;
       overflow: hidden;
       transition: all .3s;
       opacity: 1;

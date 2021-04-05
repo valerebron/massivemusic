@@ -24,7 +24,6 @@ deploy:
     - sed -i "s|MAIL_PASS=.*|MAIL_PASS=$CI_MAIL_PASS|g" .env
     - sed -i "s|API_PORT_DOCKER|API_PORT|g" docker-compose.yml
     - sed -i "s|WEB_PORT_DOCKER|WEB_PORT|g" docker-compose.yml
-    - sed -i "s|<\!--DIST_SCRIPT_HERE-->|$DIST_SCRIPT|g" front/public/index.html
     - docker-compose build
     - docker-compose up -d
   environment:

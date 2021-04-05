@@ -31,7 +31,7 @@
         </button>
         <drop @closeDrop="closeDrop" :user="user"/>
       </template>
-      <router-link :to="'/user/'+$route.params.user_id+'/profile'" tag="button" class="cta">
+      <router-link :to="'/user/'+$route.params.user_name+'/'+$route.params.user_id+'/profile'" tag="button" class="cta">
         <icon-back/>
         go back to profile
       </router-link>
