@@ -189,6 +189,7 @@
         pointer-events: none;
       }
       &.cover-image {
+        cursor: pointer;
         opacity: 0;
         transition: opacity 1s;
         .player-paused &, .player-unstarted &  {
