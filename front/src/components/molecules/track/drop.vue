@@ -22,8 +22,8 @@
     props: ['track'],
     methods: {
       drop: async function(track) {
-        await this.$store.dispatch('dropTrack', track)
         this.close()
+        await this.$store.dispatch('dropTrack', track)
       },
       close: function() {
         this.$emit('closeDrop')

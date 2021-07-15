@@ -20,11 +20,9 @@ type Query {
   searchChannel(search: String, token: String, apikey: String): channelsPayload
   getChannelDesc(id: String): String
   sendMail(to: String, name: String, subject: String!, content: String!, token: String!): String
-  shuffle(
-    style: Int
-    user: Int
-  ): Track
+  shuffle(style: Int, user: Int): Track
   getTrackDetails(id: String): Track
+  getAdminCount: AdminCount
 }
 
 type Mutation {
@@ -124,6 +122,11 @@ type Mutation {
     token: String!
   ): [Track]
   incrementPlayCount(id: Int!): Int
+}
+
+type Subscription {
+  trackCreated: Track
+  adminCountUpdated: AdminCount
 }
 
 type AuthPayload {
@@ -228,6 +231,13 @@ type Mail {
 type mailsPayload {
   mails: [Mail]
   contacts: [Contact!]!
+}
+
+type AdminCount {
+  pendingCount:  Int!
+  invalidCount:  Int!
+  emptyCount:  Int!
+  bigSmallCount: Int!
 }
 
 scalar DateTime

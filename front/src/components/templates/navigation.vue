@@ -24,29 +24,29 @@
         <avatar :user="$store.getters.session.user" size="small" />
         my Profile
       </router-link>
-      <a href="#" @click="toggleAdmin" class="nav__link nav__link--multi">
+      <a href="#" @click="toggleAdmin" class="nav__link nav__link--multi" v-if="$store.getters.isAdmin">
         <icon-admin />
         <span class="nav__link__txt">
-          Admin
+          Admin {{ adminCount }}
         </span>
         <icon-dropup v-if="isAdminOpen" class="sub-icon" />
         <icon-dropdown v-else class="sub-icon" />
       </a>
-      <div class="subnav subnav--admin" v-if="isAdminOpen">
-        <router-link v-if="$store.getters.isAdmin" to="/admin/all" class="nav__link nav__link--sub">
+      <div class="subnav subnav--admin" v-if="isAdminOpen && $store.getters.isOnline">
+        <router-link to="/admin/all" class="nav__link nav__link--sub">
           All
         </router-link>
-        <router-link v-if="$store.getters.isAdmin" to="/admin/pending" class="nav__link nav__link--sub">
-          Pending
+        <router-link to="/admin/pending" class="nav__link nav__link--sub">
+          Pending {{ $store.getters.getAdminCount.pendingCount }}
         </router-link>
-        <router-link v-if="$store.getters.isAdmin" to="/admin/invalid" class="nav__link nav__link--sub">
-          Invalid
+        <router-link to="/admin/invalid" class="nav__link nav__link--sub">
+          Invalid {{ $store.getters.getAdminCount.invalidCount }}
         </router-link>
-        <router-link v-if="$store.getters.isAdmin" to="/admin/empty" class="nav__link nav__link--sub">
-          Empty
+        <router-link to="/admin/empty" class="nav__link nav__link--sub">
+          Empty {{ $store.getters.getAdminCount.emptyCount }}
         </router-link>
-        <router-link v-if="$store.getters.isAdmin" to="/admin/duration" class="nav__link nav__link--sub">
-          Big/Small
+        <router-link to="/admin/duration" class="nav__link nav__link--sub">
+          Big/Small {{ $store.getters.getAdminCount.bigSmallCount }}
         </router-link>
       </div>
       <router-link v-if="$store.getters.isAdmin" to="/add-bots" class="nav__link">
@@ -91,7 +91,7 @@ export default {
   },
   data: function() {
     return {
-      styles: [{ id: 1, name: 'Dubstep', slug: 'dubstep' }, { id: 2, name: 'Drum & Bass', slug: 'drumandbass' }, { id: 3, name: 'Dub', slug: 'dub' }],
+      styles: this.$store.getters.styles,
       isAdminOpen: false,
     }
   },
@@ -104,35 +104,19 @@ export default {
         return ''
       }
     },
+    adminCount: function() {
+      let adminCount = this.$store.getters.getAdminCount
+      adminCount = Object.values(adminCount).reduce((a,c) => a+c)
+      return parseInt(adminCount)
+    },
   },
   methods: {
-    loadStyles() {
-      this.$apollo
-        .query({
-          query: gql`
-            query {
-              styles {
-                id
-                name
-                slug
-              }
-            }
-          `
-        })
-        .then(res => {
-          this.$store.dispatch('initStyles', res.data.styles)
-        })
-        .catch(error => {
-          console.log('%c●', 'color: red', 'loadStyle: ', error)
-        });
-    },
     shuffle: function() {
       this.$store.commit('SET_SHUFFLE', !this.$store.getters.isShuffle)
       this.$store.dispatch('shuffle')
     },
     logout: function() {
       if (!this.$store.getters.isOnline) {
-        this.$store.dispatch('ui', {type: 'nav', value: false})
         this.$router.push('/')
       } else {
         let session = this.$store.getters.session;
@@ -165,7 +149,8 @@ export default {
     }
   },
   mounted: function() {
-    this.loadStyles();
+    this.$store.dispatch('initStyles')
+    this.$store.dispatch('getAdminCount')
   }
 };
 </script>

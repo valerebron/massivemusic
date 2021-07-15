@@ -2,11 +2,12 @@ const env = require('dotenv').config({ path: '../.env' }).parsed
 const usetube = require('usetube')
 const moment = require('moment')
 const cleanTitle = require('./cleantitle')
+import updateAdminCount from './resolvers/updateAdminCount'
 
 export = syncBot
 
-async function syncBot(bot, prisma) {
-  const botTracks = await prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
+async function syncBot(bot, context) {
+  const botTracks = await context.prisma.track.findMany({ where: { user: bot.id }, orderBy: { createdAt: 'desc' }})
   let botName = bot.name.toLowerCase()
   var tracks = []
   // 1 FIRST SCAN
@@ -47,7 +48,8 @@ async function syncBot(bot, prisma) {
     // 5 SAVE TRACKS TO BDD
     const createManyTracks = await tracks.map(async (track) => {
       // save tracks
-      return await prisma.track.create({
+      updateAdminCount(context)
+      return await context.prisma.track.create({
         data: {
           yt_id: track.id,
           title: cleanTitle(track.title),
@@ -70,7 +72,7 @@ async function syncBot(bot, prisma) {
       })
     })
     // 6 UPDATE LAST SYNC DATE
-    await prisma.user.update({
+    await context.prisma.user.update({
       where: { id: bot.id },
       data: {
         channel_last_sync_date: new Date(Date.now()),

@@ -1,3 +1,5 @@
+import gql from 'graphql-tag'
+
 const state = {
   styles: [],
 }
@@ -9,8 +11,21 @@ const mutations = {
 }
 
 const actions = {
-  initStyles(store, styles) {
-    store.commit('SET_STYLES', styles)
+  async initStyles(store) {
+    const res = await window.apollo.query({
+      query: gql`
+        query {
+          styles {
+            id
+            name
+            slug
+          }
+        }
+      `
+    }).catch(error => {
+      console.log('%c●', 'color: red', 'loadStyle: ', error)
+    })
+    store.commit('SET_STYLES', res.data.styles)
   },
 }
 

@@ -50,7 +50,12 @@
         </button>
         <aside class="track__actions__menu">
           <p class="track__createdat" :title="track.createdAt" @click="play(track, $event)">
-            {{ track.createdAt | moment('from', true) }}
+            <template v-if="isEditable">
+              {{ track.updatedAt | moment('from', true) }}
+            </template>
+            <template v-else>
+              {{ track.createdAt | moment('from', true) }}
+            </template>
           </p>
           <button class="toggle_favorite" v-if="isFavoritable" @click.prevent="$store.dispatch('toggleFavorite', track)" aria-label="toggle favorite">
             <template v-if="$store.getters.isFavorite(track)">

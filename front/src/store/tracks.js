@@ -15,7 +15,7 @@ let initial_filters = {
 
 const state = {
   tracks: [],
-  tracksPerPage: 20,
+  tracksPerPage: 50,
   order: 'createdAt_DESC',
   filters: initial_filters,
   count: 0,
@@ -37,7 +37,7 @@ const mutations = {
   },
   DROP_TRACK(state, track) {
     state.tracks = state.tracks.filter(function (elt) {
-      return elt.yt_id !== track.yt_id
+      return elt.id !== track.id
     })
     state.count = state.count - 1
   },

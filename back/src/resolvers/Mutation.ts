@@ -3,6 +3,7 @@ const crypto = require('crypto')
 const sharp = require('sharp')
 const mail = require('../mail/mail')
 const syncBot = require('../syncBot')
+import updateAdminCount from './updateAdminCount'
 
 function isEmail(email) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -294,7 +295,7 @@ export async function syncFrontBot(parent, args, context, info) {
   const admin = await context.prisma.user.findUnique({ where: { id: 1 } })
   const bot = await context.prisma.user.findUnique({ where: { id: args.id }})
   if(args.token === admin.token || args.token === bot.token) {
-    syncBot(bot, context.prisma)
+    syncBot(bot, context)
   }
   else {
     console.log('bad token for sync')
@@ -305,6 +306,9 @@ export async function post(parent, args, context, info) {
   const user = await context.prisma.user.findUnique( { where: { id: args.user_id } })
   if(args.token === user.token) {
     console.log('\x1b[34m%s\x1b[0m', '●', user.name+' add a new track:  '+args.title+' - '+args.artist)
+    if(user.channel_enable_tracks === 1) {
+      updateAdminCount(context)
+    }
     return context.prisma.track.create({
       data: {
         yt_id: args.yt_id,
@@ -367,6 +371,7 @@ export async function dropPost(parent, args, context, info) {
     if(track_user || user.role === 'ADMIN') {
       if(track_user.id === user.id || user.role === 'ADMIN') {
         console.log('\x1b[34m%s\x1b[0m', '●', track_user.name+' remove ['+args.title+']')
+        updateAdminCount(context)
         return context.prisma.track.delete({ where: { id: args.id } })
       }
       else {
@@ -389,6 +394,7 @@ export async function validatePost(parent, args, context, info) {
     if(track_user || user.role === 'ADMIN') {
       if(track_user.id === user.id || user.role === 'ADMIN') {
         console.log('\x1b[34m%s\x1b[0m', '●', track_user.name+' validate ['+args.title+']')
+        updateAdminCount(context)
         return context.prisma.track.update({
           where: { id: args.id },
           data: {
@@ -433,6 +439,7 @@ export async function validateAll(parent, args, context, info) {
         invalid: false,
       },
     })
+    updateAdminCount(context)
     return res.count
   }
   else {
@@ -448,6 +455,7 @@ export async function deleteAll(parent, args, context, info) {
     const res = await context.prisma.track.deleteMany({
       where: where,
     })
+    updateAdminCount(context)
     return res.count
   }
   else {
@@ -457,6 +465,7 @@ export async function deleteAll(parent, args, context, info) {
 
 export async function invalidatePost(parent, args, context, info) {
   console.log('\x1b[34m%s\x1b[0m', '●', 'invalidate track-id:',args.id)
+  updateAdminCount(context)
   return context.prisma.track.update({
     where: { id: args.id },
     data: {

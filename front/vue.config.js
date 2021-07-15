@@ -1,7 +1,9 @@
 const env = require('dotenv').config({ path: '../.env' }).parsed
 process.env.VUE_APP_ENDPOINT = env.ENDPOINT
+process.env.VUE_APP_ENDPOINT_WS = env.ENDPOINT_WS
 process.env.VUE_APP_WEB_PORT = env.WEB_PORT
 process.env.VUE_APP_API_PORT = env.API_PORT
+process.env.VUE_APP_WS_PORT = env.WS_PORT
 process.env.VUE_APP_DB_PORT = env.DB_PORT
 process.env.VUE_APP_DB_NAME = env.DB_NAME
 process.env.VUE_APP_DB_USER = env.DB_USER

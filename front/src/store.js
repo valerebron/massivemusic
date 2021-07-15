@@ -11,6 +11,7 @@ import session from './store/session'
 import favorites from './store/favorites'
 import player from './store/player'
 import trackDetails from './store/trackDetails'
+import adminCount from './store/adminCount'
 
 Vue.use(Vuex)
 
@@ -30,6 +31,7 @@ export default new Vuex.Store({
     player,
     users,
     trackDetails,
+    adminCount,
   },
   plugins: [vuexLocalStorage.plugin],
 })
