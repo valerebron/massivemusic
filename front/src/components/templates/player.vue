@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="control-bar">
-        <img class="track__img" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title+' cover'">
+        <img class="track__img" @click="toggleFull()" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title+' cover'">
         <button  class="player-prev" @click="$store.dispatch('playPrev', track)" aria-label="play previous track">
           <icon-prev/>
         </button>
@@ -326,6 +326,12 @@
       .player-artist {
         margin-left: 1vw;
       }
+    }
+    .player-up {
+      display: none;
+      @include breakpoint(tablet) {
+        display: flex;
+      }      
     }
     .player-volume {
       display: none;
