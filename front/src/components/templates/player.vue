@@ -20,7 +20,12 @@
         </div>
       </div>
       <div class="control-bar">
-        <img class="track__img" @click="toggleFull()" :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title+' cover'">
+        <div class="track__img" @click="toggleFull()">
+          <img :src="'https://i.ytimg.com/vi/'+track.yt_id+'/default.jpg'" :alt="track.title+' cover'">
+          <button  class="player-up" aria-label="toggle fullscreen player">
+            <icon-up-down/>
+          </button>
+        </div>
         <button  class="player-prev" @click="$store.dispatch('playPrev', track)" aria-label="play previous track">
           <icon-prev/>
         </button>
@@ -31,6 +36,18 @@
         <button  class="player-next" @click="$store.dispatch('playNext', track)" aria-label="play next track">
           <icon-next/>
         </button>
+        <p class="player-infos">
+          <button  class="player-star" @click="$store.dispatch('toggleFavorite', track)" aria-label="add current track to favorite">
+            <icon-star-inline v-if="$store.getters.isFavorite(track)" />
+            <icon-star-outline v-else />
+          </button>
+          <span class="player-title">
+            {{ track.title }}
+          </span>
+          <span class="player-artist" @click.prevent="filterByArtist(track.artist)">
+            {{ track.artist }}
+          </span>
+        </p>
         <div class="player-volume">
           <button @click="toggleVolume" aria-label="toggle volume">
             <div class="player-volume__icon-container">
@@ -44,21 +61,6 @@
             <progress class="volume-bar__progress" :value="volume" max="100"></progress>
           </div>
         </div>
-        <p class="player-infos">
-          <span class="player-title">
-            {{ track.title }}
-          </span>
-          <span class="player-artist" @click.prevent="filterByArtist(track.artist)">
-            {{ track.artist }}
-          </span>
-        </p>
-        <button  class="player-star" @click="$store.dispatch('toggleFavorite', track)" aria-label="add current track to favorite">
-          <icon-star-inline v-if="$store.getters.isFavorite(track)" />
-          <icon-star-outline v-else />
-        </button>
-        <button  class="player-up" @click="toggleFull()" aria-label="toggle fullscreen player">
-          <icon-up-down/>
-        </button>
       </div>
     </div>
   </section>
@@ -212,6 +214,24 @@
       justify-content: space-around;
       align-items: center;
       height: $control-bar-height;
+      .track__img {
+        position: relative;
+        height: 80px;
+        cursor: pointer;
+        &:hover {
+          .player-up {
+            opacity: 1;
+          }
+        }
+        .player-up {
+          opacity: 0;
+          transition: opacity .3s;
+          top: calc(50% - (36px / 2));
+          left: calc(50% - (60px / 2));
+          position: absolute;
+          background-color: rgba($grey-3, .5);
+        }
+      }
     }
     .player-next, .player-prev {
       @extend %currentStyleColor;
@@ -312,7 +332,7 @@
         position: static;
       }
       @include breakpoint(tablet, only) {
-        flex-direction: column;
+        // flex-direction: column;
         font-size: 2vw;
       }
       @include breakpoint(desktop, only) {
@@ -329,10 +349,7 @@
       }
     }
     .player-up {
-      display: none;
-      @include breakpoint(tablet) {
-        display: flex;
-      }      
+      display: flex;
     }
     .player-volume {
       display: none;
@@ -369,6 +386,7 @@
         justify-content: center;
         width: 10vw;
         margin-top: -4px;
+        margin-right: 20px;
         &__cursor {
           position: relative;
           left: 0;
