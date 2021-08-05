@@ -136,6 +136,10 @@ export default {
           })
           .then(() => {
             this.$store.dispatch('logout')
+            // hide nav if mobile
+            if(window.innerWidth < 768) {
+              this.$store.dispatch('ui', {type: 'nav', value: false})
+            }
             this.$router.push('/')
           })
           .catch(error => {
