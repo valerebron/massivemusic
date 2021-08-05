@@ -136,7 +136,6 @@ export default {
           })
           .then(() => {
             this.$store.dispatch('logout')
-            this.$store.dispatch('ui', {type: 'nav', value: false})
             this.$router.push('/')
           })
           .catch(error => {
