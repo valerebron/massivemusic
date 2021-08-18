@@ -37,6 +37,10 @@ const actions = {
 
 const getters = {
   getAdminCount: state => state.adminCount,
+  getPendingCount: state => state.adminCount.pendingCount ? state.adminCount.pendingCount : '',
+  getInvalidCount: state => state.adminCount.invalidCount ? state.adminCount.invalidCount : '',
+  getEmptyCount: state => state.adminCount.emptyCount ? state.adminCount.emptyCount : '',
+  getBigSmallCount: state => state.adminCount.bigSmallCount ? state.adminCount.bigSmallCount : '',
 }
 
 export default {

@@ -37,16 +37,16 @@
           All
         </router-link>
         <router-link to="/admin/pending" class="nav__link nav__link--sub">
-          Pending {{ $store.getters.getAdminCount.pendingCount }}
+          Pending {{ $store.getters.getpendingCount }}
         </router-link>
         <router-link to="/admin/invalid" class="nav__link nav__link--sub">
-          Invalid {{ $store.getters.getAdminCount.invalidCount }}
+          Invalid {{ $store.getters.getinvalidCount }}
         </router-link>
         <router-link to="/admin/empty" class="nav__link nav__link--sub">
-          Empty {{ $store.getters.getAdminCount.emptyCount }}
+          Empty {{ $store.getters.getemptyCount }}
         </router-link>
         <router-link to="/admin/duration" class="nav__link nav__link--sub">
-          Big/Small {{ $store.getters.getAdminCount.bigSmallCount }}
+          Big/Small {{ $store.getters.getbigSmallCount }}
         </router-link>
       </div>
       <router-link v-if="$store.getters.isAdmin" to="/add-bots" class="nav__link">
@@ -107,7 +107,8 @@ export default {
     adminCount: function() {
       let adminCount = this.$store.getters.getAdminCount
       adminCount = Object.values(adminCount).reduce((a,c) => a+c)
-      return parseInt(adminCount)
+      adminCount = parseInt(adminCount)
+      return adminCount ? adminCount : ''
     },
   },
   methods: {
