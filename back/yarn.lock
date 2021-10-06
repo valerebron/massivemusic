@@ -4196,10 +4196,10 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
-usetube@^2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.1.1.tgz#a33b629480f04443d7d131ae469368e68b4eaec9"
-  integrity sha512-PFySazfd5SoWYUuefjAO4HQohEoixu2to8X/3I7/SxY7ks/TfT81zO/mnJajsTmLxc2wgLhgmuKIwA936RSfGg==
+usetube@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/usetube/-/usetube-2.1.4.tgz#f3906af0213a2e61caa4965674e20edb662fbb5e"
+  integrity sha512-Y2zrqpUHHpAQNM+tYY5XMmlLXDWgKR6dzRW4lUiChnlRCZ4DMQcdVGPe7zuAupANr7bkMKohorVXb9i4MY00+Q==
   dependencies:
     axios "^0.21.1"
 

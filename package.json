@@ -12,7 +12,7 @@
     "migrate:up": "export $(cat .env | xargs) && cd back && npx prisma migrate up --experimental",
     "dev:front": "cd front && npx vue-cli-service serve",
     "dev:back": "cd back && npx nodemon --ext ts,graphql --watch '*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts && npx prisma generate --watch",
-    "dev": "yarn dev:front & yarn dev:back & docker-compose up db",
+    "dev": "yarn deps && yarn dev:front & yarn dev:back & docker-compose up db",
     "kill": "kill $(lsof -t -i:3330)"
   },
   "author": "valere",
