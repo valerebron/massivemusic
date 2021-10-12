@@ -1,0 +1,7 @@
+terminal:
+  image: node:10.21.0-alpine
+  before_script:
+    - yarn deps
+    - yarn global add typescript
+    - yarn generate
+  script: sleep 60
