@@ -19,7 +19,7 @@ services:
     container_name: massivemusic
     image: massivemusic
     depends_on:
-      - db
+      - massivemusic_db
     build: .
     ports:
       - ${WEB_PORT_DOCKER}:${WEB_PORT}
