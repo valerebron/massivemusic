@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db:
+  massivemusic_db:
     container_name: massivemusic_db
     image: mysql:5.7
     ports:
@@ -15,7 +15,7 @@ services:
       - /var/lib/${DB_NAME}/data:/var/lib/mysql
       - ${PWD}/back/massivemusic.sql:/docker-entrypoint-initdb.d/massivemusic.sql
     restart: always
-  app:
+  massivemusic:
     container_name: massivemusic
     image: massivemusic
     depends_on:
