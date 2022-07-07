@@ -124,11 +124,6 @@ type Mutation {
   incrementPlayCount(id: Int!): Int
 }
 
-type Subscription {
-  trackCreated: Track
-  adminCountUpdated: AdminCount
-}
-
 type AuthPayload {
   token: String
   user: User

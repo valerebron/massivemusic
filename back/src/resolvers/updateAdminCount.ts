@@ -8,7 +8,6 @@ const updateAdminCount = async function(context) {
     { duration: { lte: parseInt(env.TRACK_MIN_DURATION) } },
     { duration: { gte: parseInt(env.TRACK_MAX_DURATION) } },
   ] }})
-  context.pubsub.publish('ADMIN_COUNT_UPDATED', { adminCountUpdated: { pendingCount, invalidCount, emptyCount, bigSmallCount } })
 }
 
 export default updateAdminCount

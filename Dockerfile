@@ -1,4 +1,4 @@
-FROM node:10.21.0-alpine
+FROM node:10.21.0
 
 ENV WEB_DIR /var/www/localhost
 RUN mkdir -p $WEB_DIR

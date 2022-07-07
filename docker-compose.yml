@@ -26,3 +26,9 @@ services:
       - ${API_PORT_DOCKER}:${API_PORT}
       - 5556:5555 # prisma studio
     restart: always
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8070:8080
