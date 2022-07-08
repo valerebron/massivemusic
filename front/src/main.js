@@ -7,7 +7,6 @@ import VueApollo from 'vue-apollo'
 import { HttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { split } from 'apollo-link'
-import { WebSocketLink } from 'apollo-link-ws'
 import { getMainDefinition } from 'apollo-utilities'
 
 import vueMoment from 'vue-moment'
@@ -29,19 +28,12 @@ window.formatError = function(error) {
 const httpLink = new HttpLink({
   uri: window.env.VUE_APP_ENDPOINT+'/graphql',
 })
-const wsLink = new WebSocketLink({
-  uri: window.env.VUE_APP_ENDPOINT_WS+'/subscriptions',
-  options: {
-    reconnect: true,
-  },
-})
 const link = split(
   ({ query }) => {
     const definition = getMainDefinition(query)
     return definition.kind === 'OperationDefinition' &&
       definition.operation === 'subscription'
   },
-  wsLink,
   httpLink
 )
 
