@@ -1,8 +1,26 @@
-version: '3'
+version: '3.7'
 
 services:
-  massivemusic_db:
-    container_name: massivemusic_db
+  massivemusic:
+    container_name: massivemusic
+    restart: unless-stopped
+    build: .
+    image: massivemusic
+    depends_on:
+      - massivemusic-db
+    build: .
+    ports:
+      - "${WEB_PORT}:${WEB_PORT}"
+      - "${API_PORT}:${API_PORT}"
+      - 5556:5555 # prisma studio
+    environment:
+      VIRTUAL_HOST: "${DOMAIN}"
+      VIRTUAL_PORT: "${WEB_PORT}"
+      LETSENCRYPT_HOST: "${DOMAIN}"
+
+  massivemusic-db:
+    container_name: massivemusic-db
+    restart: unless-stopped
     image: mysql:5.7
     ports:
     - ${DB_PORT}:3306
@@ -14,21 +32,13 @@ services:
     volumes:
       - /var/lib/${DB_NAME}/data:/var/lib/mysql
       - ${PWD}/back/massivemusic.sql:/docker-entrypoint-initdb.d/massivemusic.sql
-    restart: always
-  massivemusic:
-    container_name: massivemusic
-    image: massivemusic
-    depends_on:
-      - massivemusic_db
-    build: .
-    ports:
-      - ${WEB_PORT_DOCKER}:${WEB_PORT}
-      - ${API_PORT_DOCKER}:${API_PORT}
-      - 5556:5555 # prisma studio
-    restart: always
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8070:8080
+
+networks:
+  default:
+    name: pegaz

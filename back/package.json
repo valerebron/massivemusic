@@ -6,7 +6,6 @@
   "license": "MIT",
   "dependencies": {
     "@prisma/client": "^2.14.0",
-    "apollo-boost": "^0.4.9",
     "apollo-log": "^0.2.0",
     "apollo-server": "^2.11.0",
     "axios": "^0.19.2",

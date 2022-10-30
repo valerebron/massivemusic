@@ -5,7 +5,6 @@ const cleanTitle = require('../cleantitle')
 
 module.exports = {
   styles: async (parent, args, context, info) => {
-    console.log('styles query')
     return await context.prisma.style.findMany()
   },
   users: async (parent, args, context, info) => {

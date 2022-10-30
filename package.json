@@ -10,10 +10,11 @@
     "build": "yarn build:front && yarn build:back",
     "migrate:save": "export $(cat .env | xargs) && cd back && npx prisma migrate save --experimental",
     "migrate:up": "export $(cat .env | xargs) && cd back && npx prisma migrate up --experimental",
+    "dev:db": "docker-compose up -d massivemusic-db && docker-compose up -d adminer",
     "dev:front": "cd front && npx vue-cli-service serve",
-    "dev:back": "cd back && npx nodemon --ext ts,graphql --watch '*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts && npx prisma generate --watch",
-    "dev": "yarn deps && yarn dev:front & yarn dev:back & docker-compose up db",
-    "kill": "kill $(lsof -t -i:3330)"
+    "dev:back": "docker-compose up -d massivemusic-db && cd back && npx nodemon --ext ts,graphql --watch '*' --ignore 'src/**/*.spec.ts' --exec 'ts-node' src/index.ts && npx prisma generate --watch",
+    "dev": "yarn deps && yarn dev:db && yarn dev:front & yarn dev:back",
+    "kill": "kill $(lsof -t -i:7731) && kill $(lsof -t -i:7731) && kill $(lsof -t -i:7731) && kill $(lsof -t -i:8080)"
   },
   "author": "valere",
   "license": "GPL3"

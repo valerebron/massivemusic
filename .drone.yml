@@ -1,0 +1,43 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: deploy
+  image: docker/compose
+  volumes:
+  - name: docker
+    path: /var/run/docker.sock
+  - name: massivemusic
+    path: /opt/pegaz
+  environment:
+    CI_DOMAIN:
+      from_secret: CI_DOMAIN
+    CI_ENDPOINT:
+      from_secret: CI_ENDPOINT
+    CI_DB_PASS:
+      from_secret: CI_DB_PASS
+    CI_MAIL_PASS:
+      from_secret: CI_MAIL_PASS
+  commands:
+    - WORKDIR="/opt/pegaz/services/massivemusic"
+    - rm -rf $WORKDIR
+    - mkdir $WORKDIR
+    - cp -r ./ $WORKDIR
+    - cd $WORKDIR
+    - export $(cat .env | xargs)
+    - sed -i "s|DOMAIN=.*|DOMAIN=\"$CI_DOMAIN\"|g" .env
+    - sed -i "s|127.0.0.1:$DB_PORT|massivemusic-db|g" .env
+    - sed -i "s|password|$CI_DB_PASS|g" .env
+    - sed -i "s|$ENDPOINT|$CI_ENDPOINT|g" .env
+    - sed -i "s|MAIL_USER=.*|MAIL_USER=contact@massivemusic.fr|g" .env
+    - sed -i "s|MAIL_PASS=.*|MAIL_PASS=$CI_MAIL_PASS|g" .env
+    - bash /opt/pegaz/cli.pegaz.sh up massivemusic
+
+volumes:
+- name: pegaz
+  host:
+    path: /opt/pegaz
+- name: docker
+  host:
+    path: /var/run/docker.sock

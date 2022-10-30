@@ -22,6 +22,10 @@ const resolvers = {
 
 const prisma = new PrismaClient()
 const api = new ApolloServer({
+	cors: {
+		origin: '*',
+		credentials: true
+  },	
   typeDefs,
   resolvers,
   context: request => {
@@ -43,6 +47,11 @@ api.listen(options).then(() => {
 
 web.use(history())
 web.use(express.static('../front/dist'))
+web.use(function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 web.listen(parseInt(process.env.WEB_PORT), () => {
   console.log('\x1b[32m%s\x1b[0m', '●', 'web running on http://localhost:'+env.WEB_PORT)
 })
