@@ -1,8 +1,26 @@
 # MassiveMusic
 
-BassMusic streaming App
+Fullstack app for music streaming
 
-## App Design
+## features
+
+- user auth
+- CRUD music
+- admin section
+- newsletter module
+- favorite page
+- youtube channel management
+- youtube crawler
+
+## Stack
+
+- Postgresql / prisma.io
+- Nodejs / typescript
+- Graphql API
+- Vuejs / Atomic Design / IT Css / Sass
+
+## App port
+
   - WEB: **7730**
   - API: **7731**
   - DB: **7732**
@@ -10,6 +28,7 @@ BassMusic streaming App
 ## NODE.js expected version ">=10"
 
 ## Config
+
   - [.env](.env)
 
 ## Use
